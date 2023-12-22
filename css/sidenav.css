@@ -1,0 +1,49 @@
+.sidebar{
+    min-width: 15rem;
+    width: 15rem;
+    overflow: hidden;
+}
+
+.navbar-nav{
+    background: rgb(2,150,190);
+    background: linear-gradient(45deg, rgba(2,150,190,1) 0%, rgba(49,32,108,1) 100%);
+    
+}
+
+.sidebar-brand-text{
+    font-size: 20px;
+    margin: 0;
+}
+
+
+
+img {
+    display: block;
+    margin: 0 auto; /* This centers the image */
+}
+
+.sidebar-brand-text {
+    padding: 10px;
+    text-align: center;
+    font-weight:900;
+}
+
+.nav-item{
+    padding-top: 3px;
+}
+
+.nav-link{
+    font-size: 15px;
+    color: none;
+}
+
+.hover-dark{
+    background: rgb(2,150,190);
+    background: linear-gradient(90deg, rgba(2,150,190,1) 0%, rgba(49,32,108,1) 100%);
+    border-radius: 10px;
+    margin:8px;
+}
+
+.container-fluid{
+    overflow: hidden;
+}
