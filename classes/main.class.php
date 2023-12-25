@@ -4,7 +4,7 @@ class BMISClass {
 
 //------------------------------------------ DATABASE CONNECTION ----------------------------------------------------
     
-    protected $server = "mysql:host=localhost;dbname=bmis";
+    protected $server = "mysql:host=localhost;dbname=dgvc";
     protected $user = "root";
     protected $pass = "";
     protected $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
@@ -90,6 +90,42 @@ class BMISClass {
                 echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
             }
         }
+
+        // Login for Users
+        public function user_login() {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+            ob_start();
+            try {
+
+                // Your existing code here
+
+            if(isset($_POST['user_login'])) {
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+        
+                $connection = $this->openConn();
+        
+                // Check if the email exists in tbl_user
+                $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
+                $stmt->execute([$email]);
+                $user = $stmt->fetch();
+        
+                // If the email is found in tbl_user and password is correct
+                if ($user && password_verify($password, $user['password'])) {
+                    $this->set_userdata($user);
+                    header('Location: user_home.php');
+                    exit();
+                } else {
+                    // If the email is not found in tbl_user or password is incorrect
+                    echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        }
+        
 
     //eto yung function na mag e end ng session tas i l logout ka 
     public function logout(){

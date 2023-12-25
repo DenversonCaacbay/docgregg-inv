@@ -1,0 +1,23 @@
+
+
+a.nav-link.active.border-bottom {
+    border-bottom: 2px solid #000000 !important;
+}
+
+.banner-text{
+    color: #0296be;
+}
+
+.btn-primary{
+    background: #0296be;
+}
+
+.create-button{
+    background: #312065 !important;
+}
+
+@media screen and (max-width: 480px) {
+    .form-control{
+        width: 100%;
+    }
+}

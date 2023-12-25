@@ -38,7 +38,7 @@
 <!DOCTYPE html> 
 <html> 
     <head> 
-        <title> Barangay Santa Rita Management System </title>
+        <title> Doc Gregg Veterinary Clinic </title>
         <!-- responsive tags for screen compatibility -->
         <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
         <!-- custom css --> 

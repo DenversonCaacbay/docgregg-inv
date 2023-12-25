@@ -1,6 +1,6 @@
 
 <head>
-    <title> Barangay Santa Rita Management System </title>
+    <title> Doc Gregg Veterinary Clinic </title>
     <!-- put css/js here for clean look -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -30,8 +30,8 @@
     class ResidentClass extends BMISClass {
         //------------------------------------ RESIDENT CRUD FUNCTIONS ----------------------------------------
 
-        public function create_resident() {
-            if(isset($_POST['add_resident'])) {
+        public function create_user() {
+            if(isset($_POST['add_user'])) {
                 $email = $_POST['email'];
                 $password = ($_POST['password']);
                 $confirm_password = ($_POST['confirm_password']);
@@ -41,7 +41,7 @@
                 $mi = ucfirst(strtolower($_POST['mi']));
                 // $age = $_POST['age'];
                 $sex = $_POST['sex'];
-                $status = $_POST['status'];
+                // $status = $_POST['status'];
                 $houseno = $_POST['houseno'];
                 $street = $_POST['street'];
                 $brgy = $_POST['brgy'];
@@ -54,10 +54,9 @@
                 $birth_year = date("Y", strtotime($bdate));
                 $age = $current_year - $birth_year;
 
-                $bplace = $_POST['bplace'];
                 $nationality = $_POST['nationality'];
-                $voter = $_POST['voter'];
-                $familyrole = $_POST['family_role'];
+                
+
                 $role = $_POST['role'];
 
                 if ($this->check_resident($email) == 0 ) {
@@ -88,18 +87,17 @@
 
                         // proceed to create
                         $connection = $this->openConn();
-                        $stmt = $connection->prepare("INSERT INTO tbl_resident ( `email`,`password`,`lname`,`fname`,
-                            `mi`, `age`, `sex`, `status`, `houseno`, `street`, `brgy`, `municipal`, `contact`, `bdate`, 
-                            `bplace`, `nationality`,`voter` ,`family_role`,
-                            `role`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)");
+                        $stmt = $connection->prepare("INSERT INTO tbl_user ( `email`,`password`,`lname`,`fname`,
+                            `mi`, `age`, `sex`, `houseno`, `street`, `brgy`, `municipal`, `contact`, `bdate`, 
+                             `nationality`,
+                            `role`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
-                        $stmt->Execute([ $email, $hashed_password, $lname, $fname, $mi, $age, $sex, $status, 
-                        $houseno, $street, $brgy, $municipal, $contact, $bdate, $bplace, $nationality, $voter, $familyrole, $role]);
+                        $stmt->Execute([ $email, $hashed_password, $lname, $fname, $mi, $age, $sex, $houseno, $street, $brgy, $municipal, $contact, $bdate,  $nationality, $role]);
 
                         $message2 = "Account added, you can now continue logging in";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
 
-                        echo '<script>window.location.replace("index.php")</script>;';
+                        echo '<script>window.location.replace("user_login.php")</script>;';
                     }
                 }
 
@@ -111,83 +109,83 @@
 
         public function view_resident(){
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT * from tbl_resident");
+            $stmt = $connection->prepare("SELECT * from tbl_user");
             $stmt->execute();
             $view = $stmt->fetchAll();
             return $view;
         }
 
-        public function update_resident() {
-            if (isset($_POST['update_resident'])) {
-                $id_resident = $_GET['id_resident'];
-                $email = $_POST['email'];
-                $password = ($_POST['password']);
-                $lname = $_POST['lname'];
-                $fname = $_POST['fname'];
-                $mi = $_POST['mi'];
-                $age = $_POST['age'];
-                $sex = $_POST['sex'];
-                $status = $_POST['status'];
-                $houseno = $_POST['houseno'];
-                $street = $_POST['street'];
-                $brgy = $_POST['brgy'];
-                $municipal = $_POST['municipal'];
-                $contact = $_POST['contact'];
-                $bdate = $_POST['bdate'];
-                $bplace = $_POST['bplace'];
-                $nationality = $_POST['nationality'];
-                $voter = $_POST['voter'];
-                $familyrole = $_POST['family_role'];
-                $role = $_POST['role'];
-                $addedby = $_POST['addedby'];
+        // public function update_resident() {
+        //     if (isset($_POST['update_resident'])) {
+        //         $id_resident = $_GET['id_resident'];
+        //         $email = $_POST['email'];
+        //         $password = ($_POST['password']);
+        //         $lname = $_POST['lname'];
+        //         $fname = $_POST['fname'];
+        //         $mi = $_POST['mi'];
+        //         $age = $_POST['age'];
+        //         $sex = $_POST['sex'];
+        //         $status = $_POST['status'];
+        //         $houseno = $_POST['houseno'];
+        //         $street = $_POST['street'];
+        //         $brgy = $_POST['brgy'];
+        //         $municipal = $_POST['municipal'];
+        //         $contact = $_POST['contact'];
+        //         $bdate = $_POST['bdate'];
+        //         $bplace = $_POST['bplace'];
+        //         $nationality = $_POST['nationality'];
+        //         $voter = $_POST['voter'];
+        //         $familyrole = $_POST['family_role'];
+        //         $role = $_POST['role'];
+        //         $addedby = $_POST['addedby'];
 
-                $connection = $this->openConn();
-                $stmt = $connection->prepare("UPDATE tbl_resident SET `password` =?, `lname` =?, 
-                `fname` = ?, `mi` =?, `age` =?, `sex` =?, `status` =?, `email` =?, `houseno` =?, `street` =?,
-                `brgy` =?, `municipal` =?, `contact` =?,
-                `bdate` =?, `bplace` =?, `nationality` =?, `voter` =?, `family_role` =?, `role` =?, `addedby` =? WHERE `id_resident` = ?");
-                $stmt->execute([$password, $lname, $fname, $mi, $age, $sex, $status,$email, $houseno, 
-                $street, $brgy, $municipal,
-                $contact, $bdate, $bplace, $nationality, $voter, $familyrole, $role, $addedby, $id_resident]);
+        //         $connection = $this->openConn();
+        //         $stmt = $connection->prepare("UPDATE tbl_resident SET `password` =?, `lname` =?, 
+        //         `fname` = ?, `mi` =?, `age` =?, `sex` =?, `status` =?, `email` =?, `houseno` =?, `street` =?,
+        //         `brgy` =?, `municipal` =?, `contact` =?,
+        //         `bdate` =?, `bplace` =?, `nationality` =?, `voter` =?, `family_role` =?, `role` =?, `addedby` =? WHERE `id_resident` = ?");
+        //         $stmt->execute([$password, $lname, $fname, $mi, $age, $sex, $status,$email, $houseno, 
+        //         $street, $brgy, $municipal,
+        //         $contact, $bdate, $bplace, $nationality, $voter, $familyrole, $role, $addedby, $id_resident]);
                     
-                $message2 = "Resident Data Updated";
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                header("refresh: 0");
-            }
-        }
+        //         $message2 = "Resident Data Updated";
+        //         echo "<script type='text/javascript'>alert('$message2');</script>";
+        //         header("refresh: 0");
+        //     }
+        // }
 
-        public function delete_resident(){
-            $id_resident = $_POST['id_resident'];
+        // public function delete_resident(){
+        //     $id_resident = $_POST['id_resident'];
 
-            if(isset($_POST['delete_resident'])) {
-                $connection = $this->openConn();
-                $stmt = $connection->prepare("DELETE FROM tbl_resident where id_resident = ?");
-                $stmt->execute([$id_resident]);
+        //     if(isset($_POST['delete_resident'])) {
+        //         $connection = $this->openConn();
+        //         $stmt = $connection->prepare("DELETE FROM tbl_resident where id_resident = ?");
+        //         $stmt->execute([$id_resident]);
 
-                $message2 = "Resident Data Deleted";
+        //         $message2 = "Resident Data Deleted";
                 
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                header("Refresh:0");
-            }
-        }
+        //         echo "<script type='text/javascript'>alert('$message2');</script>";
+        //         header("Refresh:0");
+        //     }
+        // }
 
     //-------------------------------- EXTRA FUNCTIONS FOR RESIDENT CLASS ---------------------------------
 
     
 
 
-    public function get_single_resident($id_resident){
+    public function get_single_resident($id_user){
 
-        $id_resident = $_GET['id_resident'];
+        $id_user = $_GET['id_user'];
         
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * FROM tbl_resident where id_resident = ?");
-        $stmt->execute([$id_resident]);
-        $resident = $stmt->fetch();
+        $stmt = $connection->prepare("SELECT * FROM tbl_user where id_user = ?");
+        $stmt->execute([$id_user]);
+        $id_user = $stmt->fetch();
         $total = $stmt->rowCount();
 
         if($total > 0 )  {
-            return $resident;
+            return $id_user;
         }
         else{
             return false;
@@ -197,7 +195,7 @@
     public function check_resident($email) {
 
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE email = ?");
+        $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
         $stmt->Execute([$email]);
         $total = $stmt->rowCount(); 
 
@@ -206,7 +204,7 @@
 
     public function count_resident() {
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident");
+        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
         $stmt->execute();
         $rescount = $stmt->fetchColumn();
         return $rescount;
@@ -214,7 +212,7 @@
 
     public function check_household($lname, $mi) {
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE lname = ? AND mi = ?");
+        $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE lname = ? AND mi = ?");
         $stmt->Execute([$lname, $mi]);
         $total = $stmt->rowCount(); 
         return $total;
@@ -226,7 +224,7 @@
 
         if(isset($_POST['search_household'])) {
             $connection = $this->openConn();
-            $stmt1 = $connection->prepare("SELECT * FROM `tbl_resident` WHERE `lname` LIKE '%$lname%' and  `mi` LIKE '%$mi%'");
+            $stmt1 = $connection->prepare("SELECT * FROM `tbl_usert` WHERE `lname` LIKE '%$lname%' and  `mi` LIKE '%$mi%'");
             $stmt1->execute();
         }
     }
@@ -272,7 +270,7 @@
     }
 
     public function profile_update() {
-        $id_resident = $_GET['id_resident'];
+        $id_user = $_GET['id_user'];
         $age = $_POST['age'];
         $status = $_POST['status'];
         $address = $_POST['address'];
@@ -281,8 +279,8 @@
         if (isset($_POST['profile_update'])) {
            
             $connection = $this->openConn();
-            $stmt = $connection->prepare("UPDATE tbl_resident SET  `age` = ?,  `status` = ?, 
-            `address` = ?, `contact` = ? WHERE id_resident = ?");
+            $stmt = $connection->prepare("UPDATE tbl_user SET  `age` = ?,  `status` = ?, 
+            `address` = ?, `contact` = ? WHERE id_user = ?");
             $stmt->execute([ $age, $status, $address,
             $contact, $id_resident]);
                
