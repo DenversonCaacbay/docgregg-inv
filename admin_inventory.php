@@ -3,11 +3,11 @@
    ini_set('display_errors',0);
    require('classes/resident.class.php');
    $userdetails = $bmis->get_userdata();
-   $bmis->validate_admin();
-   $bmis->create_announcement();
-   $bmis->delete_announcement();
-   $view = $bmis->view_announcement();
-   $announcementcount = $bmis->count_announcement();
+//    $bmis->validate_admin();
+//    $bmis->create_announcement();
+//    $bmis->delete_announcement();
+//    $view = $bmis->view_announcement();
+//    $announcementcount = $bmis->count_announcement();
 
    $dt = new DateTime("now", new DateTimeZone('Asia/Manila'));
    $tm = new DateTime("now", new DateTimeZone('Asia/Manila'));

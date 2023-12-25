@@ -5,17 +5,17 @@
    require('classes/resident.class.php');
    $userdetails = $bmis->get_userdata();
    $bmis->validate_admin();
-   $view = $residentbmis->view_resident();
-   $residentbmis->create_resident();
-   $residentbmis->update_resident();
-   $residentbmis->delete_resident();
+//    $view = $residentbmis->view_resident();
+//    $residentbmis->create_resident();
+//    $residentbmis->update_resident();
+//    $residentbmis->delete_resident();
    
 
-   $rescount = $residentbmis->count_resident();
-   $rescountm = $residentbmis->count_male_resident();
-   $rescountf = $residentbmis->count_female_resident();
-   $rescountfh = $residentbmis->count_head_resident();
-   $rescountfm = $residentbmis->count_member_resident();
+//    $rescount = $residentbmis->count_resident();
+//    $rescountm = $residentbmis->count_male_resident();
+//    $rescountf = $residentbmis->count_female_resident();
+//    $rescountfh = $residentbmis->count_head_resident();
+//    $rescountfm = $residentbmis->count_member_resident();
    
 ?>
 

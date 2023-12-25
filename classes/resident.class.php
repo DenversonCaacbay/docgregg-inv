@@ -229,45 +229,45 @@
         }
     }
 
-    public function count_male_resident() {
-        $connection = $this->openConn();
+    // public function count_male_resident() {
+    //     $connection = $this->openConn();
 
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where sex = 'male' ");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
+    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user where sex = 'male' ");
+    //     $stmt->execute();
+    //     $rescount = $stmt->fetchColumn();
 
-        return $rescount;
-    }
+    //     return $rescount;
+    // }
 
-    public function count_female_resident() {
-        $connection = $this->openConn();
+    // public function count_female_resident() {
+    //     $connection = $this->openConn();
 
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where sex = 'female'");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
+    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user where sex = 'female'");
+    //     $stmt->execute();
+    //     $rescount = $stmt->fetchColumn();
 
-        return $rescount;
-    }
+    //     return $rescount;
+    // }
 
-    public function count_head_resident() {
-        $connection = $this->openConn();
+    // public function count_head_resident() {
+    //     $connection = $this->openConn();
 
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Yes'");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
+    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Yes'");
+    //     $stmt->execute();
+    //     $rescount = $stmt->fetchColumn();
 
-        return $rescount;
-    }
+    //     return $rescount;
+    // }
 
-    public function count_member_resident() {
-        $connection = $this->openConn();
+    // public function count_member_resident() {
+    //     $connection = $this->openConn();
 
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Family Member'");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
+    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Family Member'");
+    //     $stmt->execute();
+    //     $rescount = $stmt->fetchColumn();
 
-        return $rescount;
-    }
+    //     return $rescount;
+    // }
 
     public function profile_update() {
         $id_user = $_GET['id_user'];

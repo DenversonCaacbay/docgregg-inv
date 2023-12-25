@@ -54,18 +54,18 @@ class BMISClass {
                 $user = $stmt->fetch();
 
                 // check if exist in admin
-                if(!$user){
-                    // change to resident tbl if it does not exist
-                    $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE email = ?");
-                    $stmt->execute([$email]);
-                    $user = $stmt->fetch();
+                // if(!$user){
+                //     // change to resident tbl if it does not exist
+                //     $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE email = ?");
+                //     $stmt->execute([$email]);
+                //     $user = $stmt->fetch();
 
-                    if ($user AND password_verify($password, $user['password'])) {
-                        // 
-                        $this->set_userdata($user);
-                        header('Location: resident_homepage.php');
-                    }
-                }
+                //     if ($user AND password_verify($password, $user['password'])) {
+                //         // 
+                //         $this->set_userdata($user);
+                //         header('Location: resident_homepage.php');
+                //     }
+                // }
 
                 // check if existing and password matches
                 // password_verify check if password inputted(hashed) matches password from db
@@ -73,7 +73,7 @@ class BMISClass {
                     //statement na mag ch check kung admin yung role
                     if($user['role'] == 'administrator') {
                         $this->set_userdata($user);
-                        header('Location: admn_dashboard.php');
+                        header('Location: admin_dashboard.php');
                         return (0);
                     }
                     //kapag hindi admin ang role ng nag enter next na i c capture user login
