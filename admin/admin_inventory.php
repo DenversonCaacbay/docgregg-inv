@@ -50,26 +50,7 @@
                                     <?php if (is_null($view['picture'])): ?>
                                         <span>No Picture</span>
                                     <?php else: ?>
-                                        <button class="btn btn-success" data-toggle="modal" data-target="#imageModal<?= $view['id_brgyid'] ?>">View</button>
-                                
-                                        <div class="modal fade" id="imageModal<?= $view['id_brgyid'] ?>" tabindex="-1" role="dialog" aria-labelledby="imageModalTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="imageModalTitle"><?= $view['fname'];?> <?= $view['lname'];?></h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <a href="<?= $view['picture'] ?>" target="_blank"><img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image"></a>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image">
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['name'];?> </td>
