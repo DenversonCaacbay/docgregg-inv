@@ -87,15 +87,15 @@
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="mtop">Contact Number:</label>
+                                            <label>Contact Number:</label>
                                             <input type="tel" class="form-control" name="contact" maxlength="11" pattern="[0-9]{11}" placeholder="Enter Contact Number" value="<?php echo isset($_POST['contact']) ? htmlspecialchars($_POST['contact']) : ''; ?>" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Email: </label>
                                             <input type="email" class="form-control" name="email" placeholder="Enter Email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
@@ -103,7 +103,7 @@
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Password:</label>
                                             <input type="password" class="form-control" id="password-field" name="password" placeholder="Enter Password" required>
@@ -112,7 +112,7 @@
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Confirm Password:</label>
                                             <input type="password" class="form-control" id="confirm-password-field" name="confirm_password" placeholder="Enter Confirm Password" required>
@@ -121,7 +121,15 @@
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label> Address: </label>
+                                            <input type="text" class="form-control" name="address" placeholder="Enter Address" value="<?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?>" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3">
                                         <div class="form-group">
                                             <label> House No: </label>
                                             <input type="text" class="form-control" name="houseno" placeholder="Enter House No." value="<?php echo isset($_POST['houseno']) ? htmlspecialchars($_POST['houseno']) : ''; ?>" required>
@@ -152,7 +160,7 @@
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="mtop">Birth Date: </label>

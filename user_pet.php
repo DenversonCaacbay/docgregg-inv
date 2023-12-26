@@ -3,10 +3,10 @@
     require('classes/resident.class.php');
     ini_set('display_errors',0);
     $userdetails = $residentbmis->get_userdata();
-    $id_resident = $_GET['id_user'];
+    $id_resident = $userdetails['id_user'];
     $resident = $residentbmis->get_single_resident($id_resident);
+    $view = $residentbmis->view_pet($id_resident);
     
-
     $residentbmis->profile_update();
 
 ?>
@@ -70,14 +70,70 @@
     </div>
 </nav>
 
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
         <div class="card mt-5 p-2">
             ONGOING
         </div>
         <div class="card mt-3 p-2">
             
         </div>
-    </div>
+    </div> -->
+        <table class="table table-hover text-center table-bordered">
+                <form action="" method="post">
+                    <thead style="background: #0296be;color:#fff;"> 
+                        <tr>
+                            <th> Picture </th>
+                            <th> Pet Name </th>
+                            <th> Date Created </th>
+                            <th> Actions </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if(is_array($view)) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                <td>
+                                    <?php if (is_null($view['picture'])): ?>
+                                        <span>No Picture</span>
+                                    <?php else: ?>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#imageModal<?= $view['id_brgyid'] ?>">View</button>
+                                
+                                        <div class="modal fade" id="imageModal<?= $view['id_brgyid'] ?>" tabindex="-1" role="dialog" aria-labelledby="imageModalTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="imageModalTitle"><?= $view['fname'];?> <?= $view['lname'];?></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <a href="<?= $view['picture'] ?>" target="_blank"><img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image"></a>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td> <?= $view['pet_name'];?> </td>
+                                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
+                                    <td>    
+                                        <form action="" method="post">
+                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
+                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                    </tbody>
+                </form>
+            </table>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 

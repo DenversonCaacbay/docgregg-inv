@@ -37,15 +37,13 @@
                 $confirm_password = ($_POST['confirm_password']);
                 $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
                 $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
-                // $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
                 $mi = ucfirst(strtolower($_POST['mi']));
-                // $age = $_POST['age'];
                 $sex = $_POST['sex'];
-                // $status = $_POST['status'];
-                $houseno = $_POST['houseno'];
-                $street = $_POST['street'];
-                $brgy = $_POST['brgy'];
-                $municipal = $_POST['municipal'];
+                $address = $_POST['address'];
+                // $houseno = $_POST['houseno'];
+                // $street = $_POST['street'];
+                // $brgy = $_POST['brgy'];
+                // $municipal = $_POST['municipal'];
                 $contact = $_POST['contact'];
 
                 $bdate = $_POST['bdate'];
@@ -88,16 +86,14 @@
                         // proceed to create
                         $connection = $this->openConn();
                         $stmt = $connection->prepare("INSERT INTO tbl_user ( `email`,`password`,`lname`,`fname`,
-                            `mi`, `age`, `sex`, `houseno`, `street`, `brgy`, `municipal`, `contact`, `bdate`, 
-                             `nationality`,
-                            `role`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            `mi`, `sex`, `contact`, `address`,`birthdate`, `nationality`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
-                        $stmt->Execute([ $email, $hashed_password, $lname, $fname, $mi, $age, $sex, $houseno, $street, $brgy, $municipal, $contact, $bdate,  $nationality, $role]);
+                        $stmt->Execute([ $email, $hashed_password, $lname, $fname, $mi, $sex, $contact, $address, $bdate,  $nationality]);
 
                         $message2 = "Account added, you can now continue logging in";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
 
-                        echo '<script>window.location.replace("user_login.php")</script>;';
+                        echo '<script>window.location.replace("index.php")</script>;';
                     }
                 }
 
@@ -385,7 +381,79 @@
         }
     }
     
-    
+    // #pet
+    public function view_pet($id_user){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * FROM tbl_pet where deleted_at IS NULL AND pet_owner_id = ?");
+        $stmt->execute([$id_user]);
+        $view = $stmt->fetchAll();
+
+        return $view;
+    }
+
+    public function create_pet() {
+        $owner_id = $_GET['id_user'];
+
+        if(isset($_POST['add_pet'])) {
+                $pet_name = ucfirst(strtolower($_POST['pet_name']));
+
+                // proceed to create
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("INSERT INTO tbl_pet (`pet_name`,`pet_owner_id`) VALUES (?, ?)");
+
+                $stmt->Execute([$pet_name, $owner_id]);
+
+                $message2 = "Pet added!";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+
+                echo '<script>window.location.replace("user_pet.php")</script>;';
+        }
+    }
+
+    public function view_single_pet(){
+        $connection = $this->openConn();
+
+        $pet_id = $_GET['pet_id'];
+
+        $stmt = $connection->prepare("SELECT * FROM tbl_pet where pet_id = '$pet_id'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+
+        return $view;
+    }
+
+    public function update_pet() {
+        $pet_id = $_GET['pet_id'];
+
+        if(isset($_POST['update_pet'])) {
+            $pet_name = ucfirst(strtolower($_POST['pet_name']));
+
+            // proceed to create
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("INSERT INTO tbl_pet (`pet_name`) VALUES (?)");
+            $stmt->Execute([$pet_name]);
+
+            $message2 = "Pet updated!";
+            echo "<script type='text/javascript'>alert('$message2');</script>";
+
+            echo '<script>window.location.replace("user_pet.php")</script>;';
+        }
+    }
+
+    public function delete_pet(){
+        $pet_id = $_POST['pet_id'];
+
+        if(isset($_POST['delete_pet'])) {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("UPDATE tbl_pet set deleted_at = NOW() where pet_id = ?");
+            $stmt->execute([$id_user]);
+            
+            $message2 = "Staff Account Deleted";
+            
+            echo "<script type='text/javascript'>alert('$message2');</script>";
+            header('refresh:0');
+        }
+    }
     
 
 

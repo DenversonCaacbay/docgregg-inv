@@ -50,10 +50,10 @@
                                             <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
                                         </form>
                                     </td>
-                                    <td> <?= $view['pet_owner'];?> </td>
+                                    <td> <?= $view['fname'];?> <?= $view['lname'];?></td>
                                     <td> <?= $view['pet_name'];?> </td>
                                     <td> <?= $view['vaccine_name'];?> </td>
-                                    <td> <?= date("F d, Y- l", strtotime($view['date_vaccinated'])); ?> </td>
+                                    <td> <?= date("F d, Y - l", strtotime($view['date_vaccinated'])); ?> </td>
                                 </tr>
                             <?php }?>
                         <?php } ?>

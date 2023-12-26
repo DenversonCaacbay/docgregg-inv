@@ -111,7 +111,11 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_vaccine_record");
+            $stmt = $connection->prepare("SELECT *
+                FROM tbl_vaccine_record
+                INNER JOIN tbl_pet ON tbl_pet.pet_id = tbl_vaccine_record.pet_id
+                INNER JOIN tbl_user ON tbl_user.id_user = tbl_pet.pet_owner_id;
+            ");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
@@ -324,3 +328,16 @@
     }
     $staffbmis = new StaffClass();
 ?>
+
+<!-- JS and CSS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
+<!-- responsive tags for screen compatibility -->
+<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+<!-- custom css --> 
+<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<!-- bootstrap css --> 
+<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
+<!-- fontawesome icons -->
+<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
+<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>

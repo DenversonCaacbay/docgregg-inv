@@ -33,12 +33,12 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
-                            <th> Actions </th>
+                            <th> Picture </th>
                             <th> Product Name </th>
                             <th> Price </th>
                             <th> Quantity </th>
-                            <th> Picture </th>
-                            <th> Created At </th>
+                            <th> Date Created </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
 
@@ -46,6 +46,36 @@
                         <?php if(is_array($view)) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
+                                <td>
+                                    <?php if (is_null($view['picture'])): ?>
+                                        <span>No Picture</span>
+                                    <?php else: ?>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#imageModal<?= $view['id_brgyid'] ?>">View</button>
+                                
+                                        <div class="modal fade" id="imageModal<?= $view['id_brgyid'] ?>" tabindex="-1" role="dialog" aria-labelledby="imageModalTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="imageModalTitle"><?= $view['fname'];?> <?= $view['lname'];?></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <a href="<?= $view['picture'] ?>" target="_blank"><img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image"></a>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td> <?= $view['name'];?> </td>
+                                    <td>P<?= $view['price'];?> </td>
+                                    <td> <?= $view['quantity'];?> </td>
+                                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
                                     <td>    
                                         <form action="" method="post">
                                             <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
@@ -53,11 +83,6 @@
                                             <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
                                         </form>
                                     </td>
-                                    <td> <?= $view['name'];?> </td>
-                                    <td> <?= $view['price'];?> </td>
-                                    <td> <?= $view['quantity'];?> </td>
-                                    <td> Null </td>
-                                    <td> <?= date("F d, Y- l", strtotime($view['created_at'])); ?> </td>
                                 </tr>
                             <?php }?>
                         <?php } ?>
@@ -68,18 +93,6 @@
     </div>
 </div>
 <!-- End of Main Content -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
-<!-- responsive tags for screen compatibility -->
-<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-<!-- custom css --> 
-<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
-<!-- bootstrap css --> 
-<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
-<!-- fontawesome icons -->
-<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
-<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
 
 <?php 
     include('dashboard_sidebar_end.php');
