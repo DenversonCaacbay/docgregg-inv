@@ -18,8 +18,8 @@
         rel="stylesheet">
     
     <!-- Custom styles for this template-->
-    <link href="css/sidenav.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="../css/sidenav.css" rel="stylesheet">
+    <link href="../css/sb-admin-2.css" rel="stylesheet">
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
 </head>
@@ -43,7 +43,7 @@
             </a> -->
             <li class="nav-item p-2">
                 <div class="card">
-                    <img src="assets/logo.png" width="100" height="100"><br>
+                    <img src="../assets/logo.png" width="100" height="100">
                     <div class="sidebar-brand-text">
                         Doc Gregg <br>Veterinary Clinic 
                     </div>

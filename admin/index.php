@@ -15,7 +15,7 @@
 
     if($_SESSION['userdata']){
         if($user_role == 'administrator'){
-            header('Location: admn_dashboard.php');
+            header('Location: admin_dashboard.php');
         }
 
         if($user_role == 'staff'){
@@ -29,7 +29,7 @@
     }
 
     //include('autoloader.php');
-    require('classes/main.class.php');
+    require('../classes/main.class.php');
     $bmis->login();
 
    
@@ -42,7 +42,7 @@
         <!-- responsive tags for screen compatibility -->
         <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
         <!-- custom css --> 
-        <link href="css/index.css" rel="stylesheet" type="text/css">
+        <link href="../css/index.css" rel="stylesheet" type="text/css">
         <!-- bootstrap css -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"> 
         <!-- fontawesome icons --> 
@@ -52,8 +52,8 @@
 
         <style> 
             body {
-                background: rgb(2,150,190);
-                background: linear-gradient(45deg, rgba(2,150,190,1) 0%, rgba(49,32,108,1) 100%);
+                background: rgb(255,255,255);
+background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 100%);
             }
             .input-container {
             display: -ms-flexbox; /* IE10 */
@@ -93,6 +93,9 @@
             .btn:hover {
             opacity: 1;
             }
+            .banner-text{
+    color: #0296be;
+}
         </style>
 
     </head>
@@ -108,7 +111,8 @@
                 <div class="row">
                     <div class="col-sm"></div>
                         <div class="col-sm main-heading text-center text-white" > 
-                            <h3> Doc Gregg <br>Veterinary Clinic  </h3>
+                        <img src="../user/logo.png" width="150"> 
+                            <h3 class="banner-text"> Doc Gregg <br>Veterinary Clinic  </h3>
 
                         </div>
                     <div class="col-sm"></div>
@@ -120,23 +124,21 @@
                                 <div class="card-body"> 
                                     <form method="post"> 
 
-                                        <label> Email </label>
-                                        <div class="input-container">
-                                            <i class="fa fa-envelope icon"></i>
-                                            <input class="input-field" type="email" placeholder="Enter Email" name="email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" name="email" require>
+                                            <label for="floatingInputInvalid">Email</label>
                                         </div>
-
-                                        <label> Password </label>
-                                        <div class="input-container">
-                                            <i class="fa fa-key icon"></i>
-                                            <input class="input-field" type="password" placeholder="Enter Password" id="myInput" name="password" required>
+                                        <br>
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="myInput" placeholder="" name="password" require>
+                                            <label for="floatingInputInvalid">Password</label>
                                         </div>
 
                                         <br>
 
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" onclick="myFunction()" class="custom-control-input" id="switch1">
-                                            <label class="custom-control-label" for="switch1">Show Password</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" onclick="myFunction()" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Show Password</label>
                                         </div>
 
                                         <br>
@@ -147,7 +149,7 @@
 
                                     <hr>
 
-                                    <div class="registration-section"> 
+                                    <!-- <div class="registration-section"> 
                                         <p1> <strong> Haven't registered yet? </strong> </p1> 
 
                                         <br>
@@ -157,7 +159,7 @@
                                         <br>
 
                                         <button class="btn btn-success create-button" onclick="trying();"> Create Account </button> 
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -182,7 +184,7 @@
             }
 
             function trying() {
-                window.location.href = "resident_registration.php";
+                window.location.href = "staff_registration.php";
             }
         </script>
 

@@ -40,7 +40,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
         <img src="user/logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-        DGVC
+        DG Veterinary Clinic
         </a>
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

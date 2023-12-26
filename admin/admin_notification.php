@@ -2,7 +2,7 @@
     
     error_reporting(E_ALL ^ E_WARNING);
     ini_set('display_errors',0);
-    require('classes/resident.class.php');
+    require('../classes/resident.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     $bmis->delete_certofres();

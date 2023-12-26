@@ -1,12 +1,13 @@
 <?php
     error_reporting(E_ALL ^ E_WARNING);
-    include('classes/staff.class.php');
-    include('classes/resident.class.php');
+    include('../classes/staff.class.php');
+    include('../classes/resident.class.php');
 
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
 
-    // $rescount = $residentbmis->count_resident();
+    $rescountuser = $residentbmis->count_user();
+    $rescountpet = $residentbmis->count_pet();
     // $rescountm = $residentbmis->count_male_resident();
     // $rescountf = $residentbmis->count_female_resident();
     // $rescountfh = $residentbmis->count_head_resident();
@@ -14,7 +15,7 @@
     // $rescountvoter = $residentbmis->count_voters();
     // $rescountsenior = $residentbmis->count_resident_senior();
 
-    $staffcount = $staffbmis->count_staff();
+    // $staffcount = $staffbmis->count_staff();
     // $staffcountm = $staffbmis->count_mstaff();
     // $staffcountf = $staffbmis->count_fstaff();
     
@@ -54,7 +55,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Clients</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescount?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalres.php"> View Records </a> -->
                         </div>
@@ -75,8 +76,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Staffs</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountfh?></div>
+                                Total Pets</div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountpet?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
@@ -95,7 +96,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Stocks</div>
+                                Staff</div>
                                 <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvoter?></div>
                                 <br>
                                 <!-- <a href="admn_table_voters.php"> View Records </a> -->

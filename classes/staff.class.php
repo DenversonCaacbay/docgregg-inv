@@ -5,7 +5,7 @@
     // check if user is logged
     if(!is_null($_SESSION['userdata'])){
         if($user_role == 'administrator'){
-            header('Location: admn_dashboard.php');
+            header('Location: admin_dashboard.php');
         }
         else if($user_role == 'staff'){
             header('Location: staff_dashboard.php');
@@ -98,7 +98,33 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_admin");
+            $stmt = $connection->prepare("SELECT * from tbl_vaccine_record");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            //$rows = $stmt->
+            return $view;
+           
+        }
+
+        public function view_vaccine_record(){
+
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt = $connection->prepare("SELECT * from tbl_vaccine_record");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            //$rows = $stmt->
+            return $view;
+           
+        }
+
+        public function view_inventory(){
+
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt = $connection->prepare("SELECT * from tbl_inventory");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
@@ -223,7 +249,29 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_admin");
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccine_record");
+            $stmt->execute();
+            $staffcount = $stmt->fetchColumn();
+
+            return $staffcount;
+        }
+
+        public function count_vaccine_record() {
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccine_record");
+            $stmt->execute();
+            $staffcount = $stmt->fetchColumn();
+
+            return $staffcount;
+        }
+
+        public function count_inventory() {
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_inventory");
             $stmt->execute();
             $staffcount = $stmt->fetchColumn();
 

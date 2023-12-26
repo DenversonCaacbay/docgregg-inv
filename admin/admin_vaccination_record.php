@@ -1,14 +1,14 @@
 <?php
     ini_set('display_errors',0);
     error_reporting(E_ALL ^ E_WARNING);
-    require('classes/staff.class.php');
+    require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_staff();
-    $staffbmis->create_staff();
-    $upstaff = $staffbmis->update_staff();
-    $staffbmis->delete_staff();
-    $staffcount = $staffbmis->count_staff();
+    $view = $staffbmis->view_vaccine_record();
+    // $staffbmis->create_staff();
+    // $upstaff = $staffbmis->update_staff();
+    // $staffbmis->delete_staff();
+    $staffcount = $staffbmis->count_vaccine_record();
     
 ?>
 
@@ -27,16 +27,15 @@
 
     <div class="row"> 
         <div class="col-md-12">
-           <table class="table table-hover text-center table-bordered table-responsive" id="dataTable" width="100%" cellspacing="0">
+           <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
-                    <thead class="alert-info"> 
+                    <thead style="background: #0296be;color:#fff;"> 
                         <tr>
                             <th> Actions </th>
-                            <th> Email </th>
-                            <th> Surname </th>
-                            <th> First name </th>
-                            <th> Middle Name </th>
-                            <th> Role </th>
+                            <th> Pet Owner </th>
+                            <th> Pet Name </th>
+                            <th> Vaccine Name </th>
+                            <th> Date Vaccinated </th>
                         </tr>
                     </thead>
 
@@ -46,16 +45,15 @@
                                 <tr>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 90px; font-size: 17px; border-radius:30px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
                                             <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 90px; font-size: 17px; border-radius:30px;"> Archive </button>
+                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
                                         </form>
                                     </td>
-                                    <td> <?= $view['email'];?> </td>
-                                    <td> <?= $view['lname'];?> </td>
-                                    <td> <?= $view['fname'];?> </td>
-                                    <td> <?= $view['mi'];?> </td>
-                                    <td> <?= $view['role'];?> </td>
+                                    <td> <?= $view['pet_owner'];?> </td>
+                                    <td> <?= $view['pet_name'];?> </td>
+                                    <td> <?= $view['vaccine_name'];?> </td>
+                                    <td> <?= date("F d, Y- l", strtotime($view['date_vaccinated'])); ?> </td>
                                 </tr>
                             <?php }?>
                         <?php } ?>

@@ -202,9 +202,17 @@
         return $total;
     }
 
-    public function count_resident() {
+    public function count_user() {
         $connection = $this->openConn();
         $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+        $stmt->execute();
+        $rescount = $stmt->fetchColumn();
+        return $rescount;
+    }
+
+    public function count_pet() {
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_pet");
         $stmt->execute();
         $rescount = $stmt->fetchColumn();
         return $rescount;
