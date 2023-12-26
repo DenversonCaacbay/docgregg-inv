@@ -24,13 +24,24 @@
     <style>
         
         .field-icon {
-        margin-left: 70%;
-        margin-top: -8%;
+        margin-left: 81%;
+        margin-top: -9.5%;
         position: absolute;
         z-index: 2;
         }
         .form-control{
             height:50px;
+        }
+        body::-webkit-scrollbar { 
+            display: none;  /* Safari and Chrome */
+        }
+        body{
+            background: rgb(255,255,255);
+            background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 100%);
+        }
+        .navbar{
+            background: #312065 !important;
+             
         }
 
     </style>
@@ -39,7 +50,7 @@
 
         <!-- eto yung navbar -->
         <nav class="navbar sticky-top navbar-expand-lg bg-light">
-            <a class="navbar-brand mx-auto" style="font-size: 20px; font-weight: 600;" href="#">Registration Form</a>
+            <a class="navbar-brand mx-auto" style="color: #fff;font-size: 20px; font-weight: 600;" href="#">Registration Form</a>
         </nav>
 
         <div class="container-fluid"  style="margin-top: 1em;">
