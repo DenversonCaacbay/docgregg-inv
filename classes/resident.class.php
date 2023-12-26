@@ -200,7 +200,7 @@
 
     public function count_user() {
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user WHERE deleted_at IS NULL");
         $stmt->execute();
         $rescount = $stmt->fetchColumn();
         return $rescount;
@@ -208,7 +208,7 @@
 
     public function count_pet() {
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_pet");
+        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_pet WHERE deleted_at IS NULL");
         $stmt->execute();
         $rescount = $stmt->fetchColumn();
         return $rescount;
