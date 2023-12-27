@@ -62,10 +62,10 @@
                                     <td> <?= $view['address'];?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                        <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Pets </a>
                                             <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Record </a>
+                                            <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Pets </a>
                                             <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
+                                            <!-- <button class="btn btn-danger" type="submit" name="delete_user"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Remove </button> -->
                                         </form>
                                     </td>
                                 </tr>

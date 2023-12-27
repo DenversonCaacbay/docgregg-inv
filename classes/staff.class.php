@@ -123,12 +123,13 @@
            
         }
 
+        // #inventory
         public function view_inventory(){
 
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_inventory");
+            $stmt = $connection->prepare("SELECT * from tbl_inventory WHERE deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
@@ -136,26 +137,12 @@
            
         }
 
-        //View User
-        public function view_user(){
+        public function view_single_inventory(){
 
-            $connection = $this->openConn();
-
-            // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt->execute();
-            $view = $stmt->fetchAll();
-            //$rows = $stmt->
-            return $view;
-           
-        }
-
-        public function view_single_staff(){
-
-            $id_staff = $_GET['id_staff'];
+            $id_inv = $_GET['inv_id'];
             
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT * FROM tbl_user where id_user = '$id_staff'");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory where inv_id = '$id_inv'");
             $stmt->execute();
             $view = $stmt->fetch(); 
             $total = $stmt->rowCount();
@@ -169,9 +156,154 @@
             }
         }
 
-        public function update_staff() {
+        public function create_inventory() {
+            if (isset($_POST['create_inventory'])) {
+                $name = $_POST['name'];
+                $price = $_POST['price'];
+                $qty = $_POST['qty'];
+                $new_picture = $_FILES['new_picture'];
+        
+                if (!empty($new_picture['name'])) {
+                    $target_dir = "../uploads/inventory/";
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        $connection = $this->openConn();
+                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture) VALUES (?, ?, ?, ?)");
+                        $stmt->execute([$name, $price, $qty, $target_file]);
+        
+                        $message2 = "Item created!";
+                        echo "<script type='text/javascript'>alert('$message2');</script>";
+                        header("refresh: 0");
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                } else {
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity) VALUES (?, ?, ?)");
+                    $stmt->execute([$name, $price, $qty]);
+        
+                    $message2 = "Item created";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
+                    header("refresh: 0");
+                }
+            }
+        }        
+
+        public function update_inventory() {
+            if (isset($_POST['update_inventory'])) {
+                $inv_id = $_GET['inv_id'];
+                $name = $_POST['name'];
+                $price = $_POST['price'];
+                $qty = $_POST['qty'];
+                $new_picture = $_FILES['new_picture'];
+        
+                if (!empty($new_picture['name'])) {
+                    $target_dir = "../uploads/inventory/";
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        $connection = $this->openConn();
+                        $stmt = $connection->prepare("UPDATE tbl_inventory
+                            SET name =?, price =?, quantity = ?, picture = ? WHERE inv_id = ?");
+                        $stmt->execute([$name, $price, $qty, $target_file, $inv_id]);
+        
+                        $message2 = "Item Updated";
+                        echo "<script type='text/javascript'>alert('$message2');</script>";
+                        header("refresh: 0");
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                } else {
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("UPDATE tbl_inventory
+                        SET name =?, price =?, quantity = ? WHERE inv_id = ?");
+                    $stmt->execute([$name, $price, $qty, $inv_id]);
+        
+                    $message2 = "Item Updated";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
+                    header("refresh: 0");
+                }
+            }
+        }
+
+        public function delete_invetory(){
+            $inv_id = $_POST['inv_id'];
+    
+            if(isset($_POST['delete_inventory'])) {
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("UPDATE tbl_inventory set deleted_at = NOW() where inv_id = ?");
+                $stmt->execute([$inv_id]);
+                
+                $message2 = "Item Removed";
+                
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header('refresh:0');
+            }
+        }
+        
+
+        //View User
+        public function view_user(){
+
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt = $connection->prepare("SELECT * from tbl_user WHERE deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            //$rows = $stmt->
+            return $view;
+           
+        }
+
+        
+        public function delete_user(){
+            $id_user = $_POST['id_user'];
+    
+            if(isset($_POST['delete_inventory'])) {
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("UPDATE tbl_user set deleted_at = NOW() where id_user = ?");
+                $stmt->execute([$id_user]);
+                
+                $message2 = "User Removed";
+                
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header('refresh:0');
+            }
+        }
+
+        public function view_single_staff($id_admin){
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT id_admin, email, fname, lname, mi, role FROM tbl_admin where id_admin = '$id_admin'");
+            $stmt->execute();
+            $view = $stmt->fetch(); 
+            $total = $stmt->rowCount();
+ 
+            //eto yung condition na i ch check kung may laman si products at i re return niya kapag meron
+            if($total > 0 )  {
+                return $view;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public function update_staff($id_user) {
             if (isset($_POST['update_staff'])) {
-                $id_user = $_GET['id_user'];
+                // $id_user = $_GET['id_user'];
                 $password = ($_POST['password']);
                 $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
                 $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
@@ -206,7 +338,7 @@
                         "UPDATE tbl_admin SET lname = ?, fname = ?, mi = ?, role = ?, email = ? WHERE id_admin = ?");
                     $stmt->execute([$lname, $fname, $mi, $role, $email, $id_user]);
 
-                    $message2 = "Staff Account Updated";
+                    $message2 = "Admin Account Updated";
     
                     echo "<script type='text/javascript'>alert('$message2');</script>";
                     header('refresh:0');
@@ -267,7 +399,7 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccine_record");
+            $stmt = $connection->prepare("SELECT COUNT(*)-1 from tbl_vaccine_record");
             $stmt->execute();
             $staffcount = $stmt->fetchColumn();
 
@@ -361,9 +493,31 @@
 <!-- responsive tags for screen compatibility -->
 <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
 <!-- custom css --> 
-<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<link href="customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<link href="../css/custom.css" rel="stylesheet" type="text/css">
 <!-- bootstrap css --> 
-<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
 <!-- fontawesome icons -->
 <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
-<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+<script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+
+<!-- custom js -->
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(470)
+                    .height(350);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<?php 
+    include('dashboard_sidebar_end.php');
+?>

@@ -15,7 +15,7 @@
     // $rescountvoter = $residentbmis->count_voters();
     // $rescountsenior = $residentbmis->count_resident_senior();
 
-    // $staffcount = $staffbmis->count_staff();
+    $staffcount = $staffbmis->count_staff();
     // $staffcountm = $staffbmis->count_mstaff();
     // $staffcountf = $staffbmis->count_fstaff();
     
@@ -97,7 +97,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Staff</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvoter?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $staffcount?></div>
                                 <br>
                                 <!-- <a href="admn_table_voters.php"> View Records </a> -->
                         </div>

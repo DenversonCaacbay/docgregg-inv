@@ -39,7 +39,7 @@
                             <th> Pet Name </th>
                             <th> Vaccine Name </th>
                             <th> Date Vaccinated </th>
-                            <th> Actions </th>
+                            <!-- <th> Actions </th> -->
                             
                         </tr>
                     </thead>
@@ -53,13 +53,13 @@
                                     <td> <?= $view['pet_name'];?> </td>
                                     <td> <?= $view['vaccine_name'];?> </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['date_vaccinated'])); ?> </td>
-                                    <td>    
+                                    <!-- <td>    
                                         <form action="" method="post">
                                             <a href="update_vaccination_record_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
                                             <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
                                             <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
                                         </form>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             <?php }?>
                         <?php } ?>

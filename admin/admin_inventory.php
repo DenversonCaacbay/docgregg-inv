@@ -9,6 +9,7 @@
     // $upstaff = $staffbmis->update_staff();
     // $staffbmis->delete_staff();
     $staffcount = $staffbmis->count_inventory();
+    $staffbmis->delete_invetory();
     
 
 ?>
@@ -52,9 +53,9 @@
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <span>No Picture</span>
+                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Pet Picture">
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image">
+                                        <img src="<?= $view['picture'] ?>" class="img-fluid img-size" alt="Modal Image">
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['name'];?> </td>
@@ -63,11 +64,20 @@
                                     <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
-                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
+                                            <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
+                                            <button class="btn btn-danger" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
                                         </form>
                                     </td>
+
+                                    <!-- <td>    
+                                        <form action="" method="post">
+                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 90px; font-size: 17px; border-radius:30px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
+                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 90px; font-size: 17px; border-radius:30px;"> Archive </button>
+                                        </form>
+                                    </td> -->
+
                                 </tr>
                             <?php }?>
                         <?php } ?>
