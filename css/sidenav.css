@@ -6,7 +6,7 @@
 
 .navbar-nav{
     background: rgb(2,150,190);
-    background: linear-gradient(45deg, rgba(2,150,190,1) 0%, rgba(49,32,108,1) 100%);
+    /* background: linear-gradient(45deg, rgba(2,150,190,1) 0%, rgba(49,32,108,1) 100%); */
     
 }
 
@@ -38,8 +38,8 @@ img {
 }
 
 .hover-dark{
-    background: rgb(2,150,190);
-    background: linear-gradient(90deg, rgba(2,150,190,1) 0%, rgba(49,32,108,1) 100%);
+    background: rgb(49,32,101);
+    background: linear-gradient(45deg, rgba(49,32,101,1) 20%, rgba(2,150,190,1) 100%);
     border-radius: 10px;
     margin:8px;
 }

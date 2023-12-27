@@ -4,11 +4,11 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_inventory();
+    $view = $staffbmis->view_user();
     // $staffbmis->create_staff();
     // $upstaff = $staffbmis->update_staff();
     // $staffbmis->delete_staff();
-    $staffcount = $staffbmis->count_inventory();
+    $staffcount = $staffbmis->count_user();
     
 
 ?>
@@ -23,12 +23,9 @@
 
     <!-- Page Heading -->
 
-    
-    
-    <div class="row">
-        <div class="col-md-6"><h1 class="mb-4">Inventory</h1></div>
-        <div class="col-md-6"><a href="create_inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
-    </div>
+    <h1 class="mb-4">Client List</h1>
+    <!-- <button class="btn btn-primary">Add Item</button> -->
+
     <hr>
 
     <div class="row"> 
@@ -38,10 +35,11 @@
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
                             <th> Picture </th>
-                            <th> Product Name </th>
-                            <th> Price </th>
-                            <th> Quantity </th>
-                            <th> Date Created </th>
+                            <th> First Name </th>
+                            <th> Middle Name </th>
+                            <th> Last Name </th>
+                            <th> Sex </th>
+                            <th> Address </th>
                             <th> Actions </th>
                         </tr>
                     </thead>
@@ -57,13 +55,15 @@
                                         <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image">
                                         <?php endif; ?>
                                     </td>
-                                    <td> <?= $view['name'];?> </td>
-                                    <td>P<?= $view['price'];?> </td>
-                                    <td> <?= $view['quantity'];?> </td>
-                                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
+                                    <td> <?= $view['fname'];?> </td>
+                                    <td><?= $view['mi'];?> </td>
+                                    <td> <?= $view['lname'];?> </td>
+                                    <td> <?= $view['sex'];?> </td>
+                                    <td> <?= $view['address'];?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                        <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Pets </a>
+                                            <a href="update_inventory_form.php?id_user=<?= $view['id_admin'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Record </a>
                                             <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
                                             <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
                                         </form>

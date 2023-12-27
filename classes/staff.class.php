@@ -136,6 +136,20 @@
            
         }
 
+        //View User
+        public function view_user(){
+
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            //$rows = $stmt->
+            return $view;
+           
+        }
+
         public function view_single_staff(){
 
             $id_staff = $_GET['id_staff'];
@@ -254,6 +268,18 @@
 
             // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
             $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccine_record");
+            $stmt->execute();
+            $staffcount = $stmt->fetchColumn();
+
+            return $staffcount;
+        }
+
+        //Count Users / Client
+        public function count_user() {
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
             $stmt->execute();
             $staffcount = $stmt->fetchColumn();
 

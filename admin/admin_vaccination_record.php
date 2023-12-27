@@ -20,9 +20,12 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-
-    <h1 class="mb-4">Patient Record</h1>
-
+<div class="row">
+    <div class="col-md-6"><h1 class="mb-4">Vaccination Record</h1></div>
+    <div class="col-md-6"><a href="create_vaccination_record.php" style="float:right;padding: 10px" class="btn btn-primary">Add Vaccination Record</a></div>
+</div>
+    
+    
     <hr>
 
     <div class="row"> 
@@ -31,11 +34,13 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
-                            <th> Actions </th>
+                           
                             <th> Pet Owner </th>
                             <th> Pet Name </th>
                             <th> Vaccine Name </th>
                             <th> Date Vaccinated </th>
+                            <th> Actions </th>
+                            
                         </tr>
                     </thead>
 
@@ -43,17 +48,18 @@
                         <?php if(is_array($view)) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
-                                    <td>    
-                                        <form action="" method="post">
-                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
-                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
-                                        </form>
-                                    </td>
+                                    
                                     <td> <?= $view['fname'];?> <?= $view['lname'];?></td>
                                     <td> <?= $view['pet_name'];?> </td>
                                     <td> <?= $view['vaccine_name'];?> </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['date_vaccinated'])); ?> </td>
+                                    <td>    
+                                        <form action="" method="post">
+                                            <a href="update_vaccination_record_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
+                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             <?php }?>
                         <?php } ?>

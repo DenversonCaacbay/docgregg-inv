@@ -25,6 +25,32 @@
 </head>
 
 
+<style>
+    /* Add this style in your CSS or within a <style> tag in the <head> section */
+    li.nav-item {
+        /* Add your default background color and text color here */
+        background-color: transparent; /* Set the default background color */
+        /* color: #ffffff; Set the default text color (white in this case) */
+    }
+
+    /* Styles for the 'active' class */
+    li.nav-item.active {
+        background: rgb(49,32,101);
+background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
+        border-radius: 10px;
+        margin:8px; /* Set the background color for the active state */
+        color: /* Add your primary text color here */ black !important; /* Set the text color for the active state */
+    }
+
+    .btn-primary{
+        background: #0296be !important;
+    }
+    .bg-primary{
+        background: #0296be !important;
+    }
+</style>
+
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -33,14 +59,6 @@
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admn_dashboard.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    
-                </div>
-                
-                
-            </a> -->
             <li class="nav-item p-2">
                 <div class="card">
                     <img src="../assets/logo.png" width="100" height="100">
@@ -54,7 +72,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <li class="nav-item" id="dashboard">
                 <a class="nav-link text-light" href="admin_dashboard.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -68,50 +86,48 @@
                 Menu
             </div>
 
-            <!-- Resident CRUD -->
-            <li class="nav-item">
+            <!-- Client List -->
+            <li class="nav-item" id="client">
+                <a class="nav-link  text-light" href="admin_client.php">
+                    <i class="fas fa-users"></i>
+                    <span>Client List</span></a>
+            </li>
+
+            <!-- Vaccination -->
+            <li class="nav-item" id="vaccination">
                 <a class="nav-link  text-light" href="admin_vaccination_record.php">
                     <i class="fas fa-users"></i>
                     <span>Vaccination Record</span></a>
             </li>
 
 
-            <!-- Announcement Management -->
-            <li class="nav-item">
+            <!-- Inventory Management -->
+            <li class="nav-item" id="inventory">
                 <a class="nav-link  text-light" href="admin_inventory.php">
                     <i class="fas fa-bullhorn"></i>
                     <span>Inventory</span></a>
             </li>
 
-            <!-- Certificate of Residency -->
-            <li class="nav-item">
+            <!-- Notifications -->
+            <li class="nav-item" id="notification">
                 <a class="nav-link text-light" href="admin_notification.php">
                     <i class="fas fa-file-word"></i>
                     <span>Notifications</span></a>
             </li>
 
+            <!-- Profile -->
             <li class="nav-item">
                 <a class="nav-link  text-light" href="admin_myprofile.php">
                     <i class="fas fa-id-card"></i>
                     <span>My Profile </span></a>
             </li>
 
-            <li class="nav-item">
+            <!-- Help and Support -->
+            <li class="nav-item" id="help">
                 <a class="nav-link  text-light" href="admin_help.php">
                     <i class="fas fa-file-contract"></i>
                     <span>Help & Support</span></a>
             </li>
-
-
-            
-
-            <!-- Divider -->
-            <!-- <hr class="sidebar-divider d-none d-md-block"> -->
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <!-- <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div> -->
 
         </ul>
         <!-- End of Sidebar -->
@@ -164,19 +180,38 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                                 </a>
                             </li>
-                            <!-- Dropdown - User Information -->
-                            <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div> -->
                         </li>
                     </ul>
                 </nav>
+
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+                <script>
+                    $(document).ready(function () {
+                        // Retrieve the active item from localStorage
+                        var activeItem = localStorage.getItem('activeNavItem');
+
+                        // Remove the 'active' class from all items
+                        $('.nav-item').removeClass('active');
+
+                        // Add the 'active' class to the stored active item
+                        if (activeItem) {
+                            $('#' + activeItem).addClass('active');
+                        }
+
+                        // Add a click event handler to all the navigation items
+                        $('.nav-item').on('click', function () {
+                            // Remove the 'active' class from all items
+                            $('.nav-item').removeClass('active');
+
+                            // Add the 'active' class to the clicked item
+                            $(this).addClass('active');
+
+                            // Store the id of the clicked item in localStorage
+                            localStorage.setItem('activeNavItem', $(this).attr('id'));
+                        });
+                    });
+                </script>
 
                 
                 <!-- End of Topbar -->
