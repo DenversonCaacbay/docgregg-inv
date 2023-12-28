@@ -115,7 +115,7 @@
                     <span>Help & Support</span></a>
             </li>
             <li class="nav-item" id="help">
-                <a class="nav-link  text-light" href="admin_help.php">
+                <a class="nav-link  text-light" href="logout.php">
                 <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span></a>
             </li>

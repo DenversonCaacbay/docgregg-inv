@@ -111,44 +111,42 @@
             return $view;
         }
 
-        // public function update_resident() {
-        //     if (isset($_POST['update_resident'])) {
-        //         $id_resident = $_GET['id_resident'];
-        //         $email = $_POST['email'];
-        //         $password = ($_POST['password']);
-        //         $lname = $_POST['lname'];
-        //         $fname = $_POST['fname'];
-        //         $mi = $_POST['mi'];
-        //         $age = $_POST['age'];
-        //         $sex = $_POST['sex'];
-        //         $status = $_POST['status'];
-        //         $houseno = $_POST['houseno'];
-        //         $street = $_POST['street'];
-        //         $brgy = $_POST['brgy'];
-        //         $municipal = $_POST['municipal'];
-        //         $contact = $_POST['contact'];
-        //         $bdate = $_POST['bdate'];
-        //         $bplace = $_POST['bplace'];
-        //         $nationality = $_POST['nationality'];
-        //         $voter = $_POST['voter'];
-        //         $familyrole = $_POST['family_role'];
-        //         $role = $_POST['role'];
-        //         $addedby = $_POST['addedby'];
+        public function update_resident($id_resident) {
+            if (isset($_POST['update_resident'])) {
+                // $id_resident = $_GET['id_resident'];
+                $email = $_POST['email'];
+                // $password = ($_POST['password']);
+                $lname = $_POST['lname'];
+                $fname = $_POST['fname'];
+                $mi = $_POST['mi'];
+                // $age = $_POST['age'];
+                $sex = $_POST['sex'];
+                // $status = $_POST['status'];
+                // $houseno = $_POST['houseno'];
+                // $street = $_POST['street'];
+                // $brgy = $_POST['brgy'];
+                // $municipal = $_POST['municipal'];
+                $contact = $_POST['contact'];
+                $bdate = $_POST['bdate'];
+                // $bplace = $_POST['bplace'];
+                $nationality = $_POST['nationality'];
+                // $voter = $_POST['voter'];
+                // $familyrole = $_POST['family_role'];
+                $role = $_POST['role'];
+                // $addedby = $_POST['addedby'];
 
-        //         $connection = $this->openConn();
-        //         $stmt = $connection->prepare("UPDATE tbl_resident SET `password` =?, `lname` =?, 
-        //         `fname` = ?, `mi` =?, `age` =?, `sex` =?, `status` =?, `email` =?, `houseno` =?, `street` =?,
-        //         `brgy` =?, `municipal` =?, `contact` =?,
-        //         `bdate` =?, `bplace` =?, `nationality` =?, `voter` =?, `family_role` =?, `role` =?, `addedby` =? WHERE `id_resident` = ?");
-        //         $stmt->execute([$password, $lname, $fname, $mi, $age, $sex, $status,$email, $houseno, 
-        //         $street, $brgy, $municipal,
-        //         $contact, $bdate, $bplace, $nationality, $voter, $familyrole, $role, $addedby, $id_resident]);
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("UPDATE tbl_resident SET `lname` =?, 
+                    `fname` = ?, `mi` =?, `sex` =?, `email` =?, `contact` =?,
+                    `birthdate` =?, `nationality` =? WHERE `id_user` = ?");
+                    $stmt->execute([$password, $lname, $fname, $mi,$email,
+                    $contact, $bdate, $nationality, $id_resident]);
                     
-        //         $message2 = "Resident Data Updated";
-        //         echo "<script type='text/javascript'>alert('$message2');</script>";
-        //         header("refresh: 0");
-        //     }
-        // }
+                $message2 = "User details updated";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header("refresh: 0");
+            }
+        }
 
         // public function delete_resident(){
         //     $id_resident = $_POST['id_resident'];
@@ -172,7 +170,7 @@
 
     public function get_single_resident($id_user){
 
-        $id_user = $_GET['id_user'];
+        // $id_user = $_GET['id_user'];
         
         $connection = $this->openConn();
         $stmt = $connection->prepare("SELECT * FROM tbl_user where id_user = ?");
@@ -196,22 +194,6 @@
         $total = $stmt->rowCount(); 
 
         return $total;
-    }
-
-    public function count_user() {
-        $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user WHERE deleted_at IS NULL");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
-        return $rescount;
-    }
-
-    public function count_pet() {
-        $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_pet WHERE deleted_at IS NULL");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
-        return $rescount;
     }
 
     public function check_household($lname, $mi) {
@@ -536,6 +518,19 @@
     }
 
 
+    // #
+    public function view_inventory($page = 1, $recordsPerPage = 3){
+        $startFrom = ($page - 1) * $recordsPerPage;
+        $connection = $this->openConn();
+
+        // $stmt = $connection->prepare("SELECT * from tbl_user");
+        $stmt = $connection->prepare("SELECT * from tbl_inventory WHERE deleted_at IS NULL LIMIT $startFrom, $recordsPerPage");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        //$rows = $stmt->
+        return $view;
+       
+    }
 
 
 

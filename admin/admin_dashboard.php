@@ -1,13 +1,13 @@
 <?php
     error_reporting(E_ALL ^ E_WARNING);
     include('../classes/staff.class.php');
-    include('../classes/resident.class.php');
+    // include('../classes/resident.class.php');
 
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
 
-    $rescountuser = $residentbmis->count_user();
-    $rescountpet = $residentbmis->count_pet();
+    $rescountuser = $staffbmis->count_user();
+    $rescountpet = $staffbmis->count_pet();
     // $rescountm = $residentbmis->count_male_resident();
     // $rescountf = $residentbmis->count_female_resident();
     // $rescountfh = $residentbmis->count_head_resident();

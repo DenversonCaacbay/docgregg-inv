@@ -407,16 +407,16 @@
         }
 
         //Count Users / Client
-        public function count_user() {
-            $connection = $this->openConn();
+        // public function count_user() {
+        //     $connection = $this->openConn();
 
-            // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt->execute();
-            $staffcount = $stmt->fetchColumn();
+        //     // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+        //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
+        //     $stmt->execute();
+        //     $staffcount = $stmt->fetchColumn();
 
-            return $staffcount;
-        }
+        //     return $staffcount;
+        // }
 
         public function count_vaccine_record() {
             $connection = $this->openConn();
@@ -436,6 +436,22 @@
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
             return $result['count'];
+        }
+
+        public function count_user() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user WHERE deleted_at IS NULL");
+            $stmt->execute();
+            $rescount = $stmt->fetchColumn();
+            return $rescount;
+        }
+
+        public function count_pet() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_pet WHERE deleted_at IS NULL");
+            $stmt->execute();
+            $rescount = $stmt->fetchColumn();
+            return $rescount;
         }
 
         // public function count_mstaff() {
@@ -476,6 +492,7 @@
             $view = $stmt->fetchAll();
             return $view;
         }
+
 
 
 
