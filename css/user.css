@@ -1,7 +1,7 @@
 
 
 a.nav-link.active.border-bottom {
-    border-bottom: 2px solid #000000 !important;
+    border-bottom: 2px solid #0296be !important;
 }
 
 .banner-text{
@@ -16,8 +16,78 @@ a.nav-link.active.border-bottom {
     background: #312065 !important;
 }
 
-@media screen and (max-width: 480px) {
+.title{
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar-toggler{
+    margin-right: 5px;
+}
+
+.desk-create{
+    margin-top: 10px;
+    position:fixed;
+    right: 20px;
+    display: block;
+}
+
+.desk-create-btn{
+    background: #0296be !important;
+    width: 150px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* .create {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.create-btn {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background: #0296be;
+    font-size: 25px;
+    padding: 10px;
+    /* float: right; */ /* Remove this line */
+    /* color: white; */
+
+
+ /* .create-btn:hover {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background: #0296be;
+    font-size: 25px;
+    padding: 10px;
+    
+} */ 
+
+
+.mob-create{
+    display: none;
+}
+
+
+
+@media only screen and (max-width: 767px) {
     .form-control{
         width: 100%;
     }
+    .mob-create{
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+    .desk-create{
+        display: none;
+    }
+
+    
+    
 }

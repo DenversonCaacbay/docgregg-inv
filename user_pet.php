@@ -34,7 +34,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+<style>
+.create-btn {  
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #0296be !important;
+    font-size: 25px;
+    padding: 10px;
+    /* float: right; */ /* Remove this line */
+    /* color: white; */
+}
+
+
+ .create-btn:hover {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background: #0296be !important;
+    font-size: 25px;
+    padding: 10px;
+}
+
+</style>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
@@ -78,64 +103,55 @@
             
         </div>
     </div> -->
-        <table class="table table-hover text-center table-bordered">
-                <form action="" method="post">
-                    <thead style="background: #0296be;color:#fff;"> 
-                        <tr>
-                            <th> Picture </th>
-                            <th> Pet Name </th>
-                            <th> Date Created </th>
-                            <th> Actions </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php if(is_array($view)) {?>
-                            <?php foreach($view as $view) {?>
-                                <tr>
-                                <td>
-                                    <?php if (is_null($view['picture'])): ?>
-                                        <span>No Picture</span>
-                                    <?php else: ?>
-                                        <button class="btn btn-success" data-toggle="modal" data-target="#imageModal<?= $view['id_brgyid'] ?>">View</button>
-                                
-                                        <div class="modal fade" id="imageModal<?= $view['id_brgyid'] ?>" tabindex="-1" role="dialog" aria-labelledby="imageModalTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="imageModalTitle"><?= $view['fname'];?> <?= $view['lname'];?></h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <a href="<?= $view['picture'] ?>" target="_blank"><img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image"></a>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td> <?= $view['pet_name'];?> </td>
-                                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
-                                    <td>    
-                                        <form action="" method="post">
-                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
-                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Archive </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php }?>
-                        <?php } ?>
-                    </tbody>
-                </form>
-            </table>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container-fluid">
+        <div class="row mt-2">
+            <div class="col-md-6"><div class="title">My Pets</div></div>
+            <div class="col-md-6">
+                <div class="desk-create">
+                    <a class="btn desk-create-btn text-light">Add Pet</a>
+                </div>
+            </div>
+        </div>
+        
+        
+
+
+        <div class="card p-2 mt-4">
+            <div class="row">
+                <div class="col-md-3 text-center ">
+                    <?php if(is_array($view) && count($view) > 0): ?>
+                    <?php foreach($view as $item): ?>
+                            <?php if (is_null($item['picture'])): ?>
+                                <img src="images/placeholder/pet-placeholder.png" width="150px;">
+                            <?php else: ?>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-9">
+                    <h5><?= $item['pet_name']; ?></h5>
+                    <h5><?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
+                    <form action="" method="post" class="mt-4">
+                        <a href="update_staff_form.php?id_user=<?= $item['id_admin']; ?>" class="btn btn-success">Update</a>
+                        <input type="hidden" name="id_user" value="<?= $item['id_admin']; ?>">
+                        <button class="btn btn-danger" type="submit" name="delete_staff">Archive</button>
+                    </form>
+                </div>
+            </div>  
+        </div>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <p>No data available.</p>
+        <?php endif; ?>
+
+        <div class="mob-create">
+            <a class="btn create-btn text-light">+</a>
+        </div>
+    </div>
+
+
+        
+    
+    
 
 </body>
 </html>
