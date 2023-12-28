@@ -4,12 +4,28 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_inventory();
+    
+    
+//     $page = isset($_GET['page']) ? $_GET['page'] : 1;
+// $recordsPerPage = 10; // set the number of records to display per page
+// $view = $staffbmis->view_inventory($page, $recordsPerPage);
+// $totalRecords = $staffbmis->count_inventory(); // get the total number of records
+
+// Calculate the total number of pages
+// $totalPages = ceil($totalRecords / $recordsPerPage);
     // $staffbmis->create_staff();
     // $upstaff = $staffbmis->update_staff();
     // $staffbmis->delete_staff();
-    $staffcount = $staffbmis->count_inventory();
+    // $staffcount = $staffbmis->count_inventory();
     $staffbmis->delete_invetory();
+
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+$recordsPerPage = 3; // set the number of records to display per page
+$view = $staffbmis->view_inventory($page, $recordsPerPage);
+$totalRecords = $staffbmis->count_inventory(); // get the total number of records
+
+// Calculate the total number of pages
+$totalPages = ceil($totalRecords / $recordsPerPage);
     
 
 ?>
@@ -53,13 +69,13 @@
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Pet Picture">
+                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Pet Picture" width="150">
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid img-size" alt="Modal Image">
+                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['name'];?> </td>
-                                    <td>P<?= $view['price'];?> </td>
+                                    <td>₱ <?= $view['price'];?> </td>
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
                                     <td>    
@@ -69,21 +85,40 @@
                                             <button class="btn btn-danger" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
                                         </form>
                                     </td>
-
-                                    <!-- <td>    
-                                        <form action="" method="post">
-                                            <a href="update_staff_form.php?id_user=<?= $view['id_admin'];?>" style="width: 90px; font-size: 17px; border-radius:30px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
-                                            <input type="hidden" name="id_user" value="<?= $view['id_admin'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_staff"style="width: 90px; font-size: 17px; border-radius:30px;"> Archive </button>
-                                        </form>
-                                    </td> -->
-
                                 </tr>
                             <?php }?>
                         <?php } ?>
                     </tbody>
                 </form>
             </table>
+            <!-- Pagination links -->
+        <!-- Pagination links -->
+<ul class="pagination justify-content-center">
+    <!-- Previous button -->
+    <?php if ($page > 1) : ?>
+        <li class="page-item">
+            <a class="page-link" href="?page=<?= $page - 1; ?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+        <li class="page-item <?= ($i == $page) ? 'active' : ''; ?>">
+            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+        </li>
+    <?php endfor; ?>
+
+    <!-- Next button -->
+    <?php if ($page < $totalPages) : ?>
+        <li class="page-item">
+            <a class="page-link" href="?page=<?= $page + 1; ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    <?php endif; ?>
+</ul>
+
         </div>
     </div>
 </div>

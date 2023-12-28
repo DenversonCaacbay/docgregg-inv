@@ -124,12 +124,12 @@
         }
 
         // #inventory
-        public function view_inventory(){
-
+        public function view_inventory($page = 1, $recordsPerPage = 3){
+            $startFrom = ($page - 1) * $recordsPerPage;
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_inventory WHERE deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * from tbl_inventory WHERE deleted_at IS NULL LIMIT $startFrom, $recordsPerPage");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
@@ -431,13 +431,11 @@
 
         public function count_inventory() {
             $connection = $this->openConn();
-
-            // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_inventory");
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL");
             $stmt->execute();
-            $staffcount = $stmt->fetchColumn();
-
-            return $staffcount;
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
         }
 
         // public function count_mstaff() {

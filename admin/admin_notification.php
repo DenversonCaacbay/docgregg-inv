@@ -5,8 +5,8 @@
     require('../classes/resident.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $bmis->delete_certofres();
-    $view = $bmis->view_certofres();
+    // $bmis->delete_certofres();
+    // $view = $bmis->view_certofres();
     // $id_resident = $_GET['id_resident'];
     // $resident = $residentbmis->get_single_certofres($id_resident);
     // $resident = view_certofres();

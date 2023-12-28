@@ -27,20 +27,6 @@
 
 <style>
     /* Add this style in your CSS or within a <style> tag in the <head> section */
-    li.nav-item {
-        /* Add your default background color and text color here */
-        background-color: transparent; /* Set the default background color */
-        /* color: #ffffff; Set the default text color (white in this case) */
-    }
-
-    /* Styles for the 'active' class */
-    li.nav-item.active {
-        background: rgb(49,32,101);
-background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
-        border-radius: 10px;
-        margin:8px; /* Set the background color for the active state */
-        color: /* Add your primary text color here */ black !important; /* Set the text color for the active state */
-    }
 
     .btn-primary{
         background: #0296be !important;
@@ -59,14 +45,14 @@ background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <li class="nav-item p-2">
-                <div class="card">
+            
+                <div class="card p-2 m-2">
                     <img src="../assets/logo.png" width="100" height="100">
                     <div class="sidebar-brand-text">
                         Doc Gregg <br>Veterinary Clinic 
                     </div>
                 </div>
-            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -116,7 +102,7 @@ background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
             </li>
 
             <!-- Profile -->
-            <li class="nav-item">
+            <li class="nav-item" id="profile">
                 <a class="nav-link  text-light" href="admin_myprofile.php">
                     <i class="fas fa-id-card"></i>
                     <span>My Profile </span></a>
@@ -127,6 +113,11 @@ background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
                 <a class="nav-link  text-light" href="admin_help.php">
                     <i class="fas fa-file-contract"></i>
                     <span>Help & Support</span></a>
+            </li>
+            <li class="nav-item" id="help">
+                <a class="nav-link  text-light" href="admin_help.php">
+                <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span></a>
             </li>
 
         </ul>
@@ -175,9 +166,9 @@ background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
 
                         <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link" href="logout.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link" href="#" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-light small">Hello <?= $userdetails['firstname']?> <?= $userdetails['surname']?>!</span>
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
+                                    <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>
                         </li>
@@ -186,7 +177,7 @@ background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
 
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-                <script>
+                <!-- <script>
                     $(document).ready(function () {
                         // Retrieve the active item from localStorage
                         var activeItem = localStorage.getItem('activeNavItem');
@@ -211,7 +202,7 @@ background: linear-gradient(45deg, rgba(49,32,101,1) 0%, rgba(2,150,190,1) 74%);
                             localStorage.setItem('activeNavItem', $(this).attr('id'));
                         });
                     });
-                </script>
+                </script> -->
 
                 
                 <!-- End of Topbar -->
