@@ -30,21 +30,17 @@
             display: none;  /* Safari and Chrome */
         }
 
-        .navbar{
-            background: #312065 !important;
-             
-        }
 
     </style>
     
     <body >
 
         <!-- eto yung navbar -->
-        <nav class="navbar sticky-top navbar-expand-lg bg-light">
-            <a class="navbar-brand mx-auto" style="color: #fff;font-size: 20px; font-weight: 600;" href="#">Add your Pet</a>
+        <nav class=" navbar sticky-top py-3 navbar-expand-lg navbar-dark">
+            <a class="mx-auto" style="text-decoration: none;color: #fff;padding: 10px;" href="#">Add your Pet</a>
         </nav>
 
-        <div class="container-fluid"  style="margin-top: 1em;">
+        <div class="container"  style="margin-top: 1em;">
             
                 <div class="card" style="margin-bottom: 3em;">     
                     <form method="post" enctype='multipart/form-data' class=" mt-1 p-2">                

@@ -1,4 +1,13 @@
 
+.navbar{
+    background: #0296be !important;
+}
+
+.navbar-brand{
+    background: #fff !important;
+    padding: 10px;
+    border-radius: 7px;
+}
 
 a.nav-link.active.border-bottom {
     border-bottom: 2px solid #0296be !important;
@@ -33,7 +42,7 @@ a.nav-link.active.border-bottom {
 .desk-create{
     margin-top: 10px;
     position:fixed;
-    right: 20px;
+    right: 150px;
     display: block;
 }
 
@@ -44,32 +53,17 @@ a.nav-link.active.border-bottom {
     border-radius: 5px;
 }
 
+.navbar-nav{
+    margin-left: 10px;
+}
+
 /* .create {
     position: fixed;
     bottom: 20px;
     right: 20px;
-}
-
-.create-btn {
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    background: #0296be;
-    font-size: 25px;
-    padding: 10px;
-    /* float: right; */ /* Remove this line */
-    /* color: white; */
+/* } */
 
 
- /* .create-btn:hover {
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    background: #0296be;
-    font-size: 25px;
-    padding: 10px;
-    
-} */ 
 
 
 .mob-create{
@@ -81,6 +75,12 @@ a.nav-link.active.border-bottom {
 @media only screen and (max-width: 767px) {
     .form-control{
         width: 100%;
+    }
+    .navbar-brand{
+        margin-left: 5px;
+    }
+    .navbar-nav{
+        margin-left: 10px;
     }
     .mob-create{
         display: block;
