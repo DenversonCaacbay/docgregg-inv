@@ -69,7 +69,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Pet Picture" width="150">
+                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
                                     <?php else: ?>
                                         <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
                                         <?php endif; ?>

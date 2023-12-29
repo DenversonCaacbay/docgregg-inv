@@ -29,9 +29,9 @@
                             <div class="col-md-12">
                                 <!-- <label>Item Picture:</label> -->
                                 <?php if (is_null($item['picture'])): ?>
-                                    <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Pet Picture">
+                                    <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture">
                                 <?php else: ?>
-                                    <img id="blah" src="../<?= $item['picture']?>" class="img-size" alt="Pet Picture">
+                                    <img id="blah" src="../uploads/<?= $item['picture']?>" class="img-size" alt="Item Picture">
                                 <?php endif; ?>
                                 <br>
                             </div>
