@@ -11,15 +11,21 @@
 
 ?>
 
+<style>
+
+</style>
+
 <?php 
     include('user_navbar_start.php');
 ?>
     <div class="container">
-        <div class="card mt-5 p-2">
-           ONGOING
-        </div>
-        <div class="card mt-3 p-2">
-            
+        <div class="row mt-2">
+            <div class="col-md-6"><div class="title">Vaccination Records</div></div>
+            <div class="col-md-6">
+                <div class="desk-create">
+                    <a class="btn btn-primary text-light" href="create_user_vaccination.php">Add Vaccination Certificate</a>
+                </div>
+            </div>
         </div>
     </div>
 
