@@ -109,7 +109,7 @@
             <div class="col-md-6"><div class="title">My Pets</div></div>
             <div class="col-md-6">
                 <div class="desk-create">
-                    <a class="btn desk-create-btn text-light">Add Pet</a>
+                    <a class="btn desk-create-btn text-light" href="create_user_pet.php">Add Pet</a>
                 </div>
             </div>
         </div>
@@ -144,7 +144,7 @@
         <?php endif; ?>
 
         <div class="mob-create">
-            <a class="btn create-btn text-light">+</a>
+            <a class="btn create-btn text-light" href="create_user_pet.php">+</a>
         </div>
     </div>
 
