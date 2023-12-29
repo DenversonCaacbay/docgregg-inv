@@ -66,7 +66,7 @@
         <div class="collapse navbar-collapse ms-auto" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active border-bottom" aria-current="page" href="user_home.php">Home</a>
+                    <a class="nav-link " aria-current="page" href="user_home.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="user_pet.php">Pets</a>
@@ -75,7 +75,7 @@
                     <a class="nav-link" href="user_record.php">Records</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link active border-bottom dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?= $userdetails['surname'];?>, <?= $userdetails['firstname'];?>
                     </a>
                     <ul class="dropdown-menu">
@@ -93,12 +93,10 @@
     <!-- Page Heading -->
 
     <div class="row"> 
-        <div class=""> 
-            <h1> My Profile</h1>
+        <div class="text-center mt-3"> 
+            <h1 style="color: #0296be;"> My Profile</h1>
         </div>
     </div>
-
-    <br><br>
 
 <!-- Begin Page Content -->
 
@@ -106,7 +104,7 @@
 
     <!-- Page Heading -->
                 
-    <div class="row"> 
+    <div class="row mt-3"> 
         <div class="col-md-2"> </div> 
         <div class="col-md-8"> 
             <div class="card">
@@ -121,21 +119,21 @@
                             <?php endif; ?>
                             </div>
                             
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label> First Name: </label>
                                     <input type="text" class="form-control" name="fname" value="<?= $user['fname']; ?>" required>
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label> Last Name: </label>
                                     <input type="text" class="form-control" name="lname" value="<?= $user['lname']; ?>" required>
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label> Middle Initial: </label>
                                     <input type="text" class="form-control" name="mi" value="<?= $user['mi']; ?>" required>

@@ -9,7 +9,7 @@ a.nav-link.active.border-bottom {
 }
 
 .btn-primary{
-    background: #0296be;
+    background: #0296be !important;
 }
 
 .create-button{
@@ -20,6 +20,10 @@ a.nav-link.active.border-bottom {
     font-size: 2rem;
     font-weight: 600;
     font-family: 'Nunito', sans-serif;
+}
+
+.text-primary{
+    color: #0296be;
 }
 
 .navbar-toggler{

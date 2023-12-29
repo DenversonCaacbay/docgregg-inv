@@ -86,7 +86,7 @@
                     <?= $userdetails['surname'];?>, <?= $userdetails['firstname'];?>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="user_myprofile.php">Profile</a></li>
                         <li><a class="dropdown-item" href="user_logout.php">Logout</a></li>
                     </ul>
                 </li>
