@@ -25,7 +25,7 @@
         
         .field-icon {
         margin-left: 81%;
-        margin-top: -6.5%;
+        margin-top: -5.5%;
         position: absolute;
         z-index: 2;
         }
@@ -155,7 +155,7 @@
                                     </div>
     
                                 <br>
-                                <button class="btn btn-primary" type="submit" name="add_user"> Submit </button>
+                                <button class="btn btn-primary" type="submit" name="add_user"> Create an Account </button>
                                 <input type="hidden" class="form-control" name="role" value="resident">
                                 <a class="btn btn-danger" href="index.php"> Back to Login</a>
                                 

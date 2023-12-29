@@ -14,6 +14,13 @@
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
 </head>
 <?php 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Include PHPMailer autoloader
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
     require_once('main.class.php');
     
@@ -30,78 +37,110 @@
     class ResidentClass extends BMISClass {
         //------------------------------------ RESIDENT CRUD FUNCTIONS ----------------------------------------
 
-        public function create_user() {
-            if(isset($_POST['add_user'])) {
-                $email = $_POST['email'];
-                $password = ($_POST['password']);
-                $confirm_password = ($_POST['confirm_password']);
-                $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
-                $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
-                $mi = ucfirst(strtolower($_POST['mi']));
-                $sex = $_POST['sex'];
-                $address = $_POST['address'];
-                // $houseno = $_POST['houseno'];
-                // $street = $_POST['street'];
-                // $brgy = $_POST['brgy'];
-                // $municipal = $_POST['municipal'];
-                $contact = $_POST['contact'];
+        public function create_user()
+{
+    if (isset($_POST['add_user'])) {
+        ob_start();
+        $email = $_POST['email'];
+        $password = ($_POST['password']);
+        $confirm_password = ($_POST['confirm_password']);
+        $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
+        $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
+        $mi = ucfirst(strtolower($_POST['mi']));
+        $sex = $_POST['sex'];
+        $address = $_POST['address'];
+        $contact = $_POST['contact'];
+        $bdate = $_POST['bdate'];
+        $current_year = date("Y");
+        $birth_year = date("Y", strtotime($bdate));
+        $age = $current_year - $birth_year;
+        $nationality = $_POST['nationality'];
+        $role = $_POST['role'];
 
-                $bdate = $_POST['bdate'];
-                // Calculate age based on the provided birthdate
-                $current_year = date("Y");
-                $birth_year = date("Y", strtotime($bdate));
-                $age = $current_year - $birth_year;
+        if ($this->check_resident($email) == 0) {
 
-                $nationality = $_POST['nationality'];
-                
-
-                $role = $_POST['role'];
-
-                if ($this->check_resident($email) == 0 ) {
-
-                    // check if user is 18
-                    if ($age < 18) {
-                        $message = "Sorry, you are still underaged to register an account";
-                        echo "<script type='text/javascript'>alert('$message');</script>";
-                        return false;
-                    }
-                    else {
-                        // Check if the password and confirm password match
-                        if ($password !== $confirm_password) {
-                            $message = "Password and Confirm Password do not match";
-                            echo "<script type='text/javascript'>alert('$message');</script>";
-                            return false;
-                        }
-
-                        // Check if the password is at least 8 characters long
-                        if (strlen($password) < 8) {
-                            $message = "Password must be at least 8 characters long";
-                            echo "<script type='text/javascript'>alert('$message');</script>";
-                            return false;
-                        }
-
-                        // Hash the password
-                        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-                        // proceed to create
-                        $connection = $this->openConn();
-                        $stmt = $connection->prepare("INSERT INTO tbl_user ( `email`,`password`,`lname`,`fname`,
-                            `mi`, `sex`, `contact`, `address`,`birthdate`, `nationality`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    
-                        $stmt->Execute([ $email, $hashed_password, $lname, $fname, $mi, $sex, $contact, $address, $bdate,  $nationality]);
-
-                        $message2 = "Account added, you can now continue logging in";
-                        echo "<script type='text/javascript'>alert('$message2');</script>";
-
-                        echo '<script>window.location.replace("index.php")</script>;';
-                    }
+            // check if the user is 18
+            if ($age < 18) {
+                $message = "Sorry, you are still underage to register an account";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+                return false;
+            } else {
+                // Check if the password and confirm password match
+                if ($password !== $confirm_password) {
+                    $message = "Password and Confirm Password do not match";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                    return false;
                 }
 
-                else {
-                    echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
+                // Check if the password is at least 8 characters long
+                if (strlen($password) < 8) {
+                    $message = "Password must be at least 8 characters long";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                    return false;
+                }
+
+                // Hash the password
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+                // proceed to create
+                $connection = $this->openConn();
+                $verification_code = bin2hex(random_bytes(16));
+                $stmt = $connection->prepare("INSERT INTO tbl_user (`email`, `password`, `lname`, `fname`, `mi`, `sex`, `contact`, `address`, `birthdate`, `nationality`, `verification_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                $stmt->Execute([$email, $hashed_password, $lname, $fname, $mi, $sex, $contact, $address, $bdate, $nationality, $verification_code]);
+
+                // Check if the query was successful
+                if ($stmt->rowCount() > 0) {
+                    // Send verification email using PHPMailer
+                    $mail = new PHPMailer(true);
+
+                    try {
+                        // SMTP settings (replace with your SMTP server details)
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'rileyelijah052005@gmail.com';
+                        $mail->Password = 'zptq dkfa ommi azbl';
+                        $mail->SMTPSecure = 'tls';
+                        $mail->Port = 587;
+
+                        // Set "From" address
+                        $mail->setFrom('rileyelijah052005@gmail.com', 'DG Veterinary Clinic');
+
+                        // Set "To" address
+                        $mail->addAddress($email);
+
+                        // Set email subject and body
+                        $mail->Subject = 'Email Verification';
+                        $mail->Body = "Thank you for signing up! Your verification code is: $verification_code";
+
+                        // Enable verbose debug output
+                        $mail->SMTPDebug = 2;
+
+                        // Send the email
+                        $mail->send();
+
+                        // Redirect to a verification page
+                        header("Location: user_verification.php?email=$email");
+                        ob_end_flush();
+                        exit();
+                    } catch (Exception $e) {
+                        // Log the error
+                        error_log("Email sending failed for $email: " . $mail->ErrorInfo, 1, "your_error_log.txt");
+                        echo "Email sending failed. Please try again later.";
+                    }
+                } else {
+                    $message2 = "Failed to add the account. Please try again.";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
                 }
             }
+        } else {
+            // This 'else' is associated with the 'if ($this->check_resident($email) == 0)' statement
+            echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
         }
+    }
+}
+
 
         public function view_resident(){
             $connection = $this->openConn();
