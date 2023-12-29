@@ -63,6 +63,18 @@
                                     <input type="number" class="form-control" name="qty" required>
                                 </div>
                             </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="mtop">Category</label>
+                                    <select class="form-control" name="categpry" id="category" required>
+                                        <option value="" <?php echo empty($_POST['sex']) ? 'selected' : ''; ?>>Choose Category</option>
+                                        <option value="Male">Medicine</option>
+                                        <option value="Female">Vaccine</option>
+                                        <option value="Female">Dog Food</option>
+                                        <option value="Female">Cat food</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
 
