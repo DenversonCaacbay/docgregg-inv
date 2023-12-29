@@ -61,10 +61,11 @@
         <div class="card p-2 mt-4">
             <div class="row">
                 <div class="col-md-3 text-center ">
-                    <?php if (is_null($item['picture'])): ?>
+                    <?php if (is_null($item['pet_picture'])): ?>
                         <img src="images/placeholder/pet-placeholder.png" width="150px;">
                     <?php else: ?>
                         <!-- Display pet image here -->
+                        <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
                     <?php endif; ?>
                 </div>
                 <div class="col-md-9">

@@ -2,9 +2,12 @@
     
     error_reporting(E_ALL ^ E_WARNING);
     ini_set('display_errors',0);
-    require('../classes/resident.class.php');
+    // require('../classes/resident.class.php');
+    require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
+    $view = $staffbmis->view_pet();
+    // print_r($view);
     // $bmis->delete_certofres();
     // $view = $bmis->view_certofres();
     // $id_resident = $_GET['id_resident'];
@@ -47,20 +50,27 @@
     <!-- Page Heading -->
 
     <div class="d-flex align-items-center">
-    <a class="btn btn-primary" href="admin_client.php">Back</a>
-    <h1 class="mb-0 ml-2">Client Pets</h1>
-</div>
+        <a class="btn btn-primary" href="admin_client.php">Back</a>
+        <h1 class="mb-0 ml-2">Client Pets</h1>
+    </div>
 
     <br>
+    <?php if(is_array($view) && count($view) > 0): ?>
+    <?php foreach($view as $item): ?>
     <div class="container">
         <div class="card p-2 mt-4">
             <div class="row">
                 <div class="col-md-3 text-center ">
-                    <img src="../images/placeholder/pet-placeholder.png" width="150px;">
+                    <?php if (is_null($item['pet_picture'])): ?>
+                        <img src="images/placeholder/pet-placeholder.png" width="150px;">
+                    <?php else: ?>
+                        <!-- Display pet image here -->
+                        <img src="../<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-9">
-                    <h5>Pet Name:</h5>
-                    <h5>Pet Added:</h5>
+                    <h5>Pet Name: <?= $item['pet_name']; ?></h5>
+                    <h5>Pet Added: <?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
                     <form method="post" class="mt-4">
                         <!-- <a href="update_user_pet.php?id_user=<?= $item['id_admin']; ?>" class="btn btn-success">Update</a> -->
                         <!-- <input type="hidden" name="id_user" value="<?= $item['id_admin']; ?>"> -->
@@ -70,6 +80,11 @@
             </div>
         </div>
     </div>
+
+    <?php endforeach; ?>
+    <?php else: ?>
+        <p>No data available.</p>
+    <?php endif; ?>
     
     <!-- /.container-fluid -->
     

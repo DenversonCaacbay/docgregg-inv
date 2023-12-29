@@ -58,6 +58,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <th> Product Name </th>
                             <th> Price </th>
                             <th> Quantity </th>
+                            <th> Category </th>
                             <th> Date Created </th>
                             <th> Actions </th>
                         </tr>
@@ -77,6 +78,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <td> <?= $view['name'];?> </td>
                                     <td>₱ <?= $view['price'];?> </td>
                                     <td> <?= $view['quantity'];?> </td>
+                                    <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
                                     <td>    
                                         <form action="" method="post">

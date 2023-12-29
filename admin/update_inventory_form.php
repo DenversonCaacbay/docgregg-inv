@@ -66,6 +66,19 @@
                                     <input type="number" class="form-control" name="qty"value="<?= $item['quantity']?>" required>
                                 </div>
                             </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="mtop">Category</label>
+                                    <select class="form-control" name="category" id="category" required>
+                                        <option value="">Choose Category</option>
+                                        <option value="Medicine" <?php echo ($item['category'] == 'Medicine') ? 'selected="selected"' : ''; ?>>Medicine</option>
+                                        <option value="Vaccine" <?php echo ($item['category'] == 'Vaccine') ? 'selected="selected"' : ''; ?>>Vaccine</option>
+                                        <option value="Dog Food" <?php echo ($item['category'] == 'Dog Food') ? 'selected="selected"' : ''; ?>>Dog Food</option>
+                                        <option value="Cat food" <?php echo ($item['category'] == 'Cat food') ? 'selected="selected"' : ''; ?>>Cat food</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
 

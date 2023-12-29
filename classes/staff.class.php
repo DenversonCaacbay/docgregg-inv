@@ -161,7 +161,9 @@
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
+                $category = $_POST['category'];
                 $new_picture = $_FILES['new_picture'];
+
         
                 if (!empty($new_picture['name'])) {
                     $target_dir = "../uploads/inventory/";
@@ -175,8 +177,8 @@
         
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         $connection = $this->openConn();
-                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture) VALUES (?, ?, ?, ?)");
-                        $stmt->execute([$name, $price, $qty, $target_file]);
+                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category) VALUES (?, ?, ?, ?, ?)");
+                        $stmt->execute([$name, $price, $qty, $target_file, $category]);
         
                         $message2 = "Item created!";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -269,6 +271,25 @@
            
         }
 
+        public function view_single_user(){
+
+            $id_user = $_GET['id_user'];
+            
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT * FROM tbl_user where id_user = '$id_user'");
+            $stmt->execute();
+            $view = $stmt->fetch(); 
+            $total = $stmt->rowCount();
+ 
+            //eto yung condition na i ch check kung may laman si products at i re return niya kapag meron
+            if($total > 0 )  {
+                return $view;
+            }
+            else{
+                return false;
+            }
+        }
+
         
         public function delete_user(){
             $id_user = $_POST['id_user'];
@@ -283,6 +304,17 @@
                 echo "<script type='text/javascript'>alert('$message2');</script>";
                 header('refresh:0');
             }
+        }
+
+        public function view_pet(){
+            $id_user = $_GET['id_user'];
+
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT * FROM tbl_pet where deleted_at IS NULL AND pet_owner_id = ?");
+            $stmt->execute([$id_user]);
+            $view = $stmt->fetchAll();
+    
+            return $view;
         }
 
         public function view_single_staff($id_admin){
@@ -438,6 +470,15 @@
             return $result['count'];
         }
 
+        public function count_low_inventory() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= 10");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+
         public function count_user() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user WHERE deleted_at IS NULL");
@@ -515,6 +556,9 @@
 <!-- fontawesome icons -->
 <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
 <script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- custom js -->
 <script>

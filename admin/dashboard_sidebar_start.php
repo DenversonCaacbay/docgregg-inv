@@ -175,7 +175,12 @@
                         <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="#" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-light small">Hello <?= $userdetails['firstname']?> <?= $userdetails['surname']?>!</span>
+                                    <?php if($staffbmis->count_low_inventory()) : ?>
+                                        <a href="admin_inventory.php">
+                                            <span class="badge badge-light"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
+                                        </a>&nbsp;
+                                    <?php endif; ?>
+                                        <span class="mr-2 d-none d-lg-inline text-light small">Hello <?= $userdetails['firstname']?> <?= $userdetails['surname']?>!</span>
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>

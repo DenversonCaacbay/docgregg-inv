@@ -37,7 +37,7 @@
                            
                             <th> Pet Owner </th>
                             <th> Pet Name </th>
-                            <th> Vaccine Name </th>
+                            <th> Vaccine Certificate </th>
                             <th> Date Vaccinated </th>
                             <!-- <th> Actions </th> -->
                             
@@ -51,7 +51,13 @@
                                     
                                     <td> <?= $view['fname'];?> <?= $view['lname'];?></td>
                                     <td> <?= $view['pet_name'];?> </td>
-                                    <td> <?= $view['vaccine_name'];?> </td>
+                                    <td>
+                                        <?php if (empty($view['vac_certf'])): ?>
+                                            <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
+                                        <?php else: ?>
+                                            <img src="<?= $view['vac_certf'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                                        <?php endif; ?>
+                                    </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['date_vaccinated'])); ?> </td>
                                     <!-- <td>    
                                         <form action="" method="post">

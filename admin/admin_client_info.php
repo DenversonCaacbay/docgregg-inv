@@ -4,7 +4,8 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_user();
+    $view = $staffbmis->view_single_user();
+    // print_r($view);
     // $staffbmis->create_staff();
     // $upstaff = $staffbmis->update_staff();
     // $staffbmis->delete_staff();
@@ -42,55 +43,55 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> First Name: </label>
-                                <input type="text" class="form-control" name="fname" value="" required>
+                                <input type="text" class="form-control" name="fname" value="<?= $view['fname'] ?>" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Last Name: </label>
-                                <input type="text" class="form-control" name="lname" value="" required>
+                                <input type="text" class="form-control" name="lname" value="<?= $view['lname'] ?>" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Middle Initial: </label>
-                                <input type="text" class="form-control" name="mi" value="" required>
+                                <input type="text" class="form-control" name="mi" value="<?= $view['mi'] ?>" required>
                             </div>
                         </div>    
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Sex </label>
-                                <input type="text" class="form-control" name="fname" value="" required>
+                                <input type="text" class="form-control" name="sex" value="<?= $view['sex'] ?>" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Address </label>
-                                <input type="text" class="form-control" name="lname" value="" required>
+                                <input type="text" class="form-control" name="address" value="<?= $view['address'] ?>" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Contact Number </label>
-                                <input type="text" class="form-control" name="mi" value="" required>
+                                <input type="text" class="form-control" name="contact" value="<?= $view['contact'] ?>" required>
                             </div>
                         </div>  
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Birthdate </label>
-                                <input type="text" class="form-control" name="lname" value="" required>
+                                <input type="text" class="form-control" name="birthdate" value="<?= $view['birthdate'] ?>" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Nationality </label>
-                                <input type="text" class="form-control" name="mi" value="" required>
+                                <input type="text" class="form-control" name="nationality" value="<?= $view['nationality'] ?>" required>
                             </div>
                         </div>                           
                         <div class="col">
                             <div class="form-group">
                                 <label>Email: </label>
-                                <input type="text" class="form-control" name="email" value="" required>
+                                <input type="text" class="form-control" name="email" value="<?= $view['email'] ?>" required>
                             </div>
                         </div>
                     </div>

@@ -66,12 +66,12 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="mtop">Category</label>
-                                    <select class="form-control" name="categpry" id="category" required>
-                                        <option value="" <?php echo empty($_POST['sex']) ? 'selected' : ''; ?>>Choose Category</option>
-                                        <option value="Male">Medicine</option>
-                                        <option value="Female">Vaccine</option>
-                                        <option value="Female">Dog Food</option>
-                                        <option value="Female">Cat food</option>
+                                    <select class="form-control" name="category" id="category" required>
+                                        <option value="">Choose Category</option>
+                                        <option value="MMedicineale">Medicine</option>
+                                        <option value="Vaccine">Vaccine</option>
+                                        <option value="Dog Food">Dog Food</option>
+                                        <option value="Cat food">Cat food</option>
                                     </select>
                                 </div>
                             </div>

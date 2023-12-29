@@ -412,24 +412,50 @@ require 'PHPMailer/src/SMTP.php';
         return $view;
     }
 
-    public function create_pet() {
-        $owner_id = $_GET['id_user'];
-
-        if(isset($_POST['add_pet'])) {
-                $pet_name = ucfirst(strtolower($_POST['pet_name']));
-
-                // proceed to create
+    public function create_pet($owner_id) {
+        if (isset($_POST['add_pet'])) {
+            $pet_name = ucfirst(strtolower($_POST['pet_name']));
+            $owner_id = intval($owner_id); // Make sure owner_id is an integer
+    
+            $new_picture = $_FILES['pet_picture'];
+    
+            if (!empty($new_picture['name'])) {
+                $target_dir = "uploads/pets/";
+                $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+    
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0755, true);
+                }
+    
+                $target_file = $target_dir . time() . '.' . $file_extension;
+    
+                if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                    // proceed to create with picture
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("INSERT INTO tbl_pet (`pet_name`, `pet_owner_id`, `pet_picture`) VALUES (?, ?, ?)");
+                    $stmt->execute([$pet_name, $owner_id, $target_file]);
+    
+                    $message2 = "Pet added!";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
+    
+                    echo '<script>window.location.replace("user_pet.php")</script>';
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            } else {
+                // proceed to create without picture
                 $connection = $this->openConn();
-                $stmt = $connection->prepare("INSERT INTO tbl_pet (`pet_name`,`pet_owner_id`) VALUES (?, ?)");
-
-                $stmt->Execute([$pet_name, $owner_id]);
-
+                $stmt = $connection->prepare("INSERT INTO tbl_pet (`pet_name`, `pet_owner_id`) VALUES (?, ?)");
+                $stmt->execute([$pet_name, $owner_id]);
+    
                 $message2 = "Pet added!";
                 echo "<script type='text/javascript'>alert('$message2');</script>";
-
-                echo '<script>window.location.replace("user_pet.php")</script>;';
+    
+                echo '<script>window.location.replace("user_pet.php")</script>';
+            }
         }
     }
+    
 
     public function view_single_pet(){
         $connection = $this->openConn();
@@ -571,7 +597,16 @@ require 'PHPMailer/src/SMTP.php';
        
     }
 
-
+    // #user dashboard
+    public function view_low_inventory(){
+        $connection = $this->openConn();
+        $low_qty = 10;
+        $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE quantity <= ?");
+        $stmt->execute([$low_qty]);
+        $view = $stmt->fetchAll();
+    
+        return $view;
+    }    
 
 
 
@@ -621,18 +656,18 @@ require 'PHPMailer/src/SMTP.php';
 
         <!-- show img before uploading -->
         <script>
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        $('#blah')
-                            .attr('src', e.target.result)
-                            .width(470)
-                            .height(350);
-                    };
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(470)
+                    .height(350);
+            };
 
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-        </script>
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
