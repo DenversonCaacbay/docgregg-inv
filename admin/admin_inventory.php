@@ -37,10 +37,12 @@
 
     <div class="row"> 
         <div class="col-md-12">
-            <div class="form-group">
+        
+             <div class="form-group">
                 <label> Search </label>
                 <input type="text" class="form-control" name="name"  value="" required>
             </div>
+           
            <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
