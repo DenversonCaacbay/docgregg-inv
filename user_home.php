@@ -67,8 +67,8 @@
                                     <?php if (is_null($view['picture'])): ?>
                                         <img id="blah" src="images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Item Image" width="100">
-
+                                        <img src="<?= ltrim($view['picture'], '../') ?>" class="img-fluid" alt="Item Image" width="100">
+                                        
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['name'];?> </td>

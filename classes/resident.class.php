@@ -14,13 +14,13 @@
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
 </head>
 <?php 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
 
-// Include PHPMailer autoloader
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+// // Include PHPMailer autoloader
+// require 'PHPMailer/src/Exception.php';
+// require 'PHPMailer/src/PHPMailer.php';
+// require 'PHPMailer/src/SMTP.php';
 
     require_once('main.class.php');
     
@@ -608,7 +608,7 @@ require 'PHPMailer/src/SMTP.php';
     public function view_low_inventory(){
         $connection = $this->openConn();
         $low_qty = 20;
-        $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE quantity < ?");
+        $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE quantity < ? AND deleted_at IS NULL");
         $stmt->execute([$low_qty]);
         $view = $stmt->fetchAll();
     

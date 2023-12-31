@@ -26,13 +26,13 @@ if (!isset($_GET['email'])) {
 </nav>
 <div class="container mt-5">
     <div class="card p-2">
-        <form method="post" class="p-2" action="user_verify_code.php">
+        <form method="post" class="p-2" action="user_forgot_verify_code.php">
                 <h5 class="text-header">Enter Verification code sent to your Email</h5>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="verification_code" require>
                     <label for="floatingInputInvalid">Verification Code: </label>
                 </div>
-            <input type="text" name="email" value="<?php echo $_GET['email']; ?>"><br>
+            <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>"><br>
             <button class="btn btn-primary w-100" type="submit" name="verify">Verify</button>
         </form>
     </div>

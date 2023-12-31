@@ -5,27 +5,15 @@
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     
-    
-//     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-// $recordsPerPage = 10; // set the number of records to display per page
-// $view = $staffbmis->view_inventory($page, $recordsPerPage);
-// $totalRecords = $staffbmis->count_inventory(); // get the total number of records
-
-// Calculate the total number of pages
-// $totalPages = ceil($totalRecords / $recordsPerPage);
-    // $staffbmis->create_staff();
-    // $upstaff = $staffbmis->update_staff();
-    // $staffbmis->delete_staff();
-    // $staffcount = $staffbmis->count_inventory();
     $staffbmis->delete_invetory();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$recordsPerPage = 3; // set the number of records to display per page
-$view = $staffbmis->view_inventory($page, $recordsPerPage);
-$totalRecords = $staffbmis->count_inventory(); // get the total number of records
+    $recordsPerPage = 5; // set the number of records to display per page
+    $view = $staffbmis->view_inventory($page, $recordsPerPage);
+    $totalRecords = $staffbmis->count_inventory(); // get the total number of records
 
 // Calculate the total number of pages
-$totalPages = ceil($totalRecords / $recordsPerPage);
+    $totalPages = ceil($totalRecords / $recordsPerPage);
     
 
 ?>
@@ -43,13 +31,16 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     
     
     <div class="row">
-        <div class="col-md-6"><h1 class="mb-4">Inventory</h1></div>
+        <div class="col-md-6"><h1 class="">Inventory</h1></div>
         <div class="col-md-6"><a href="create_inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
     </div>
-    <hr>
 
     <div class="row"> 
         <div class="col-md-12">
+            <div class="form-group">
+                <label> Search </label>
+                <input type="text" class="form-control" name="name"  value="" required>
+            </div>
            <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
@@ -72,7 +63,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <?php if (is_null($view['picture'])): ?>
                                         <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['name'];?> </td>
@@ -95,31 +86,37 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             </table>
             <!-- Pagination links -->
         <!-- Pagination links -->
-<ul class="pagination justify-content-center">
-    <!-- Previous button -->
-    <?php if ($page > 1) : ?>
-        <li class="page-item">
-            <a class="page-link" href="?page=<?= $page - 1; ?>" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-    <?php endif; ?>
+        <div class="container-fluid fixed-bottom mb-5">
+        <div class="row justify-content-end">
+            <div class="col-md-12">
+                <ul class="pagination justify-content-end">
+                    <!-- Previous button -->
+                    <?php if ($page > 1) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?= $page - 1; ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
 
-    <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-        <li class="page-item <?= ($i == $page) ? 'active' : ''; ?>">
-            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
-        </li>
-    <?php endfor; ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                        <li class="page-item <?= ($i == $page) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
 
-    <!-- Next button -->
-    <?php if ($page < $totalPages) : ?>
-        <li class="page-item">
-            <a class="page-link" href="?page=<?= $page + 1; ?>" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    <?php endif; ?>
-</ul>
+                    <!-- Next button -->
+                    <?php if ($page < $totalPages) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?= $page + 1; ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
 
         </div>
     </div>

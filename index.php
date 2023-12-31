@@ -180,12 +180,14 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 1
                                         <br>
                                         
                                         <button class="btn btn-primary login-button" type="submit" name="user_login"> Log-in </button>
+                                        <a href="user_forgot_password.php" class="mt-2" style="float:right">Forgot Password</a>
                                     
                                     </form>
+                                    <br>
 
-                                    <hr>
+                                    <hr class="mt-3">
 
-                                    <div class="registration-section"> 
+                                    <div class="registration-section mt-3"> 
                                         <p1> <strong> Haven't registered yet? </strong> </p1> 
 
                                         <br>

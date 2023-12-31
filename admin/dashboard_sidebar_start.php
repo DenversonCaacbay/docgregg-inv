@@ -97,11 +97,11 @@
                     <i class="fas fa-bullhorn"></i>
                     <span>Inventory</span></a>
             </li>
-            <li class="nav-item" id="staff">
+            <!-- <li class="nav-item" id="staff">
                 <a class="nav-link  text-light" href="admin_staff_list.php">
                     <i class="fas fa-bullhorn"></i>
                     <span>Staff List</span></a>
-            </li>
+            </li> -->
 
             <!-- Profile -->
             <li class="nav-item" id="profile">

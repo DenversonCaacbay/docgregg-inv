@@ -1,5 +1,12 @@
 <?php 
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Include PHPMailer autoloader
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 class BMISClass {
 
 //------------------------------------------ DATABASE CONNECTION ----------------------------------------------------
@@ -91,40 +98,149 @@ class BMISClass {
             }
         }
 
-        // Login for Users
-        public function user_login() {
+        //Testing Login with checking is User has verified his or her account
+        public function user_login() 
+        {
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
             ob_start();
-            try {
 
+            try 
+            {
                 // Your existing code here
+                if(isset($_POST['user_login'])) 
+                {
+                    $email = $_POST['email'];
+                    $password = $_POST['password'];
+                    $connection = $this->openConn();
 
-            if(isset($_POST['user_login'])) {
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-        
-                $connection = $this->openConn();
-        
-                // Check if the email exists in tbl_user
-                $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
-                $stmt->execute([$email]);
-                $user = $stmt->fetch();
-        
-                // If the email is found in tbl_user and password is correct
-                if ($user && password_verify($password, $user['password'])) {
-                    $this->set_userdata($user);
-                    header('Location: user_home.php');
-                    exit();
-                } else {
-                    // If the email is not found in tbl_user or password is incorrect
-                    echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
+                    // Check if the email exists in tbl_user
+                    $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
+                    $stmt->execute([$email]);
+                    $user = $stmt->fetch();
+
+                    // If the email is found in tbl_user
+                    if ($user) 
+                    {
+                        // Check if the account is verified
+                        if ($user['verified'] == 1) 
+                        {
+                            // If the password is correct, log in
+                            if (password_verify($password, $user['password'])) 
+                            {
+                                $this->set_userdata($user);
+                                header('Location: user_home.php');
+                                exit();
+                            } 
+                            else 
+                            {
+                                echo "<script type='text/javascript'>alert('Invalid Password');</script>";
+                            }
+                        } 
+                        else 
+                        {
+                            // Account is not verified, send verification code and redirect to verify_code.php
+                            $verificationCode = bin2hex(random_bytes(16));
+                            $this->sendVerificationEmail($email, $verificationCode);
+
+                            // Update verification_code in tbl_user
+                            $updateCodeQuery = "UPDATE tbl_user SET verification_code = ? WHERE email = ?";
+                            $updateCodeStmt = $connection->prepare($updateCodeQuery);
+                            $updateCodeStmt->execute([$verificationCode, $email]);
+
+                            header("Location: user_verification.php?email=$email");
+                            exit();
+                        }
+                    } 
+                    else 
+                    {
+                        // Email not found, alert and prompt to register
+                        echo "<script type='text/javascript'>alert('No Account Found. Please Register First.');</script>";
+                    }
                 }
+            } 
+            catch (Exception $e) 
+            {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
             }
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
+
+// Function to send verification email
+        private function sendVerificationEmail($email, $verificationCode) {
+            // Include PHPMailer autoloader
+            // require 'PHPMailer/src/Exception.php';
+            // require 'PHPMailer/src/PHPMailer.php';
+            // require 'PHPMailer/src/SMTP.php';
+
+            $mail = new PHPMailer(true);
+
+            try {
+                // Your SMTP settings here
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'rileyelijah052005@gmail.com';
+                $mail->Password = 'zptq dkfa ommi azbl';
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+
+                // Set "From" address
+                $mail->setFrom('rileyelijah052005@gmail.com', 'DG Veterinary Clinic'); // Replace with your name
+
+                // Set "To" address
+                $mail->addAddress($email);
+
+                // Set email subject and body
+                $mail->Subject = 'Email Verification';
+                $mail->Body = "Thank you for signing up! Your verification code is: $verificationCode";
+
+                // Enable verbose debug output
+                $mail->SMTPDebug = 2;
+
+                // Send the email
+                $mail->send();
+            } catch (Exception $e) {
+                // Log the error
+                error_log("Email sending failed for $email: " . $mail->ErrorInfo, 1, "your_error_log.txt");
+                echo "Email sending failed. Please try again later.";
+            }
         }
+
+
+        // This is Working Login for Users
+        // public function user_login() 
+        // {
+        //     error_reporting(E_ALL);
+        //     ini_set('display_errors', 1);
+        //     ob_start();
+        //     try 
+        //     {
+        //         // Your existing code here
+        //         if(isset($_POST['user_login'])) 
+        //         {
+        //             $email = $_POST['email'];
+        //             $password = $_POST['password'];
+        //             $connection = $this->openConn();
+        //             // Check if the email exists in tbl_user
+        //             $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
+        //             $stmt->execute([$email]);
+        //             $user = $stmt->fetch();
+        //             // If the email is found in tbl_user and password is correct
+        //             if ($user && password_verify($password, $user['password'])) {
+        //                 $this->set_userdata($user);
+        //                 header('Location: user_home.php');
+        //                 exit();
+        //             } else {
+        //                 // If the email is not found in tbl_user or password is incorrect
+        //                 echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
+        //             }
+        //         }
+        //     } 
+        //     catch (Exception $e) 
+        //     {
+        //         echo 'Caught exception: ',  $e->getMessage(), "\n";
+        //     }
+        // }
         
 
     //eto yung function na mag e end ng session tas i l logout ka 

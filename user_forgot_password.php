@@ -4,9 +4,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Include PHPMailer autoloader
-require '../classes/PHPMailer/src/Exception.php';
-require '../classes/PHPMailer/src/PHPMailer.php';
-require '../classes/PHPMailer/src/SMTP.php';
+require 'classes/PHPMailer/src/Exception.php';
+require 'classes/PHPMailer/src/PHPMailer.php';
+require 'classes/PHPMailer/src/SMTP.php';
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Check if the user exists
-    $checkUserQuery = "SELECT * FROM tbl_admin WHERE email = ?";
+    $checkUserQuery = "SELECT * FROM tbl_user WHERE email = ?";
     $stmt = $conn->prepare($checkUserQuery);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -37,13 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         sendVerificationEmail($email, $verificationCode);
 
         // Update the verification_code column in the database
-        $updateCodeQuery = "UPDATE tbl_admin SET verification_code = ? WHERE email = ?";
+        $updateCodeQuery = "UPDATE tbl_user SET verification_code = ? WHERE email = ?";
         $updateCodeStmt = $conn->prepare($updateCodeQuery);
         $updateCodeStmt->bind_param("ss", $verificationCode, $email);
         $updateCodeStmt->execute();
 
         // Redirect to verify_code.php
-        header("Location: admin_forgot_verification_page.php?email=$email&code=$verificationCode");
+        header("Location: user_forgot_verification.php?email=$email&code=$verificationCode");
         exit();
     } else {
         // User does not exist, redirect to login page
@@ -99,7 +99,7 @@ function sendVerificationEmail($email, $verificationCode) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email</title>
-    <link href="../css/user.css" rel="stylesheet" type="text/css"> 
+    <link href="css/user.css" rel="stylesheet" type="text/css"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>

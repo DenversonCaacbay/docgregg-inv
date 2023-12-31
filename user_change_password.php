@@ -22,7 +22,7 @@ if (isset($_POST['update_password'])) {
     if ($new_password === $confirm_password) {
         // Update the password in tbl_user
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-        $updateQuery = "UPDATE tbl_admin SET password='$hashed_password' WHERE email='$email'";
+        $updateQuery = "UPDATE tbl_user SET password='$hashed_password' WHERE email='$email'";
 
         if ($conn->query($updateQuery) === TRUE) {
             echo "<script type='text/javascript'>alert('Password updated successfully.');</script>";
@@ -46,8 +46,8 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Password</title>
-    <link href="../css/user.css" rel="stylesheet" type="text/css"> 
+    <title>Document</title>
+    <link href="css/user.css" rel="stylesheet" type="text/css"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>

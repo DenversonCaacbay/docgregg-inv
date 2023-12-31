@@ -24,9 +24,9 @@
 
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
-    <a class="btn btn-primary" href="admin_client.php">Back</a>
-    <h1 class="mb-0 ml-2">Client Information</h1>
-</div>
+        <a class="btn btn-primary" href="admin_client.php">Back</a>
+        <h1 class="mb-0 ml-2">Client Information</h1>
+    </div>
 
 
     
