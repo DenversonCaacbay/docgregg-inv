@@ -187,21 +187,6 @@ require 'PHPMailer/src/SMTP.php';
             }
         }
 
-        // public function delete_resident(){
-        //     $id_resident = $_POST['id_resident'];
-
-        //     if(isset($_POST['delete_resident'])) {
-        //         $connection = $this->openConn();
-        //         $stmt = $connection->prepare("DELETE FROM tbl_resident where id_resident = ?");
-        //         $stmt->execute([$id_resident]);
-
-        //         $message2 = "Resident Data Deleted";
-                
-        //         echo "<script type='text/javascript'>alert('$message2');</script>";
-        //         header("Refresh:0");
-        //     }
-        // }
-
     //-------------------------------- EXTRA FUNCTIONS FOR RESIDENT CLASS ---------------------------------
 
     
@@ -209,7 +194,6 @@ require 'PHPMailer/src/SMTP.php';
 
     public function get_single_resident($id_user){
 
-        // $id_user = $_GET['id_user'];
         
         $connection = $this->openConn();
         $stmt = $connection->prepare("SELECT * FROM tbl_user where id_user = ?");
@@ -254,45 +238,6 @@ require 'PHPMailer/src/SMTP.php';
         }
     }
 
-    // public function count_male_resident() {
-    //     $connection = $this->openConn();
-
-    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user where sex = 'male' ");
-    //     $stmt->execute();
-    //     $rescount = $stmt->fetchColumn();
-
-    //     return $rescount;
-    // }
-
-    // public function count_female_resident() {
-    //     $connection = $this->openConn();
-
-    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user where sex = 'female'");
-    //     $stmt->execute();
-    //     $rescount = $stmt->fetchColumn();
-
-    //     return $rescount;
-    // }
-
-    // public function count_head_resident() {
-    //     $connection = $this->openConn();
-
-    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Yes'");
-    //     $stmt->execute();
-    //     $rescount = $stmt->fetchColumn();
-
-    //     return $rescount;
-    // }
-
-    // public function count_member_resident() {
-    //     $connection = $this->openConn();
-
-    //     $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Family Member'");
-    //     $stmt->execute();
-    //     $rescount = $stmt->fetchColumn();
-
-    //     return $rescount;
-    // }
 
     public function profile_update() {
         $id_user = $_GET['id_user'];
@@ -412,6 +357,24 @@ require 'PHPMailer/src/SMTP.php';
         return $view;
     }
 
+    public function view_record($id_user){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * FROM tbl_vaccination where deleted_at IS NULL AND pet_owner_id = ?");
+        $stmt->execute([$id_user]);
+        $view = $stmt->fetchAll();
+
+        return $view;
+    }
+    public function view_recent($id_user) {
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * FROM tbl_vaccination WHERE deleted_at IS NULL AND pet_owner_id = ? ORDER BY created_at DESC LIMIT 1");
+        $stmt->execute([$id_user]);
+        $view = $stmt->fetchAll(); // Use fetch() instead of fetchAll()
+    
+        return $view;
+    }
+    
+
     public function create_pet($owner_id) {
         if (isset($_POST['add_pet'])) {
             $pet_name = ucfirst(strtolower($_POST['pet_name']));
@@ -499,6 +462,50 @@ require 'PHPMailer/src/SMTP.php';
             
             echo "<script type='text/javascript'>alert('$message2');</script>";
             header('refresh:0');
+        }
+    }
+
+    public function create_vaccination_record($owner_id) {
+        if (isset($_POST['add_vac'])) {
+            $pet_name = ucfirst(strtolower($_POST['pet_name']));
+            $owner_id = intval($owner_id); // Make sure owner_id is an integer
+    
+            $new_picture = $_FILES['vac_picture'];
+    
+            if (!empty($new_picture['name'])) {
+                $target_dir = "uploads/pets/";
+                $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+    
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0755, true);
+                }
+    
+                $target_file = $target_dir . time() . '.' . $file_extension;
+    
+                if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                    // proceed to create with picture
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_name`, `pet_owner_id`, `vac_picture`) VALUES (?, ?, ?)");
+                    $stmt->execute([$pet_name, $owner_id, $target_file]);
+    
+                    $message2 = "Vaccination Certificate added!";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
+    
+                    echo '<script>window.location.replace("user_record.php")</script>';
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            } else {
+                // proceed to create without picture
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_name`, `pet_owner_id`) VALUES (?, ?)");
+                $stmt->execute([$pet_name, $owner_id]);
+    
+                $message2 = "Pet added!";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+    
+                echo '<script>window.location.replace("user_record.php")</script>';
+            }
         }
     }
     
@@ -600,8 +607,8 @@ require 'PHPMailer/src/SMTP.php';
     // #user dashboard
     public function view_low_inventory(){
         $connection = $this->openConn();
-        $low_qty = 10;
-        $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE quantity <= ?");
+        $low_qty = 20;
+        $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE quantity < ?");
         $stmt->execute([$low_qty]);
         $view = $stmt->fetchAll();
     

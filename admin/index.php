@@ -120,7 +120,7 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 1
                 <div class="row">
                     <div class="col-sm"></div>
                         <div class="col-sm"> 
-                            <div class="card main-card mtop"> 
+                            <div class="card border-0 main-card mtop"> 
                                 <div class="card-body"> 
                                     <form method="post"> 
 
@@ -143,11 +143,9 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 1
 
                                         <br>
                                         
-                                        <button class="btn btn-primary login-button" type="submit" name="login"> Log-in </button>
-                                    
+                                        <button class="btn btn-primary login-button" type="submit" name="login"> Log-in </button><br><br>
+                                        <a style="float:right;" href="admin_forgot_password.php">Forgot Password</a>
                                     </form>
-
-                                    <hr>
 
                                     <!-- <div class="registration-section"> 
                                         <p1> <strong> Haven't registered yet? </strong> </p1> 

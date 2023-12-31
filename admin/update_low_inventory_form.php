@@ -17,7 +17,7 @@
 
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="admin_inventory.php">Back</a>
+        <a class="btn btn-primary" href="admin_low_inventory.php">Back</a>
         <h1 class="mb-0 ml-2">Update Item Data</h1>
     </div>
                 
@@ -91,8 +91,8 @@
 
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
-                            
-                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
+                            <!-- <a href="admin_inventory.php" class="btn btn-danger" style="width: 120px; font-size: 18px; border-radius:5px; margin-left:35%;"> Back </a> -->
+                        <button class="btn btn-primary W-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
                     </form>
                 </div>
             </div>

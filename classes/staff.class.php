@@ -137,6 +137,19 @@
            
         }
 
+        public function view_low_inventory($page = 1, $recordsPerPage = 3){
+            $startFrom = ($page - 1) * $recordsPerPage;
+            $connection = $this->openConn();
+        
+            // Modify the SQL query to include a WHERE clause
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity < 20 LIMIT $startFrom, $recordsPerPage");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        
+
         public function view_single_inventory(){
 
             $id_inv = $_GET['inv_id'];
@@ -472,7 +485,7 @@
 
         public function count_low_inventory() {
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= 10");
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= 20");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -556,7 +569,7 @@
 <!-- fontawesome icons -->
 <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
 <script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
