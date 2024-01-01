@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-md-3 text-center ">
                     <?php if (is_null($item['pet_picture'])): ?>
-                        <img src="images/placeholder/pet-placeholder.png" width="150px;">
+                        <img src="../images/placeholder/pet-placeholder.png" width="100">
                     <?php else: ?>
                         <!-- Display pet image here -->
                         <img src="../<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="100">

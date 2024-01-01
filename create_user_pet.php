@@ -46,40 +46,42 @@
         <div class="container"  style="margin-top: 12em;">
             
                 <div class="card" style="margin-bottom: 3em;">     
-                    <form method="post" enctype='multipart/form-data' class=" mt-1 p-2">                
-                        <!-- <label>Item Picture:</label> -->
-                        <div class="row">
-                            <div class="col">
-                                <div class="custom-file form-group">
-                                    <label for="customFile">Pet Picture:</label>
-                                    <div class="d-flex align-items-center flex-column mb-2">
-                                        <img id="blah" src="images/placeholder/pet-placeholder.png" class="img-thumbnail" style="margin-top:-200px;" width="150" alt="Pet Picture">
-                                        <input type="file" onchange="readURL(this);" value="<?= $item['pet_picture']?>" class="custom-file-input" id="customFile" name="pet_picture">
-                                        <label class="custom-file-label" for="customFile">Choose File Photo</label>
-                                    </div>
-                                </div>
-                            </div>
+                <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
+                    <?php if (isset($item['pet_picture']) && !is_null($item['pet_picture'])): ?>
+                        <img id="blah" src="<?= $item['pet_picture'] ?>" class="img-size" alt="Pet Picture">
+                    <?php else: ?>
+                        <img id="blah" src="images/placeholder/item-placeholder.png" class="text-center mb-3" width="100" alt="Pet Picture">
+                    <?php endif; ?>
+                    <!-- Rest of your form code -->
 
-                        
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label> Pet Name: </label>
-                                    <input type="text" class="form-control" name="pet_name" required>
-                                </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="custom-file form-group">
+                                <input type="file" onchange="readURL(this);" class="custom-file-input" id="customFile" name="pet_picture">
+                                <label class="custom-file-label" for="customFile">Choose File Photo</label>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
-                        <br>
+                    </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <input type="submit" class="btn btn-primary w-100 mb-3" name="add_pet" value="Submit"/>
-                                <a class="btn btn-danger w-100" href="user_pet.php"> Back to Pets</a>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label> Pet Name: </label>
+                                <input type="text" class="form-control" name="pet_name" required>
                             </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-primary w-100 mb-3" name="add_pet" value="Submit"/>
+                            <a class="btn btn-danger w-100" href="user_pet.php"> Back to Pets</a>
+                        </div>
+                    </div>
+                </form>
+
                 </div>
             
         </div>
