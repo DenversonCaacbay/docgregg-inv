@@ -98,7 +98,7 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_vaccine_record");
+            $stmt = $connection->prepare("SELECT * from tbl_vaccination");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
@@ -106,43 +106,63 @@
            
         }
 
+        // public function view_vaccine_record(){
+        //     $connection = $this->openConn();
+        
+        //     $stmt = $connection->prepare("SELECT * FROM tbl_vaccination");
+        //     $stmt->execute();
+        //     $view = $stmt->fetchAll();
+        
+        //     return $view;
+        // }
+        
+
+        //old code
         public function view_vaccine_record(){
-
             $connection = $this->openConn();
-
-            // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT *
-                FROM tbl_vaccine_record
-                INNER JOIN tbl_pet ON tbl_pet.pet_id = tbl_vaccine_record.pet_id
-                INNER JOIN tbl_user ON tbl_user.id_user = tbl_pet.pet_owner_id;
-            ");
+        
+            $stmt = $connection->prepare("SELECT * 
+                FROM tbl_vaccination
+                LEFT JOIN tbl_user ON tbl_user.id_user = tbl_vaccination.pet_owner_id");
             $stmt->execute();
             $view = $stmt->fetchAll();
-            //$rows = $stmt->
+        
             return $view;
-           
         }
+        
+        
 
         // #inventory
-        public function view_inventory($page = 1, $recordsPerPage = 3){
-            $startFrom = ($page - 1) * $recordsPerPage;
-            $connection = $this->openConn();
 
-            // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_inventory WHERE deleted_at IS NULL LIMIT $startFrom, $recordsPerPage");
+        public function view_inventory(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
-            //$rows = $stmt->
+        
             return $view;
-           
         }
+        //with pagination
+        // public function view_inventory($page = 1, $recordsPerPage = 3){
+        //     $startFrom = ($page - 1) * $recordsPerPage;
+        //     $connection = $this->openConn();
 
-        public function view_low_inventory($page = 1, $recordsPerPage = 3){
-            $startFrom = ($page - 1) * $recordsPerPage;
+        //     // $stmt = $connection->prepare("SELECT * from tbl_user");
+        //     $stmt = $connection->prepare("SELECT * from tbl_inventory WHERE deleted_at IS NULL LIMIT $startFrom, $recordsPerPage");
+        //     $stmt->execute();
+        //     $view = $stmt->fetchAll();
+        //     //$rows = $stmt->
+        //     return $view;
+           
+        // }
+
+        public function view_low_inventory(){
+            // $startFrom = ($page - 1) * $recordsPerPage;
             $connection = $this->openConn();
         
             // Modify the SQL query to include a WHERE clause
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity < 20 LIMIT $startFrom, $recordsPerPage");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity < 20");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -444,7 +464,7 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt = $connection->prepare("SELECT COUNT(*)-1 from tbl_vaccine_record");
+            $stmt = $connection->prepare("SELECT COUNT(*)-1 from tbl_vaccination");
             $stmt->execute();
             $staffcount = $stmt->fetchColumn();
 
@@ -467,7 +487,7 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user");
-            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccine_record");
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccination");
             $stmt->execute();
             $staffcount = $stmt->fetchColumn();
 

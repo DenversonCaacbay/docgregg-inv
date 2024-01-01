@@ -40,7 +40,7 @@
         
              <div class="form-group">
                 <label> Search </label>
-                <input type="text" class="form-control" name="name"  value="" required>
+                <input type="text" class="form-control" id="searchInput" name="name"  value="" required>
             </div>
            
            <table class="table table-hover text-center table-bordered">
@@ -88,11 +88,13 @@
             </table>
             <!-- Pagination links -->
         <!-- Pagination links -->
-        <div class="container-fluid fixed-bottom mb-5">
+
+        <!--Pagination -->
+        <!-- <div class="container-fluid fixed-bottom mb-5">
         <div class="row justify-content-end">
             <div class="col-md-12">
                 <ul class="pagination justify-content-end">
-                    <!-- Previous button -->
+                    
                     <?php if ($page > 1) : ?>
                         <li class="page-item">
                             <a class="page-link" href="?page=<?= $page - 1; ?>" aria-label="Previous">
@@ -107,7 +109,7 @@
                         </li>
                     <?php endfor; ?>
 
-                    <!-- Next button -->
+                    
                     <?php if ($page < $totalPages) : ?>
                         <li class="page-item">
                             <a class="page-link" href="?page=<?= $page + 1; ?>" aria-label="Next">
@@ -118,11 +120,41 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
 
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the input field and table
+        var input = document.getElementById('searchInput');
+        var table = document.querySelector('.table');
+
+        // Add an event listener to the input field
+        input.addEventListener('input', function () {
+            // Get the search query and convert it to lowercase
+            var query = input.value.toLowerCase();
+
+            // Get all table rows in the tbody
+            var rows = table.querySelectorAll('tbody tr');
+
+            // Loop through each row and hide/show based on the search query
+            rows.forEach(function (row) {
+                var productName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                var category = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
+
+                // Check if the query matches the product name or category
+                if (productName.includes(query) || category.includes(query)) {
+                    row.style.display = ''; // Show the row
+                } else {
+                    row.style.display = 'none'; // Hide the row
+                }
+            });
+        });
+    });
+</script>
 <!-- End of Main Content -->
 
 <?php 

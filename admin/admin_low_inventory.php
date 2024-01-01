@@ -45,7 +45,6 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <div class="row">
         <div class="col-md-6"><h1 class="mb-4">Low Inventory</h1></div>
     </div>
-    <hr>
 
     <div class="row"> 
         <div class="col-md-12">
@@ -94,8 +93,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             </table>
             <!-- Pagination links -->
         <!-- Pagination links -->
-<ul class="pagination justify-content-center">
-    <!-- Previous button -->
+<!-- <ul class="pagination justify-content-center">
+
     <?php if ($page > 1) : ?>
         <li class="page-item">
             <a class="page-link" href="?page=<?= $page - 1; ?>" aria-label="Previous">
@@ -110,7 +109,6 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         </li>
     <?php endfor; ?>
 
-    <!-- Next button -->
     <?php if ($page < $totalPages) : ?>
         <li class="page-item">
             <a class="page-link" href="?page=<?= $page + 1; ?>" aria-label="Next">
@@ -118,7 +116,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             </a>
         </li>
     <?php endif; ?>
-</ul>
+</ul> -->
 
         </div>
     </div>

@@ -26,10 +26,12 @@
     <h1 class="mb-4">Client List</h1>
     <!-- <button class="btn btn-primary">Add Item</button> -->
 
-    <hr>
-
     <div class="row"> 
         <div class="col-md-12">
+        <div class="form-group">
+                <label> Search </label>
+                <input type="text" class="form-control" id="searchInput" name="name"  value="" required>
+            </div>
            <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
@@ -77,6 +79,38 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the input field and table
+        var input = document.getElementById('searchInput');
+        var table = document.querySelector('.table');
+
+        // Add an event listener to the input field
+        input.addEventListener('input', function () {
+            // Get the search query and convert it to lowercase
+            var query = input.value.toLowerCase();
+
+            // Get all table rows in the tbody
+            var rows = table.querySelectorAll('tbody tr');
+
+            // Loop through each row and hide/show based on the search query
+            rows.forEach(function (row) {
+                var fname = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                var lname = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+
+                // var category = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
+
+                // Check if the query matches the product name or category
+                if (fname.includes(query) || lname.includes(query)) {
+                    row.style.display = ''; // Show the row
+                } else {
+                    row.style.display = 'none'; // Hide the row
+                }
+            });
+        });
+    });
+</script>
 <!-- End of Main Content -->
 
 <?php 
