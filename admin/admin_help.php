@@ -60,7 +60,7 @@
                 </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                <div class="accordion-body">You can check the records of the clients and their pets</div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -70,7 +70,7 @@
                 </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                <div class="accordion-body">Viewing of vaccination certificates uploaded my the clients</div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -80,7 +80,11 @@
                 </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                <div class="accordion-body">Here in inventory you can check the stocks of every item. <br>
+                    <code>1.</code> You can add item of pets and you can select there category<br>
+                    <code>2.</code> Updating the item data<br>
+                    <code>3.</code> You can remove the item on the inventory
+                </div>
                 </div>
             </div>
         </div>

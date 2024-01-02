@@ -57,16 +57,26 @@
     <div class="row mt-3"> 
         <div class="col-md-2"> </div> 
         <div class="col-md-8"> 
-            <div class="card">
+            <div class="card border-0">
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data"> 
                         <div class="row">
                             <div class="col-12 text-center mb-3">
-                            <?php if (is_null($user['picture'])): ?>
-                                <img id="blah" src="images/placeholder/item-placeholder.png" class="img-size" alt="User Picture" width="150">
+                            <div class="col-md-12">
+                                <?php if (is_null($item['picture'])): ?>
+                                    <img id="blah" src="images/placeholder/user-placeholder.png" width="150" alt="User Picture">
                                 <?php else: ?>
-                                <img src="<?= $user['picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
-                            <?php endif; ?>
+                                    <img id="blah" src="<?= $item['picture']?>" width="150" alt="User Picture">
+                                <?php endif; ?>
+                                <br>
+                            </div>
+                            <div class="col-md-12 mt-3 mb-2">
+                                <!-- <label>Item Picture:</label> -->
+                                <div class="custom-file form-group">
+                                    <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
+                                    <label class="custom-file-label" for="customFile">Choose File Photo</label>
+                                </div>
+                            </div>
                             </div>
                             
                             <div class="col-md-4">

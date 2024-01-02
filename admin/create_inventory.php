@@ -14,23 +14,26 @@
 <!-- Begin Page Content -->
 
 <div class="container-fluid">
-
+<div class="d-flex align-items-center">
+        <a class="btn btn-primary" href="admin_inventory.php">Back</a>
+        <h1 class="mb-0 ml-2">Add Item Data</h1>
+    </div>
     <!-- Page Heading -->
                 
-    <div class="row"> 
+    <div class="row mt-3"> 
         <div class="col-md-2"> </div> 
         <div class="col-md-8"> 
             <div class="card">
-                <div class="card-header bg-primary text-white"> Add Item Data</div>
+                <!-- <div class="card-header bg-primary text-white"> Add Item Data</div> -->
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data"> 
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- <label>Item Picture:</label> -->
                                 <?php if (is_null($item['picture'])): ?>
-                                    <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Pet Picture">
+                                    <img id="blah" src="../images/placeholder/item-placeholder.png" width="150" alt="Pet Picture">
                                 <?php else: ?>
-                                    <img id="blah" src="../<?= $item['picture']?>" class="img-size" alt="Pet Picture">
+                                    <img id="blah" src="../<?= $item['picture']?>" width="150" alt="Pet Picture">
                                 <?php endif; ?>
                                 <br>
                             </div>
@@ -75,16 +78,18 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mtop"> Expiration Date: </label>
+                                    <input type="date" class="form-control" name="exp_date" required>
+                                </div>
+                            </div>
                         </div>
 
 
-
-                    <br>
-                    <hr>
-
                         <input type="hidden" class="form-control" name="role" value="resident">
-                            <a href="admin_inventory.php" class="btn btn-danger" style="width: 120px; font-size: 18px; border-radius:5px; margin-left:35%;"> Back </a>
-                        <button class="btn btn-primary" style="width: 120px; font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
+                            <!-- <a href="admin_inventory.php" class="btn btn-danger" style="width: 120px; font-size: 18px; border-radius:5px; margin-left:35%;"> Back </a> -->
+                        <button class="btn btn-primary w-100 m-2" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
                     </form>
                 </div>
             </div>

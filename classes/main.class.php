@@ -179,13 +179,13 @@ class BMISClass {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'rileyelijah052005@gmail.com';
-                $mail->Password = 'zptq dkfa ommi azbl';
+                $mail->Username = 'dgvetclinic@gmail.com';
+                $mail->Password = 'uxpq syxi hxte ootg';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
                 // Set "From" address
-                $mail->setFrom('rileyelijah052005@gmail.com', 'DG Veterinary Clinic'); // Replace with your name
+                $mail->setFrom('dgvetclinic@gmail.com', 'DG Veterinary Clinic'); // Replace with your name
 
                 // Set "To" address
                 $mail->addAddress($email);

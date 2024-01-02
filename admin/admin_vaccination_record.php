@@ -23,7 +23,7 @@
     <!-- Page Heading -->
 <div class="row">
     <div class="col-md-6"><h1 class="mb-4">Vaccination Record</h1></div>
-    <div class="col-md-6"><a href="create_vaccination_record.php" style="float:right;padding: 10px" class="btn btn-primary">Add Vaccination Record</a></div>
+    <!-- <div class="col-md-6"><a href="create_vaccination_record.php" style="float:right;padding: 10px" class="btn btn-primary">Add Vaccination Record</a></div> -->
 </div>
     
 

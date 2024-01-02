@@ -60,18 +60,24 @@ $view = $residentbmis->view_pet($id_resident);
     <a class="mx-auto" style="text-decoration: none;color: #fff;padding: 10px;" href="#">Add Vaccination Certificate</a>
 </nav>
 
-<div class="container"  style="margin-top: 12em;">       
+<div class="container"  style="margin-top: 5em;">       
     <div class="card p-3" style="margin-bottom: 3em;">     
         <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
             <div class="row">
-                <div class="col">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <?php if (isset($item['pet_picture']) && !is_null($item['vac_picture'])): ?>
+                        <img id="blah" src="<?= $item['vac_picture'] ?>" class="img-size"  width="100" alt="Vaccine Picture">
+                    <?php else: ?>
+                        <img id="blah" src="images/placeholder/item-placeholder.png" class="text-center mb-3" width="100" alt="Vaccine Picture">
+                    <?php endif; ?>
+                    
+                </div>
+                <div class="col-md-12">
                     <div class="custom-file form-group">
-                        <label for="customFile">Item Picture:</label>
-                        <div class="d-flex align-items-center flex-column mb-2">
-                            <img id="blah" src="images/placeholder/item-placeholder.png" class="img-thumbnail" style="margin-top:-200px;" width="150" alt="VaccinePicture">
-                            <input type="file" onchange="readURL(this);" value="<?= $item['vac_picture']?>" class="custom-file-input" id="customFile" name="vac_picture">
-                            <label class="custom-file-label" for="customFile">Choose File Photo</label>
-                        </div>
+                        <input type="file" onchange="readURL(this);" class="custom-file-input" id="customFile" name="vac_picture">
+                        <label class="custom-file-label" for="customFile">Choose File Photo</label>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
                     </div>
                 </div>
             </div>

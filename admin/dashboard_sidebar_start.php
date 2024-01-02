@@ -104,11 +104,11 @@
             </li> -->
 
             <!-- Profile -->
-            <li class="nav-item" id="profile">
+            <!-- <li class="nav-item" id="profile">
                 <a class="nav-link  text-light" href="admin_myprofile.php">
                     <i class="fas fa-id-card"></i>
                     <span>My Profile </span></a>
-            </li>
+            </li> -->
 
             <!-- Help and Support -->
             <li class="nav-item" id="help">
@@ -177,9 +177,9 @@
 
                         <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link" href="#" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     
-                                        <span class="mr-2 d-none d-lg-inline text-primary">Hello <?= $userdetails['firstname']?> <?= $userdetails['surname']?>!</span>
+                                        <span class="mr-2 d-none d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['firstname']?> <?= $userdetails['surname']?></span>
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>

@@ -43,19 +43,22 @@
             <a class="mx-auto" style="text-decoration: none;color: #fff;padding: 10px;" href="#">Add your Pet</a>
         </nav>
 
-        <div class="container"  style="margin-top: 12em;">
+        <div class="container"  style="margin-top: 5em;">
             
                 <div class="card" style="margin-bottom: 3em;">     
                 <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
-                    <?php if (isset($item['pet_picture']) && !is_null($item['pet_picture'])): ?>
-                        <img id="blah" src="<?= $item['pet_picture'] ?>" class="img-size" alt="Pet Picture">
-                    <?php else: ?>
-                        <img id="blah" src="images/placeholder/item-placeholder.png" class="text-center mb-3" width="100" alt="Pet Picture">
-                    <?php endif; ?>
                     <!-- Rest of your form code -->
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <?php if (isset($item['pet_picture']) && !is_null($item['pet_picture'])): ?>
+                                <img id="blah" src="<?= $item['pet_picture'] ?>" class="img-size"  width="100" alt="Pet Picture">
+                            <?php else: ?>
+                                <img id="blah" src="images/placeholder/item-placeholder.png" class="text-center mb-3" width="100" alt="Pet Picture">
+                            <?php endif; ?>
+                            
+                        </div>
+                        <div class="col-md-12">
                             <div class="custom-file form-group">
                                 <input type="file" onchange="readURL(this);" class="custom-file-input" id="customFile" name="pet_picture">
                                 <label class="custom-file-label" for="customFile">Choose File Photo</label>
