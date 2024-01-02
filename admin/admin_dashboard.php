@@ -46,7 +46,7 @@
 
 
     <div class="row"> 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <h4>Dashboard</h4>
             <br>
             <div class="card border-left-primary shadow">
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">  
+        <div class="col-md-6">  
             <br>
             <div class="card border-left-primary shadow card-upper-space">
                 <div class="card-body">
@@ -82,14 +82,14 @@
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user fa-2x text-dark"></i>
+                            <i class="fas fa-paw fa-2x text-dark"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4"> 
+        <!-- <div class="col-md-4"> 
             <br>
             <div class="card border-left-primary shadow card-upper-space">
                 <div class="card-body">
@@ -99,7 +99,7 @@
                                 Staff</div>
                                 <div class="h5 mb-0 font-weight-bold text-dark"><?= $staffcount?></div>
                                 <br>
-                                <!-- <a href="admn_table_voters.php"> View Records </a> -->
+                               
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-layer-group fa-2x text-dark"></i>
@@ -107,7 +107,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>  -->
     </div>
 
 
@@ -122,6 +122,11 @@
             <th>Full Name</th>
             <th>Pet Name</th>
             <th>Date</th>
+            <tr>
+                <td>Dog Hat</td>
+                <td>Ruby</td>
+                <td>January 01, 2024</td>
+            </tr>
         </table>
         
     </div>
