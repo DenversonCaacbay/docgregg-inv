@@ -53,6 +53,7 @@
                             <th> Quantity </th>
                             <th> Category </th>
                             <th> Date Created </th>
+                            <th> Expiration Date </th>
                             <th> Actions </th>
                         </tr>
                     </thead>
@@ -63,7 +64,7 @@
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
+                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-fluid" alt="Item Picture" width="50">
                                     <?php else: ?>
                                         <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
                                         <?php endif; ?>
@@ -73,6 +74,7 @@
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
+                                    <td> <?= $view['expired_at'] ? date("F d, Y - l", strtotime($view['expired_at'])) : "N/A"; ?> </td>
                                     <td>    
                                         <form action="" method="post">
                                             <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>

@@ -6,6 +6,7 @@
     $userdetails = $bmis->get_userdata();
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $staffbmis->update_staff($userdetails['id_admin']);
+    $staffbmis->update_password($userdetails['id_admin']);
     // $bmis->validate_admin();
     // $bmis->delete_brgyid();
     // $view = $bmis->view_brgyid();
@@ -69,17 +70,16 @@
                     <form method="post" enctype="multipart/form-data"> 
                         <div class="row">
                             <div class="col-md-12">
-                                <?php if (is_null($item['picture'])): ?>
+                                <?php if (empty($user['picture'])): ?>
                                     <img id="blah" src="../images/placeholder/item-placeholder.png" width="150" alt="Pet Picture">
                                 <?php else: ?>
-                                    <img id="blah" src="../<?= $item['picture']?>" width="150" alt="Pet Picture">
+                                    <img id="blah" src="../<?= $user['picture']?>" width="150" alt="Pet Picture">
                                 <?php endif; ?>
                                 <br>
                             </div>
                             <div class="col-md-12 mb-2">
-                                <!-- <label>Item Picture:</label> -->
                                 <div class="custom-file form-group">
-                                    <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
+                                    <input type="file" onchange="readURL(this);" value="<?= $user['new_picture']?>" class="custom-file-input" id="customFile" name="new_picture">
                                     <label class="custom-file-label" for="customFile">Choose File Photo</label>
                                 </div>
                             </div>
@@ -97,12 +97,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-4" hidden>
+                            <!-- <div class="col-4">
                                 <div class="form-group">
                                     <label> Middle Initial: </label>
                                     <input type="text" class="form-control" name="mi" value="<?= $user['mi']; ?>" required>
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <div class="col-12">
                                 <div class="form-group">
@@ -132,17 +132,17 @@
                <form method="post">
                     <div class="form-group">
                         <label> New Password </label>
-                        <input type="text" class="form-control" placeholder="New Password" name="new_password" required>
+                        <input type="password" class="form-control" placeholder="New Password" name="new_password" required>
                     </div>
                     <div class="form-group">
                         <label> Confirm Password </label>
-                        <input type="text" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+                        <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
                     </div>
                     <div class="form-check form-switch mt-2">
                         <input class="form-check-input" onclick="myFunction()" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                         <label class="form-check-label" for="flexSwitchCheckDefault">Show Password</label>
                     </div>
-                    <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>">
+                    <!-- <input type="hidden" name="email" value="<?php echo $user['id_admin']; ?>"> -->
                     <button class="btn btn-primary w-100 mt-3" style="font-size: 18px; border-radius:5px;" type="submit" name="update_password">Update Password</button>
                 </form> 
             </div>

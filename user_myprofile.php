@@ -63,17 +63,17 @@
                         <div class="row">
                             <div class="col-12 text-center mb-3">
                             <div class="col-md-12">
-                                <?php if (is_null($item['picture'])): ?>
+                                <?php if (empty($user['picture'])): ?>
                                     <img id="blah" src="images/placeholder/user-placeholder.png" width="150" alt="User Picture">
                                 <?php else: ?>
-                                    <img id="blah" src="<?= $item['picture']?>" width="150" alt="User Picture">
+                                    <img id="blah" src="<?= $user['picture']?>" width="150" alt="User Picture">
                                 <?php endif; ?>
                                 <br>
                             </div>
                             <div class="col-md-12 mt-3 mb-2">
                                 <!-- <label>Item Picture:</label> -->
                                 <div class="custom-file form-group">
-                                    <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
+                                    <input type="file" onchange="readURL(this);" value="<?= $user['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
                                     <label class="custom-file-label" for="customFile">Choose File Photo</label>
                                 </div>
                             </div>
@@ -112,8 +112,8 @@
 
 
 
-                    <br>
-                    <button class="btn btn-primary" style="width: 100%; font-size: 18px; border-radius:5px;" type="submit" name="update_resident"> Update Profile </button>
+                        <br>
+                        <button class="btn btn-primary" style="width: 100%; font-size: 18px; border-radius:5px;" type="submit" name="update_resident"> Update Profile </button>
                         
                     </form>
                 </div>

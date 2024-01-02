@@ -66,7 +66,7 @@
                             <div class="col"> 
                                 <div class="form-group">
                                     <label class="mtop"> Quantity: </label>
-                                    <input type="number" class="form-control" name="qty"value="<?= $item['quantity']?>" required>
+                                    <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" required>
                                 </div>
                             </div>
 
@@ -82,12 +82,14 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mtop"> Expiration Date: </label>
+                                    <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" required>
+                                </div>
+                            </div>
                         </div>
-
-
-
-                        <br>
-                        <hr>
 
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">

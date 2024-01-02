@@ -151,41 +151,67 @@
         }
 
         public function update_resident($id_resident) {
+            // ini_set('display_errors', 1);
             if (isset($_POST['update_resident'])) {
-                // $id_resident = $_GET['id_resident'];
                 $email = $_POST['email'];
-                // $password = ($_POST['password']);
                 $lname = $_POST['lname'];
                 $fname = $_POST['fname'];
                 $mi = $_POST['mi'];
-                // $age = $_POST['age'];
-                $sex = $_POST['sex'];
-                // $status = $_POST['status'];
-                // $houseno = $_POST['houseno'];
-                // $street = $_POST['street'];
-                // $brgy = $_POST['brgy'];
-                // $municipal = $_POST['municipal'];
-                $contact = $_POST['contact'];
+                // $sex = $_POST['sex'];
+                // $contact = $_POST['contact'];
                 $bdate = $_POST['bdate'];
-                // $bplace = $_POST['bplace'];
                 $nationality = $_POST['nationality'];
-                // $voter = $_POST['voter'];
-                // $familyrole = $_POST['family_role'];
-                $role = $_POST['role'];
-                // $addedby = $_POST['addedby'];
+                // $role = $_POST['role'];
+        
+                // Check if a new picture is uploaded
+                $new_picture = $_FILES['new_picture'];
+                $target_dir = "uploads/user/";
 
-                $connection = $this->openConn();
-                $stmt = $connection->prepare("UPDATE tbl_resident SET `lname` =?, 
-                    `fname` = ?, `mi` =?, `sex` =?, `email` =?, `contact` =?,
-                    `birthdate` =?, `nationality` =? WHERE `id_user` = ?");
-                    $stmt->execute([$password, $lname, $fname, $mi,$email,
-                    $contact, $bdate, $nationality, $id_resident]);
-                    
+                // Function to handle image upload
+                function uploadImage($new_picture, $target_dir) {
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        return $target_file;
+                    } else {
+                        return false;
+                    }
+                }
+        
+                // Check if a new picture is uploaded
+                if (!empty($new_picture['name'])) {
+                    $uploaded_file = uploadImage($new_picture, $target_dir);
+        
+                    if ($uploaded_file !== false) {
+                        $connection = $this->openConn();
+        
+                        // Update the resident information including the new picture
+                        $stmt = $connection->prepare("UPDATE tbl_user SET `lname` =?, `fname` = ?, `mi` =?, `email` =?, `picture` =? WHERE `id_user` = ?");
+                        $stmt->execute([$lname, $fname, $mi, $email, $uploaded_file, $id_resident]);
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                        return;
+                    }
+                } else {
+                    // Update resident information without changing the picture
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("UPDATE tbl_user SET `lname` =?, `fname` = ?, `mi` =?, `email` =?
+                         WHERE `id_user` = ?");
+                    $stmt->execute([$lname, $fname, $mi, $email, $id_resident]);
+                }
+        
                 $message2 = "User details updated";
                 echo "<script type='text/javascript'>alert('$message2');</script>";
                 header("refresh: 0");
             }
         }
+        
 
     //-------------------------------- EXTRA FUNCTIONS FOR RESIDENT CLASS ---------------------------------
 

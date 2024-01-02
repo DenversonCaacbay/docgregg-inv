@@ -201,6 +201,7 @@
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
                 $category = $_POST['category'];
+                $exp = $_POST['exp_date'];
                 $new_picture = $_FILES['new_picture'];
 
         
@@ -216,8 +217,8 @@
         
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         $connection = $this->openConn();
-                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category) VALUES (?, ?, ?, ?, ?)");
-                        $stmt->execute([$name, $price, $qty, $target_file, $category]);
+                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category, expired_at) VALUES (?, ?, ?, ?, ?, ?)");
+                        $stmt->execute([$name, $price, $qty, $target_file, $category, $exp]);
         
                         $message2 = "Item created!";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -227,8 +228,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                    $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity) VALUES (?, ?, ?)");
-                    $stmt->execute([$name, $price, $qty]);
+                    $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, expired_at) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$name, $price, $qty, $exp]);
         
                     $message2 = "Item created";
                     echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -243,6 +244,7 @@
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
+                $exp = $_POST['exp_date'];
                 $new_picture = $_FILES['new_picture'];
         
                 if (!empty($new_picture['name'])) {
@@ -258,8 +260,8 @@
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         $connection = $this->openConn();
                         $stmt = $connection->prepare("UPDATE tbl_inventory
-                            SET name =?, price =?, quantity = ?, picture = ? WHERE inv_id = ?");
-                        $stmt->execute([$name, $price, $qty, $target_file, $inv_id]);
+                            SET name =?, price =?, quantity = ?, picture = ?, expired_at = ? WHERE inv_id = ?");
+                        $stmt->execute([$name, $price, $qty, $target_file, $exp, $inv_id]);
         
                         $message2 = "Item Updated";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -270,8 +272,8 @@
                 } else {
                     $connection = $this->openConn();
                     $stmt = $connection->prepare("UPDATE tbl_inventory
-                        SET name =?, price =?, quantity = ? WHERE inv_id = ?");
-                    $stmt->execute([$name, $price, $qty, $inv_id]);
+                        SET name =?, price =?, quantity = ?, expired_at = ? WHERE inv_id = ?");
+                    $stmt->execute([$name, $price, $qty, $exp, $inv_id]);
         
                     $message2 = "Item Updated";
                     echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -358,7 +360,7 @@
 
         public function view_single_staff($id_admin){
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT id_admin, email, fname, lname, mi, role FROM tbl_admin where id_admin = '$id_admin'");
+            $stmt = $connection->prepare("SELECT id_admin, email, fname, lname, mi, role, picture FROM tbl_admin where id_admin = '$id_admin'");
             $stmt->execute();
             $view = $stmt->fetch(); 
             $total = $stmt->rowCount();
@@ -374,48 +376,88 @@
 
         public function update_staff($id_user) {
             if (isset($_POST['update_staff'])) {
-                // $id_user = $_GET['id_user'];
                 $password = ($_POST['password']);
                 $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
                 $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
-                $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
+                // $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
+                $mi = ""; // Get first letter in uppercase and add '.'
                 $role = $_POST['role'];
                 $email = $_POST['email'];
-                
-                    $connection = $this->openConn();
-
-                    // Check if the provided email matches the current user's email
-                    $stmtEmailCheck = $connection->prepare("SELECT email FROM tbl_admin WHERE id_admin = ?");
-                    $stmtEmailCheck->execute([$id_user]);
-                    $currentUserEmail = $stmtEmailCheck->fetchColumn();
-
-                    // checks if user changes email
-                    if ($email !== $currentUserEmail) {
-                        // Provided email is different, check for its existence
-                        $stmtEmailExist = $connection->prepare("SELECT COUNT(*) FROM tbl_admin WHERE email = ?");
-                        $stmtEmailExist->execute([$_POST['email']]);
-                        $emailExists = $stmtEmailExist->fetchColumn();
-            
-                        if ($emailExists > 0) {
-                            // Email already exists, show an error message
-                            $messageError = "Email already exists. Please choose a different email.";
-                            echo "<script type='text/javascript'>alert('$messageError');</script>";
-                            header('refresh:0');
-                            return;
-                        }
+        
+                // Check if a new picture is uploaded
+                $new_picture = $_FILES['new_picture'];
+                $target_dir = "../uploads/admin/";
+        
+                // Function to handle image upload
+                function uploadImage($new_picture, $target_dir) {
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
                     }
-
-                    $stmt = $connection->prepare(
-                        "UPDATE tbl_admin SET lname = ?, fname = ?, mi = ?, role = ?, email = ? WHERE id_admin = ?");
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        return $target_file;
+                    } else {
+                        return false;
+                    }
+                }
+        
+                // Check if a new picture is uploaded
+                if (!empty($new_picture['name'])) {
+                    $uploaded_file = uploadImage($new_picture, $target_dir);
+        
+                    if ($uploaded_file !== false) {
+                        $connection = $this->openConn();
+        
+                        // Update the staff information including the new picture
+                        $stmt = $connection->prepare("UPDATE tbl_admin SET lname = ?, fname = ?, mi = ?, role = ?, email = ?, picture = ? WHERE id_admin = ?");
+                        $stmt->execute([$lname, $fname, $mi, $role, $email, $uploaded_file, $id_user]);
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                        return;
+                    }
+                } else {
+                    // Update staff information without changing the picture
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("UPDATE tbl_admin SET lname = ?, fname = ?, mi = ?, role = ?, email = ? WHERE id_admin = ?");
                     $stmt->execute([$lname, $fname, $mi, $role, $email, $id_user]);
-
-                    $message2 = "Admin Account Updated";
-    
-                    echo "<script type='text/javascript'>alert('$message2');</script>";
-                    header('refresh:0');
-
+                }
+        
+                $message2 = "Admin Account Updated";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header('refresh:0');
             }
         }
+
+        public function update_password($id_user) {
+            if (isset($_POST['update_password'])) {
+                $new_password = $_POST['new_password']; // New password input
+                $confirm_password = $_POST['confirm_password']; // Confirm password input
+        
+                // Validate the new password and confirm password
+                if (!empty($new_password) && $new_password === $confirm_password) {
+                    // Hash the new password before storing it
+                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        
+                    // Update only the password column
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("UPDATE tbl_admin SET password = ? WHERE id_admin = ?");
+                    $stmt->execute([$hashed_password, $id_user]);
+        
+                    $message2 = "Admin Password Updated";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
+                    header('refresh:0');
+                } else {
+                    echo "<script type='text/javascript'>alert('New password and confirm password do not match.');</script>";
+                    return;
+                }
+            }
+        }
+        
+        
 
         public function delete_staff(){
 
