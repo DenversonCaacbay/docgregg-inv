@@ -8,6 +8,7 @@
     $view = $residentbmis->view_record($id_resident);
     
     $residentbmis->profile_update();
+    $residentbmis->delete_vaccination();
  
 ?>
 
@@ -66,8 +67,8 @@ padding: 10px;
                     <h5><?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
                     <form method="post" class="mt-4">
                         <!-- <a href="update_user_pet.php?id_user=<?= $item['id_admin']; ?>" class="btn btn-success">Update</a> -->
-                        <input type="hidden" name="id_user" value="<?= $item['id_admin']; ?>">
-                        <button class="btn btn-danger" type="submit" name="delete_staff">Remove</button>
+                        <input type="hidden" name="vac_id" value="<?= $item['vac_id']; ?>">
+                        <button class="btn btn-danger" style="width: 90px; font-size: 17px; border-radius:30px;" type="submit" name="delete_vac" onclick="return confirm('Are you sure you want to remove this Vaccination?')"> Remove </button>
                     </form>
                 </div>
             </div>

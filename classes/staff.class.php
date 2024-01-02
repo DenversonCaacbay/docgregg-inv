@@ -121,9 +121,15 @@
         public function view_vaccine_record(){
             $connection = $this->openConn();
         
+            // $stmt = $connection->prepare("SELECT * 
+            //     FROM tbl_vaccination
+            //     LEFT JOIN tbl_user ON tbl_user.id_user = tbl_vaccination.pet_owner_id");
             $stmt = $connection->prepare("SELECT * 
                 FROM tbl_vaccination
-                LEFT JOIN tbl_user ON tbl_user.id_user = tbl_vaccination.pet_owner_id");
+                LEFT JOIN tbl_user ON tbl_user.id_user = tbl_vaccination.pet_owner_id
+                LEFT JOIN tbl_pet ON tbl_pet.pet_id = tbl_vaccination.pet_id
+                WHERE tbl_pet.deleted_at IS NULL
+            ");  
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -547,6 +553,21 @@
 
         //     return $staffcount;
         // }
+
+        public function recent_user() {
+            $connection = $this->openConn();
+            $limit = 4;
+
+            $stmt = $connection->prepare("SELECT * FROM tbl_user 
+            JOIN tbl_pet ON tbl_pet.pet_owner_id = tbl_user.id_user
+            WHERE tbl_user.deleted_at IS NULL AND tbl_pet.deleted_at IS NULL
+            ORDER BY tbl_pet.created_at DESC
+            LIMIT ".$limit);    
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+
+            return $view;
+        }
 
 
         //===================================== SCOPE CHANGED FEATURES =======================================

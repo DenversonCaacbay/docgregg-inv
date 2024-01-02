@@ -5,6 +5,8 @@
 
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
+    $recent_user = $staffbmis->recent_user();
+    // print_r($recent_user);
 
     $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
@@ -122,11 +124,19 @@
             <th>Full Name</th>
             <th>Pet Name</th>
             <th>Date</th>
-            <tr>
-                <td>Dog Hat</td>
-                <td>Ruby</td>
-                <td>January 01, 2024</td>
-            </tr>
+
+            <?php if(is_array($recent_user)) {?>
+                <?php foreach($recent_user as $view) {?>
+                <tr>
+                    <td><?= $view['fname'];?> <?= $view['lname'];?></td>
+                    <td><?= $view['pet_name'];?></td>
+                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
+                    <!-- <td>Dog Hat</td>
+                    <td>Ruby</td>
+                    <td>January 01, 2024</td> -->
+                </tr>
+                <?php }?>
+            <?php } ?>
         </table>
         
     </div>

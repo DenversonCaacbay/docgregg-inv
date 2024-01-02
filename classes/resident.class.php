@@ -359,7 +359,10 @@
 
     public function view_record($id_user){
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * FROM tbl_vaccination where deleted_at IS NULL AND pet_owner_id = ?");
+        $stmt = $connection->prepare("SELECT * FROM tbl_vaccination 
+            INNER JOIN tbl_pet ON tbl_pet.pet_id = tbl_vaccination.pet_id
+            WHERE tbl_vaccination.deleted_at IS NULL AND tbl_vaccination.pet_owner_id = ?
+            ");
         $stmt->execute([$id_user]);
         $view = $stmt->fetchAll();
 
@@ -456,9 +459,9 @@
         if(isset($_POST['delete_pet'])) {
             $connection = $this->openConn();
             $stmt = $connection->prepare("UPDATE tbl_pet set deleted_at = NOW() where pet_id = ?");
-            $stmt->execute([$id_user]);
+            $stmt->execute([$pet_id]);
             
-            $message2 = "Staff Account Deleted";
+            $message2 = "Pet removed";
             
             echo "<script type='text/javascript'>alert('$message2');</script>";
             header('refresh:0');
@@ -485,7 +488,7 @@
                 if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                     // proceed to create with picture
                     $connection = $this->openConn();
-                    $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_name`, `pet_owner_id`, `vac_picture`) VALUES (?, ?, ?)");
+                    $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_id`, `pet_owner_id`, `vac_picture`) VALUES (?, ?, ?)");
                     $stmt->execute([$pet_name, $owner_id, $target_file]);
     
                     $message2 = "Vaccination Certificate added!";
@@ -506,6 +509,21 @@
     
                 echo '<script>window.location.replace("user_record.php")</script>';
             }
+        }
+    }
+
+    public function delete_vaccination(){
+        $pet_id = $_POST['vac_id'];
+
+        if(isset($_POST['delete_vac'])) {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("UPDATE tbl_vaccination set deleted_at = NOW() where vac_id = ?");
+            $stmt->execute([$pet_id]);
+            
+            $message2 = "Vaccination removed";
+            
+            echo "<script type='text/javascript'>alert('$message2');</script>";
+            header('refresh:0');
         }
     }
     

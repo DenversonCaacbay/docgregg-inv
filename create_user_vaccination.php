@@ -6,8 +6,10 @@
 require('classes/resident.class.php');
 // $residentbmis->create_user();
 $userdetails = $bmis->get_userdata();
+$id_resident = $userdetails['id_user'];
 $residentbmis->create_vaccination_record($userdetails['id_user']);
-    // print_r($userdetails['id_user']);
+$view = $residentbmis->view_pet($id_resident);
+    // print_r($view);
 // ?>
 
 <!DOCTYPE html> 
@@ -77,8 +79,14 @@ $residentbmis->create_vaccination_record($userdetails['id_user']);
             <div class="row">
                 <div class="col mt-3">
                     <div class="form-group">
-                        <label for="pet_name">Pet Name:</label>
-                        <input type="text" class="form-control" name="pet_name" required>
+                        <label for="pet_name">Pet List:</label>
+                        <select class="form-select" name="pet_name" aria-label="Default select example">
+                        <?php
+                            foreach ($view as $pet) {
+                                    echo '<option value="' . $pet['pet_id'] . '">' . $pet['pet_name'] . '</option>';
+                                }
+                        ?>
+                        </select>
                     </div>
                 </div>
             </div>
