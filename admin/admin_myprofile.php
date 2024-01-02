@@ -71,9 +71,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <?php if (empty($user['picture'])): ?>
-                                    <img id="blah" src="../images/placeholder/item-placeholder.png" width="150" alt="Pet Picture">
+                                    <img id="blah" src="../images/placeholder/user-placeholder.png" width="100" alt="User Picture">
                                 <?php else: ?>
-                                    <img id="blah" src="../<?= $user['picture']?>" width="150" alt="Pet Picture">
+                                    <img id="blah" src="<?= $user['picture']?>" width="100" alt="User Picture">
                                 <?php endif; ?>
                                 <br>
                             </div>
@@ -132,11 +132,11 @@
                <form method="post">
                     <div class="form-group">
                         <label> New Password </label>
-                        <input type="password" class="form-control" placeholder="New Password" name="new_password" required>
+                        <input type="password" class="form-control" id="newPassword" placeholder="New Password" name="new_password" required>
                     </div>
                     <div class="form-group">
                         <label> Confirm Password </label>
-                        <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirm_password" required>
                     </div>
                     <div class="form-check form-switch mt-2">
                         <input class="form-check-input" onclick="myFunction()" type="checkbox" role="switch" id="flexSwitchCheckDefault">
@@ -157,7 +157,22 @@
     <!-- /.container-fluid -->
     
 </div>
-        <script>
+<script>
+    function togglePasswordVisibility() {
+        var newPasswordInput = document.getElementById('newPassword');
+        var confirmPasswordInput = document.getElementById('confirmPassword');
+        var showPasswordCheckbox = document.getElementById('showPasswordCheckbox');
+
+        if (showPasswordCheckbox.checked) {
+            newPasswordInput.type = 'text';
+            confirmPasswordInput.type = 'text';
+        } else {
+            newPasswordInput.type = 'password';
+            confirmPasswordInput.type = 'password';
+        }
+    }
+</script>
+        <!-- <script>
             function myFunction() {
                 var x = document.getElementById("myInput");
                     if (x.type === "password") {
@@ -166,10 +181,7 @@
                         x.type = "password";
                 }
             }
-            function trying() {
-                window.location.href = "user_registration.php";
-            }
-        </script>
+        </script> -->
 <!-- End of Main Content -->
 
 <?php 

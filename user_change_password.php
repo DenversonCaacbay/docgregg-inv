@@ -1,4 +1,12 @@
 <?php
+// Check if email is not set in the GET parameters
+if (!isset($_GET['email'])) {
+    // Redirect to user_registration.php
+    header("Location: index.php");
+    exit(); // Ensure that the script stops executing after the redirection
+}
+?>
+<?php
 // Database connection details
 $servername = "localhost";
 $username = "root";
@@ -55,6 +63,9 @@ $conn->close();
         .text-header{
             color: #0296be;
         }
+        .form-control{
+            padding:10px;
+        }
     </style>
 <nav class="navbar sticky-top py-3 navbar-expand-lg navbar-dark">
     <a class="mx-auto" style="text-decoration:none;color: #fff;font-size: 20px; font-weight: 600;" href="#">Verifying...</a>
@@ -63,13 +74,17 @@ $conn->close();
     <div class="card p-2">
     <form method="post" class="p-2">
     <h5 class="text-header">Change Your Password</h5>
-    <div class="form-floating">
-        <input type="password" class="form-control" id="floatingInputInvalid" placeholder="New Password" name="new_password" required>
-        <label for="floatingInputInvalid">New Password</label>
+    <div class="form-group">
+        <label> New Password </label>
+        <input type="password" class="form-control" id="newPassword" placeholder="New Password" name="new_password" required>
     </div>
-    <div class="form-floating mt-3">
-        <input type="password" class="form-control" id="floatingInputInvalid" placeholder="Confirm Password" name="confirm_password" required>
-        <label for="floatingInputInvalid">Confirm Password</label>
+    <div class="form-group mt-3">
+        <label> Confirm Password </label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirm_password" required>
+    </div>
+    <div class="form-check form-switch mt-2">
+        <input class="form-check-input" onclick="togglePasswordVisibility()" type="checkbox" role="switch" id="showPasswordCheckbox">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Show Password</label>
     </div>
     <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>">
     <button class="btn btn-primary w-100 mt-3" type="submit" name="update_password">Update Password</button>
@@ -78,6 +93,22 @@ $conn->close();
     </div>
 </div>
 
+
+<script>
+    function togglePasswordVisibility() {
+        var newPasswordInput = document.getElementById('newPassword');
+        var confirmPasswordInput = document.getElementById('confirmPassword');
+        var showPasswordCheckbox = document.getElementById('showPasswordCheckbox');
+
+        if (showPasswordCheckbox.checked) {
+            newPasswordInput.type = 'text';
+            confirmPasswordInput.type = 'text';
+        } else {
+            newPasswordInput.type = 'password';
+            confirmPasswordInput.type = 'password';
+        }
+    }
+</script>
 
     
 </body>

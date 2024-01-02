@@ -54,7 +54,7 @@
                                     <?php if (is_null($view['picture'])): ?>
                                         <span>No Picture</span>
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image">
+                                        <img src="../<?= $view['picture'] ?>" class="" width="50" alt="Modal Image">
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['fname'];?> </td>

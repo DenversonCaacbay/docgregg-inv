@@ -37,8 +37,8 @@
                 <form method="post" enctype="multipart/form-data"> 
                     <div class="row">
                         <div class="col-12 text-center mb-3">   
-                            <img id="blah" src="../images/placeholder/user-placeholder.png" class="" alt="User Picture" width="150">
-                            <!-- <img src="<?= $user['picture'] ?>" class="img-fluid" alt="Modal Image" width="100"> -->
+                            <!-- <img id="blah" src="../images/placeholder/user-placeholder.png" class="" alt="User Picture" width="150"> -->
+                            <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="User Image" width="100">
                         </div>                          
                         <div class="col-md-4">
                             <div class="form-group">
