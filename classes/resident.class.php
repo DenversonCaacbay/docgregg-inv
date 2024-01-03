@@ -14,8 +14,8 @@
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
 </head>
 <?php 
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // // Include PHPMailer autoloader
 // require 'PHPMailer/src/Exception.php';

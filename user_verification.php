@@ -32,7 +32,7 @@ if (!isset($_GET['email'])) {
                     <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="verification_code" require>
                     <label for="floatingInputInvalid">Verification Code: </label>
                 </div>
-            <input type="text" name="email" value="<?php echo $_GET['email']; ?>"><br>
+            <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>"><br>
             <button class="btn btn-primary w-100" type="submit" name="verify">Verify</button>
         </form>
     </div>

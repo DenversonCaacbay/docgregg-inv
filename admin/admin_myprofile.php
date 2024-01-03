@@ -139,7 +139,7 @@
                         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirm_password" required>
                     </div>
                     <div class="form-check form-switch mt-2">
-                        <input class="form-check-input" onclick="myFunction()" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <input class="form-check-input" onclick="togglePasswordVisibility()" type="checkbox" role="switch" id="showPasswordCheckbox">
                         <label class="form-check-label" for="flexSwitchCheckDefault">Show Password</label>
                     </div>
                     <!-- <input type="hidden" name="email" value="<?php echo $user['id_admin']; ?>"> -->

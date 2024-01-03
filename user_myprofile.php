@@ -54,7 +54,7 @@
 
     <!-- Page Heading -->
                 
-    <div class="row mt-3"> 
+    <div class="row"> 
         <div class="col-md-2"> </div> 
         <div class="col-md-8"> 
             <div class="card border-0">
@@ -76,6 +76,7 @@
                                     <input type="file" onchange="readURL(this);" value="<?= $user['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
                                     <label class="custom-file-label" for="customFile">Choose File Photo</label>
                                 </div>
+                                <code>The photo must be in 2x2 format</code>
                             </div>
                             </div>
                             

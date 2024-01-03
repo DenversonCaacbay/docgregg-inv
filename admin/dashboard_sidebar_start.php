@@ -38,6 +38,19 @@
     .bg-primary{
         background: #0296be !important;
     }
+    /* .fixed-sidebar {
+        position: fixed;
+        height: 100%;
+        z-index: 1031;
+        overflow-y: auto; 
+    }
+
+    .fixed-navbar {
+        position: fixed;
+        width: 100%;
+        z-index: 1030; 
+    } */
+
 </style>
 
 
@@ -47,7 +60,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
 
             
                 <div class="card p-2 m-2">
@@ -132,7 +145,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow fixed-navbar">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -167,9 +180,10 @@
                         </li>
                         <li class="nav-item mt-4">
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
-                            <?php if($lowInventoryCount > 0) : ?>
+                            
                                 <a href="admin_low_inventory.php" style="position: relative;">
                                     <i class="fas fa-bell" style="font-size: 20px;"></i>
+                                    <?php if($lowInventoryCount > 0) : ?>
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
                             <?php endif; ?>

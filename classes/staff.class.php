@@ -135,6 +135,25 @@
         
             return $view;
         }
+
+        public function view_single_vaccine_record(){
+
+            $vac_id = $_GET['vac_id'];
+            
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT * FROM tbl_vaccination where vac_id = '$vac_id'");
+            $stmt->execute();
+            $view = $stmt->fetch(); 
+            $total = $stmt->rowCount();
+ 
+            //eto yung condition na i ch check kung may laman si products at i re return niya kapag meron
+            if($total > 0 )  {
+                return $view;
+            }
+            else{
+                return false;
+            }
+        }
         
         
 
@@ -598,13 +617,26 @@
 
         public function recent_user() {
             $connection = $this->openConn();
-            $limit = 4;
+            $limit = 5;
 
             $stmt = $connection->prepare("SELECT * FROM tbl_user 
             JOIN tbl_pet ON tbl_pet.pet_owner_id = tbl_user.id_user
             WHERE tbl_user.deleted_at IS NULL AND tbl_pet.deleted_at IS NULL
             ORDER BY tbl_pet.created_at DESC
             LIMIT ".$limit);    
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+
+            return $view;
+        }
+
+        public function recent_user_all() {
+            $connection = $this->openConn();
+
+            $stmt = $connection->prepare("SELECT * FROM tbl_user 
+            JOIN tbl_pet ON tbl_pet.pet_owner_id = tbl_user.id_user
+            WHERE tbl_user.deleted_at IS NULL AND tbl_pet.deleted_at IS NULL
+            ORDER BY tbl_pet.created_at DESC");    
             $stmt->execute();
             $view = $stmt->fetchAll();
 

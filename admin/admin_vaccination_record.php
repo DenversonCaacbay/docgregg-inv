@@ -58,7 +58,10 @@
                                         <?php if (empty($view['vac_picture'])): ?>
                                             <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
                                         <?php else: ?>
-                                            <img src="../<?= $view['vac_picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
+                                            <a href="admin_view_vaccination_record.php?vac_id=<?= $view['vac_id']; ?>">
+                                                <img src="../<?= $view['vac_picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
+                                            </a>
+
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['vac_date'])); ?> </td>
