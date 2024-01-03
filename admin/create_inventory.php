@@ -71,17 +71,25 @@
                                     <label class="mtop">Category</label>
                                     <select class="form-control" name="category" id="category" required>
                                         <option value="">Choose Category</option>
-                                        <option value="MMedicineale">Medicine</option>
+                                        <option value="Medicine">Medicine</option>
                                         <option value="Vaccine">Vaccine</option>
                                         <option value="Dog Food">Dog Food</option>
                                         <option value="Cat food">Cat food</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="mtop"> Expiration Date: </label>
-                                    <input type="date" class="form-control" name="exp_date" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="mtop"> Purchased Date: </label>
+                                        <input type="date" class="form-control" name="bought_date" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="mtop"> Expiration Date: </label>
+                                        <input type="date" class="form-control" name="exp_date" required>
+                                    </div>
                                 </div>
                             </div>
                         </div>

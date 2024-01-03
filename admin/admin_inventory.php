@@ -53,6 +53,7 @@
                             <th> Quantity </th>
                             <th> Category </th>
                             <th> Date Created </th>
+                            <th> Purchased Date </th>
                             <th> Expiration Date </th>
                             <th> Actions </th>
                         </tr>
@@ -74,6 +75,7 @@
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
                                     <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
+                                    <td> <?= $view['purchased_at'] ? date("F d, Y - l", strtotime($view['purchased_at'])) : "N/A"; ?> </td>
                                     <td> <?= $view['expired_at'] ? date("F d, Y - l", strtotime($view['expired_at'])) : "N/A"; ?> </td>
                                     <td>    
                                         <form action="" method="post">

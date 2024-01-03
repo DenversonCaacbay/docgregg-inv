@@ -220,6 +220,7 @@
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
                 $category = $_POST['category'];
+                $bought_date = $_POST['bought_date'];
                 $exp = $_POST['exp_date'];
                 $new_picture = $_FILES['new_picture'];
 
@@ -236,8 +237,8 @@
         
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         $connection = $this->openConn();
-                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category, expired_at) VALUES (?, ?, ?, ?, ?, ?)");
-                        $stmt->execute([$name, $price, $qty, $target_file, $category, $exp]);
+                        $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->execute([$name, $price, $qty, $target_file, $category, $exp, $bought_date]);
         
                         $message2 = "Item created!";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -247,8 +248,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                    $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, expired_at) VALUES (?, ?, ?, ?)");
-                    $stmt->execute([$name, $price, $qty, $exp]);
+                    $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$name, $price, $qty, $category, $exp, $bought_date]);
         
                     $message2 = "Item created";
                     echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -263,6 +264,8 @@
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
+                $category = $_POST['category'];
+                $bought_date = $_POST['bought_date'];
                 $exp = $_POST['exp_date'];
                 $new_picture = $_FILES['new_picture'];
         
@@ -279,8 +282,9 @@
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         $connection = $this->openConn();
                         $stmt = $connection->prepare("UPDATE tbl_inventory
-                            SET name =?, price =?, quantity = ?, picture = ?, expired_at = ? WHERE inv_id = ?");
-                        $stmt->execute([$name, $price, $qty, $target_file, $exp, $inv_id]);
+                            SET name =?, price =?, quantity = ?, category = ?,picture = ?, expired_at = ?, purchased_at = ?
+                            WHERE inv_id = ?");
+                        $stmt->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date,$inv_id]);
         
                         $message2 = "Item Updated";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -291,8 +295,9 @@
                 } else {
                     $connection = $this->openConn();
                     $stmt = $connection->prepare("UPDATE tbl_inventory
-                        SET name =?, price =?, quantity = ?, expired_at = ? WHERE inv_id = ?");
-                    $stmt->execute([$name, $price, $qty, $exp, $inv_id]);
+                        SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
+                        WHERE inv_id = ?");
+                    $stmt->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
         
                     $message2 = "Item Updated";
                     echo "<script type='text/javascript'>alert('$message2');</script>";
