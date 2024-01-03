@@ -63,11 +63,16 @@
             <div class="row">
                 <div class="col-md-3 text-center ">
                     <?php if (is_null($item['pet_picture'])): ?>
-                        <img src="images/placeholder/pet-placeholder.png" width="100">
+                        <img src="images/placeholder/pet-placeholder.png" width="150">
                     <?php else: ?>
                         <!-- Display pet image here -->
-                        <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                        <!-- <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150"> -->
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $item['pet_picture'] ?>')">
+                            <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150">
+                        </a>
                     <?php endif; ?>
+
+                    
                 </div>
                 <div class="col-md-9">
                     <h5><?= $item['pet_name']; ?></h5>
@@ -89,6 +94,33 @@
         <a class="btn create-btn text-light" href="create_user_pet.php">+</a>
     </div>
 </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Pet Picture</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal image -->
+                <img id="modalImage" class="img-fluid" alt="Modal Image" width="100%">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript function to open the modal and set the image source
+    function openModal(imageSrc) {
+        // Set the image source for the modal image
+        document.getElementById('modalImage').src = "" + imageSrc;
+    }
+</script>
 
 <!-- ... (other code) -->
     <!-- </div> -->

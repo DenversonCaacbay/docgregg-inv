@@ -46,40 +46,7 @@
 <?php endif; ?>
 
     </div>
-    <div class="card bgcard mt-3 p-3">
-        <h4 class="text-light">This List of Stocks are low</h4>
-        <table class="table table-hover text-center table-bordered">
-                <form action="" method="post">
-                    <thead style="background: #0296be;color:#fff;"> 
-                        <tr>
-                            <th> Picture </th>
-                            <th> Product Name </th>
-                            <th> Price </th>
-                            
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php if(is_array($low_items)) {?>
-                            <?php foreach($low_items as $view) {?>
-                                <tr>
-                                <td>
-                                    <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
-                                    <?php else: ?>
-                                        <img src="<?= ltrim($view['picture'], '../') ?>" class="img-fluid" alt="Item Image" width="100">
-                                        
-                                        <?php endif; ?>
-                                    </td>
-                                    <td> <?= $view['name'];?> </td>
-                                    <td>₱ <?= $view['price'];?> </td>
-                                </tr>
-                            <?php }?>
-                        <?php } ?>
-                    </tbody>
-                </form>
-            </table>
-    </div>
+    
     <div class="row mt-3"> 
         <div class="col-md-12">
 

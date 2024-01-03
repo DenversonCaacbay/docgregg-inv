@@ -49,7 +49,7 @@
 
 
     <div class="row"> 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h4>Dashboard</h4>
             <br>
             <div class="card border-left-primary shadow">
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">  
+        <div class="col-md-4">  
             <br>
             <div class="card border-left-primary shadow card-upper-space">
                 <div class="card-body">
@@ -86,6 +86,26 @@
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-paw fa-2x text-dark"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">  
+            <br>
+            <div class="card border-left-primary shadow card-upper-space">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Sales</div>
+                                <div class="h5 mb-0 font-weight-bold text-dark">₱1030.00</div>
+                                <br>
+                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill fa-2x text-dark"></i>
                         </div>
                     </div>
                 </div>
