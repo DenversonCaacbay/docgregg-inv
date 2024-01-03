@@ -58,7 +58,7 @@
                                         <?php if (empty($view['vac_picture'])): ?>
                                             <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
                                         <?php else: ?>
-                                            <a href="admin_view_vaccination_record.php?vac_id=<?= $view['vac_id']; ?>">
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $view['vac_picture'] ?>')">
                                                 <img src="../<?= $view['vac_picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
                                             </a>
 
@@ -82,6 +82,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Vaccination Certificate</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal image -->
+                <img id="modalImage" class="img-fluid" alt="Modal Image" width="100%">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript function to open the modal and set the image source
+    function openModal(imageSrc) {
+        // Set the image source for the modal image
+        document.getElementById('modalImage').src = "../" + imageSrc;
+    }
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
