@@ -55,9 +55,9 @@ function isPageActive($page) {
                 <li class="nav-item">
                     <a class="nav-link <?= isPageActive('user_pet.php'); ?>" href="user_pet.php">Pets</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link <?= isPageActive('user_record.php'); ?>" href="user_record.php">Records</a>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle  text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?= $userdetails['surname'];?>, <?= $userdetails['firstname'];?>

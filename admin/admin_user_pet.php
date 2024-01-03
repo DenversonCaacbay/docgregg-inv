@@ -50,9 +50,10 @@
     <!-- Page Heading -->
 
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="admin_client.php">Back</a>
-        <h1 class="mb-0 ml-2">Client Pets</h1>
-    </div>
+    <a class="btn btn-primary" href="admin_client.php">Back</a>
+    <h1 class="mb-0 ml-2">Client Pets</h1>
+    <a class="btn btn-primary ml-auto" href="create_user_pet.php">Add Pet</a>
+</div>
 
     <br>
     <?php if(is_array($view) && count($view) > 0): ?>
@@ -62,17 +63,22 @@
             <div class="row">
                 <div class="col-md-3 text-center ">
                     <?php if (is_null($item['pet_picture'])): ?>
-                        <img src="../images/placeholder/pet-placeholder.png" width="100">
+                        <img src="../images/placeholder/pet-placeholder.png" width="150">
                     <?php else: ?>
                         <!-- Display pet image here -->
-                        <img src="../<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                        <img src="../<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150">
                     <?php endif; ?>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-6">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
-                    <h5>Pet Added: <?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
-                    <form method="post" class="mt-4">
-                        <!-- <a href="update_user_pet.php?id_user=<?= $item['id_admin']; ?>" class="btn btn-success">Update</a> -->
+                    <h5>Date Check Up: </h5>
+                    <h5>Recent Vaccination: </h5>
+                    <h5>Next Vaccination: </h5>
+                    <h5>Health Record: </h5>
+                </div>
+                <div class="col-md-3 ">
+                    <form method="post" class="mt-1 d-flex">
+                        <a href="create_vaccination_record.php" class="btn btn-success  ml-auto">Create Vaccination Record</a>
                         <!-- <input type="hidden" name="id_user" value="<?= $item['id_admin']; ?>"> -->
                         <!-- <button class="btn btn-danger" type="submit" name="delete_staff">Remove</button> -->
                     </form>

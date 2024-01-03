@@ -45,11 +45,11 @@
     <div class="container">
         <div class="row mt-2">
             <div class="col-md-6"><div class="title">My Pets</div></div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="desk-create">
                     <a class="btn desk-create-btn text-light" href="create_user_pet.php">Add Pet</a>
                 </div>
-            </div>
+            </div> -->
         </div>
         
         
@@ -75,12 +75,16 @@
                     
                 </div>
                 <div class="col-md-9">
-                    <h5><?= $item['pet_name']; ?></h5>
-                    <h5><?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
+                    <h5>Pet Name: <?= $item['pet_name']; ?></h5>
+                    <h5>Date Check Up: </h5>
+                    <h5>Recent Vaccination: </h5>
+                    <h5>Next Vaccination: </h5>
+                    <h5>Health Record: </h5>
+                    <!-- <h5><?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5> -->
                     <form method="post" class="mt-4">
                         <!-- <a href="update_user_pet.php?id_user=<?= $item['pet_id']; ?>" class="btn btn-success">Update</a> -->
-                        <input type="hidden" name="pet_id" value="<?= $item['pet_id']; ?>">
-                        <button class="btn btn-danger" style="width: 90px; font-size: 17px; border-radius:30px;" type="submit" name="delete_pet" onclick="return confirm('Are you sure you want to remove this pet?')"> Remove </button>
+                        <!-- <input type="hidden" name="pet_id" value="<?= $item['pet_id']; ?>">
+                        <button class="btn btn-danger" style="width: 90px; font-size: 17px; border-radius:30px;" type="submit" name="delete_pet" onclick="return confirm('Are you sure you want to remove this pet?')"> Remove </button> -->
                     </form>
                 </div>
             </div>
@@ -90,9 +94,9 @@
     <p>No data available.</p>
 <?php endif; ?>
 
-    <div class="mob-create">
+    <!-- <div class="mob-create">
         <a class="btn create-btn text-light" href="create_user_pet.php">+</a>
-    </div>
+    </div> -->
 </div>
 
 
