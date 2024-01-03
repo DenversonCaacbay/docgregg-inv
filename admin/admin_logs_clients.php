@@ -6,10 +6,8 @@
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     $view = $staffbmis->view_user();
-    // $bmis->validate_admin();
-    // $bmis->delete_bspermit();
-    // $view = $bmis->view_bspermit();
-    $id_resident = $_GET['id_resident'];
+
+    $staffcount = $staffbmis->count_user();
     // $resident = $residentbmis->get_single_bspermit($id_resident);
    
 ?>
@@ -54,7 +52,7 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h1 class="text-gray">Logs - Stocks</h1>
+            <h1 class="text-gray">Logs - Clients</h1>
         </div>
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
@@ -70,16 +68,36 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-primary">Day</button>
-                    <button type="button" class="btn btn-primary">Week</button>
-                    <button type="button" class="btn btn-primary">Month</button>
-                    <button type="button" class="btn btn-primary">Year</button>
+                    <!-- <button type="button" class="btn btn-primary">Day</button> -->
+                    <a href="generatepdf/clients/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
+                    <a href="generatepdf/clients/week.php" class="btn btn-primary" target="_blank" id="generatePDF">Weekly</a>
+                    <a href="generatepdf/clients/month.php" class="btn btn-primary" target="_blank" id="generatePDF">Monthly</a>
+                    <a href="generatepdf/clients/year.php" class="btn btn-primary" target="_blank" id="generatePDF">Yearly</a>
+                    <!-- <button type="button" class="btn btn-primary">Week</button>
+                    <button type="button" class="btn btn-primary">Month</button> -->
+                    <!-- <button type="button" class="btn btn-primary">Year</button> -->
                 </div>
             </div>
             <table class="table table-hover text-center table-bordered mt-3">
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <form action="" method="post">
+                    <thead style="background: #0296be;color:#fff;"> 
+                        <tr>
+                            <th> Full Name </th>
+                            <th> Date Registered </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if(is_array($view)) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                    <td> <?= $view['fname'];?> <?= $view['mi'];?> <?= $view['lname'];?></td>
+                                    <td> <?= $view['created_at'];?> </td>
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                    </tbody>
+                </form>
             </table>
         </div>
     </div>

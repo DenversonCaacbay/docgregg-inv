@@ -54,7 +54,7 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h1 class="text-gray">Logs - Stocks</h1>
+            <h1 class="text-gray">Logs - Vaccination</h1>
         </div>
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">

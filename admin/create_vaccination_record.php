@@ -3,8 +3,8 @@
    require('../classes/resident.class.php');
    $userdetails = $bmis->get_userdata();
    $bmis->validate_admin();
-//    $id_user = $_GET['id_user'];
-//    $view = $residentbmis->get_single_resident($id_user);
+   $id_user = $_GET['id_user'];
+   $view = $residentbmis->get_single_resident($id_user);
 //    $residentbmis->update_resident();
 
 ?>
