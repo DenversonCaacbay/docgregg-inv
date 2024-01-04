@@ -9,7 +9,9 @@
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
-    $id_resident = $_GET['id_resident'];
+    $id_user = $_GET['id_user'];
+    $staffbmis->create_pet($id_user);
+    // echo $id_user;
     // $resident = $residentbmis->get_single_bspermit($id_resident);
    
 ?>
@@ -79,19 +81,25 @@
                                     <input type="text" class="form-control" name="pet_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label> Breed: </label>
-                                    <input type="text" class="form-control" name="breed" required>
+                                    <label class="mtop">Breed</label>
+                                    <select class="form-control" name="breed" id="breed" required>
+                                        <option value="">Choose your Breed</option>
+                                        <option value="Dog">Dog</option>
+                                        <option value="Cat">Cat</option>
+                                    </select>
+                                    <!-- <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div> -->
                                 </div>
                                 <div class="form-group">
                                     <label> Birth Date: </label>
                                     <input type="date" class="form-control" name="bdate" id="birthdate" onchange="calculateAge()" required>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>Age</label>
                                     <input type="text" class="form-control" name="age" id="age" readonly />
                                     
-                                </div>
+                                </div> -->
                                 
                                 <div class="form-group">
                                     <label class="mtop">Sex</label>

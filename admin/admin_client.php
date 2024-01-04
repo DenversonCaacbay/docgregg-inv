@@ -52,7 +52,7 @@
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <span>No Picture</span>
+                                        <img src="../images/placeholder/item-placeholder.png" width="100">
                                     <?php else: ?>
                                         <img src="../<?= $view['picture'] ?>" class="" width="50" alt="Modal Image">
                                         <?php endif; ?>

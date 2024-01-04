@@ -117,7 +117,32 @@
         // }
         
 
-        //old code
+        // #vaccine
+        public function create_vaccination_record() {
+            if (isset($_POST['add_vac'])) {
+                $pet_id = $_GET['pet_id'];
+                $owner_id = $_GET['id_user']; // Make sure owner_id is an integer
+                $vac_used = $_POST['vaccine'];
+                $next_vac = $_POST['next_vac'];
+                // $vacc_done_check = $_POST['vacc_done_check'];
+
+                if(empty($next_vac)){
+                    $next_vac = NULL;
+                }
+        
+                // proceed to create without picture
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_id`, `pet_owner_id`, `vac_next`, `vac_used`) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$pet_id, $owner_id, $next_vac, $vac_used]);
+        
+                $message2 = "Pet vaccination record added!";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+        
+                echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+            }
+        }
+        
+
         public function view_vaccine_record(){
             $connection = $this->openConn();
         
@@ -382,13 +407,89 @@
             }
         }
 
+        // #pet
+        public function create_pet($owner_id) {
+            if (isset($_POST['add_pet'])) {
+                $pet_name = ucfirst(strtolower($_POST['pet_name']));
+                $breed = $_POST['breed'];
+                $bdate = $_POST['bdate'];
+                $sex = $_POST['sex'];
+                $owner_id = intval($owner_id); // Make sure owner_id is an integer
+
+                $new_picture = $_FILES['pet_picture'];
+        
+                if (!empty($new_picture['name'])) {
+                    $target_dir = "uploads/pets/";
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        // proceed to create with picture
+                        $connection = $this->openConn();
+                        $stmt = $connection->prepare("INSERT INTO tbl_pet 
+                            (`pet_name`, `pet_owner_id`, `pet_picture`, `breed`, `bdate`, `sex`) VALUES (?, ?, ?, ?, ?, ?)");
+                        $stmt->execute([$pet_name, $owner_id, $target_file, $breed, $bdate, $sex]);
+        
+                        $message2 = "Pet added!";
+                        echo "<script type='text/javascript'>alert('$message2');</script>";
+        
+                        // echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                } else {
+                    // proceed to create without picture
+                    $connection = $this->openConn();
+                    $stmt = $connection->prepare("INSERT INTO tbl_pet 
+                        (`pet_name`, `pet_owner_id`, `breed`, `bdate`, `sex`) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->execute([$pet_name, $owner_id, $breed, $bdate, $sex]);
+        
+                    $message2 = "Pet added!";
+                    echo "<script type='text/javascript'>alert('$message2');</script>";
+        
+                    // echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+                }
+
+                echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+                // return '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+            }
+        }
+        
         public function view_pet(){
             $id_user = $_GET['id_user'];
 
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT * FROM tbl_pet where deleted_at IS NULL AND pet_owner_id = ?");
+            $stmt = $connection->prepare("SELECT *, TIMESTAMPDIFF(YEAR, bdate, CURDATE()) AS age FROM tbl_pet WHERE deleted_at IS NULL AND pet_owner_id = ?");
             $stmt->execute([$id_user]);
             $view = $stmt->fetchAll();
+    
+            return $view;
+        }
+
+        public function view_single_pet(){
+            $connection = $this->openConn();
+    
+            $pet_id = $_GET['pet_id'];
+    
+            $stmt = $connection->prepare("SELECT tbl_pet.*, 
+                TIMESTAMPDIFF(YEAR, tbl_pet.bdate, CURDATE()) AS age, tbl_vaccination.*
+                FROM tbl_pet
+                LEFT JOIN (
+                    SELECT *
+                    FROM tbl_vaccination
+                    WHERE pet_id = 1
+                    ORDER BY created_at DESC
+                    LIMIT 1
+                ) AS tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id
+                WHERE tbl_pet.pet_id = 1
+            ");
+            $stmt->execute();
+            $view = $stmt->fetch();
     
             return $view;
         }
