@@ -7,12 +7,14 @@
     $processTotal = '';
     $processCash = '';
     $processChange = '';
+    $processTotalQty = 0;
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         // check if it has qty
         foreach($_SESSION['shopping_cart'] as $data){
             $prod_id = $data['item_id'];
             $prod_qty = $data['item_quantity'];
+            $processTotalQty += $data['item_quantity'];;
 
             // echo $data['item_id']."<br>";
             // echo $data['item_quantity']."<br>";
@@ -42,25 +44,28 @@
         }
 
         // create invoice
-        $sql = 'INSERT INTO invoice(product, total, cash, cash_change) 
-            VALUES (:products, :total, :cash, :cash_change)';
+        $sql = 'INSERT INTO invoice(product, total, totalQty,cash, cash_change) 
+            VALUES (:products, :total, :totalQty, :cash, :cash_change)';
 
         $statement = $pdo->prepare($sql);
 
         $newInv = [
             'products' => 'text',
             'total' => '9',
+            'totalQty' => '0',
             'cash' => 9,
             'cash_change' => 9,
         ];
 
         $statement->bindParam(':products', $newInv['products']);
         $statement->bindParam(':total', $newInv['total']);
+        $statement->bindParam(':totalQty', $newInv['totalQty']);
         $statement->bindParam(':cash', $newInv['cash']);
         $statement->bindParam(':cash_change', $newInv['cash_change']);
 
         //change
         $newInv['products'] = $_POST['productAll'];
+        $newInv['totalQty'] = $processTotalQty;
         $newInv['total'] = $_POST['processTotal'];
         $newInv['cash'] = $_POST['processCash'];
         $newInv['cash_change'] = $_POST['processChange'];
