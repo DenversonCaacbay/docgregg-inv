@@ -482,11 +482,11 @@
                 LEFT JOIN (
                     SELECT *
                     FROM tbl_vaccination
-                    WHERE pet_id = 1
+                    WHERE pet_id = ?
                     ORDER BY created_at DESC
                     LIMIT 1
                 ) AS tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id
-                WHERE tbl_pet.pet_id = 1
+                WHERE tbl_pet.pet_id = ?
             ");
             $stmt->execute();
             $view = $stmt->fetch();
