@@ -76,7 +76,7 @@ if(isset($_GET["action"]))
 			if($values["item_id"] == $_GET["id"])
 			{
 				unset($_SESSION["shopping_cart"][$keys]);
-				echo '<script>alert("Item Removed")</script>';
+				// echo '<script>alert("Item Removed")</script>';
 				echo '<script>window.location="admin_sale_inventory.php"</script>';
 			}
 		}
@@ -152,29 +152,33 @@ if(isset($_GET["action"]))
                         ?>
                         <tbody id="myTable">
                         <tr>
-                            <form method="post" action="admin_sale_inventory.php?action=add&id=<?php echo $row["inv_id"]; ?>">
-                                <td><h5 class=""><?php echo $row["name"]; ?></h5></td>
-                                <td><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
-                                <td><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
-                                <td><input type="text" name="quantity" id="inputQuantity" value="1" class="form-control" /></td>
-                                <td><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
-                                <td><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
-                                <td><input type="hidden" name="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
-                                <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Add to Cart" id="addToCartBtn"/></td>
-                                <script>
-                                    document.getElementById('inputQuantity').addEventListener('input', function () {
-                                        var inputQuantity = parseInt(this.value, 10);
-                                        var availableQuantity = <?php echo $row["quantity"]; ?>;
+                        <form method="post" action="admin_sale_inventory.php?action=add&id=<?php echo $row["inv_id"]; ?>">
+    <td><h5 class=""><?php echo $row["name"]; ?></h5></td>
+    <td><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
+    <td><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
+    <td><input type="text" name="quantity" class="inputQuantity form-control" value="1" /></td>
+    <td><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
+    <td><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
+    <td><input type="hidden" name="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
+    <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary addToCartBtn" value="Add to Cart" /></td>
+    <script>
+        var inputQuantity = document.querySelector('.inputQuantity');
+        var addToCartBtn = document.querySelector('.addToCartBtn');
 
-                                        // Check if the input quantity is greater than the available quantity
-                                        if (inputQuantity > availableQuantity) {
-                                            document.getElementById('addToCartBtn').disabled = true;
-                                        } else {
-                                            document.getElementById('addToCartBtn').disabled = false;
-                                        }
-                                    });
-                                </script>
-                            </form>
+        inputQuantity.addEventListener('input', function () {
+            var inputValue = parseInt(this.value, 10);
+            var availableQuantity = <?php echo $row["quantity"]; ?>;
+
+            // Check if the input quantity is greater than the available quantity
+            if (inputValue > availableQuantity) {
+                addToCartBtn.disabled = true;
+            } else {
+                addToCartBtn.disabled = false;
+            }
+        });
+    </script>
+</form>
+
                         </tr>
                     
                         <?php
