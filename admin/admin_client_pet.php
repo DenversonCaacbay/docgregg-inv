@@ -50,10 +50,10 @@
     <!-- Page Heading -->
 
     <div class="d-flex align-items-center">
-    <a class="btn btn-primary" href="admin_client.php">Back</a>
-    <h1 class="mb-0 ml-2">Client Pets</h1>
-    <a class="btn btn-primary ml-auto" href="create_user_pet.php">Add Pet</a>
-</div>
+        <a class="btn btn-primary" href="admin_client.php">Back</a>
+        <h1 class="mb-0 ml-2">Client Pets</h1>
+        <a class="btn btn-primary ml-auto" href="create_client_pet.php">Add Pet</a>
+    </div>
 
     <br>
     <?php if(is_array($view) && count($view) > 0): ?>
@@ -77,8 +77,9 @@
                     <h5>Health Record: </h5>
                 </div>
                 <div class="col-md-3 ">
-                    <form method="post" class="mt-1 d-flex">
-                        <a href="create_vaccination_record.php" class="btn btn-success  ml-auto">Create Vaccination Record</a>
+                    <form method="post" class="mt-1">
+                        <a href="create_vaccination_record.php" class="btn btn-success text-center d-flex ml-auto">Create Vaccination Record</a><br>
+                        <a href="view_vaccination_record.php" class="btn btn-primary text-center d-flex ml-auto">View Records</a>
                         <!-- <input type="hidden" name="id_user" value="<?= $item['id_admin']; ?>"> -->
                         <!-- <button class="btn btn-danger" type="submit" name="delete_staff">Remove</button> -->
                     </form>

@@ -5,7 +5,7 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_user();
+    $view = $staffbmis->view_invoice();
     $staffcount = $staffbmis->count_invoice();
     // $bmis->validate_admin();
 
@@ -79,7 +79,7 @@
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
                             <th> Product Name </th>
-                            <th> total </th>
+                            <th> Total </th>
                             <th> Created at </th>
                         </tr>
                     </thead>

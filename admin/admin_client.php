@@ -65,7 +65,7 @@
                                     <td>    
                                         <form action="" method="post">
                                             <a href="admin_client_info.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Record </a>
-                                            <a href="admin_user_pet.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Pets </a>
+                                            <a href="admin_client_pet.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> View Pets </a>
                                             <input type="hidden" name="id_user" value="<?= $view['id_user'];?>">
                                             <!-- <button class="btn btn-danger" type="submit" name="delete_user"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> Remove </button> -->
                                         </form>

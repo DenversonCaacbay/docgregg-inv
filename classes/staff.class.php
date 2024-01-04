@@ -336,6 +336,19 @@
            
         }
 
+        public function view_invoice(){
+
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt = $connection->prepare("SELECT * from invoice");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            //$rows = $stmt->
+            return $view;
+           
+        }
+
         public function view_single_user(){
 
             $id_user = $_GET['id_user'];
@@ -587,6 +600,14 @@
         public function count_user() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user WHERE deleted_at IS NULL");
+            $stmt->execute();
+            $rescount = $stmt->fetchColumn();
+            return $rescount;
+        }
+
+        public function count_invoice() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) from invoice");
             $stmt->execute();
             $rescount = $stmt->fetchColumn();
             return $rescount;

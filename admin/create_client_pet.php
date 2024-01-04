@@ -47,7 +47,7 @@
 
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_client_pet.php">Back</a>
-        <h1 class="mb-0 ml-2">Add Record</h1>
+        <h1 class="mb-0 ml-2">Add Pets</h1>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -55,6 +55,23 @@
                 <div class="card" style="margin-bottom: 3em;">     
                     <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
                     <!-- Rest of your form code -->
+                        <div class="row">
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <?php if (isset($item['pet_picture']) && !is_null($item['pet_picture'])): ?>
+                                    <img id="blah" src="<?= $item['pet_picture'] ?>" class="img-size"  width="100" alt="Pet Picture">
+                                <?php else: ?>
+                                    <img id="blah" src="../images/placeholder/pet-placeholder.png" class="text-center mb-3" width="100" alt="Pet Picture">
+                                <?php endif; ?>       
+                            </div>
+                            <div class="col-md-12">
+                                <div class="custom-file form-group">
+                                    <input type="file" onchange="readURL(this);" class="custom-file-input" id="customFile" name="pet_picture">
+                                    <label class="custom-file-label" for="customFile">Choose File Photo</label>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mt-3">
                             <div class="col">
                                 <div class="form-group">
@@ -79,4 +96,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
 <!-- responsive tags for screen compatibility -->
+<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+<!-- custom css --> 
+<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<!-- bootstrap css --> 
+<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
+<!-- fontawesome icons -->
+<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
+<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
 
