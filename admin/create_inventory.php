@@ -107,6 +107,30 @@
 
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Add a change event handler to the Purchased Date input
+        $('input[name="bought_date"]').on('change', function () {
+            // Get the selected Purchased Date value
+            var purchasedDate = new Date($(this).val());
+
+            // Calculate the minimum Expiration Date (6 months from the Purchased Date)
+            var minExpirationDate = new Date(purchasedDate.getFullYear(), purchasedDate.getMonth() + 12, purchasedDate.getDate());
+
+            // Set the minimum Expiration Date value to the Expiration Date input
+            $('input[name="exp_date"]').attr('min', formatDate(minExpirationDate));
+        });
+
+        // Function to format date as 'YYYY-MM-DD'
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + '-' + month + '-' + day;
+        }
+    });
+</script>
+
 <!-- /.container-fluid -->
 
 <!-- End of Main Content -->

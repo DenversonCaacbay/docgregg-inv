@@ -74,6 +74,20 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="mtop"> Purchased Date: </label>
+                                        <input type="date" class="form-control" name="bought_date" value="<?= $item['purchased_at']?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="mtop"> Expiration Date: </label>
+                                        <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 

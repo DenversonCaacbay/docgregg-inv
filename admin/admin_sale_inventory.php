@@ -8,6 +8,16 @@
 
    
 ?>
+<script>
+        $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        });
+    </script>
 
 <?php 
     include('dashboard_sidebar_start.php');
@@ -131,7 +141,7 @@ if(isset($_GET["action"]))
                             <th colspan="2" style="background: #0296be;color:white;">Add</th>
                         </tr>   
                         <?php
-                            $query = "SELECT * FROM tbl_inventory ORDER BY inv_id ASC";
+                            $query = "SELECT * FROM tbl_inventory WHERE deleted_at IS NULL ORDER BY inv_id ASC";
                             $result = mysqli_query($connect, $query);
                             if(mysqli_num_rows($result) > 0)
                             {
@@ -146,11 +156,24 @@ if(isset($_GET["action"]))
                                 <td><h5 class=""><?php echo $row["name"]; ?></h5></td>
                                 <td><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
                                 <td><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
-                                <td><input type="text" name="quantity" value="1" class="form-control" /></td>
+                                <td><input type="text" name="quantity" id="inputQuantity" value="1" class="form-control" /></td>
                                 <td><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
                                 <td><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
                                 <td><input type="hidden" name="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
-                                <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Add to Cart" /></td>
+                                <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Add to Cart" id="addToCartBtn"/></td>
+                                <script>
+                                    document.getElementById('inputQuantity').addEventListener('input', function () {
+                                        var inputQuantity = parseInt(this.value, 10);
+                                        var availableQuantity = <?php echo $row["quantity"]; ?>;
+
+                                        // Check if the input quantity is greater than the available quantity
+                                        if (inputQuantity > availableQuantity) {
+                                            document.getElementById('addToCartBtn').disabled = true;
+                                        } else {
+                                            document.getElementById('addToCartBtn').disabled = false;
+                                        }
+                                    });
+                                </script>
                             </form>
                         </tr>
                     
@@ -282,16 +305,7 @@ function checkpayment()
     
 </div>
 <!-- End of Main Content -->
-<script>
-        $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-        });
-    </script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>

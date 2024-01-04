@@ -52,7 +52,7 @@
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_client.php">Back</a>
         <h1 class="mb-0 ml-2">Client Pets</h1>
-        <a class="btn btn-primary ml-auto" href="create_client_pet.php">Add Pet</a>
+        <!-- <a class="btn btn-primary ml-auto" href="create_client_pet.php">Add Pet</a> -->
     </div>
 
     <br>
@@ -71,10 +71,10 @@
                 </div>
                 <div class="col-md-6">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
-                    <h5>Vaccine Taken: </h5>
-                    <h5>Recent Vaccination: </h5>
-                    <h5>Next Vaccination: </h5>
-                    <h5>Date Check Up: </h5>
+                    <h5>Sex: </h5>
+                    <h5>Breed: </h5>
+                    <h5>Birthdate: </h5>
+                    <h5>Age: </h5>
  
                 </div>
                 <div class="col-md-3 ">

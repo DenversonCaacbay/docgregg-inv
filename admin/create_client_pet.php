@@ -46,7 +46,7 @@
     <!-- Page Heading -->
 
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="admin_client_pet.php">Back</a>
+        <a class="btn btn-primary" href="admin_client.php">Back</a>
         <h1 class="mb-0 ml-2">Add Pets</h1>
     </div>
     <div class="row">
@@ -79,8 +79,12 @@
                                     <input type="text" class="form-control" name="pet_name" required>
                                 </div>
                                 <div class="form-group">
+                                    <label> Breed: </label>
+                                    <input type="text" class="form-control" name="breed" required>
+                                </div>
+                                <div class="form-group">
                                     <label> Birth Date: </label>
-                                    <input type="date" class="form-control" name="pet_name" id="birthdate" onchange="calculateAge()" required>
+                                    <input type="date" class="form-control" name="bdate" id="birthdate" onchange="calculateAge()" required>
                                 </div>
 
                                 <div class="form-group">
