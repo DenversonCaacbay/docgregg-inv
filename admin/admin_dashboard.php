@@ -10,6 +10,7 @@
 
     $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
+    $rescountsales = $staffbmis->count_total();
     // $rescountm = $residentbmis->count_male_resident();
     // $rescountf = $residentbmis->count_female_resident();
     // $rescountfh = $residentbmis->count_head_resident();
@@ -100,7 +101,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Sales</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark">₱1030.00</div>
+                                <div class="h5 mb-0 font-weight-bold text-dark">₱ <?= number_format($rescountsales, 2, '.', ',') ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>

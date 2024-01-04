@@ -611,6 +611,21 @@
             return $rescount;
         }
 
+        // public function count_total() {
+        //     $connection = $this->openConn();
+        //     $stmt = $connection->prepare("SELECT COUNT(*) from invoice");
+        //     $stmt->execute();
+        //     $rescount = $stmt->fetchColumn();
+        //     return $rescount;
+        // }
+        public function count_total() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT SUM(total) FROM invoice");
+            $stmt->execute();
+            $rescount = $stmt->fetchColumn();
+            return $rescount;
+        }
+
         public function count_pet() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) from tbl_pet WHERE deleted_at IS NULL");

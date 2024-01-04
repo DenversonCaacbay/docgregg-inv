@@ -56,34 +56,64 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Client List
+                    Client List Tab
                 </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">You can check the records of the clients and their pets</div>
+                <div class="accordion-body">
+                    <code>1.</code> You can view the records of the clients<br>
+                    <code>2.</code> You can add the pets of the client<br>
+                    <code>3.</code> You can view the pets information in Pet records<br>
+                    <code>4.</code> You can add vaccination information of each pet<br>
+                    <code>5.</code> You can view the records information of each pet<br>
+                </div>
                 </div>
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                   Vaccination Record
+                   Inventory Tab
                 </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Viewing of vaccination certificates uploaded my the clients</div>
+                <div class="accordion-body">
+                    <code>1.</code> You can see all the product added in your database<br>
+                    <code>2.</code> You can add Product via Add Item button, and fill up the product information needed<br>
+                    <code>3.</code> You can Update the product information through the Inventory tab in the right column there is an Update Button where you can update the information<br>
+                    <code>4.</code> You can also delete the product if needed.<br>
+                </div>
                 </div>
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    Inventory
+                    Sales Inventory Tab
                 </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Here in inventory you can check the stocks of every item. <br>
-                    <code>1.</code> You can add item of pets and you can select there category<br>
-                    <code>2.</code> Updating the item data<br>
-                    <code>3.</code> You can remove the item on the inventory
+                <div class="accordion-body">
+                    <code>1.</code> In this tab admin needs client to buy first in the shop and enter the items bought by the clients<br>
+                    <code>2.</code> You can add to cart the items and it will be displayed in the Order Details Section.<br>
+                    <code>3.</code> You need to verify first if the cash is exact amount or not to be able to proceed in the payment<br>
+                    <code>4.</code> After you are done in the payment. the quantity of the item will also be decrease in the inventory section<br>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                   Reports Tab
+                </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <code>1.</code> There are three sections which is Stocks, Clients and Vaccinations<br>
+                    <code>2.</code> In the stocks you can see all the bought products of the client.<br>
+                    <code>3.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
+                    <code>2.</code> In the Clients you can see all the client who registered.<br>
+                    <code>3.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
+                    <code>2.</code> In the Vaccination you can see all the client pet records listed.<br>
+                    <code>3.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
                 </div>
                 </div>
             </div>
