@@ -61,6 +61,18 @@
                                     <label> Pet Name: </label>
                                     <input type="text" class="form-control" name="pet_name" required>
                                 </div>
+                                <div class="form-group">
+                                    <label> Vaccine Taken: </label>
+                                    <input type="text" class="form-control" name="pet_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label> Date Vaccinated: </label>
+                                    <input type="text" class="form-control" name="pet_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label> Next Vaccination: </label>
+                                    <input type="text" class="form-control" name="pet_name" required>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

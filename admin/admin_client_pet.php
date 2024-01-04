@@ -71,10 +71,11 @@
                 </div>
                 <div class="col-md-6">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
-                    <h5>Date Check Up: </h5>
+                    <h5>Vaccine Taken: </h5>
                     <h5>Recent Vaccination: </h5>
                     <h5>Next Vaccination: </h5>
-                    <h5>Health Record: </h5>
+                    <h5>Date Check Up: </h5>
+ 
                 </div>
                 <div class="col-md-3 ">
                     <form method="post" class="mt-1">
