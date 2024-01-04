@@ -5,11 +5,11 @@
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     $view = $staffbmis->view_user();
+
+    $staffcount = $staffbmis->count_user();
     // $staffbmis->create_staff();
     // $upstaff = $staffbmis->update_staff();
     // $staffbmis->delete_staff();
-    $staffcount = $staffbmis->count_user();
-    
 
 ?>
 

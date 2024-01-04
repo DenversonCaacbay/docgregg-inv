@@ -1,18 +1,11 @@
 <?php
 session_start();
-// require_once '../dompdf/vendor/autoload.php'; // Include dompdf library
 
-// use Dompdf\Dompdf;
-
-// Create a new Dompdf instance
-// $dompdf = new Dompdf();
 require_once '../pdf.php';
-// $user = $_SESSION['username'];
-// Fetch today's date
+
 $today = date('Y-m-d');
 $currentMonth = date('Y-m');
 
-// Connect to your database (replace with your own credentials)
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -23,7 +16,6 @@ if ($conn->connect_error) {
   die('Connection failed: ' . $conn->connect_error);
 }
 
-// Fetch data from the shop_inventory table based on today's date
 $query = "SELECT * FROM tbl_user WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
 $result = $conn->query($query);
 
@@ -58,6 +50,9 @@ $html = '
 <h4>Month Generated:  '.date("F, Y", strtotime($today)).'</h4>
 
 ';
+$rowCount = $result->num_rows;
+
+$html .= '<h5>Total Clients Registered this Month: ' . $rowCount . '</h5>';
 
 $html .= '<table  id="customers">';
 $html .= '<tr>
@@ -66,7 +61,7 @@ $html .= '<tr>
 </tr>';
 $totalSales = 0;
 if ($result->num_rows > 0) {
-  // $total = $quantity * $unitPrice;
+
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
@@ -81,18 +76,13 @@ if ($result->num_rows > 0) {
 }
 
 $html .= '</table>';
-// $pdf = new Pdf();
 
-// Load the HTML into dompdf
 $pdf = new Pdf();
-// $dompdf->loadHtml(html_entity_decode($html));
-//landscape orientation
+
  $file_name = 'Monthly Report -'.$today.'.pdf';
  $pdf->loadHtml($html);
  $pdf->setPaper('A4', 'portrait');
  $pdf->render();
  $pdf->stream($file_name, array("Attachment" => false));
 
-// Output the generated PDF to the browser
-// $dompdf->stream('daily_report.pdf');
 ?>

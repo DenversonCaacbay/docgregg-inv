@@ -59,6 +59,9 @@ $html = '
 <h4>Year Generated:  '.date("Y", strtotime($today)).'</h4>
 
 ';
+$rowCount = $result->num_rows;
+
+$html .= '<h5>Total Clients Registered this Year: ' . $rowCount . '</h5>';
 
 $html .= '<table  id="customers">';
 $html .= '<tr>

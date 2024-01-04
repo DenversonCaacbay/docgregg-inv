@@ -68,6 +68,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12 text-md-right">
+                    Generate Report by:  &nbsp
                     <!-- <button type="button" class="btn btn-primary">Day</button> -->
                     <a href="generatepdf/clients/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
                     <a href="generatepdf/clients/week.php" class="btn btn-primary" target="_blank" id="generatePDF">Weekly</a>

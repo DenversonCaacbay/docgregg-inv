@@ -6,11 +6,9 @@
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     $view = $staffbmis->view_user();
+    $staffcount = $staffbmis->count_invoice();
     // $bmis->validate_admin();
-    // $bmis->delete_bspermit();
-    // $view = $bmis->view_bspermit();
-    $id_resident = $_GET['id_resident'];
-    // $resident = $residentbmis->get_single_bspermit($id_resident);
+
    
 ?>
 
@@ -77,9 +75,27 @@
                 </div>
             </div>
             <table class="table table-hover text-center table-bordered mt-3">
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <form action="" method="post">
+                    <thead style="background: #0296be;color:#fff;"> 
+                        <tr>
+                            <th> Product Name </th>
+                            <th> total </th>
+                            <th> Created at </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if(is_array($view)) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                    <td> <?= $view['product'];?></td>
+                                    <td> <?= $view['total'];?></td>
+                                    <td> <?= $view['created_at'];?> </td>
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                    </tbody>
+                </form>
             </table>
         </div>
     </div>
