@@ -5,12 +5,10 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_user();
+    $view = $staffbmis->view_invoice();
+    $staffcount = $staffbmis->count_invoice();
     // $bmis->validate_admin();
-    // $bmis->delete_bspermit();
-    // $view = $bmis->view_bspermit();
-    $id_resident = $_GET['id_resident'];
-    // $resident = $residentbmis->get_single_bspermit($id_resident);
+
    
 ?>
 
@@ -54,14 +52,14 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h1 class="text-gray">Logs - Vaccination</h1>
+            <h1 class="text-gray">Reports - Stocks</h1>
         </div>
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active"><a href="admin_logs.php">Stocks</a></li>
-                    <li class="breadcrumb-item"><a href="admin_logs_clients.php">Clients</a></li>
-                    <li class="breadcrumb-item"><a href="admin_logs_vaccination.php">Vaccinations</a></li>
+                    <li class="breadcrumb-item active"><a href="admin_reports.php">Stocks</a></li>
+                    <li class="breadcrumb-item"><a href="admin_reports_clients.php">Clients</a></li>
+                    <li class="breadcrumb-item"><a href="admin_reports_vaccination.php">Vaccinations</a></li>
                 </ol>
             </nav>
         </div>
@@ -70,16 +68,41 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-primary">Day</button>
-                    <button type="button" class="btn btn-primary">Week</button>
-                    <button type="button" class="btn btn-primary">Month</button>
-                    <button type="button" class="btn btn-primary">Year</button>
+                    Generate Report by:  &nbsp
+                    <!-- <button type="button" class="btn btn-primary">Day</button> -->
+                    <a href="generatepdf/stocks/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
+                    <a href="generatepdf/stocks/week.php" class="btn btn-primary" target="_blank" id="generatePDF">Weekly</a>
+                    <a href="generatepdf/stocks/month.php" class="btn btn-primary" target="_blank" id="generatePDF">Monthly</a>
+                    <a href="generatepdf/stocks/year.php" class="btn btn-primary" target="_blank" id="generatePDF">Yearly</a>
+                    <!-- <button type="button" class="btn btn-primary">Week</button>
+                    <button type="button" class="btn btn-primary">Month</button> -->
+                    <!-- <button type="button" class="btn btn-primary">Year</button> -->
                 </div>
             </div>
             <table class="table table-hover text-center table-bordered mt-3">
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <form action="" method="post">
+                    <thead style="background: #0296be;color:#fff;"> 
+                        <tr>
+                            <th> Product Name </th>
+                            <th> Total Quantity</th>
+                            <th> Total </th>
+                            <th> Created at </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if(is_array($view)) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                    <td> <?= $view['product'];?></td>
+                                    <td> <?= $view['totalQty'];?></td>
+                                    <td> <?= $view['total'];?></td>
+                                    <td> <?= $view['created_at'];?> </td>
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                    </tbody>
+                </form>
             </table>
         </div>
     </div>

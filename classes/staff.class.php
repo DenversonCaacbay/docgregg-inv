@@ -337,16 +337,14 @@
         }
 
         public function view_invoice(){
-
             $connection = $this->openConn();
-
+        
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from invoice");
+            $stmt = $connection->prepare("SELECT * from invoice ORDER BY created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
-            //$rows = $stmt->
+        
             return $view;
-           
         }
 
         public function view_single_user(){

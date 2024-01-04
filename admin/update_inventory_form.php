@@ -66,14 +66,14 @@
                             <div class="col"> 
                                 <div class="form-group">
                                     <label class="mtop"> Quantity: </label>
-                                    <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" required>
+                                    <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" readonly>
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label class="mtop">Category</label>
-                                    <select class="form-control" name="category" id="category" required>
+                                    <select class="form-control" name="category" id="category" disabled>
                                         <option value="">Choose Category</option>
                                         <option value="Medicine" <?php echo ($item['category'] == 'Medicine') ? 'selected="selected"' : ''; ?>>Medicine</option>
                                         <option value="Vaccine" <?php echo ($item['category'] == 'Vaccine') ? 'selected="selected"' : ''; ?>>Vaccine</option>
@@ -87,13 +87,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="mtop"> Purchased Date: </label>
-                                        <input type="date" class="form-control" name="bought_date" value="<?= $item['purchased_at']?>" required>
+                                        <input type="date" class="form-control" name="bought_date" value="<?= $item['purchased_at']?>" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="mtop"> Expiration Date: </label>
-                                        <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" required>
+                                        <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                     </div>
                                 </div>
                             </div>

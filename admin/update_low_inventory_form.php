@@ -39,27 +39,19 @@
                                 <br>
                             </div>
 
-                            <div class="col-md-12">
-                                <!-- <label>Item Picture:</label> -->
-                                <div class="custom-file form-group">
-                                    <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
-                                    <label class="custom-file-label" for="customFile">Choose File Photo</label>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
-                                </div>
-                            </div><br><br>
+                            <br><br>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label> Product Name: </label>
-                                    <input type="text" class="form-control" name="name"  value="<?= $item['name']?>" required>
+                                    <input type="text" class="form-control" name="name"  value="<?= $item['name']?>" readonly>
                                 </div>
                             </div>
                             
                             <div class="col">
                                 <div class="form-group">
                                     <label class="mtop" >Price: </label>
-                                    <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" required>
+                                    <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" readonly>
                                 </div>
                             </div>
 
@@ -73,7 +65,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="mtop">Category</label>
-                                    <select class="form-control" name="category" id="category" required>
+                                    <select class="form-control" name="category" id="category" readonly>
                                         <option value="">Choose Category</option>
                                         <option value="Medicine" <?php echo ($item['category'] == 'Medicine') ? 'selected="selected"' : ''; ?>>Medicine</option>
                                         <option value="Vaccine" <?php echo ($item['category'] == 'Vaccine') ? 'selected="selected"' : ''; ?>>Vaccine</option>

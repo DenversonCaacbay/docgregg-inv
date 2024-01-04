@@ -35,7 +35,7 @@
         min-width: 40px;
     }
     .form-control{
-        text-align: center;
+        text-align: left;
     }
 </style>
 
@@ -51,8 +51,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="container"  style="margin-top: 5em;">   
-                <div class="card" style="margin-bottom: 3em;">     
+            <div class="container"  style="margin-top: 1em;">   
+                <div class="card" >     
                     <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
                     <!-- Rest of your form code -->
                         <div class="row">
@@ -78,6 +78,27 @@
                                     <label> Pet Name: </label>
                                     <input type="text" class="form-control" name="pet_name" required>
                                 </div>
+                                <div class="form-group">
+                                    <label> Birth Date: </label>
+                                    <input type="date" class="form-control" name="pet_name" id="birthdate" onchange="calculateAge()" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Age</label>
+                                    <input type="text" class="form-control" name="age" id="age" readonly />
+                                    
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="mtop">Sex</label>
+                                    <select class="form-control" name="sex" id="sex" required>
+                                        <option value="" <?php echo empty($_POST['sex']) ? 'selected' : ''; ?>>Choose your Sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <!-- <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div> -->
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -91,6 +112,25 @@
         </div>
     </div> 
 </div>
+
+<script>
+function calculateAge() {
+    // Get the entered birthdate from the input field
+    var birthdateInput = document.getElementById("birthdate");
+    var birthdate = new Date(birthdateInput.value);
+
+    // Get the current date
+    var currentDate = new Date();
+
+    // Calculate the age in years
+    var ageInMilliseconds = currentDate - birthdate;
+    var ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+
+    // Display the calculated age in the second input field
+    var ageInput = document.getElementById("age");
+    ageInput.value = ageInYears.toFixed(2) + " years";
+}
+</script>
 <!-- End of Main Content -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>

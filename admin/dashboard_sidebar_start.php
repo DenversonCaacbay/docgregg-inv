@@ -38,6 +38,10 @@
     .bg-primary{
         background: #0296be !important;
     }
+    .sidebar .active{
+        background: #31206c;
+        opacity: 0.8;
+    }
     /* .fixed-sidebar {
         position: fixed;
         height: 100%;
@@ -110,15 +114,15 @@
                     <i class="fas fa-bullhorn"></i>
                     <span>Inventory</span></a>
             </li>
-            <li class="nav-item" id="inventory">
+            <li class="nav-item" id="sales">
                 <a class="nav-link  text-light" href="admin_sale_inventory.php">
                     <i class="fas fa-bullhorn"></i>
                     <span>Sales Inventory</span></a>
             </li>
-            <li class="nav-item" id="inventory">
-                <a class="nav-link  text-light" href="admin_logs.php">
+            <li class="nav-item" id="reports">
+                <a class="nav-link  text-light" href="admin_reports.php">
                     <i class="fas fa-bullhorn"></i>
-                    <span>Logs</span></a>
+                    <span>Reports</span></a>
             </li>
             <!-- <li class="nav-item" id="staff">
                 <a class="nav-link  text-light" href="admin_staff_list.php">
@@ -139,7 +143,7 @@
                     <i class="fas fa-file-contract"></i>
                     <span>Help & Support</span></a>
             </li>
-            <li class="nav-item" id="help">
+            <li class="nav-item" id="logout">
                 <a class="nav-link  text-light" href="logout.php">
                 <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span></a>
@@ -213,18 +217,22 @@
 
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-                <!-- <script>
+                <script>
                     $(document).ready(function () {
                         // Retrieve the active item from localStorage
                         var activeItem = localStorage.getItem('activeNavItem');
+
+                        // Set the default active item to 'dashboard' if not already set
+                        if (!activeItem) {
+                            activeItem = 'dashboard';
+                            localStorage.setItem('activeNavItem', activeItem);
+                        }
 
                         // Remove the 'active' class from all items
                         $('.nav-item').removeClass('active');
 
                         // Add the 'active' class to the stored active item
-                        if (activeItem) {
-                            $('#' + activeItem).addClass('active');
-                        }
+                        $('#' + activeItem).addClass('active');
 
                         // Add a click event handler to all the navigation items
                         $('.nav-item').on('click', function () {
@@ -238,7 +246,8 @@
                             localStorage.setItem('activeNavItem', $(this).attr('id'));
                         });
                     });
-                </script> -->
+                </script>
+
 
                 
                 <!-- End of Topbar -->
