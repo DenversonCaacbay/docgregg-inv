@@ -145,17 +145,20 @@
 
         public function view_vaccine_record(){
             $connection = $this->openConn();
-        
+
+            $pet_id = $_GET['pet_id'];
+
             // $stmt = $connection->prepare("SELECT * 
             //     FROM tbl_vaccination
             //     LEFT JOIN tbl_user ON tbl_user.id_user = tbl_vaccination.pet_owner_id");
+
             $stmt = $connection->prepare("SELECT * 
                 FROM tbl_vaccination
                 LEFT JOIN tbl_user ON tbl_user.id_user = tbl_vaccination.pet_owner_id
                 LEFT JOIN tbl_pet ON tbl_pet.pet_id = tbl_vaccination.pet_id
-                WHERE tbl_pet.deleted_at IS NULL
+                WHERE tbl_pet.pet_id = ? AND tbl_pet.deleted_at IS NULL
             ");  
-            $stmt->execute();
+            $stmt->execute([$pet_id]);
             $view = $stmt->fetchAll();
         
             return $view;
@@ -488,7 +491,7 @@
                 ) AS tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id
                 WHERE tbl_pet.pet_id = ?
             ");
-            $stmt->execute();
+            $stmt->execute([$pet_id, $pet_id]);
             $view = $stmt->fetch();
     
             return $view;
