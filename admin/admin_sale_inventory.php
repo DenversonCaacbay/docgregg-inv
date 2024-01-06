@@ -125,7 +125,7 @@ if(isset($_GET["action"]))
         <div class="col-md-12">
             <table id="datatableid" class="table text-center">
                 <tr>
-                    <th scope="col"> <!--Inventory Search and Table of items-->
+                    <th scope="col" class="bg-white"> <!--Inventory Search and Table of items-->
                         <div class="sub-btn">
                             <input type="text" class="form-control" style="width:100%;height:40px;" name="search" id="myInput" placeholder="Search Product...">
                         </div>
@@ -138,7 +138,7 @@ if(isset($_GET["action"]))
                             <th width="10%;" style="background: #0296be;color:white;">Quantity</th>
                             <th style="background: #0296be;color:white;"></th>
                             <th style="background: #0296be;color:white;"></th>
-                            <th colspan="2" style="background: #0296be;color:white;">Add</th>
+                            <th colspan="2" class="text-center" style="background: #0296be;color:white;">Add</th>
                         </tr>   
                         <?php
                             $query = "SELECT * FROM tbl_inventory WHERE deleted_at IS NULL ORDER BY inv_id ASC";
@@ -192,7 +192,7 @@ if(isset($_GET["action"]))
             </table>
             </th>
 
-<th scope="col"><!--Orders and Reciept-->
+<th scope="col" class="bg-white"><!--Orders and Reciept-->
 <div style="clear:both"></div>
 <br>
 <h3>Order Details</h3>

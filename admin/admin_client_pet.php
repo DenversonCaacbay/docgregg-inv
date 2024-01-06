@@ -63,14 +63,15 @@
             <div class="row">
                 <div class="col-md-3 text-center ">
                     <?php if (is_null($item['pet_picture'])): ?>
-                        <img src="../images/placeholder/pet-placeholder.png" width="150">
+                        <img src="../images/placeholder/pet-placeholder.png" width="200">
                     <?php else: ?>
                         <!-- Display pet image here -->
-                        <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150">
+                        <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="200">
                     <?php endif; ?>
                 </div>
                 <div class="col-md-6">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
+                    <h5>Pet Type: <?= $item['pet_type']; ?></h5>
                     <h5>Sex:  <?= $item['sex'] = $item['sex'] ? $item['sex'] : "---"; ?></h5>
                     <h5>Breed: <?= $item['breed']= $item['breed'] ? $item['breed'] : "---"; ?></h5>
                     <h5>Birthdate: <?= $item['bdate'] = !empty($item['bdate']) ? date("m/d/Y", $view['bdate']) : "---"; ?></h5>
@@ -80,7 +81,7 @@
                 <div class="col-md-3 ">
                     <form method="post" class="mt-1">
                         <a href="create_vaccination_record.php?pet_id=<?= $item['pet_id']; ?>&id_user=<?= $_GET['id_user']; ?>" class="btn btn-success text-center d-flex ml-auto">Create Vaccination Record</a><br>
-                        <a href="view_vaccination_record.php" class="btn btn-primary text-center d-flex ml-auto">View Records</a>
+                        <a href="view_vaccination_record.php?pet_id=<?= $item['pet_id']; ?>&id_user=<?= $_GET['id_user']; ?>" class="btn btn-primary text-center d-flex ml-auto">View Records</a>
                         <!-- <input type="hidden" name="id_user" value="<?= $item['id_admin']; ?>"> -->
                         <!-- <button class="btn btn-danger" type="submit" name="delete_staff">Remove</button> -->
                     </form>

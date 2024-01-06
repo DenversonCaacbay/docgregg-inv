@@ -5,7 +5,7 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $recent_user = $staffbmis->recent_user_all();
+    $view = $staffbmis->view_vaccine_record();
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
@@ -46,29 +46,38 @@
     <!-- Page Heading -->
 
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="admin_dashboard.php">Back</a>
-        <h1 class="mb-0 ml-2">All Pets</h1>
+        <a class="btn btn-primary" href="admin_client_pet.php?id_user=<?= $_GET['id_user']; ?>">Back</a>
+        <h1 class="mb-0 ml-2">View Vaccination Record</h1>
     </div>
-    <div class="mt-3">
-    <table class="table">
-            <th>Full Name</th>
-            <th>Pet Name</th>
-            <th>Date</th>
 
-            <?php if(is_array($recent_user)) {?>
-                <?php foreach($recent_user as $view) {?>
-                <tr>
-                    <td><?= $view['fname'];?> <?= $view['lname'];?></td>
-                    <td><?= $view['pet_name'];?></td>
-                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
-                    <!-- <td>Dog Hat</td>
-                    <td>Ruby</td>
-                    <td>January 01, 2024</td> -->
-                </tr>
-                <?php }?>
-            <?php } ?>
-        </table>
+    <?php if(is_array($view) && count($view) > 0): ?>
+    <?php foreach($view as $item): ?>
+    <div class="container">
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">Date:  <?=  date("F d, Y - l [g:i:s A]", strtotime($item["created_at"])); ?></div>
+           
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Vaccine Taken: <?= $item['vac_used']; ?></h5>
+                        <h5>Pet Condition: <?= $item['vac_condition'];?> </h5>
+                        <h5>Date Vaccinated:  <?= date("F d, Y - l [g:i:s A]", strtotime($item["created_at"])); ?></h5>
+                        <h5>Next Vaccination: <?= date("F d, Y - l [g:i:s A]", strtotime($item["vac_next"])); ?></h5>
+                        
+                        
+    
+                    </div>
+                </div>
+            </div>
+            
+        </div>
     </div>
+
+    <?php endforeach; ?>
+    <?php else: ?>
+        <p>No data available.</p>
+    <?php endif; ?>
+    
 
     
     

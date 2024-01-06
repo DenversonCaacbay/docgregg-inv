@@ -42,6 +42,28 @@
         background: #31206c;
         opacity: 0.8;
     }
+    label{
+        font-weight: 500;
+        font-size: 18px;
+        /* color: #0296be; */
+    }
+    .card{
+        border: none;
+        box-shadow: 0px 5px 10px rgb(34, 32, 32,0.1),
+        0px 5px 10px rgba(0,0,0,0.1);
+    }
+    .btn-primary{
+        background:  #0296be !important;
+
+    }
+    .table th{
+        background: #0296be;
+        color: white;
+    }
+    /* .btn-primary:hover{
+        background:  #ffffff !important;
+        color: 0296be;
+    } */
     /* .fixed-sidebar {
         position: fixed;
         height: 100%;

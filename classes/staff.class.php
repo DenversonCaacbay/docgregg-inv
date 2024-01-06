@@ -123,6 +123,7 @@
                 $pet_id = $_GET['pet_id'];
                 $owner_id = $_GET['id_user']; // Make sure owner_id is an integer
                 $vac_used = $_POST['vaccine'];
+                $vac_condition = $_POST['vac_condition'];
                 $next_vac = $_POST['next_vac'];
                 // $vacc_done_check = $_POST['vacc_done_check'];
 
@@ -132,8 +133,8 @@
         
                 // proceed to create without picture
                 $connection = $this->openConn();
-                $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_id`, `pet_owner_id`, `vac_next`, `vac_used`) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$pet_id, $owner_id, $next_vac, $vac_used]);
+                $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_id`, `pet_owner_id`, `vac_next`,`vac_condition`, `vac_used`) VALUES (?,?, ?, ?, ?)");
+                $stmt->execute([$pet_id, $owner_id, $next_vac, $vac_condition, $vac_used]);
         
                 $message2 = "Pet vaccination record added!";
                 echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -414,6 +415,7 @@
         public function create_pet($owner_id) {
             if (isset($_POST['add_pet'])) {
                 $pet_name = ucfirst(strtolower($_POST['pet_name']));
+                $pet_type = $_POST['pet_type'];
                 $breed = $_POST['breed'];
                 $bdate = $_POST['bdate'];
                 $sex = $_POST['sex'];
@@ -435,8 +437,8 @@
                         // proceed to create with picture
                         $connection = $this->openConn();
                         $stmt = $connection->prepare("INSERT INTO tbl_pet 
-                            (`pet_name`, `pet_owner_id`, `pet_picture`, `breed`, `bdate`, `sex`) VALUES (?, ?, ?, ?, ?, ?)");
-                        $stmt->execute([$pet_name, $owner_id, $target_file, $breed, $bdate, $sex]);
+                            (`pet_name`, `pet_owner_id`, `pet_picture`,   `pet_type`, `breed`, `bdate`, `sex`) VALUES (?,?, ?, ?, ?, ?, ?)");
+                        $stmt->execute([$pet_name, $owner_id, $target_file,$pet_type, $breed, $bdate, $sex]);
         
                         $message2 = "Pet added!";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
@@ -449,8 +451,8 @@
                     // proceed to create without picture
                     $connection = $this->openConn();
                     $stmt = $connection->prepare("INSERT INTO tbl_pet 
-                        (`pet_name`, `pet_owner_id`, `breed`, `bdate`, `sex`) VALUES (?, ?, ?, ?, ?)");
-                    $stmt->execute([$pet_name, $owner_id, $breed, $bdate, $sex]);
+                        (`pet_name`, `pet_owner_id`, `pet_type`,`breed`, `bdate`, `sex`) VALUES (?,?, ?, ?, ?, ?)");
+                    $stmt->execute([$pet_name, $owner_id, $pet_type, $breed, $bdate, $sex]);
         
                     $message2 = "Pet added!";
                     echo "<script type='text/javascript'>alert('$message2');</script>";

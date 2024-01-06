@@ -81,25 +81,53 @@
                                     <input type="text" class="form-control" name="pet_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="mtop">Breed</label>
-                                    <select class="form-control" name="breed" id="breed" required>
-                                        <option value="">Choose your Breed</option>
+                                    <label class="mtop">Pet Type</label>
+                                    <select class="form-control" name="pet_type" id="pet_type" required>
+                                        <option value="">Choose</option>
                                         <option value="Dog">Dog</option>
                                         <option value="Cat">Cat</option>
-                                    </select>
-                                    <!-- <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div> -->
+                                    </select> 
                                 </div>
+                                <div class="form-group" id="breedContainer" style="display: none;">
+                                    <label class="mtop">Pet Breed</label>
+                                    <select class="form-control" name="breed" id="pet_breed">
+                                        <!-- Breed options will be dynamically added here -->
+                                    </select>
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#pet_type').change(function() {
+                                            var selectedPetType = $(this).val();
+                                            var breedContainer = $('#breedContainer');
+
+                                            // Clear previous options
+                                            $('#pet_breed').empty();
+
+                                            if (selectedPetType === 'Dog') {
+                                                // Show the breed select and populate it with dog breeds
+                                                breedContainer.show();
+                                                $('#pet_breed').append('<option value="Labrador">Labrador</option>');
+                                                $('#pet_breed').append('<option value="Golden Retriever">Golden Retriever</option>');
+                                                // Add more dog breeds as needed
+                                            } else if (selectedPetType === 'Cat') {
+                                                // Show the breed select and populate it with cat breeds
+                                                breedContainer.show();
+                                                $('#pet_breed').append('<option value="Siamese">Siamese</option>');
+                                                $('#pet_breed').append('<option value="Persian">Persian</option>');
+                                                // Add more cat breeds as needed
+                                            } else {
+                                                // Hide the breed select if neither Dog nor Cat is selected
+                                                breedContainer.hide();
+                                            }
+                                        });
+                                    });
+                                </script>
                                 <div class="form-group">
                                     <label> Birth Date: </label>
-                                    <input type="date" class="form-control" name="bdate" id="birthdate" onchange="calculateAge()" required>
+                                    <input type="date" class="form-control" name="bdate" id="birthdate" max="<?php echo date('Y-m-d'); ?>" required>
                                 </div>
 
-                                <!-- <div class="form-group">
-                                    <label>Age</label>
-                                    <input type="text" class="form-control" name="age" id="age" readonly />
-                                    
-                                </div> -->
+
                                 
                                 <div class="form-group">
                                     <label class="mtop">Sex</label>
@@ -126,6 +154,7 @@
 </div>
 
 <script>
+    
 function calculateAge() {
     // Get the entered birthdate from the input field
     var birthdateInput = document.getElementById("birthdate");
@@ -142,7 +171,7 @@ function calculateAge() {
     var ageInput = document.getElementById("age");
     ageInput.value = ageInYears.toFixed(2) + " years";
 }
-</script>
+</scrip>
 <!-- End of Main Content -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>

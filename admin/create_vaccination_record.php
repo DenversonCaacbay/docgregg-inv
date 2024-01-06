@@ -54,33 +54,54 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="container"  style="margin-top: 5em;">   
-                <div class="card" style="margin-bottom: 3em;">     
+            <div class="container"  style="margin-top: 2em;">   
+                <div class="card p-3" style="margin-bottom: 3em;">     
                     <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
                     <!-- Rest of your form code -->
                         <div class="row mt-3">
-                            <div class="col">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Pet Name: </label>
                                     <input type="text" class="form-control" name="pet_name" value="<?= $view['pet_name'] ?>" readonly>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> Pet Type: </label>
+                                    <input type="text" class="form-control" name="pet_type" id="petType" value="<?= $view['pet_type'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Vaccine Taken: </label>
                                     <input type="text" class="form-control" name="vaccine" required>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" id="medicalConditionGroup" style="display: none;">
+                                    <label> Medical Condition: </label>
+                                    <select class="form-control" name="vac_condition" id="medicalCondition">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Date Vaccinated: </label>
                                     <input type="text" class="form-control" name="vac_date" value="<?= date("M d, Y") ?>" readonly>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Next Vaccination: </label>
                                     <input type="datetime-local" class="form-control" id="nextVacInput" name="next_vac" required>
-                                    <input type="checkbox" id="vacCheckbox" name="vacc_done_check"> Vaccination Done
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                            <input type="checkbox" id="vacCheckbox" name="vacc_done_check"> Vaccination Done
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
+                        <div class="row mt-3">
+                            <div class="col-md-12">
                                 <input type="submit" class="btn btn-primary w-100 mb-3" name="add_vac" value="Submit"/>
                             </div>
                         </div>
@@ -91,7 +112,64 @@
     </div> 
 </div>
 <!-- End of Main Content -->
+<script>
+    // Function to show/hide and populate medical condition based on pet type
+    function toggleAndPopulateMedicalCondition() {
+        var petType = document.getElementById('petType').value;
+        var medicalConditionGroup = document.getElementById('medicalConditionGroup');
+        var medicalConditionSelect = document.getElementById('medicalCondition');
 
+        // Define medical conditions for dogs and cats
+        var dogMedicalConditions = [
+            "Ear Infection", "Vomiting", "Arthritis", "Dental Disease", "Leptospirosis", 
+            "Conjunctivitis", "Urinary tract Infections", "Dog diarrhoea", "Obesity", 
+            "Parvovirus", "Parasites", "Diarrhea", "Rabies", "Hip dysplasia", 
+            "Breathing difficulties", "Dog ear Infections", "Kennel cough", 
+            "Canine Distemper", "Epilepsy", "Anal fistulae", "Pancreatitis", "Cancer", 
+            "Gum Disease"
+        ];
+
+        var catMedicalConditions = [
+            "FeLV", "Diabetes", "Hyperthyroidism", "Dental Disease", 
+            "Feline Lower Urinary tract Disease", "Loss of Appetite", "Fever", 
+            "Bloody Urine", "Obesity", "Cancer", "Diarrhea", "Rabbies", 
+            "Urinary Tract Infection", "Fleas", "Breathing problems", 
+            "Kidney Disease", "Upper Respiratory infection", "Feline Panleukonia", 
+            "Tapeworms", "Ringworms", "Vomiting", "Hearthworm", "Cat flu"
+        ];
+
+        // Display the medical condition group if pet type is 'dog' or 'cat', hide otherwise
+        if (petType.toLowerCase() === 'dog') {
+            populateMedicalConditions(dogMedicalConditions);
+            medicalConditionGroup.style.display = 'block';
+        } else if (petType.toLowerCase() === 'cat') {
+            populateMedicalConditions(catMedicalConditions);
+            medicalConditionGroup.style.display = 'block';
+        } else {
+            medicalConditionGroup.style.display = 'none';
+        }
+    }
+
+    // Function to populate medical conditions in the select element
+    function populateMedicalConditions(conditions) {
+        var medicalConditionSelect = document.getElementById('medicalCondition');
+        medicalConditionSelect.innerHTML = ""; // Clear existing options
+
+        // Add options based on the conditions array
+        for (var i = 0; i < conditions.length; i++) {
+            var option = document.createElement('option');
+            option.value = conditions[i];
+            option.text = conditions[i];
+            medicalConditionSelect.add(option);
+        }
+    }
+
+    // Add an event listener to the pet type input to trigger the toggle function
+    document.getElementById('petType').addEventListener('change', toggleAndPopulateMedicalCondition);
+
+    // Initial check on page load
+    toggleAndPopulateMedicalCondition();
+</script>
 <script>
   $(document).ready(function() {
     // Event listener for date input changes

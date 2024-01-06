@@ -39,7 +39,6 @@
                     <h5>Date Check Up: </h5>
                     <h5>Recent Vaccination: </h5>
                     <h5>Next Vaccination: </h5>
-                    <h5>Health Record: </h5>
                     <h5>Date Vaccinated: <?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
                 </div>
             </div>

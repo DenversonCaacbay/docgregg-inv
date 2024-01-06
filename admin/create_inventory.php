@@ -14,7 +14,7 @@
 <!-- Begin Page Content -->
 
 <div class="container-fluid">
-<div class="d-flex align-items-center">
+    <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_inventory.php">Back</a>
         <h1 class="mb-0 ml-2">Add Item Data</h1>
     </div>
@@ -46,27 +46,27 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                             </div><br><br>
-                            <div class="col">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label> Product Name: </label>
                                     <input type="text" class="form-control" name="name" required>
                                 </div>
                             </div>
                             
-                            <div class="col">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="mtop" >Price: </label>
                                     <input type="number" class="form-control" name="price"  required>
                                 </div>
                             </div>
 
-                            <div class="col"> 
+                            <div class="col-md-3"> 
                                 <div class="form-group">
                                     <label class="mtop"> Quantity: </label>
                                     <input type="number" class="form-control" name="qty" required>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="mtop">Category</label>
                                     <select class="form-control" name="category" id="category" required>
@@ -78,8 +78,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="mtop"> Purchased Date: </label>
                                         <input type="date" class="form-control" name="bought_date" required>
@@ -91,20 +90,20 @@
                                         <input type="date" class="form-control" name="exp_date" required>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary w-100 m-2" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <input type="hidden" class="form-control" name="role" value="resident">
+                        <!-- <input type="hidden" class="form-control" name="role" value="resident"> -->
                             <!-- <a href="admin_inventory.php" class="btn btn-danger" style="width: 120px; font-size: 18px; border-radius:5px; margin-left:35%;"> Back </a> -->
-                        <button class="btn btn-primary w-100 m-2" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
+                        
                     </form>
                 </div>
             </div>
-            <div class="col-md-2"> </div>
         </div>
     </div>
-
 </div>
 
 <script>

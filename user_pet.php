@@ -8,7 +8,7 @@
     $view = $residentbmis->view_pet($id_resident);
     
     $residentbmis->profile_update();
-    $residentbmis->delete_pet();
+    // $residentbmis->delete_pet();
 
 ?>
 
@@ -70,17 +70,17 @@
                         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $item['pet_picture'] ?>')">
                             <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150">
                         </a>
+    
                     <?php endif; ?>
 
                     
                 </div>
                 <div class="col-md-9">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
-                    <h5>Date Check Up: </h5>
-                    <h5>Recent Vaccination: </h5>
-                    <h5>Next Vaccination: </h5>
-                    <h5>Health Record: </h5>
-                    <!-- <h5><?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5> -->
+                    <h5>Sex:  <?= $item['sex'] = $item['sex'] ? $item['sex'] : "---"; ?></h5>
+                    <h5>Breed: <?= $item['breed']= $item['breed'] ? $item['breed'] : "---"; ?></h5>
+                    <h5>Birthdate: <?= $item['bdate'] = !empty($item['bdate']) ? date("m/d/Y", $view['bdate']) : "---"; ?></h5>
+                    <h5>Age: <?= $item['age'] = !empty($item['age']) ? $item['age'] : 0; ?></h5>
                     <form method="post" class="mt-4">
                         <!-- <a href="update_user_pet.php?id_user=<?= $item['pet_id']; ?>" class="btn btn-success">Update</a> -->
                         <!-- <input type="hidden" name="pet_id" value="<?= $item['pet_id']; ?>">
