@@ -32,7 +32,9 @@
 
 <style>
     /* Add this style in your CSS or within a <style> tag in the <head> section */
-
+    body::-webkit-scrollbar {
+    display: none;
+    }
     .btn-primary{
         background: #0296be !important;
     }
