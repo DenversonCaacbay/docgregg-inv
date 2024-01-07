@@ -22,50 +22,51 @@
     </div>
                 
     <div class="row"> 
-        <div class="col-md-2"> </div> 
-        <div class="col-md-8"> 
-            <div class="card mt-3">
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data"> 
+        <div class="col-md-12"> 
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="col-md-12 mt-5">   
+                            <?php if (is_null($item['picture'])): ?>
+                                <img id="blah" src="../images/placeholder/item-placeholder.png" height="400" width="400" alt="Item Picture">
+                            <?php else: ?>
+                                <img id="blah" src="../uploads/<?= $item['picture']?>" height="400" width="400" alt="Item Picture">
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
                         <div class="row">
-                            <!--  -->
-                            <div class="col-md-12">
+                        <div class="col-md-12 " hidden>
                                 <!-- <label>Item Picture:</label> -->
-                                <?php if (is_null($item['picture'])): ?>
-                                    <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture">
-                                <?php else: ?>
-                                    <img id="blah" src="../uploads/<?= $item['picture']?>" class="img-size" alt="Item Picture">
-                                <?php endif; ?>
-                                <br>
+                                <div class="custom-file form-group">
+                                    <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
+                                    <label class="custom-file-label" for="customFile">Choose File Photo</label>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
                             </div>
-
-                            <br><br>
-
-                            <div class="col">
+                            <div class="col-md-12 mt-3" hidden>
                                 <div class="form-group">
                                     <label> Product Name: </label>
-                                    <input type="text" class="form-control" name="name"  value="<?= $item['name']?>" readonly>
+                                    <input type="text" class="form-control" name="name"  value="<?= $item['name']?>" required>
                                 </div>
                             </div>
-                            
-                            <div class="col">
+                            <div class="col-md-6" hidden>
                                 <div class="form-group">
                                     <label class="mtop" >Price: </label>
-                                    <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" readonly>
+                                    <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" required>
                                 </div>
                             </div>
-
-                            <div class="col"> 
+                            <div class="col-md-6"> 
                                 <div class="form-group">
                                     <label class="mtop"> Quantity: </label>
-                                    <input type="number" class="form-control" name="qty"value="<?= $item['quantity']?>" required>
+                                    <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" required>
                                 </div>
                             </div>
-
-                            <div class="col">
+                            <div class="col" hidden>
                                 <div class="form-group">
                                     <label class="mtop">Category</label>
-                                    <select class="form-control" name="category" id="category" readonly>
+                                    <select class="form-control" name="category" id="category" disabled>
                                         <option value="">Choose Category</option>
                                         <option value="Medicine" <?php echo ($item['category'] == 'Medicine') ? 'selected="selected"' : ''; ?>>Medicine</option>
                                         <option value="Vaccine" <?php echo ($item['category'] == 'Vaccine') ? 'selected="selected"' : ''; ?>>Vaccine</option>
@@ -74,35 +75,28 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12" hidden>
                                     <div class="form-group">
                                         <label class="mtop"> Purchased Date: </label>
                                         <input type="date" class="form-control" name="bought_date" value="<?= $item['purchased_at']?>" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12" hidden>
                                     <div class="form-group">
                                         <label class="mtop"> Expiration Date: </label>
                                         <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                     </div>
-                                </div>
                             </div>
                         </div>
-
-
-
-                        <br>
-                        <hr>
-
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
-                            <!-- <a href="admin_inventory.php" class="btn btn-danger" style="width: 120px; font-size: 18px; border-radius:5px; margin-left:35%;"> Back </a> -->
-                        <button class="btn btn-primary W-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
-                    </form>
+                            
+                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2"> </div>
+            </form> 
         </div>
     </div>
 

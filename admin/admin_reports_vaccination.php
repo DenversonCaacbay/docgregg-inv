@@ -5,7 +5,7 @@
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_user();
+    $view = $staffbmis->count_vaccine_report();
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
@@ -59,7 +59,7 @@
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active"><a href="admin_reportss.php">Stocks</a></li>
+                    <li class="breadcrumb-item active"><a href="admin_reports.php">Stocks</a></li>
                     <li class="breadcrumb-item"><a href="admin_reports_clients.php">Clients</a></li>
                     <li class="breadcrumb-item"><a href="admin_reports_vaccination.php">Vaccinations</a></li>
                 </ol>
@@ -77,9 +77,29 @@
                 </div>
             </div>
             <table class="table table-hover text-center table-bordered mt-3">
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <form action="" method="post">
+                    <thead style="background: #0296be;color:#fff;"> 
+                        <tr>
+                            <th> Pet Name </th>
+                            <th> Pet Condition </th>
+                            <th> Vaccine Taken </th>
+                            <th> Date Vaccinated </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if(is_array($view)) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                <td> <?= $view['pet_name'];?> </td>
+                                <td> <?= $view['vac_condition'];?> </td>
+                                <td> <?= $view['vac_used'];?> </td>
+                                    <td> <?= $view['created_at'];?> </td>
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                    </tbody>
+                </form>
             </table>
         </div>
     </div>

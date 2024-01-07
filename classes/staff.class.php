@@ -683,6 +683,21 @@
             return $staffcount;
         }
 
+        //this is for reports vaccinations
+        public function count_vaccine_report() {
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_pet
+                                          INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id");
+        
+            $stmt->execute();
+        
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+            return $result;
+        }
+        
+
         public function count_inventory() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL");

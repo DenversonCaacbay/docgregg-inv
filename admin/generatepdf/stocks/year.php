@@ -51,7 +51,10 @@ $html = '
   background-color: #0296be;
   color: white;
 }
-
+#customers td.product-name {
+  word-wrap: break-word;
+  max-width: 150px; /* Set a maximum width to control line breaks */
+}
 </style>
 
 
@@ -63,16 +66,16 @@ $rowCount = $result->num_rows;
 
 $html .= '<table  id="customers">';
 $html .= '<tr>
-<th>Created At</th>
-<th>Product Name</th>
-<th>Total</th>
+<th width="20%">Created At</th>
+<th width="60%">Product Name</th>
+<th width="20%">Total</th>
 </tr>';
 $totalSales = 0;
 if ($rowCount > 0) {
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . date('Y-m-d H:i:s', strtotime($row['created_at'])) . '</td>';
-    $html .= '<td>' . $row['product'] .  '</td>';
+    $html .= '<td class="product-name">' . $row['product'] .  '</td>';
     $html .= '<td> ₱' . $row['total'] .  '.00</td>';
     $totalSales += $row['total']; // Accumulate total sales
     $html .= '</tr>';
