@@ -82,6 +82,7 @@
                     <h5>Birthdate: <?= $item['bdate'] = !empty($item['bdate']) ? date("m/d/Y", $view['bdate']) : "---"; ?></h5>
                     <h5>Age: <?= $item['age'] = !empty($item['age']) ? $item['age'] : 0; ?></h5>
                     <form method="post" class="mt-4">
+                    <a href="view_vaccination_record.php?pet_id=<?= $item['pet_id']; ?>&id_user=<?= $_GET['id_user']; ?>" class="btn btn-primary p-2" style="width:130px;">View Records</a>
                         <!-- <a href="update_user_pet.php?id_user=<?= $item['pet_id']; ?>" class="btn btn-success">Update</a> -->
                         <!-- <input type="hidden" name="pet_id" value="<?= $item['pet_id']; ?>">
                         <button class="btn btn-danger" style="width: 90px; font-size: 17px; border-radius:30px;" type="submit" name="delete_pet" onclick="return confirm('Are you sure you want to remove this pet?')"> Remove </button> -->

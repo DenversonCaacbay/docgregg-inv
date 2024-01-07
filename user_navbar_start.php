@@ -35,6 +35,9 @@ function isPageActive($page) {
  .navbar-nav .nav-link.active {
         border-bottom: 2px solid #0296be; /* Set the desired border color and thickness */
     }
+.bg-primary{
+    background:  #0296be !important;
+}
 </style>
 
 <nav class="navbar sticky-top py-3 navbar-expand-lg navbar-dark">

@@ -7,7 +7,7 @@
 
     $id_resident = $userdetails['id_user'];
     $resident = $residentbmis->get_single_resident($id_user);
-    $low_items = $residentbmis->view_low_inventory();
+    // $low_items = $residentbmis->view_low_inventory();
     $view = $residentbmis->view_recent($id_resident);
     // print_r($low_items);
     
@@ -36,8 +36,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
-                    <h5>Date Check Up: </h5>
-                    <h5>Recent Vaccination: </h5>
+                    <h5>Pet Condition: </h5>
+                    <h5>Vaccine Taken </h5>
                     <h5>Next Vaccination: </h5>
                     <h5>Date Vaccinated: <?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
                 </div>
