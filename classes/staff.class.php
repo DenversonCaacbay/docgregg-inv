@@ -183,11 +183,21 @@
                 return false;
             }
         }
-        
-        
+
+        public function done_vaccine(){
+            $connection = $this->openConn();
+            $vac_id = $_POST['vac_id'];
+
+            if(isset($_POST['is_done_true'])){
+                $stmt = $connection->prepare("UPDATE tbl_vaccination SET is_done = '1' WHERE vac_id = ?");
+                $stmt->execute([$vac_id]);
+                $message2 = "Vaccination marked as done";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header("refresh: 0");
+            }
+        }
 
         // #inventory
-
         public function view_inventory(){
             $connection = $this->openConn();
         
@@ -197,6 +207,18 @@
         
             return $view;
         }
+
+        public function view_vaccine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+
         //with pagination
         // public function view_inventory($page = 1, $recordsPerPage = 3){
         //     $startFrom = ($page - 1) * $recordsPerPage;

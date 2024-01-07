@@ -8,7 +8,8 @@
     // $view = $staffbmis->view_user();
     $view = $staffbmis->view_single_pet();
     $staffbmis->create_vaccination_record();
-    // print_r($view);
+    $vax = $staffbmis->view_vaccine();
+    // print_r($vax);
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
@@ -74,13 +75,22 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Vaccine Taken: </label>
-                                    <input type="text" class="form-control" name="vaccine" required>
+                                    <!-- <input type="text" class="form-control" name="vaccine" required> -->
+                                    <select class="form-control" name="vaccine" required>
+                                        <?php if(is_array($vax) && count($vax) > 0): ?>
+                                        <?php foreach($vax as $item): ?>
+                                            <option value="<?= $item['name']; ?>"><?= $item['name']; ?></option>
+                                        <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <option value="">No vaccine available</option>
+                                        <?php endif; ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" id="medicalConditionGroup" style="display: none;">
                                     <label> Medical Condition: </label>
-                                    <select class="form-control" name="vac_condition" id="medicalCondition">
+                                    <select class="form-control" name="vac_condition" id="medicalCondition" required>
                                     </select>
                                 </div>
                             </div>

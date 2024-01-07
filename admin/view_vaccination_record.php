@@ -1,11 +1,12 @@
 <?php
     
-    ini_set('display_errors',0);
+    // ini_set('display_errors',0);
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     $view = $staffbmis->view_vaccine_record();
+    $staffbmis->done_vaccine();
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
@@ -62,7 +63,17 @@
                         <h5>Vaccine Taken: <?= $item['vac_used']; ?></h5>
                         <h5>Pet Condition: <?= $item['vac_condition'];?> </h5>
                         <h5>Date Vaccinated:  <?= date("F d, Y - l [g:i:s A]", strtotime($item["created_at"])); ?></h5>
-                        <h5>Next Vaccination: <?= date("F d, Y - l [g:i:s A]", strtotime($item["vac_next"])); ?></h5>
+                        <h5>Next Vaccination: <?= $item["vac_next"] = !empty($item["vac_next"]) ? date("F d, Y - l [g:i:s A]", strtotime($item["vac_next"])) : "---"; ?></h5>
+                        <form method="POST">
+                            <h5>Remarks: 
+                                <?php if($item['is_done'] == 0): ?>
+                                    <input type="submit" class="btn btn-success text-center" name="is_done_true" value="Mark as Done">
+                                    <input type="text" value="<?= $item['vac_id']; ?>" name="vac_id" style="display: none;">
+                                <?php else: ?>
+                                    Done
+                                <?php endif; ?>
+                            </form>
+                        </h5>
                     </div>
                 </div>
             </div>
