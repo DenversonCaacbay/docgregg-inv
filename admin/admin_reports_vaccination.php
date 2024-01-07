@@ -69,11 +69,67 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-primary">Day</button>
-                    <button type="button" class="btn btn-primary">Week</button>
-                    <button type="button" class="btn btn-primary">Month</button>
-                    <button type="button" class="btn btn-primary">Year</button>
+            <div class="col-md-7">
+                    <form id="pdfForm" method="post" action="generatepdf/random/vaccination.php" style="display: inline-block; margin-right: 10px;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label for="fromDate" style="display: block;">From Date:</label>
+                                    <input type="date" class="form-control" id="fromDate" name="fromDate" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label for="toDate" style="display: block;">To Date:</label>
+                                    <input type="date" class="form-control" id="toDate" name="toDate" required>
+                                </div>
+                            </div>
+                            <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div>
+                            <div class="col-md-1 mt-4"><a  href="admin_reports.php" class="btn btn-primary p-2 mt-3"><i class="fas fa-redo"></i></a></div>            
+                            <div class="col-md-2 mt-4"><a href="#" class="btn btn-primary p-2" style="margin-top:15px" onclick="validateDates()" id="pdfLink"><i class="fas fa-print"></i></a></div>
+                        </div>
+                    </form> 
+                </div>  
+                <!-- <script>
+                    document.getElementById('pdfLink').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        document.getElementById('pdfForm').submit();
+                    });
+                </script>   -->
+                <script>
+    function validateDates() {
+        var startDate = document.getElementById('fromDate').value;
+        var endDate = document.getElementById('toDate').value;
+
+        if (startDate === "" || endDate === "") {
+            alert("Please select both start and end dates.");
+        } else {
+            // Perform other actions or submit the form
+            var form = document.getElementById('pdfForm');
+            form.submit();
+
+            // Open PDF link in a new tab
+            openPdfLink();
+        }
+    }
+
+    // This function opens the PDF link in a new tab
+    function openPdfLink() {
+        var pdfLink = document.getElementById('pdfLink').getAttribute('href');
+        window.open(pdfLink, '_blank');
+    }
+</script>
+
+                <div class="col-md-5 text-md-right mt-4">
+                    Generate Report by:  &nbsp
+                    <!-- <button type="button" class="btn btn-primary">Day</button> -->
+                    <a href="generatepdf/vaccination/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
+                    <a href="generatepdf/vaccination/week.php" class="btn btn-primary" target="_blank" id="generatePDF">Weekly</a>
+                    <a href="generatepdf/vaccination/month.php" class="btn btn-primary" target="_blank" id="generatePDF">Monthly</a>
+                    <a href="generatepdf/vaccination/year.php" class="btn btn-primary" target="_blank" id="generatePDF">Yearly</a>
+                    <!-- <button type="button" class="btn btn-primary">Week</button>
+                    <button type="button" class="btn btn-primary">Month</button> -->
+                    <!-- <button type="button" class="btn btn-primary">Year</button> -->
                 </div>
             </div>
             <table class="table table-hover text-center table-bordered mt-3">
@@ -109,15 +165,51 @@
 </div>
 <!-- End of Main Content -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
-<!-- responsive tags for screen compatibility -->
-<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-<!-- custom css --> 
-<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
-<!-- bootstrap css --> 
-<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
-<!-- fontawesome icons -->
-<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
-<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+<script>
+    $(document).ready(function() {
+        // Handle click on product link
+        $(".product-link").click(function(e) {
+            e.preventDefault();
+            var productDetails = $(this).data("product");
+            displayProductDetails(productDetails);
+        });
+
+        // Function to display product details in the modal
+        function displayProductDetails(product) {
+            // You can customize this function based on how you want to display product details
+            var detailsHtml = "<p><strong>Product:</strong> " + product.product + "</p>";
+            detailsHtml += "<p><strong>Total Quantity:</strong> " + product.totalQty + "</p>";
+            detailsHtml += "<p><strong>Total:</strong> ₱" + product.total + ".00</p>";
+            detailsHtml += "<p><strong>Created At:</strong> " + product.created_at + "</p>";
+
+            // Update the content of the modal with the product details
+            $("#productDetails").html(detailsHtml);
+
+            // Show the modal using JavaScript
+            $("#productModal").modal("show");
+        }
+
+        // Handle form submission to filter results
+        $("form").submit(function(e) {
+            e.preventDefault();
+            var fromDate = new Date($("#fromDate").val());
+            var toDate = new Date($("#toDate").val());
+
+            // Iterate through each row and hide/show based on the date range
+            $("tbody tr").each(function() {
+                var rowDate = new Date($(this).find("td:last-child").text());
+                if (rowDate >= fromDate && rowDate <= toDate) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>

@@ -16,7 +16,13 @@ if ($conn->connect_error) {
   die('Connection failed: ' . $conn->connect_error);
 }
 
-$query = "SELECT * FROM tbl_user WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
+// $query = "SELECT * FROM tbl_pet
+// INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
+// WHERE DATE_FORMAT(tbl_pet.created_at, '%Y-%m') = '$currentMonth'";
+$query = "SELECT * FROM tbl_pet
+          INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
+          WHERE DATE_FORMAT(tbl_pet.created_at, '%Y-%m') = '$currentMonth'";
+
 $result = $conn->query($query);
 
 // Generate the report HTML
@@ -46,33 +52,35 @@ $html = '
 }
 
 </style>
-<h1 style="text-align:center">Monthly Clients Report</h1>
+<h1 style="text-align:center">Monthly Vaccination Report</h1>
 <h4>Month Generated:  '.date("F, Y", strtotime($today)).'</h4>
 
 ';
 $rowCount = $result->num_rows;
 
-$html .= '<h5>Total Clients Registered this Month: ' . $rowCount . '</h5>';
+$html .= '<h5>Total Vaccinated this Day: ' . $rowCount . '</h5>';
 
 $html .= '<table  id="customers">';
 $html .= '<tr>
-<th>Client Name</th>
-<th>Registered Date</th>
+<th width="50%">Pet Name</th>
+<th width="50%">Pet Condition</th>
+<th width="50%">Vaccine Taken</th>
+<th width="50%">Date Vaccinated</th>
 </tr>';
 $totalSales = 0;
 if ($result->num_rows > 0) {
 
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
-    $html .= '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
-    $html .= '<td>' . $row['created_at'] . '</td>';
+    $html .= '<td>' . $row['pet_name'] .'</td>';
+    $html .= '<td>' . $row['pet_condition'] .'</td>';
+    $html .= '<td>' . $row['vaccine_taken'] .'</td>';
+    $html .= '<td>' . $row['created_at'] .  '.00</td>';
+
     $html .= '</tr>';
   }
-  $html .= '<tr>';
-
-  $html .= '</tr>';
 } else {
-  $html .= '<tr><td colspan="5">No Client Registered this month.</td></tr>';
+  $html .= '<tr><td colspan="4">No Pet Vaccinated this month.</td></tr>';
 }
 
 $html .= '</table>';

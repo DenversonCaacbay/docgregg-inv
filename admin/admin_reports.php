@@ -68,7 +68,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-7">
-                    <form id="pdfForm" method="post" action="generatepdf/random/day.php" style="display: inline-block; margin-right: 10px;">
+                    <form id="pdfForm" method="post" action="generatepdf/random/stocks.php" style="display: inline-block; margin-right: 10px;">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group" style="margin-bottom: 5px;">

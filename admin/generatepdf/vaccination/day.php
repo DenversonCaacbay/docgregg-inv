@@ -17,7 +17,9 @@ if ($conn->connect_error) {
 }
 
 // Use DATE() function to get only the date part of created_at
-$query = "SELECT * FROM tbl_user WHERE DATE(created_at) = '$today'";
+$query = "SELECT * FROM tbl_pet
+INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
+WHERE DATE(tbl_pet.created_at) = '$today'";
 $result = $conn->query($query);
 
 $html = '
@@ -59,41 +61,47 @@ body {
 </style>
 
 
-<h1 style="text-align:center">Daily Clients Report</h1>
+<h1 style="text-align:center">Daily Vaccination Report</h1>
 <h4>Day Generated:  '.date("F d, Y", strtotime($today)).'</h4>
 
 ';
 
 $rowCount = $result->num_rows;
 
-$html .= '<h5>Total Clients Registered this Day: ' . $rowCount . '</h5>';
+$html .= '<h5>Total Vaccinated this Day: ' . $rowCount . '</h5>';
 $html .= '
 <meta charset="UTF-8">
 <table  id="customers">';
 $html .= '<tr>
-<th>Client Name</th>
-<th>Date Registered</th>
+<th width="50%">Pet Name</th>
+<th width="50%">Pet Condition</th>
+<th width="50%">Vaccine Taken</th>
+<th width="50%">Date Vaccinated</th>
 </tr>';
 $totalSales = 0;
 if ($result->num_rows > 0) {
   // $total = $quantity * $unitPrice;
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
-    $html .= '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
-    $html .= '<td>' . date('Y-m-d H:i:s', strtotime($row['created_at'])) . '</td>';
+    $html .= '<td>' . $row['pet_name'] .'</td>';
+    $html .= '<td>' . $row['pet_condition'] .'</td>';
+    $html .= '<td>' . $row['vaccine_taken'] .'</td>';
+    $html .= '<td>' . $row['created_at'] .  '.00</td>';
+
+    $html .= '</tr>';
 
 
     $html .= '</tr>';
   }
 } else {
-  $html .= '<tr><td colspan="2">No Client Registered today.</td></tr>';
+  $html .= '<tr><td colspan="4">No Pet Vaccinated today.</td></tr>';
 }
 
 $html .= '</table>';
 
 $pdf = new Pdf();
 
-$file_name = 'Client Daily Report -'.$today.'.pdf';
+$file_name = 'Vaccination Daily Report -'.$today.'.pdf';
 $pdf->loadHtml($html);
 $pdf->setPaper('A4', 'portrait');
 $pdf->render();

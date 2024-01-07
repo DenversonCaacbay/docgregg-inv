@@ -1,11 +1,6 @@
 <?php
 session_start();
-// require_once '../dompdf/vendor/autoload.php'; // Include dompdf library
 
-// use Dompdf\Dompdf;
-
-// Create a new Dompdf instance
-// $dompdf = new Dompdf();
 require_once '../pdf.php';
 // Fetch today's date
 $today = date('Y-m-d');
@@ -23,7 +18,9 @@ if ($conn->connect_error) {
 }
 
 // Fetch data from the shop_inventory table based on today's date
-$query = "SELECT * FROM tbl_user WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
+$query = "SELECT * FROM tbl_pet
+INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
+WHERE DATE_FORMAT(tbl_pet.created_at, '%Y-%m') = '$currentMonth'";
 $result = $conn->query($query);
 
 // Generate the report HTML
@@ -65,8 +62,10 @@ $html .= '<h5>Total Clients Registered this Year: ' . $rowCount . '</h5>';
 
 $html .= '<table  id="customers">';
 $html .= '<tr>
-<th>Client Name</th>
-<th>Date Registered</th>
+<th width="50%">Pet Name</th>
+<th width="50%">Pet Condition</th>
+<th width="50%">Vaccine Taken</th>
+<th width="50%">Date Vaccinated</th>
 
 </tr>';
 $totalSales = 0;
@@ -74,8 +73,10 @@ if ($result->num_rows > 0) {
   // $total = $quantity * $unitPrice;
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
-    $html .= '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
-    $html .= '<td>' . $row['created_at'] . '</td>';
+    $html .= '<td>' . $row['pet_name'] .'</td>';
+    $html .= '<td>' . $row['pet_condition'] .'</td>';
+    $html .= '<td>' . $row['vaccine_taken'] .'</td>';
+    $html .= '<td>' . $row['created_at'] .  '.00</td>';
    
     $html .= '</tr>';
   }
