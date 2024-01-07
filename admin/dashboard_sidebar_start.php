@@ -26,6 +26,7 @@
     
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 
@@ -47,11 +48,11 @@
         font-size: 18px;
         /* color: #0296be; */
     }
-    .card{
+    /* .card{
         border: none;
         box-shadow: 0px 5px 10px rgb(34, 32, 32,0.1),
         0px 5px 10px rgba(0,0,0,0.1);
-    }
+    } */
     .btn-primary{
         background:  #0296be !important;
 

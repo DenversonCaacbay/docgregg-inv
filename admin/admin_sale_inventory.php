@@ -153,7 +153,7 @@ if(isset($_GET["action"]))
                         <tbody id="myTable">
                         <tr>
                         <form method="post" action="admin_sale_inventory.php?action=add&id=<?php echo $row["inv_id"]; ?>">
-    <td><h5 class=""><?php echo $row["name"]; ?></h5></td>
+    <td><h5 class=""><?php echo strlen($row['name']) > 20 ? substr($row['name'], 0, 20) . '...' : $row['name']; ?></h5></td>
     <td><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
     <td><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
     <td><input type="text" name="quantity" class="inputQuantity form-control" value="1" /></td>
@@ -213,7 +213,7 @@ if(isset($_GET["action"]))
       {
   ?>
   <tr>
-      <td><?php echo $values["item_name"]; ?></td>
+      <td><?php echo strlen($values['item_name']) > 20 ? substr($values['item_name'], 0, 20) . '...' : $values['item_name']; ?></td>
       <td><?php echo $values["item_quantity"]; ?></td>
       <td>₱ <?php echo $values["item_price"]; ?></td>
       <td>₱ <?php echo $values["item_quantity"] * $values["item_price"];?></td>

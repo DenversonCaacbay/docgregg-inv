@@ -68,7 +68,7 @@
                         <!-- Display pet image here -->
                         <!-- <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150"> -->
                         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $item['pet_picture'] ?>')">
-                            <img src="<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150">
+                            <img src="admin/<?= $item['pet_picture'] ?>" class="img-fluid" alt="Modal Image" width="150">
                         </a>
     
                     <?php endif; ?>
@@ -121,9 +121,9 @@
 <script>
     // JavaScript function to open the modal and set the image source
     function openModal(imageSrc) {
-        // Set the image source for the modal image
-        document.getElementById('modalImage').src = "" + imageSrc;
-    }
+    // console.log("Opening modal with image source:", imageSrc);
+    document.getElementById('modalImage').src = "admin/" + imageSrc;
+}
 </script>
 
 <!-- ... (other code) -->

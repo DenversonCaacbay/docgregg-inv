@@ -63,9 +63,6 @@
                         <h5>Pet Condition: <?= $item['vac_condition'];?> </h5>
                         <h5>Date Vaccinated:  <?= date("F d, Y - l [g:i:s A]", strtotime($item["created_at"])); ?></h5>
                         <h5>Next Vaccination: <?= date("F d, Y - l [g:i:s A]", strtotime($item["vac_next"])); ?></h5>
-                        
-                        
-    
                     </div>
                 </div>
             </div>

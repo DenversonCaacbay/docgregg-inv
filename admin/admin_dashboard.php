@@ -11,6 +11,7 @@
     $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
     $rescountsales = $staffbmis->count_total();
+    $rescountvac = $staffbmis->count_vac();
     // $rescountm = $residentbmis->count_male_resident();
     // $rescountf = $residentbmis->count_female_resident();
     // $rescountfh = $residentbmis->count_head_resident();
@@ -100,8 +101,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Sales</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark">₱ <?= number_format($rescountsales, 2, '.', ',') ?></div>
+                                Total Pet Vaccinated</div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
@@ -136,9 +137,71 @@
 
 
     <br>
-    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex align-items-center">
+                <label for="timePeriod" class="me-2 mt-2">Select Time Period:</label>
+                <select class="form-select" style="width:100px;" id="timePeriod" onchange="updateChart()">
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
+                    <option value="year">Year</option>
+                </select>
+            </div>
 
-    <div class="row"> 
+
+    <!-- Display the chart -->
+            <canvas id="salesChart" width="800" height="200"></canvas>
+
+    <!-- Your script to fetch and update data -->
+    <script>
+        // Initial time period selection
+        let selectedTimePeriod = 'week';
+
+        // Function to update the chart based on the selected time period
+        function updateChart() {
+            selectedTimePeriod = document.getElementById('timePeriod').value;
+            updateChartData();
+        }
+
+        // Function to update the chart data
+        function updateChartData() {
+            // Fetch data from the server using AJAX
+            fetch('pos/fetch_data.php?timePeriod=' + selectedTimePeriod)
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('salesChart').getContext('2d');
+
+                    const chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.dates,
+                            datasets: [{
+                                label: 'Total Sales',
+                                data: data.total,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Initial chart rendering
+        updateChartData();
+    </script>
+        </div>
+    </div>
+
+    <div class="row mt-5"> 
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6"><h4 class="mb-4">New Added Pets</h4></div>

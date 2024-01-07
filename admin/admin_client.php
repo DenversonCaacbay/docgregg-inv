@@ -36,13 +36,13 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
-                            <th> Picture </th>
-                            <th> First Name </th>
-                            <th> Middle Name </th>
-                            <th> Last Name </th>
-                            <th> Sex </th>
-                            <th> Address </th>
-                            <th> Actions </th>
+                            <th width="10%"> Picture </th>
+                            <th width="10%"> First Name </th>
+                            <th width="10%"> Middle Name </th>
+                            <th width="10%"> Last Name </th>
+                            <th width="10%"> Sex </th>
+                            <th width="23%"> Address </th>
+                            <th width="30%"> Actions </th>
                         </tr>
                     </thead>
 
@@ -52,7 +52,7 @@
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <img src="../images/placeholder/user-placeholder.png" width="100">
+                                        <img src="../images/placeholder/user-placeholder.png" width="50">
                                     <?php else: ?>
                                         <img src="../<?= $view['picture'] ?>" class="" width="50" alt="Modal Image">
                                         <?php endif; ?>
@@ -61,10 +61,11 @@
                                     <td><?= $view['mi'];?> </td>
                                     <td> <?= $view['lname'];?> </td>
                                     <td> <?= $view['sex'];?> </td>
-                                    <td> <?= $view['address'];?> </td>
+                                    <td><?= strlen($view['address']) > 30 ? substr($view['address'], 0, 30) . '...' : $view['address']; ?></td>
+
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="admin_client_info.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-primary"> View Record </a>
+                                            <a href="admin_client_info.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-primary"> View Info </a>
                                             <a href="create_client_pet.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-primary"> Add Pet </a>
                                             <a href="admin_client_pet.php?id_user=<?= $view['id_user'];?>" style="width: 100px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-primary"> View Pets </a>
                                             <input type="hidden" name="id_user" value="<?= $view['id_user'];?>">

@@ -740,6 +740,14 @@
             return $rescount;
         }
 
+        public function count_vac() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) from tbl_vaccination WHERE deleted_at IS NULL");
+            $stmt->execute();
+            $rescount = $stmt->fetchColumn();
+            return $rescount;
+        }
+
         // public function count_mstaff() {
         //     $connection = $this->openConn();
 

@@ -53,18 +53,17 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="container"  style="margin-top: 1em;">   
-                <div class="card" >     
-                    <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
-                    <!-- Rest of your form code -->
+            <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
+                <div class="row">
+                    <div class="col-md-5 mt-5">
+                        <?php if (isset($item['pet_picture']) && !is_null($item['pet_picture'])): ?>
+                            <img id="blah" src="<?= $item['pet_picture'] ?>" class="img-size"  width="400" alt="Pet Picture">
+                        <?php else: ?>
+                            <img id="blah" src="../images/placeholder/pet-placeholder.png" class="text-center mb-3" width="400" alt="Pet Picture">
+                        <?php endif; ?>   
+                    </div>
+                    <div class="col-md-7">
                         <div class="row">
-                            <div class="col d-flex justify-content-center align-items-center">
-                                <?php if (isset($item['pet_picture']) && !is_null($item['pet_picture'])): ?>
-                                    <img id="blah" src="<?= $item['pet_picture'] ?>" class="img-size"  width="100" alt="Pet Picture">
-                                <?php else: ?>
-                                    <img id="blah" src="../images/placeholder/pet-placeholder.png" class="text-center mb-3" width="100" alt="Pet Picture">
-                                <?php endif; ?>       
-                            </div>
                             <div class="col-md-12">
                                 <div class="custom-file form-group">
                                     <input type="file" onchange="readURL(this);" class="custom-file-input" id="customFile" name="pet_picture">
@@ -73,13 +72,13 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col">
+                            <div class="col-md-12 mt-3">
                                 <div class="form-group">
                                     <label> Pet Name: </label>
                                     <input type="text" class="form-control" name="pet_name" required>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop">Pet Type</label>
                                     <select class="form-control" name="pet_type" id="pet_type" required>
@@ -88,47 +87,22 @@
                                         <option value="Cat">Cat</option>
                                     </select> 
                                 </div>
-                                <div class="form-group" id="breedContainer" style="display: none;">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" id="breedContainer">
                                     <label class="mtop">Pet Breed</label>
-                                    <select class="form-control" name="breed" id="pet_breed">
+                                    <select class="form-control" name="breed" id="pet_breed" required>
                                         <!-- Breed options will be dynamically added here -->
                                     </select>
                                 </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#pet_type').change(function() {
-                                            var selectedPetType = $(this).val();
-                                            var breedContainer = $('#breedContainer');
-
-                                            // Clear previous options
-                                            $('#pet_breed').empty();
-
-                                            if (selectedPetType === 'Dog') {
-                                                // Show the breed select and populate it with dog breeds
-                                                breedContainer.show();
-                                                $('#pet_breed').append('<option value="Labrador">Labrador</option>');
-                                                $('#pet_breed').append('<option value="Golden Retriever">Golden Retriever</option>');
-                                                // Add more dog breeds as needed
-                                            } else if (selectedPetType === 'Cat') {
-                                                // Show the breed select and populate it with cat breeds
-                                                breedContainer.show();
-                                                $('#pet_breed').append('<option value="Siamese">Siamese</option>');
-                                                $('#pet_breed').append('<option value="Persian">Persian</option>');
-                                                // Add more cat breeds as needed
-                                            } else {
-                                                // Hide the breed select if neither Dog nor Cat is selected
-                                                breedContainer.hide();
-                                            }
-                                        });
-                                    });
-                                </script>
+                             </div>  
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label> Birth Date: </label>
                                     <input type="date" class="form-control" name="bdate" id="birthdate" max="<?php echo date('Y-m-d'); ?>" required>
                                 </div>
-
-
-                                
+                            </div>   
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="mtop">Sex</label>
                                     <select class="form-control" name="sex" id="sex" required>
@@ -136,23 +110,60 @@
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-                                    <!-- <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div> -->
                                 </div>
+                                <input type="submit" class="btn btn-primary w-100 mb-3" name="add_pet" value="Add Pet"/>
                             </div>
+                            
+                            
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <input type="submit" class="btn btn-primary w-100 mb-3" name="add_pet" value="Submit"/>
-                            </div>
-                        </div>
-                    </form>             
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div> 
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#pet_type').change(function() {
+            var selectedPetType = $(this).val();
+            var breedContainer = $('#breedContainer');
+            // Clear previous options
+            $('#pet_breed').empty();
+            if (selectedPetType === 'Dog') {
+                // Show the breed select and populate it with dog breeds
+                breedContainer.show();
+                $('#pet_breed').append('<option value="Labrador">Labrador Retriever</option>');
+                $('#pet_breed').append('<option value="Golden_Retriever">Golden Retriever</option>');
+                $('#pet_breed').append('<option value="German_Shepherd">German Shepherd</option>');
+                $('#pet_breed').append('<option value="Bulldog">Bulldog</option>');
+                $('#pet_breed').append('<option value="Beagle">Beagle</option>');
+                $('#pet_breed').append('<option value="Poodle">Poodle</option>');
+                $('#pet_breed').append('<option value="Rottweiler">Rottweiler</option>');
+                $('#pet_breed').append('<option value="Husky">Siberian Husky</option>');
+                $('#pet_breed').append('<option value="Dachshund">Dachshund</option>');
+                $('#pet_breed').append('<option value="Azkal">Azkal</option>');
+                // Add more dog breeds as needed
+            } else if (selectedPetType === 'Cat') {
+                // Show the breed select and populate it with cat breeds
+                breedContainer.show();
+                $('#pet_breed').append('<option value="Siamese">Siamese</option>');
+                $('#pet_breed').append('<option value="Persian">Persian</option>');
+                $('#pet_breed').append('<option value="Maine_Coon">Maine Coon</option>');
+                $('#pet_breed').append('<option value="Sphynx">Sphynx</option>');
+                $('#pet_breed').append('<option value="Ragdoll">Ragdoll</option>');
+                $('#pet_breed').append('<option value="British_Shorthair">British Shorthair</option>');
+                $('#pet_breed').append('<option value="Bengal">Bengal</option>');
+                $('#pet_breed').append('<option value="Abyssinian">Abyssinian</option>');
+                $('#pet_breed').append('<option value="Scottish_Fold">Scottish Fold</option>');
+                // Add more cat breeds as needed
+            } else {
+                // Hide the breed select if neither Dog nor Cat is selected
+                breedContainer.show();
+            }
+        });
+    });
+</script>
 <script>
     
 function calculateAge() {
