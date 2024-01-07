@@ -39,11 +39,11 @@
                         <div class="col-12 text-center mb-3">   
                             <!-- <img id="blah" src="../images/placeholder/user-placeholder.png" class="" alt="User Picture" width="150"> -->
                             <!-- <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="User Image" width="100"> -->
-                            <?php if (is_null($item['picture'])): ?>
-                                <img src="../images/placeholder/item-placeholder.png" width="100">
+                            <?php if (is_null($view['picture'])): ?>
+                                <img src="../images/placeholder/user-placeholder.png" width="200" height="200">
                             <?php else: ?>
                                 <!-- Display pet image here -->
-                                <img src="../<?= $item['picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                                <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="200">
                             <?php endif; ?>
                         </div>                          
                         <div class="col-md-4">

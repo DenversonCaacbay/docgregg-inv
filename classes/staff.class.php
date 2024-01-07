@@ -238,7 +238,7 @@
             $connection = $this->openConn();
         
             // Modify the SQL query to include a WHERE clause
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity < 20");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= 20");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -320,39 +320,50 @@
                 $exp = $_POST['exp_date'];
                 $new_picture = $_FILES['new_picture'];
         
-                if (!empty($new_picture['name'])) {
-                    $target_dir = "../uploads/inventory/";
-                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+                // Fetch the old quantity from the database
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("SELECT quantity FROM tbl_inventory WHERE inv_id = ?");
+                $stmt->execute([$inv_id]);
+                $oldQuantity = $stmt->fetchColumn();
         
-                    if (!is_dir($target_dir)) {
-                        mkdir($target_dir, 0755, true);
-                    }
+                // Compare old quantity with new quantity
+                if ($qty >= $oldQuantity) {
+                    if (!empty($new_picture['name'])) {
+                        $target_dir = "../uploads/inventory/";
+                        $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
         
-                    $target_file = $target_dir . time() . '.' . $file_extension;
+                        if (!is_dir($target_dir)) {
+                            mkdir($target_dir, 0755, true);
+                        }
         
-                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
-                        $connection = $this->openConn();
+                        $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                        if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                            $stmt = $connection->prepare("UPDATE tbl_inventory
+                                SET name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
+                                WHERE inv_id = ?");
+                            $stmt->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
+        
+                            $message2 = "Item Updated";
+                            echo "<script type='text/javascript'>alert('$message2');</script>";
+                            header("refresh: 0");
+                        } else {
+                            echo "Sorry, there was an error uploading your file.";
+                        }
+                    } else {
                         $stmt = $connection->prepare("UPDATE tbl_inventory
-                            SET name =?, price =?, quantity = ?, category = ?,picture = ?, expired_at = ?, purchased_at = ?
+                            SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
                             WHERE inv_id = ?");
-                        $stmt->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date,$inv_id]);
+                        $stmt->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
         
                         $message2 = "Item Updated";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
                         header("refresh: 0");
-                    } else {
-                        echo "Sorry, there was an error uploading your file.";
                     }
                 } else {
-                    $connection = $this->openConn();
-                    $stmt = $connection->prepare("UPDATE tbl_inventory
-                        SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
-                        WHERE inv_id = ?");
-                    $stmt->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
-        
-                    $message2 = "Item Updated";
-                    echo "<script type='text/javascript'>alert('$message2');</script>";
-                    header("refresh: 0");
+                    // Quantity is lower than the previous quantity, show an alert
+                    $message = "Cannot update! Quantity is lower than the previous quantity.";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
                 }
             }
         }
@@ -432,17 +443,21 @@
                 header('refresh:0');
             }
         }
-
-        // #pet
         public function create_pet($owner_id) {
             if (isset($_POST['add_pet'])) {
                 $pet_name = ucfirst(strtolower($_POST['pet_name']));
                 $pet_type = $_POST['pet_type'];
-                $breed = $_POST['breed'];
                 $bdate = $_POST['bdate'];
                 $sex = $_POST['sex'];
                 $owner_id = intval($owner_id); // Make sure owner_id is an integer
-
+        
+                // Determine the breed based on user input
+                if ($_POST['pet_breed'] === 'Other') {
+                    $breed = ucfirst(strtolower($_POST['other_breed']));
+                } else {
+                    $breed = $_POST['pet_breed'];
+                }
+        
                 $new_picture = $_FILES['pet_picture'];
         
                 if (!empty($new_picture['name'])) {
@@ -460,12 +475,10 @@
                         $connection = $this->openConn();
                         $stmt = $connection->prepare("INSERT INTO tbl_pet 
                             (`pet_name`, `pet_owner_id`, `pet_picture`,   `pet_type`, `breed`, `bdate`, `sex`) VALUES (?,?, ?, ?, ?, ?, ?)");
-                        $stmt->execute([$pet_name, $owner_id, $target_file,$pet_type, $breed, $bdate, $sex]);
+                        $stmt->execute([$pet_name, $owner_id, $target_file, $pet_type, $breed, $bdate, $sex]);
         
                         $message2 = "Pet added!";
                         echo "<script type='text/javascript'>alert('$message2');</script>";
-        
-                        // echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                     }
@@ -478,14 +491,66 @@
         
                     $message2 = "Pet added!";
                     echo "<script type='text/javascript'>alert('$message2');</script>";
-        
-                    // echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
                 }
-
+        
                 echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
-                // return '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
             }
         }
+        
+
+        // #pet
+        // public function create_pet($owner_id) {
+        //     if (isset($_POST['add_pet'])) {
+        //         $pet_name = ucfirst(strtolower($_POST['pet_name']));
+        //         $pet_type = $_POST['pet_type'];
+        //         $breed = $_POST['breed'];
+        //         $bdate = $_POST['bdate'];
+        //         $sex = $_POST['sex'];
+        //         $owner_id = intval($owner_id); // Make sure owner_id is an integer
+
+        //         $new_picture = $_FILES['pet_picture'];
+        
+        //         if (!empty($new_picture['name'])) {
+        //             $target_dir = "uploads/pets/";
+        //             $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+        //             if (!is_dir($target_dir)) {
+        //                 mkdir($target_dir, 0755, true);
+        //             }
+        
+        //             $target_file = $target_dir . time() . '.' . $file_extension;
+        
+        //             if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+        //                 // proceed to create with picture
+        //                 $connection = $this->openConn();
+        //                 $stmt = $connection->prepare("INSERT INTO tbl_pet 
+        //                     (`pet_name`, `pet_owner_id`, `pet_picture`,   `pet_type`, `breed`, `bdate`, `sex`) VALUES (?,?, ?, ?, ?, ?, ?)");
+        //                 $stmt->execute([$pet_name, $owner_id, $target_file,$pet_type, $breed, $bdate, $sex]);
+        
+        //                 $message2 = "Pet added!";
+        //                 echo "<script type='text/javascript'>alert('$message2');</script>";
+        
+        //                 // echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+        //             } else {
+        //                 echo "Sorry, there was an error uploading your file.";
+        //             }
+        //         } else {
+        //             // proceed to create without picture
+        //             $connection = $this->openConn();
+        //             $stmt = $connection->prepare("INSERT INTO tbl_pet 
+        //                 (`pet_name`, `pet_owner_id`, `pet_type`,`breed`, `bdate`, `sex`) VALUES (?,?, ?, ?, ?, ?)");
+        //             $stmt->execute([$pet_name, $owner_id, $pet_type, $breed, $bdate, $sex]);
+        
+        //             $message2 = "Pet added!";
+        //             echo "<script type='text/javascript'>alert('$message2');</script>";
+        
+        //             // echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+        //         }
+
+        //         echo '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+        //         // return '<script>window.location.replace("admin_client_pet.php?id_user='.$owner_id.'")</script>';
+        //     }
+        // }
         
         public function view_pet(){
             $id_user = $_GET['id_user'];

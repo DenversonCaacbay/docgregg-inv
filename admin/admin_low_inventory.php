@@ -68,16 +68,16 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-size" alt="Item Picture" width="150">
+                                        <img id="blah" src="../images/placeholder/item-placeholder.png" width="50" alt="Item Picture" width="150">
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="100">
+                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
                                         <?php endif; ?>
                                     </td>
-                                    <td> <?= $view['name'];?> </td>
+                                    <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
                                     <td>₱ <?= $view['price'];?> </td>
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
-                                    <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
+                                    <td> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
                                     <td>    
                                         <form action="" method="post">
                                             <a href="update_low_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>

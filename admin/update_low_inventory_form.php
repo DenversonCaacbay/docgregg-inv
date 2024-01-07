@@ -18,7 +18,7 @@
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_low_inventory.php">Back</a>
-        <h1 class="mb-0 ml-2">Update Item Data</h1>
+        <h1 class="mb-0 ml-2">Add Item Stocks</h1>
     </div>
                 
     <div class="row"> 
@@ -57,22 +57,22 @@
                                     <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" required>
                                 </div>
                             </div>
-                            <div class="col-md-6"> 
-                                <div class="form-group">
-                                    <label class="mtop"> Quantity: </label>
-                                    <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" required>
-                                </div>
-                            </div>
+                            <div class="col-md-12" style="margin-top:15%;"> 
+    <div class="form-group">
+        <label class="mtop"> Total Quantity: </label>
+        <input type="number" class="form-control" name="total_quantity" value="<?= $item['quantity'] ?>" readonly>
+    </div>
+</div>
+<div class="col-md-12"> 
+    <div class="form-group">
+        <label class="mtop"> Quantity: </label>
+        <input type="number" class="form-control" name="qty" value="" required>
+    </div>
+</div>
                             <div class="col" hidden>
                                 <div class="form-group">
                                     <label class="mtop">Category</label>
-                                    <select class="form-control" name="category" id="category" disabled>
-                                        <option value="">Choose Category</option>
-                                        <option value="Medicine" <?php echo ($item['category'] == 'Medicine') ? 'selected="selected"' : ''; ?>>Medicine</option>
-                                        <option value="Vaccine" <?php echo ($item['category'] == 'Vaccine') ? 'selected="selected"' : ''; ?>>Vaccine</option>
-                                        <option value="Dog Food" <?php echo ($item['category'] == 'Dog Food') ? 'selected="selected"' : ''; ?>>Dog Food</option>
-                                        <option value="Cat food" <?php echo ($item['category'] == 'Cat food') ? 'selected="selected"' : ''; ?>>Cat food</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="category" value="<?= $item['category']?>" readonly>
                                 </div>
                             </div>
                                 <div class="col-md-12" hidden>
@@ -91,7 +91,7 @@
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
                             
-                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
+                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update Quantity </button>
 
                         </div>
                     </div>
@@ -101,6 +101,9 @@
     </div>
 
 </div>
+
+
+
 
 <!-- /.container-fluid -->
 

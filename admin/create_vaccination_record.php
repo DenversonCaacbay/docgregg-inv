@@ -94,12 +94,19 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="com-md-12">
+                                <div class="form-group" id="medicalConditionGroup">
+                                    <label> Other Condition: </label>
+                                    <input type="text" class="form-control" id="other_condition" name="other_condition" required>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Date Vaccinated: </label>
                                     <input type="text" class="form-control" name="vac_date" value="<?= date("M d, Y") ?>" readonly>
                                 </div>
                             </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Next Vaccination: </label>
@@ -136,7 +143,7 @@
             "Parvovirus", "Parasites", "Diarrhea", "Rabies", "Hip dysplasia", 
             "Breathing difficulties", "Dog ear Infections", "Kennel cough", 
             "Canine Distemper", "Epilepsy", "Anal fistulae", "Pancreatitis", "Cancer", 
-            "Gum Disease"
+            "Gum Disease", "Other"
         ];
 
         var catMedicalConditions = [
@@ -145,7 +152,7 @@
             "Bloody Urine", "Obesity", "Cancer", "Diarrhea", "Rabbies", 
             "Urinary Tract Infection", "Fleas", "Breathing problems", 
             "Kidney Disease", "Upper Respiratory infection", "Feline Panleukonia", 
-            "Tapeworms", "Ringworms", "Vomiting", "Hearthworm", "Cat flu"
+            "Tapeworms", "Ringworms", "Vomiting", "Hearthworm", "Cat flu",  "Other"
         ];
 
         // Display the medical condition group if pet type is 'dog' or 'cat', hide otherwise

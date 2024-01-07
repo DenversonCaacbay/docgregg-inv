@@ -89,13 +89,26 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group" id="breedContainer">
+                                <!-- <div class="form-group" id="breedContainer">
                                     <label class="mtop">Pet Breed</label>
                                     <select class="form-control" name="breed" id="pet_breed" required>
+                                        
+                                    </select>
+                                </div> -->
+                                <div id="breedContainer">
+                                    <label for="pet_breed">Breed:</label>
+                                    <select id="pet_breed" class="form-control" name="pet_breed">
                                         <!-- Breed options will be dynamically added here -->
                                     </select>
+                                
                                 </div>
-                             </div>  
+                             </div> 
+                             <div class="col-md-12 mb-2">
+                                <div id="otherBreedInput" style="display: none;">
+                                    <label for="other_breed">Other Breed:</label>
+                                    <input type="text" class="form-control" id="other_breed" name="other_breed">
+                                </div>
+                             </div> 
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label> Birth Date: </label>
@@ -122,8 +135,64 @@
         </div>
     </div> 
 </div>
-
 <script>
+    $(document).ready(function() {
+        var breedContainer = $('#breedContainer');
+        var otherBreedInput = $('#otherBreedInput');
+
+        $('#pet_type').change(function() {
+            var selectedPetType = $(this).val();
+
+            // Clear previous options
+            $('#pet_breed').empty();
+
+            if (selectedPetType === 'Dog') {
+                // Show the breed select and populate it with dog breeds
+                breedContainer.show();
+                $('#pet_breed').append('<option value="Labrador">Labrador Retriever</option>');
+                $('#pet_breed').append('<option value="Golden_Retriever">Golden Retriever</option>');
+                $('#pet_breed').append('<option value="German_Shepherd">German Shepherd</option>');
+                $('#pet_breed').append('<option value="Bulldog">Bulldog</option>');
+                $('#pet_breed').append('<option value="Beagle">Beagle</option>');
+                $('#pet_breed').append('<option value="Poodle">Poodle</option>');
+                $('#pet_breed').append('<option value="Rottweiler">Rottweiler</option>');
+                $('#pet_breed').append('<option value="Husky">Siberian Husky</option>');
+                $('#pet_breed').append('<option value="Dachshund">Dachshund</option>');
+                $('#pet_breed').append('<option value="Azkal">Azkal</option>');
+                $('#pet_breed').append('<option value="Other">Other</option>');
+            } else if (selectedPetType === 'Cat') {
+                // Show the breed select and populate it with cat breeds
+                breedContainer.show();
+                $('#pet_breed').append('<option value="Siamese">Siamese</option>');
+                $('#pet_breed').append('<option value="Persian">Persian</option>');
+                $('#pet_breed').append('<option value="Maine_Coon">Maine Coon</option>');
+                $('#pet_breed').append('<option value="Sphynx">Sphynx</option>');
+                $('#pet_breed').append('<option value="Ragdoll">Ragdoll</option>');
+                $('#pet_breed').append('<option value="British_Shorthair">British Shorthair</option>');
+                $('#pet_breed').append('<option value="Bengal">Bengal</option>');
+                $('#pet_breed').append('<option value="Abyssinian">Abyssinian</option>');
+                $('#pet_breed').append('<option value="Scottish_Fold">Scottish Fold</option>');
+                $('#pet_breed').append('<option value="Other">Other</option>');
+            } else {
+                // Hide the breed select if neither Dog nor Cat is selected
+                breedContainer.hide();
+            }
+        });
+
+        $('#pet_breed').change(function() {
+            var selectedBreed = $(this).val();
+
+            // Show additional input if "Other" is selected
+            if (selectedBreed === 'Other') {
+                otherBreedInput.show();
+            } else {
+                otherBreedInput.hide();
+            }
+        });
+    });
+</script>
+
+<!-- <script>
     $(document).ready(function() {
         $('#pet_type').change(function() {
             var selectedPetType = $(this).val();
@@ -143,6 +212,7 @@
                 $('#pet_breed').append('<option value="Husky">Siberian Husky</option>');
                 $('#pet_breed').append('<option value="Dachshund">Dachshund</option>');
                 $('#pet_breed').append('<option value="Azkal">Azkal</option>');
+                $('#pet_breed').append('<option value="Other">Other...</option>');
                 // Add more dog breeds as needed
             } else if (selectedPetType === 'Cat') {
                 // Show the breed select and populate it with cat breeds
@@ -156,6 +226,7 @@
                 $('#pet_breed').append('<option value="Bengal">Bengal</option>');
                 $('#pet_breed').append('<option value="Abyssinian">Abyssinian</option>');
                 $('#pet_breed').append('<option value="Scottish_Fold">Scottish Fold</option>');
+                $('#pet_breed').append('<option value="Other">Other</option>');
                 // Add more cat breeds as needed
             } else {
                 // Hide the breed select if neither Dog nor Cat is selected
@@ -163,7 +234,7 @@
             }
         });
     });
-</script>
+</script> -->
 <script>
     
 function calculateAge() {
