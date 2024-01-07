@@ -5,7 +5,8 @@
     $userdetails = $residentbmis->get_userdata();
     $id_resident = $userdetails['id_user'];
     $resident = $residentbmis->get_single_resident($id_resident);
-    $view = $residentbmis->view_pet($id_resident);
+    // $view = $residentbmis->view_pet($id_resident);
+    $view = $residentbmis->view_vaccine_record();
     
     $residentbmis->profile_update();
     // $residentbmis->delete_pet();
@@ -42,7 +43,12 @@
                         <h5>Next Vaccination: <?= $item["vac_next"] = !empty($item["vac_next"]) ? date("F d, Y - l [g:i:s A]", strtotime($item["vac_next"])) : "---"; ?></h5>
                         <form method="POST">
                             <h5>Remarks: 
-                        </form>
+                                <?php if($item['is_done'] == 0): ?>
+                                    Not Yet
+                                <?php else: ?>
+                                    Done
+                                <?php endif; ?>
+                            </form>
                         </h5>
                     </div>
                 </div>

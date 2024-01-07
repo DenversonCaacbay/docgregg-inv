@@ -1,7 +1,7 @@
 <?php 
     error_reporting(E_ALL ^ E_WARNING);
     require('classes/resident.class.php');
-    ini_set('display_errors',0);
+    // ini_set('display_errors',0);
     $userdetails = $residentbmis->get_userdata();
     // $id_user = $_GET['id_user'];
 
@@ -9,7 +9,7 @@
     $resident = $residentbmis->get_single_resident($id_user);
     // $low_items = $residentbmis->view_low_inventory();
     $view = $residentbmis->view_recent($id_resident);
-    // print_r($low_items);
+    // print_r($view);
     
     // print_r($view);
     $residentbmis->profile_update();
@@ -36,9 +36,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
-                    <h5>Pet Condition: </h5>
-                    <h5>Vaccine Taken </h5>
-                    <h5>Next Vaccination: </h5>
+                    <h5>Pet Condition: <?= $item['vac_condition']; ?></h5>
+                    <h5>Vaccine Taken <?= $item['vac_used']; ?></h5>
+                    <h5>Next Vaccination: <?= $item['vac_next'] ? date("F d, Y - l", strtotime($item['vac_next'])) : "---"; ?></h5>
                     <h5>Date Vaccinated: <?= date("F d, Y - l", strtotime($item['created_at'])); ?></h5>
                 </div>
             </div>
