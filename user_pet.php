@@ -79,7 +79,10 @@
                     <h5>Pet Name: <?= $item['pet_name']; ?></h5>
                     <h5>Sex:  <?= $item['sex'] = $item['sex'] ? $item['sex'] : "---"; ?></h5>
                     <h5>Breed: <?= $item['breed']= $item['breed'] ? $item['breed'] : "---"; ?></h5>
-                    <h5>Birthdate: <?= $item['bdate'] = !empty($item['bdate']) ? date("m/d/Y", $view['bdate']) : "---"; ?></h5>
+                    <?php 
+                        $bdate_format = !empty($item['bdate']) ? date("M d,Y", strtotime($item['bdate'])) : "---";
+                    ?>
+                    <h5>Birthdate: <?= $bdate_format; ?></h5>
                     <h5>Age: <?= $item['age'] = !empty($item['age']) ? $item['age'] : 0; ?></h5>
                     <form method="post" class="mt-4">
                         <!-- <a href="update_user_pet.php?id_user=<?= $item['pet_id']; ?>" class="btn btn-success">Update</a> -->

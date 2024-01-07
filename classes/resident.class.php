@@ -376,9 +376,7 @@ use PHPMailer\PHPMailer\Exception;
     // #pet
     public function view_pet($id_user){
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT *, 
-            TIMESTAMPDIFF(YEAR, bdate, CURDATE()) - 
-            (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(bdate, '%m%d')) AS age FROM tbl_pet where deleted_at IS NULL AND pet_owner_id = ?");
+        $stmt = $connection->prepare("SELECT *, TIMESTAMPDIFF(YEAR, bdate, CURDATE()) AS age FROM tbl_pet WHERE deleted_at IS NULL AND pet_owner_id = ?");
         $stmt->execute([$id_user]);
         $view = $stmt->fetchAll();
 
