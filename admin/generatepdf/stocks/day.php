@@ -47,13 +47,11 @@ $html = '
   color: white;
 }
 
-@font-face {
-  font-family: DejaVu Sans, sans-serif;
-  font-style: normal;
-  font-weight: normal;
+#customers td.product-name {
+  word-wrap: break-word;
+  max-width: 150px; /* Set a maximum width to control line breaks */
 }
-body {
-  font-family: DejaVu Sans, sans-serif;
+</style>
 </style>
 
 
@@ -66,9 +64,9 @@ $html .= '
 <meta charset="UTF-8">
 <table  id="customers">';
 $html .= '<tr>
-<th>Created At</th>
-<th>Product Name</th>
-<th>Total</th>
+<th width="20%">Created At</th>
+<th width="60%">Product Name</th>
+<th width="20%">Total</th>
 </tr>';
 
 $totalSales = 0;
@@ -77,7 +75,7 @@ if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . date('Y-m-d H:i:s', strtotime($row['created_at'])) . '</td>';
-    $html .= '<td>' . $row['product'] .  '</td>';
+    $html .= '<td class="product-name">' . $row['product'] .  '</td>';
     $html .= '<td> ₱' . $row['total'] .  '.00</td>';
     $totalSales += $row['total']; // Accumulate total sales
 
