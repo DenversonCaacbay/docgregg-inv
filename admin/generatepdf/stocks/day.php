@@ -52,7 +52,6 @@ $html = '
   max-width: 150px; /* Set a maximum width to control line breaks */
 }
 </style>
-</style>
 
 
 <h1 style="text-align:center">Daily Stocks Report</h1>

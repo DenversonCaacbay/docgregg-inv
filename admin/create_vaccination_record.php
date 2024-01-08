@@ -94,12 +94,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="com-md-12">
+                            <!-- <div class="com-md-12">
                                 <div class="form-group" id="medicalConditionGroup">
                                     <label> Other Condition: </label>
                                     <input type="text" class="form-control" id="other_condition" name="other_condition" required>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Date Vaccinated: </label>
