@@ -129,12 +129,16 @@
 
                 if(empty($next_vac)){
                     $next_vac = NULL;
+                    $is_done = 1;
+                }
+                else{
+                    $is_done = 0;
                 }
         
                 // proceed to create without picture
                 $connection = $this->openConn();
-                $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_id`, `pet_owner_id`, `vac_next`,`vac_condition`, `vac_used`) VALUES (?,?, ?, ?, ?)");
-                $stmt->execute([$pet_id, $owner_id, $next_vac, $vac_condition, $vac_used]);
+                $stmt = $connection->prepare("INSERT INTO tbl_vaccination (`pet_id`, `pet_owner_id`, `vac_next`,`vac_condition`, `vac_used`,`is_done`) VALUES (?,?, ?, ?, ?,?)");
+                $stmt->execute([$pet_id, $owner_id, $next_vac, $vac_condition, $vac_used, $is_done]);
         
                 $message2 = "Pet vaccination record added!";
                 echo "<script type='text/javascript'>alert('$message2');</script>";
