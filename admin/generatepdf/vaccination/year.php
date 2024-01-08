@@ -74,8 +74,8 @@ if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . $row['pet_name'] .'</td>';
-    $html .= '<td>' . $row['pet_condition'] .'</td>';
-    $html .= '<td>' . $row['vaccine_taken'] .'</td>';
+    $html .= '<td>' . $row['vac_condition'] .'</td>';
+    $html .= '<td>' . $row['vac_used'] .'</td>';
     $html .= '<td>' . $row['created_at'] .  '.00</td>';
    
     $html .= '</tr>';

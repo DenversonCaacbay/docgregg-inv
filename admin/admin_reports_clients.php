@@ -82,7 +82,7 @@
                                     <input type="date" class="form-control" id="toDate" name="toDate" required>
                                 </div>
                             </div>
-                            <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div>
+                            <!-- <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div> -->
                             <div class="col-md-1 mt-4"><a  href="admin_reports.php" class="btn btn-primary p-2 mt-3"><i class="fas fa-redo"></i></a></div>            
                             <div class="col-md-2 mt-4"><a href="#" class="btn btn-primary p-2" style="margin-top:15px" onclick="validateDates()" id="pdfLink"><i class="fas fa-print"></i></a></div>
                         </div>

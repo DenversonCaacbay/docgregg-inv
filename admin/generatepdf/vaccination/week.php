@@ -14,16 +14,21 @@ $dbname = "dgvc";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-  die('Connection failed: ' . $conn->connect_error);
+    die('Connection failed: ' . $conn->connect_error);
 }
 
 $query = "SELECT * FROM tbl_pet
-INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
-WHERE DATE(tbl_pet.created_at) >= '$startOfWeek' AND DATE(tbl_pet.created_at) < '$endOfWeek'";
+LEFT JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
+WHERE DATE(tbl_vaccination.created_at) BETWEEN '$startOfWeek' AND '$endOfWeek'";
+
 $result = $conn->query($query);
 
 $html = '
+
 <style>
+.logo{
+  text-align:center;
+}
 #customers {
   font-family: DejaVu Sans, sans-serif;
   border-collapse: collapse;
@@ -47,41 +52,48 @@ $html = '
   color: white;
 }
 
+@font-face {
+  font-family: DejaVu Sans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+body {
+  font-family: DejaVu Sans, sans-serif;
 </style>
 
-<h1 style="text-align:center">Weekly Clients Report</h1>
-<h4>Week Generated:  '.date("F d, Y", strtotime($startOfWeek)).'  - '.date("F d, Y", strtotime($endOfWeek)).'</h4>';
+<h1 style="text-align:center">Weekly Vaccination Report</h1>
+<h4>Week Generated:  ' . date("F d, Y", strtotime($startOfWeek)) . '  - ' . date("F d, Y", strtotime($endOfWeek)) . '</h4>
+';
 
-// Count the number of rows
 $rowCount = $result->num_rows;
 
-$html .= '<h5>Total Clients Registered this Week: ' . $rowCount . '</h5>';
-
-$html .= '<table id="customers">';
+$html .= '<h5>Total Vaccinated this Week: ' . $rowCount . '</h5>';
+$html .= '
+<meta charset="UTF-8">
+<table  id="customers">';
 $html .= '<tr>
 <th width="50%">Pet Name</th>
 <th width="50%">Pet Condition</th>
 <th width="50%">Vaccine Taken</th>
 <th width="50%">Date Vaccinated</th>
 </tr>';
-$totalSales = 0;
-if ($rowCount > 0) {
+if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
-    $html .= '<tr>';
-    $html .= '<td>' . $row['pet_name'] .'</td>';
-    $html .= '<td>' . $row['pet_condition'] .'</td>';
-    $html .= '<td>' . $row['vaccine_taken'] .'</td>';
-    $html .= '<td>' . $row['created_at'] .  '.00</td>';
-    $html .= '</tr>';
+      $html .= '<tr>';
+      $html .= '<td>' . $row['pet_name'] . '</td>';
+      $html .= '<td>' . ($row['vac_condition'] ?? '') . '</td>'; // Check if pet_condition is not NULL
+      $html .= '<td>' . ($row['vac_used'] ?? '') . '</td>'; // Check if vaccine_taken is not NULL
+      $html .= '<td>' . ($row['created_at'] ?? '') . '.00</td>'; // Check if created_at is not NULL
+      $html .= '</tr>';
   }
 } else {
-  $html .= '<tr><td colspan="5">No Client Registered this week.</td></tr>';
+  $html .= '<tr><td colspan="4">No Pet Vaccinated this week.</td></tr>';
 }
-
 $html .= '</table>';
 
 $pdf = new Pdf();
-$file_name = 'Weekly Report -'.$today.'.pdf';
+
+$file_name = 'Vaccination Weekly Report -' . $startOfWeek . '-' . $endOfWeek . '.pdf';
 $pdf->loadHtml($html);
 $pdf->setPaper('A4', 'portrait');
 $pdf->render();
