@@ -142,6 +142,7 @@
                             <th> Product Name </th>
                             <th> Total Quantity</th>
                             <th> Total </th>
+                            <th> Staff </th>
                             <th> Created at </th>
                         </tr>
                     </thead>
@@ -159,6 +160,7 @@
                                     </td>
                                     <td> <?= $view['totalQty']; ?></td>
                                     <td>₱ <?= number_format($view['total']); ?> </td>
+                                    <td> <?= $view['staff_name']; ?></td>
                                     <td> <?= $view['created_at']; ?> </td>
                                 </tr>
                             <?php }?>

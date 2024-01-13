@@ -250,6 +250,12 @@ if(isset($_GET["action"]))
                             <td colspan="3" align="right">Change :</td>
                             <td colspan="2" align="right"><input type="number" step="any" name="processChange" id="resultpayment" class="form-control" readonly></td>
                         </tr>
+                        <tr>
+                            <td colspan="3" align="right">Staff Name</td>
+                            <td colspan="2" align="right">
+                                <input type="text" step="any" name="staff_name" id="staff" value="<?= $userdetails['firstname']?> <?= $userdetails['surname']?>" class="form-control" readonly>
+                            </td>
+                        </tr>
                         <?php
                         }
                         ?>               
