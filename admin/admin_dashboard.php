@@ -8,7 +8,7 @@
     $recent_user = $staffbmis->recent_user();
     // print_r($recent_user);
 
-    $rescountuser = $staffbmis->count_user();
+    // $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
     $rescountsales = $staffbmis->count_total();
     $rescountvac = $staffbmis->count_vac();
@@ -23,6 +23,18 @@
     // $staffcountm = $staffbmis->count_mstaff();
     // $staffcountf = $staffbmis->count_fstaff();
     
+    $rescountuser = $staffbmis->count_services_consultation();
+    $rescountuser1 = $staffbmis->count_services_vaccination();
+    $rescountuser2 = $staffbmis->count_services_treatment();
+    $rescountuser3 = $staffbmis->count_services_deworming();
+    $rescountuser4 = $staffbmis->count_services_cesarian();
+    $rescountuser5 = $staffbmis->count_services_grooming();
+    $rescountuser6 = $staffbmis->count_services_surgery();
+    $rescountuser7 = $staffbmis->count_services_bloodchem();
+    $rescountuser8 = $staffbmis->count_services_heartworm();
+    $rescountuser9 = $staffbmis->count_services_confinement();
+    $rescountuser10 = $staffbmis->count_services_laboratory();
+    $rescountuser11 = $staffbmis->count_services_diagnostic();
 
 
 
@@ -37,6 +49,9 @@
     margin-top: 3em;
 }
 
+img{
+    width: 50px;
+}
 
 
 </style>
@@ -71,7 +86,8 @@
                         </div>
                         <div class="col-auto">
                             <span style="color: #4e73df;"> 
-                                <i class="fas fa-user-friends fa-2x text-dark "></i>
+                                <!-- <i class="fas fa-user-friends fa-2x text-dark "></i> -->
+                                <img src="../assets/consulrtation.png">
                             </span>
                         </div>
                     </div>
@@ -87,12 +103,13 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Vaccination</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountpet?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser1?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fa-solid fa-syringe fa-2x text-dark"></i>
+                            <!-- <i class="fas fa-syringe fa-2x text-dark"></i> -->
+                            <img src="../assets/vaccination.png">
               
                         </div>
                     </div>
@@ -108,12 +125,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Deworming</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser3 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/deworming.png">
                         </div>
                     </div>
                 </div>
@@ -128,12 +145,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Heartworm</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser8 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/heartworm.png">
                         </div>
                     </div>
                 </div>
@@ -147,12 +164,13 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Treatment</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser2 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                            <!-- <i class="fas fa-first-aid fa-2x text-dark"></i> -->
+                            <img src="../assets/treatment.png">
                         </div>
                     </div>
                 </div>
@@ -166,12 +184,13 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Surgery</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser6 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                            <!-- <i class="fas fa-money-bill fa-2x text-dark"></i> -->
+                            <img src="../assets/surgery.png">
                         </div>
                     </div>
                 </div>
@@ -185,12 +204,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Laboratory</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser10 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/laboratory.png">
                         </div>
                     </div>
                 </div>
@@ -204,12 +223,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Confinement</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser9 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/confinement.png">
                         </div>
                     </div>
                 </div>
@@ -223,12 +242,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Diagnotics</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser11 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/diagnostic.png">
                         </div>
                     </div>
                 </div>
@@ -242,12 +261,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Grooming</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser5 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/grooming.png">
                         </div>
                     </div>
                 </div>
@@ -261,12 +280,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Cesarian Section Surgery</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser4 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/surgery.png">
                         </div>
                     </div>
                 </div>
@@ -280,12 +299,12 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Blood Chemistry Test</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountvac ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser7 ?></div>
                                 <br>
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-money-bill fa-2x text-dark"></i>
+                        <img src="../assets/blood-test.png">
                         </div>
                     </div>
                 </div>

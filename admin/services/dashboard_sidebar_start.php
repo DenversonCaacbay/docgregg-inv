@@ -241,6 +241,7 @@ $userRole = $userdetails['role'];
                             </div>
                         </li>
                         <li class="nav-item mt-4">
+                        <?php if ($userRole === 'administrator') : ?>
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
                             
                                 <a href="../admin_low_inventory.php" style="position: relative;">
@@ -248,6 +249,7 @@ $userRole = $userdetails['role'];
                                     <?php if($lowInventoryCount > 0) : ?>
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
+                            <?php endif; ?>
                             <?php endif; ?>
                         </li>
 

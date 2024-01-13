@@ -60,6 +60,10 @@
         background: #0296be;
         color: white;
     }
+    .logo{
+        width:100px;
+        height: 100px;
+    }
 
 </style>
 
@@ -77,7 +81,7 @@ $userRole = $userdetails['role'];
 
 <ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
     <div class="card p-2 m-2">
-        <img src="../assets/logo.png" width="100" height="100">
+        <img class="logo" src="../assets/logo.png">
         <div class="sidebar-brand-text">
             Doc Gregg <br>Veterinary Clinic
         </div>
@@ -223,6 +227,7 @@ $userRole = $userdetails['role'];
                             </div>
                         </li>
                         <li class="nav-item mt-4">
+                        <?php if ($userRole === 'administrator') : ?>
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
                             
                                 <a href="admin_low_inventory.php" style="position: relative;">
@@ -231,6 +236,7 @@ $userRole = $userdetails['role'];
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
                             <?php endif; ?>
+                        <?php endif; ?>
                         </li>
 
                         <!-- Nav Item - User Information -->
