@@ -14,9 +14,16 @@
     $user_role = $_SESSION['userdata']['role'];
 
     if($_SESSION['userdata']){
+        if($user_role == 'administrator'){
+            header('Location: admin_dashboard.php');
+        }
+
+        if($user_role == 'staff'){
+            header('Location: staff_dashboard.php');
+        }
 
         if($user_role == 'resident'){
-            header('Location: user_home.php');
+            header('Location: resident_homepage.php');
         }
         
     }
@@ -27,9 +34,8 @@
 
    
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
+<!DOCTYPE html> 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,8 +86,12 @@
     .input-field:focus {
     border: 2px solid dodgerblue;
     }
-   .btn {
+    .text-primary{
+        color: #0296be !important;
+    }
+   .btn-primary {
     color: white;
+    background: #0296be !important;
     padding: 10px 15px;
     border: none;
     cursor: pointer;
@@ -115,8 +125,8 @@
                 <div class="row">
                     <div class="col-sm"></div>
                         <div class="col-sm main-heading text-center text-white" >
-                            <img src="user/logo.png" width="150"> 
-                            <h3 class="banner-text"> Doc Gregg <br>Veterinary Clinic  </h3>
+                            <img src="assets/logo.png" width="150"> 
+                            <h3 class="text-primary"> Doc Gregg <br>Veterinary Clinic  </h3>
 
                         </div>
                     <div class="col-sm"></div>
@@ -126,15 +136,15 @@
                         <div class="col-sm"> 
                             <div class="card main-card mtop"> 
                                 <div class="card-body"> 
-                                    <form method="post"> 
+                                    <form method="post" autocomplete="off"> 
 
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" name="email" require>
+                                            <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" name="email" autocomplete="off" require>
                                             <label for="floatingInputInvalid">Email</label>
                                         </div>
                                         <br>
                                         <div class="form-floating">
-                                            <input type="password" class="form-control" id="myInput" placeholder="" name="password" require>
+                                            <input type="password" class="form-control" id="myInput" placeholder="" name="password" autocomplete="off" require>
                                             <label for="floatingInputInvalid">Password</label>
                                         </div>
                                         <br>
@@ -144,7 +154,7 @@
                                         </div>
                                         <br>                                       
                                         <button class="btn btn-primary login-button" type="submit" name="user_login"> Log-in </button>
-                                        <a href="user_forgot_password.php" class="mt-2" style="float:right">Forgot Password</a>
+                                        <a href="admin_forgot_password.php" class="mt-2" style="float:right">Forgot Password</a>
                                     
                                     </form>
                                     <br>
@@ -152,11 +162,10 @@
                                     <hr class="mt-3">
 
                                     <div class="registration-section mt-3"> 
-                                        <p1> <strong> Haven't registered yet? </strong> </p1> 
+                                        <p1> <strong> Register as Staff</strong> </p1> 
 
-                                        <br>
 
-                                        <button class="btn create-button" onclick="trying();"> Create Account </button> 
+                                        <A class="btn btn-primary mt-3" href="sign-up-staff.php"> Create Account </A> 
                                     </div>
                                 </div>
                             </div>
@@ -178,9 +187,11 @@
                 }
             }
             function trying() {
-                window.location.href = "user_registration.php";
+                window.location.href = "sign-up-staff.php";
             }
         </script>
+
+        
 
 
 </body>

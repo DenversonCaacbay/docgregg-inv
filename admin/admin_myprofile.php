@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <?php if (empty($user['picture'])): ?>
-                                    <img id="blah" src="../images/placeholder/user-placeholder.png" width="100" alt="User Picture">
+                                    <img id="blah" src="../assets/placeholder/user-placeholder.png" width="100" alt="User Picture">
                                 <?php else: ?>
                                     <img id="blah" src="<?= $user['picture']?>" width="100" alt="User Picture">
                                 <?php endif; ?>

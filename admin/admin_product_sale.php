@@ -253,7 +253,7 @@ if(isset($_GET["action"]))
                         <tr>
                             <td colspan="3" align="right">Staff Name</td>
                             <td colspan="2" align="right">
-                                <input type="text" step="any" name="staff_name" id="staff" value="<?= $userdetails['firstname']?> <?= $userdetails['surname']?>" class="form-control" readonly>
+                                <input type="hidden" step="any" name="staff_name" id="staff" value="<?= $userdetails['firstname']?> <?= $userdetails['surname']?>" class="form-control" readonly>
                             </td>
                         </tr>
                         <?php

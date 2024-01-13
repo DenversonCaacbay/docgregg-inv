@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-12 mt-5">
                                 <?php if (is_null($item['picture'])): ?>
-                                    <img id="blah" src="../images/placeholder/item-placeholder.png" height="400" width="400" alt="Pet Picture">
+                                    <img id="blah" src="../assets/placeholder/item-placeholder.png" height="400" width="400" alt="Pet Picture">
                                 <?php else: ?>
                                     <img id="blah" src="../<?= $item['picture']?>" width="400" height="400" alt="Pet Picture">
                                 <?php endif; ?>

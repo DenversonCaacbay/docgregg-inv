@@ -79,7 +79,7 @@ $userdetails = $bmis->get_userdata();
 $userRole = $userdetails['role'];
 ?>
 
-<ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark fixed-sidebar shadow accordion" id="accordionSidebar">
     <div class="card p-2 m-2">
         <img class="logo" src="../assets/logo.png">
         <div class="sidebar-brand-text">
@@ -187,7 +187,7 @@ $userRole = $userdetails['role'];
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper">
 
             <!-- Main Content -->
             <div id="content">

@@ -89,7 +89,7 @@
                                 <tr>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="../images/placeholder/item-placeholder.png" class="img-fluid" width="50" height="50" alt="Item Picture">
+                                        <img id="blah" src="../assets/placeholder/item-placeholder.png" class="img-fluid" width="50" height="50" alt="Item Picture">
                                     <?php else: ?>
             
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $view['picture'] ?>', '<?= $view['category'] ?>')">

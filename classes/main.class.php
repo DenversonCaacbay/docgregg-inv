@@ -114,7 +114,7 @@ class BMISClass {
                             if (password_verify($password, $user['password'])) 
                             {
                                 $this->set_userdata($user);
-                                header('Location: admin_dashboard.php');
+                                header('Location: admin/admin_dashboard.php');
                                 exit();
                             } 
                             else 
