@@ -1,15 +1,21 @@
 <?php
-    
-    ini_set('display_errors',0);
+    ini_set('display_errors', 0);
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     $view = $staffbmis->view_invoice();
     $staffcount = $staffbmis->count_invoice();
-    // $bmis->validate_admin();
 
-   
+    if ($userdetails['role'] !== 'Administrator') {
+        // User is not an admin, display an alert
+        echo '<script>alert("You are not authorized to access this page as admin.");</script>';
+        // Redirect or take appropriate action if needed
+        header('Location: admin_dashboard.php');
+        exit();
+    }
+
+    // Continue with the rest of your code for admin
 ?>
 
 <?php 
@@ -95,28 +101,28 @@
                     });
                 </script>   -->
                 <script>
-    function validateDates() {
-        var startDate = document.getElementById('fromDate').value;
-        var endDate = document.getElementById('toDate').value;
+                    function validateDates() {
+                        var startDate = document.getElementById('fromDate').value;
+                        var endDate = document.getElementById('toDate').value;
 
-        if (startDate === "" || endDate === "") {
-            alert("Please select both start and end dates.");
-        } else {
-            // Perform other actions or submit the form
-            var form = document.getElementById('pdfForm');
-            form.submit();
+                        if (startDate === "" || endDate === "") {
+                            alert("Please select both start and end dates.");
+                        } else {
+                            // Perform other actions or submit the form
+                            var form = document.getElementById('pdfForm');
+                            form.submit();
 
-            // Open PDF link in a new tab
-            openPdfLink();
-        }
-    }
+                            // Open PDF link in a new tab
+                            openPdfLink();
+                        }
+                    }
 
-    // This function opens the PDF link in a new tab
-    function openPdfLink() {
-        var pdfLink = document.getElementById('pdfLink').getAttribute('href');
-        window.open(pdfLink, '_blank');
-    }
-</script>
+                    // This function opens the PDF link in a new tab
+                    function openPdfLink() {
+                        var pdfLink = document.getElementById('pdfLink').getAttribute('href');
+                        window.open(pdfLink, '_blank');
+                    }
+                </script>
 
 
 

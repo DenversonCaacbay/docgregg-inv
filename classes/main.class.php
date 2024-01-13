@@ -1525,7 +1525,11 @@ class BMISClass {
                 $this->show_404();
             }
         } else {
-            $this->show_404();
+            // User is not logged in, display "Login First" alert
+            echo '<script>alert("Login First");</script>';
+            // Redirect to login page or take appropriate action if needed
+            header('Location: ../index.php'); // Change 'login.php' to your login page
+            exit();
         }
     }
     

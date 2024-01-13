@@ -13,7 +13,13 @@
     $staffbmis->create_pet($id_user);
     // echo $id_user;
     // $resident = $residentbmis->get_single_bspermit($id_resident);
-   
+    if ($userdetails['role'] !== 'Administrator') {
+        // User is not an admin, display an alert
+        echo '<script>alert("You are not authorized to access this page as admin.");</script>';
+        // Redirect or take appropriate action if needed
+        header('Location: admin_dashboard.php');
+        exit();
+    }
 ?>
 
 <?php 

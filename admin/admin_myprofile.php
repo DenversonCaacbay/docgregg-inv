@@ -7,12 +7,6 @@
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $staffbmis->update_staff($userdetails['id_admin']);
     $staffbmis->update_password($userdetails['id_admin']);
-    // $bmis->validate_admin();
-    // $bmis->delete_brgyid();
-    // $view = $bmis->view_brgyid();
-    // $id_resident = $_GET['id_resident'];
-    // $resident = $residentbmis->get_single_certofres($id_resident);
-    // print_r($user);
    
 ?>
 
