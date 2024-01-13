@@ -63,7 +63,7 @@
             <div class="col-md-4">
                 <label> Services </label>
                 <select id="categorySelect" class="form-select" aria-label="Default select example">
-                    <option option="all">All</option>
+                    <option value="all">All</option>
                     <option value="consultation">Consultation</option>
                     <option value="vaccination">Vaccination</option>
                     <option value="deworming">Deworming</option>
