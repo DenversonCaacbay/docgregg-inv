@@ -38,7 +38,8 @@
                        
                     </div>
                     <div class="col-md-7">
-                        <div class="row">
+                        <div class="container">
+                            <div class="row me-3">
                             <div class="col-md-12">
                                 <div class="custom-file form-group">
                                     <input type="file" onchange="readURL(this, 'blah');" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
@@ -72,8 +73,10 @@
                                     <label class="mtop">Category</label>
                                     <select class="form-control" name="category" id="category" required>
                                         <option value="">Choose Category</option>
+                                        <option value="Shampoo">Shampoo</option>
                                         <option value="Medicine">Medicine</option>
                                         <option value="Vaccine">Vaccine</option>
+                                        <option value="Syringe">Syringe</option>
                                         <option value="Dog Food">Dog Food</option>
                                         <option value="Cat food">Cat food</option>
                                     </select>
@@ -90,11 +93,11 @@
                                     <label class="mtop"> Expiration Date: </label>
                                     <input type="date" class="form-control" name="exp_date" required>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn btn-primary w-100 m-2" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
+                                 <button class="btn btn-primary w-100" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
                             </div>
                         </div>
+                        </div>
+                        
                     </div>
                 </div>
             </form>

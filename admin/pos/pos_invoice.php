@@ -5,6 +5,7 @@
     //
     $productAll = '';
     $processTotal = '';
+    $processCustomer = '';
     $processCash = '';
     $processChange = '';
     $processTotalQty = 0;
@@ -44,12 +45,13 @@
         }
 
         // create invoice
-        $sql = 'INSERT INTO invoice(product, total, totalQty,cash, cash_change) 
-            VALUES (:products, :total, :totalQty, :cash, :cash_change)';
+        $sql = 'INSERT INTO invoice(customer_name, product, total, totalQty,cash, cash_change) 
+            VALUES (:customer_name, :products, :total, :totalQty, :cash, :cash_change)';
 
         $statement = $pdo->prepare($sql);
 
         $newInv = [
+            'customer_name' => 'text',
             'products' => 'text',
             'total' => '9',
             'totalQty' => '0',
@@ -57,6 +59,7 @@
             'cash_change' => 9,
         ];
 
+        $statement->bindParam(':customer_name', $newInv['customer_name']);
         $statement->bindParam(':products', $newInv['products']);
         $statement->bindParam(':total', $newInv['total']);
         $statement->bindParam(':totalQty', $newInv['totalQty']);
@@ -64,6 +67,7 @@
         $statement->bindParam(':cash_change', $newInv['cash_change']);
 
         //change
+        $newInv['customer_name'] = $_POST['processCustomer'];
         $newInv['products'] = $_POST['productAll'];
         $newInv['totalQty'] = $processTotalQty;
         $newInv['total'] = $_POST['processTotal'];
@@ -76,7 +80,7 @@
         unset($_SESSION["shopping_cart"]);
         echo "<script>
         alert('Successfull! Create new transaction');
-        window.location.href='../admin_sale_inventory.php';
+        window.location.href='../admin_product_sale.php';
         </script>";
         exit();
     }

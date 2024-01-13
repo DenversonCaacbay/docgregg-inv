@@ -211,6 +211,66 @@
         
             return $view;
         }
+        //For Cat food
+        public function view_inventory_catfood(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Cat Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For Dog Food
+        public function view_inventory_dogfood(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Dog Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For Medicine
+        public function view_inventory_medicine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Medicine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For Syringe
+        public function view_inventory_syringe(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Syringe' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For Vaccine
+        public function view_inventory_vaccine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For Shampoo
+        public function view_inventory_shampoo(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Shampoo' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
 
         public function view_vaccine(){
             $connection = $this->openConn();
@@ -219,6 +279,125 @@
             $stmt->execute();
             $view = $stmt->fetchAll();
         
+            return $view;
+        }
+
+        public function view_services_all(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_services");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        public function view_services_consultation(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Consultation', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+
+        public function view_services_vaccination(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Vaccination', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_deworming(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Deworming', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_heartworm(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Heartworm', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_treatment(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Treatment', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_surgery(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Surgery', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_laboratory(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Laboratory', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_confinement(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Confinement', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_diagnostic(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Diagnostic', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_grooming(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Grooming', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_cesarian(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Cesarian Section Surgery', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
+        public function view_services_bloodchem(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE FIND_IN_SET('Blood Chemistry Test', REPLACE(service_availed, ', ', ',')) > 0");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
             return $view;
         }
 
@@ -797,6 +976,60 @@
     
             return $result['count'];
         }
+        //Count Cat food
+        public function count_inventory_catfood() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Cat Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count dogfood
+        public function count_inventory_dogfood() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Dog Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count medicine
+        public function count_inventory_medicine() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Medicine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count syringe
+        public function count_inventory_syringe() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Syringe' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count shampoo
+        public function count_inventory_shampoo() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Shampoo' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count vaccine
+        public function count_inventory_vaccine() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
 
         public function count_low_inventory() {
             $connection = $this->openConn();
@@ -822,6 +1055,123 @@
             $rescount = $stmt->fetchColumn();
             return $rescount;
         }
+
+        public function count_services_all() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+
+        public function count_services_consultation() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Consultation', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+
+        public function count_services_vaccination() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Vaccination', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+
+        public function count_services_deworming() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Deworming', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_heartworm() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Heartworm', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_treatment() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Treatment', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_surgery() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Surgery', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_laboratory() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Laboratory', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_confinement() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Confinement', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_diagnostic() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Diagnostic', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_grooming() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Grooming', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_cesarian() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Cesarian Section Surgery', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        public function count_services_bloodchem() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE FIND_IN_SET('Blood Chemistry Test', REPLACE(service_availed, ', ', ','))");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        
+        // public function count_services_consultation() {
+        //     $connection = $this->openConn();
+        //     $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_services WHERE deleted_at IS NULL");
+        //     $stmt->execute();
+        //     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        //     return $result['count'];
+        // }
 
         // public function count_total() {
         //     $connection = $this->openConn();

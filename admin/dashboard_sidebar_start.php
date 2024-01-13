@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <link rel="icon" href="../assets/logo.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,6 +27,7 @@
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 
 
@@ -120,9 +121,9 @@
 
             <!-- Client List -->
             <li class="nav-item" id="client">
-                <a class="nav-link  text-light" href="admin_client.php">
+                <a class="nav-link  text-light" href="services.php">
                     <i class="fas fa-users"></i>
-                    <span>Client List</span></a>
+                    <span>Services</span></a>
             </li>
 
             <!-- Vaccination -->
@@ -140,9 +141,9 @@
                     <span>Inventory</span></a>
             </li>
             <li class="nav-item" id="sales">
-                <a class="nav-link  text-light" href="admin_sale_inventory.php">
+                <a class="nav-link  text-light" href="admin_product_sale.php">
                     <i class="fas fa-bullhorn"></i>
-                    <span>Sales Inventory</span></a>
+                    <span>Product Sales</span></a>
             </li>
             <li class="nav-item" id="reports">
                 <a class="nav-link  text-light" href="admin_reports.php">

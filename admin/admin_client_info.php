@@ -42,62 +42,62 @@
                             <?php if (is_null($view['picture'])): ?>
                                 <img src="../images/placeholder/user-placeholder.png" width="200" height="200">
                             <?php else: ?>
-                                <!-- Display pet image here -->
-                                <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="200">
+                                <!-- Display pet image here --> 
+                                <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="200" height="200">
                             <?php endif; ?>
                         </div>                          
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> First Name: </label>
-                                <input type="text" class="form-control" name="fname" value="<?= $view['fname'] ?>" required>
+                                <input type="text" class="form-control" name="fname" value="<?= $view['fname'] ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Last Name: </label>
-                                <input type="text" class="form-control" name="lname" value="<?= $view['lname'] ?>" required>
+                                <input type="text" class="form-control" name="lname" value="<?= $view['lname'] ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Middle Initial: </label>
-                                <input type="text" class="form-control" name="mi" value="<?= $view['mi'] ?>" required>
+                                <input type="text" class="form-control" name="mi" value="<?= $view['mi'] ?>" readonly>
                             </div>
                         </div>    
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Sex </label>
-                                <input type="text" class="form-control" name="sex" value="<?= $view['sex'] ?>" required>
+                                <input type="text" class="form-control" name="sex" value="<?= $view['sex'] ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Address </label>
-                                <input type="text" class="form-control" name="address" value="<?= $view['address'] ?>" required>
+                                <input type="text" class="form-control" name="address" value="<?= $view['address'] ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Contact Number </label>
-                                <input type="text" class="form-control" name="contact" value="<?= $view['contact'] ?>" required>
+                                <input type="text" class="form-control" name="contact" value="<?= $view['contact'] ?>" readonly>
                             </div>
                         </div>  
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Birthdate </label>
-                                <input type="text" class="form-control" name="birthdate" value="<?= $view['birthdate'] ?>" required>
+                                <input type="text" class="form-control" name="birthdate" value="<?= $view['birthdate'] ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Nationality </label>
-                                <input type="text" class="form-control" name="nationality" value="<?= $view['nationality'] ?>" required>
+                                <input type="text" class="form-control" name="nationality" value="<?= $view['nationality'] ?>" readonly>
                             </div>
                         </div>                           
                         <div class="col">
                             <div class="form-group">
                                 <label>Email: </label>
-                                <input type="text" class="form-control" name="email" value="<?= $view['email'] ?>" required>
+                                <input type="text" class="form-control" name="email" value="<?= $view['email'] ?>" readonly>
                             </div>
                         </div>
                     </div>

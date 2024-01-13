@@ -54,14 +54,14 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h1 class="text-gray">Reports - Vaccination</h1>
+            <h1 class="text-gray">Reports - Services</h1>
         </div>
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><a href="admin_reports.php">Stocks</a></li>
                     <li class="breadcrumb-item"><a href="admin_reports_clients.php">Clients</a></li>
-                    <li class="breadcrumb-item"><a href="admin_reports_vaccination.php">Vaccinations</a></li>
+                    <li class="breadcrumb-item"><a href="admin_reports_services.php">Services</a></li>
                 </ol>
             </nav>
         </div>

@@ -63,7 +63,8 @@
                         <?php endif; ?>   
                     </div>
                     <div class="col-md-7">
-                        <div class="row">
+                        <div class="container">
+                             <div class="row me-5 mt-3">
                             <div class="col-md-12">
                                 <div class="custom-file form-group">
                                     <input type="file" onchange="readURL(this);" class="custom-file-input" id="customFile" name="pet_picture">
@@ -128,6 +129,7 @@
                             </div>
                             
                             
+                        </div>
                         </div>
                     </div>
                 </div>

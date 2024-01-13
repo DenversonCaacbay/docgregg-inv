@@ -64,7 +64,8 @@ $html .= '
 <table  id="customers">';
 $html .= '<tr>
 <th width="20%">Created At</th>
-<th width="60%">Product Name</th>
+<th width="20%">Customer Name</th>
+<th width="40%">Product Name</th>
 <th width="20%">Total</th>
 </tr>';
 
@@ -74,6 +75,7 @@ if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . date('Y-m-d H:i:s', strtotime($row['created_at'])) . '</td>';
+    $html .= '<td>' . $row['customer_name'] .  '</td>';
     $html .= '<td class="product-name">' . $row['product'] .  '</td>';
     $html .= '<td> ₱' . $row['total'] .  '.00</td>';
     $totalSales += $row['total']; // Accumulate total sales
@@ -83,11 +85,11 @@ if ($result->num_rows > 0) {
 
   // Display total sales row
   $html .= '<tr>';
-  $html .= '<td colspan="2" style="text-align: right;">Total Sales:</td>';
+  $html .= '<td colspan="3" style="text-align: right;">Total Sales:</td>';
   $html .= '<td> ₱' . $totalSales . '.00</td>';
   $html .= '</tr>';
 } else {
-  $html .= '<tr><td colspan="3">No Sales Recorded today.</td></tr>';
+  $html .= '<tr><td colspan="4">No Sales Recorded today.</td></tr>';
 }
 
 $html .= '</table>';

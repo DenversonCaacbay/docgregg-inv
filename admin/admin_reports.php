@@ -59,7 +59,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><a href="admin_reports.php">Stocks</a></li>
                     <li class="breadcrumb-item"><a href="admin_reports_clients.php">Clients</a></li>
-                    <li class="breadcrumb-item"><a href="admin_reports_vaccination.php">Vaccinations</a></li>
+                    <li class="breadcrumb-item"><a href="admin_reports_services.php">Services</a></li>
                 </ol>
             </nav>
         </div>
@@ -138,6 +138,7 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
+                            <th> Customer Name </th>
                             <th> Product Name </th>
                             <th> Total Quantity</th>
                             <th> Total </th>
@@ -150,13 +151,14 @@
                         <?php if(is_array($view)) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
+                                    <td> <?= $view['customer_name']; ?></td>
                                     <td>
                                         <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($view), ENT_QUOTES, 'UTF-8'); ?>">
                                             <?= strlen($view['product']) > 30 ? substr($view['product'], 0, 30) . '...' : $view['product']; ?>
                                         </a>
                                     </td>
                                     <td> <?= $view['totalQty']; ?></td>
-                                    <td>₱ <?= $view['total']; ?>.00</td>
+                                    <td>₱ <?= number_format($view['total']); ?> </td>
                                     <td> <?= $view['created_at']; ?> </td>
                                 </tr>
                             <?php }?>
@@ -210,19 +212,24 @@
         });
 
         // Function to display product details in the modal
+
+    // You can customize this function based on how you want to display product details
         function displayProductDetails(product) {
-            // You can customize this function based on how you want to display product details
+    // You can customize this function based on how you want to display product details
+            var totalNumber = parseFloat(product.total); // Convert to number if it's not already
+            var formattedTotal = totalNumber.toLocaleString(); // Format the total with commas
             var detailsHtml = "<p><strong>Product:</strong> " + product.product + "</p>";
             detailsHtml += "<p><strong>Total Quantity:</strong> " + product.totalQty + "</p>";
-            detailsHtml += "<p><strong>Total:</strong> ₱" + product.total + ".00</p>";
+            detailsHtml += "<p><strong>Total:</strong> ₱" + formattedTotal + ".00</p>";
             detailsHtml += "<p><strong>Created At:</strong> " + product.created_at + "</p>";
-
+        
             // Update the content of the modal with the product details
             $("#productDetails").html(detailsHtml);
-
+        
             // Show the modal using JavaScript
             $("#productModal").modal("show");
         }
+
 
         // Handle form submission to filter results
         $("form").submit(function(e) {

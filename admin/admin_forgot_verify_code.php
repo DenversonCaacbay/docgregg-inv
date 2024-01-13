@@ -1,9 +1,9 @@
 <?php
 // Database connection details
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dgvc";
+$username = "u579189311_dgvetclinic";
+$password = "Intelliware556";
+$dbname = "u579189311_dgvc";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

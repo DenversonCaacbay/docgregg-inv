@@ -67,7 +67,7 @@ if(isset($_POST["add_to_cart"]))
         // if order qty > stocks
         if($quantity > $hiddenStocks){
             echo '<script>alert("Item QTY is greater than stocks!")</script>';
-            echo '<script>window.location="admin_sale_inventory.php"</script>';
+            echo '<script>window.location="admin_product_sale.php"</script>';
         }
         else{
             $item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
@@ -85,12 +85,14 @@ if(isset($_POST["add_to_cart"]))
             else
             {
                 echo '<script>alert("Item Already Added")</script>';
-                echo '<script>window.location="admin_sale_inventory.php"</script>';
+                echo '<script>window.location="admin_product_sale.php"</script>';
             }
         }
     }
     
-    if(isset($_GET["action"]))
+    
+}
+if(isset($_GET["action"]))
     {
         if($_GET["action"] == "delete")
         {
@@ -99,12 +101,11 @@ if(isset($_POST["add_to_cart"]))
                 if($values["item_id"] == $_GET["id"])
                 {
                     unset($_SESSION["shopping_cart"][$keys]);
-                    echo '<script>window.location="admin_sale_inventory.php"</script>';
+                    echo '<script>window.location="admin_product_sale.php"</script>';
                 }
             }
         }
     }
-}
 ?>
 
 
@@ -152,49 +153,52 @@ if(isset($_POST["add_to_cart"]))
                         <input type="text" class="form-control" style="width:100%;height:40px;" id="myInput" placeholder="Search Product..." autocomplete="off">
                     </div>
                     <br>
-                    <table style="width:100%;" id="myTable datatableid" class="table table-light">
-                        <tr>
-                            <th width="40%" style="background: #0296be;color:white;">Product Name</th>
-                            <th width="20%" style="background: #0296be;color:white;">Price</th>
-                            <th width="20%" style="background: #0296be;color:white;">Stocks</th>
-                            <th width="10%" style="background: #0296be;color:white;">Quantity</th>
-                            <th style="background: #0296be;color:white;"></th>
-                            <th style="background: #0296be;color:white;"></th>
-                            <th width="10%"colspan="2" class="text-center" style="background: #0296be;color:white;">Add</th>
-                        </tr>   
-                        <?php
-                            $query = "SELECT * FROM tbl_inventory WHERE deleted_at IS NULL ORDER BY inv_id ASC";
-                            $result = mysqli_query($connect, $query);
-                            if(mysqli_num_rows($result) > 0)
-                            {
-                                while($row = mysqli_fetch_array($result))
-                                {
-                                    if($row['quantity'] > 0)
-                                    {
-                        ?>
-                        <tbody id="myTable">
+                    <div class="card" style="height: 500px; overflow: auto;">
+                        <table style="width:100%;" id="myTable datatableid" class="table table-light">
                             <tr>
-                                <form method="post" action="admin_sale_inventory.php?action=add&id=<?php echo $row["inv_id"]; ?>">
-                                    <td width="20%"><h5 class=""><?php echo strlen($row['name']) > 20 ? substr($row['name'], 0, 20) . '...' : $row['name']; ?></h5></td>
-                                    <td width="20%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
-                                    <td width="20%"><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
-                                    <td><input type="text" name="quantity" class="inputQuantity form-control" value="1" /></td>
-                                    <td><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
-                                    <td><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
-                                    <td><input type="hidden" name="hidden_stocks" class="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
-                                    <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary addToCartBtn" value="Add to Cart" /></td>
-                                </form>
-                            </tr>                   
-                        <?php
+                                <th width="40%" style="background: #0296be;color:white;">Product Name</th>
+                                <th width="20%" style="background: #0296be;color:white;">Price</th>
+                                <th width="20%" style="background: #0296be;color:white;">Stocks</th>
+                                <th width="10%" style="background: #0296be;color:white;">Quantity</th>
+                                <th style="background: #0296be;color:white;"></th>
+                                <th style="background: #0296be;color:white;"></th>
+                                <th width="10%"colspan="2" class="text-center" style="background: #0296be;color:white;">Add</th>
+                            </tr>   
+                            <?php
+                                $query = "SELECT * FROM tbl_inventory WHERE deleted_at IS NULL ORDER BY inv_id ASC";
+                                $result = mysqli_query($connect, $query);
+                                if(mysqli_num_rows($result) > 0)
+                                {
+                                    while($row = mysqli_fetch_array($result))
+                                    {
+                                        if($row['quantity'] > 0)
+                                        {
+                            ?>
+                            <tbody id="myTable">
+                                <tr>
+                                    <form method="post" action="admin_product_sale.php?action=add&id=<?php echo $row["inv_id"]; ?>">
+                                        <td width="20%"><h5 class=""><?php echo strlen($row['name']) > 20 ? substr($row['name'], 0, 20) . '...' : $row['name']; ?></h5></td>
+                                        <td width="20%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
+                                        <td width="20%"><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
+                                        <td><input type="text" name="quantity" class="inputQuantity form-control" value="1" /></td>
+                                        <td><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
+                                        <td><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
+                                        <td><input type="hidden" name="hidden_stocks" class="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
+                                        <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary addToCartBtn" value="Add to Cart" /></td>
+                                    </form>
+                                </tr>                   
+                            <?php
+                                        }
                                     }
                                 }
-                            }
-                        ?>
-                        <tr id="noItemRow" style="display: none;">
-                            <td colspan="7" class="text-center">No item found</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            ?>
+                            <tr id="noItemRow" style="display: none;">
+                                <td colspan="7" class="text-center">No item found</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </div>
                 <div class="col-md-5">
                 <div style="clear:both"></div>
@@ -221,7 +225,7 @@ if(isset($_POST["add_to_cart"]))
                             <td width="20%"><?php echo $values["item_quantity"]; ?></td>
                             <td width="20%">₱ <?php echo $values["item_price"]; ?></td>
                             <td width="20%">₱ <?php echo $values["item_quantity"] * $values["item_price"];?></td>
-                            <td><a href="admin_sale_inventory.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
+                            <td><a href="admin_product_sale.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
                         </tr>
                         <?php
                                 $total = $total + ($values["item_quantity"] * $values["item_price"]);
@@ -233,6 +237,10 @@ if(isset($_POST["add_to_cart"]))
                             <td colspan="2" align="right">
                                 <input type="number" name="processTotal" id="total_id" step="any" value="<?php echo $total; ?>" class="form-control" placeholder="₱ " readonly>
                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="right">Enter Customer Name</td>
+                            <td colspan="2" align="right"><input type="text" step="any" name="processCustomer" id="customer_id" class="form-control" placeholder="" required></td>
                         </tr>
                         <tr>
                             <td colspan="3" align="right">Enter Cash</td>

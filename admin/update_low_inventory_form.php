@@ -58,17 +58,17 @@
                                 </div>
                             </div>
                             <div class="col-md-12" style="margin-top:15%;"> 
-    <div class="form-group">
-        <label class="mtop"> Total Quantity: </label>
-        <input type="number" class="form-control" name="total_quantity" value="<?= $item['quantity'] ?>" readonly>
-    </div>
-</div>
-<div class="col-md-12"> 
-    <div class="form-group">
-        <label class="mtop"> Quantity: </label>
-        <input type="number" class="form-control" name="qty" value="" required>
-    </div>
-</div>
+                                <div class="form-group">
+                                    <label class="mtop"> Total Quantity: </label>
+                                    <input type="number" class="form-control" name="total_quantity" value="<?= $item['quantity'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-12"> 
+                                <div class="form-group">
+                                    <label class="mtop"> Quantity: </label>
+                                    <input type="number" class="form-control" name="qty" value="" required>
+                                </div>
+                            </div>
                             <div class="col" hidden>
                                 <div class="form-group">
                                     <label class="mtop">Category</label>

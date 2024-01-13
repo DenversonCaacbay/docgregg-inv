@@ -54,7 +54,11 @@
                                     <?php if (is_null($view['picture'])): ?>
                                         <img src="../images/placeholder/user-placeholder.png" width="50">
                                     <?php else: ?>
-                                        <img src="../<?= $view['picture'] ?>" class="" width="50" alt="Modal Image">
+
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('../<?= $view['picture'] ?>')">
+                                            <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
+                                        </a>
+
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= $view['fname'];?> </td>
@@ -81,6 +85,35 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Client Picture</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal image -->
+                <img id="modalImage" class="img-fluid" alt="Modal Image" width="100%">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript function to open the modal and set the image source
+    function openModal(imageSrc) {
+        console.log("Opening modal with image source:", imageSrc);
+
+        // Assuming modalImage is the ID of your image element in the modal
+        document.getElementById('modalImage').src = imageSrc;
+    }
+</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
