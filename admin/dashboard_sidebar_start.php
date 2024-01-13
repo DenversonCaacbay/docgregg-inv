@@ -51,11 +51,7 @@
         font-size: 18px;
         /* color: #0296be; */
     }
-    /* .card{
-        border: none;
-        box-shadow: 0px 5px 10px rgb(34, 32, 32,0.1),
-        0px 5px 10px rgba(0,0,0,0.1);
-    } */
+
     .btn-primary{
         background:  #0296be !important;
 
@@ -64,22 +60,6 @@
         background: #0296be;
         color: white;
     }
-    /* .btn-primary:hover{
-        background:  #ffffff !important;
-        color: 0296be;
-    } */
-    /* .fixed-sidebar {
-        position: fixed;
-        height: 100%;
-        z-index: 1031;
-        overflow-y: auto; 
-    }
-
-    .fixed-navbar {
-        position: fixed;
-        width: 100%;
-        z-index: 1030; 
-    } */
 
 </style>
 
@@ -90,92 +70,116 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
+        <?php
+$userdetails = $bmis->get_userdata();
+$userRole = $userdetails['role'];
+?>
 
-            
-                <div class="card p-2 m-2">
-                    <img src="../assets/logo.png" width="100" height="100">
-                    <div class="sidebar-brand-text">
-                        Doc Gregg <br>Veterinary Clinic 
-                    </div>
-                </div>
+<ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
+    <div class="card p-2 m-2">
+        <img src="../assets/logo.png" width="100" height="100">
+        <div class="sidebar-brand-text">
+            Doc Gregg <br>Veterinary Clinic
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item" id="dashboard">
+        <a class="nav-link text-light" href="admin_dashboard.php">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Menu
+    </div>
+
+    <?php if ($userRole === 'administrator') : ?>
+        <!-- Admin sees all items -->
+        <li class="nav-item" id="client">
+            <a class="nav-link text-light" href="services.php">
+                <i class="fas fa-users"></i>
+                <span>Services</span>
+            </a>
+        </li>
+
+        <li class="nav-item" id="inventory">
+            <a class="nav-link text-light" href="admin_inventory.php">
+                <i class="fas fa-bullhorn"></i>
+                <span>Inventory</span>
+            </a>
+        </li>
+
+        <li class="nav-item" id="sales">
+            <a class="nav-link text-light" href="admin_product_sale.php">
+                <i class="fas fa-bullhorn"></i>
+                <span>Product Sales</span>
+            </a>
+        </li>
+
+        <li class="nav-item" id="reports">
+            <a class="nav-link text-light" href="admin_reports.php">
+                <i class="fas fa-bullhorn"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+        <li class="nav-item" id="staff">
+            <a class="nav-link text-light" href="admin_staff_list.php">
+                <i class="fas fa-bullhorn"></i>
+                <span>Staff List</span>
+            </a>
+        </li>
+
+        <!-- ... Other sidebar elements ... -->
+
+    <?php elseif ($userRole === 'Staff') : ?>
+        <!-- Staff sees specific items -->
+        <li class="nav-item" id="client">
+            <a class="nav-link text-light" href="services.php">
+                <i class="fas fa-users"></i>
+                <span>Services</span>
+            </a>
+        </li>
+
+        <li class="nav-item" id="sales">
+            <a class="nav-link text-light" href="admin_product_sale.php">
+                <i class="fas fa-bullhorn"></i>
+                <span>Product Sales</span>
+            </a>
+        </li>
+
+    <?php endif; ?>
+
+    <!-- ... Other sidebar elements ... -->
+
+    <li class="nav-item" id="help">
+        <a class="nav-link text-light" href="admin_help.php">
+            <i class="fas fa-file-contract"></i>
+            <span>Help & Support</span>
+        </a>
+    </li>
+
+    <li class="nav-item" id="logout">
+        <a class="nav-link text-light" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </li>
+
+</ul>
 
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item" id="dashboard">
-                <a class="nav-link text-light" href="admin_dashboard.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Menu
-            </div>
-
-            <!-- Client List -->
-            <li class="nav-item" id="client">
-                <a class="nav-link  text-light" href="services.php">
-                    <i class="fas fa-users"></i>
-                    <span>Services</span></a>
-            </li>
-
-            <!-- Vaccination -->
-            <!-- <li class="nav-item" id="vaccination">
-                <a class="nav-link  text-light" href="admin_vaccination_record.php">
-                    <i class="fas fa-users"></i>
-                    <span>Vaccination Record</span></a>
-            </li> -->
 
 
-            <!-- Inventory Management -->
-            <li class="nav-item" id="inventory">
-                <a class="nav-link  text-light" href="admin_inventory.php">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Inventory</span></a>
-            </li>
-            <li class="nav-item" id="sales">
-                <a class="nav-link  text-light" href="admin_product_sale.php">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Product Sales</span></a>
-            </li>
-            <li class="nav-item" id="reports">
-                <a class="nav-link  text-light" href="admin_reports.php">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Reports</span></a>
-            </li>
-            <!-- <li class="nav-item" id="staff">
-                <a class="nav-link  text-light" href="admin_staff_list.php">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Staff List</span></a>
-            </li> -->
-
-            <!-- Profile -->
-            <!-- <li class="nav-item" id="profile">
-                <a class="nav-link  text-light" href="admin_myprofile.php">
-                    <i class="fas fa-id-card"></i>
-                    <span>My Profile </span></a>
-            </li> -->
-
-            <!-- Help and Support -->
-            <li class="nav-item" id="help">
-                <a class="nav-link  text-light" href="admin_help.php">
-                    <i class="fas fa-file-contract"></i>
-                    <span>Help & Support</span></a>
-            </li>
-            <li class="nav-item" id="logout">
-                <a class="nav-link  text-light" href="logout.php">
-                <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span></a>
-            </li>
-
-        </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -242,7 +246,6 @@
                 </nav>
 
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
                 <script>
                     $(document).ready(function () {
                         // Retrieve the active item from localStorage

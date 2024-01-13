@@ -46,57 +46,42 @@ class BMISClass {
         //authentication function para sa sa tatlong type ng accounts
         public function login() {
             if(isset($_POST['login'])) {
-
                 $email = $_POST['email'];
-                $password = ($_POST['password']);
-            
+                $password = $_POST['password'];
+        
                 $connection = $this->openConn();
-
-
-                //unang i c capture admin
-                // $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ? AND password = ?");
+        
+                // Query to retrieve the user based on the email
                 $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ?");
-                // $stmt->Execute([$email, $password]);
                 $stmt->execute([$email]);
                 $user = $stmt->fetch();
-
-                // check if exist in admin
-                // if(!$user){
-                //     // change to resident tbl if it does not exist
-                //     $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE email = ?");
-                //     $stmt->execute([$email]);
-                //     $user = $stmt->fetch();
-
-                //     if ($user AND password_verify($password, $user['password'])) {
-                //         // 
-                //         $this->set_userdata($user);
-                //         header('Location: resident_homepage.php');
-                //     }
-                // }
-
-                // check if existing and password matches
-                // password_verify check if password inputted(hashed) matches password from db
-                if ($user AND password_verify($password, $user['password'])) {
-                    //statement na mag ch check kung admin yung role
-                    if($user['role'] == 'administrator') {
-                        $this->set_userdata($user);
-                        header('Location: admin_dashboard.php');
-                        return (0);
+        
+                if ($user) {
+                    // Verify the entered password against the stored hashed password
+                    if (password_verify($password, $user['password'])) {
+                        // Check the user role
+                        if ($user['role'] == 'administrator') {
+                            $this->set_userdata($user);
+                            header('Location: admin_dashboard.php');
+                            exit();
+                        } elseif ($user['role'] == 'staff') {
+                            $this->set_userdata($user);
+                            header('Location: staff_dashboard.php');
+                            exit();
+                        } else {
+                            // Handle other roles or scenarios
+                        }
+                    } else {
+                        // Incorrect password
+                        echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
                     }
-                    //kapag hindi admin ang role ng nag enter next na i c capture user login
-                    if($user['role'] == 'staff') {
-                        //statement na mag ch check kung user yung role
-                        $this->set_userdata($user);
-                        header('Location: staff_dashboard.php');
-                        return(0);
-                    }
-
+                } else {
+                    // User not found by email
+                    echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
                 }
-
-                // if all else fail, give error
-                echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
             }
         }
+        
 
         //Testing Login with checking is User has verified his or her account
         public function user_login() 
@@ -115,7 +100,7 @@ class BMISClass {
                     $connection = $this->openConn();
 
                     // Check if the email exists in tbl_user
-                    $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
+                    $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ?");
                     $stmt->execute([$email]);
                     $user = $stmt->fetch();
 
@@ -129,7 +114,7 @@ class BMISClass {
                             if (password_verify($password, $user['password'])) 
                             {
                                 $this->set_userdata($user);
-                                header('Location: user_home.php');
+                                header('Location: admin_dashboard.php');
                                 exit();
                             } 
                             else 
@@ -144,11 +129,11 @@ class BMISClass {
                             $this->sendVerificationEmail($email, $verificationCode);
 
                             // Update verification_code in tbl_user
-                            $updateCodeQuery = "UPDATE tbl_user SET verification_code = ? WHERE email = ?";
+                            $updateCodeQuery = "UPDATE tbl_admin SET verification_code = ? WHERE email = ?";
                             $updateCodeStmt = $connection->prepare($updateCodeQuery);
                             $updateCodeStmt->execute([$verificationCode, $email]);
 
-                            header("Location: user_verification.php?email=$email");
+                            header("Location: staff_verification.php?email=$email");
                             exit();
                         }
                     } 
@@ -167,10 +152,6 @@ class BMISClass {
 
 // Function to send verification email
         private function sendVerificationEmail($email, $verificationCode) {
-            // Include PHPMailer autoloader
-            // require 'PHPMailer/src/Exception.php';
-            // require 'PHPMailer/src/PHPMailer.php';
-            // require 'PHPMailer/src/SMTP.php';
 
             $mail = new PHPMailer(true);
 
@@ -205,42 +186,6 @@ class BMISClass {
                 echo "Email sending failed. Please try again later.";
             }
         }
-
-
-        // This is Working Login for Users
-        // public function user_login() 
-        // {
-        //     error_reporting(E_ALL);
-        //     ini_set('display_errors', 1);
-        //     ob_start();
-        //     try 
-        //     {
-        //         // Your existing code here
-        //         if(isset($_POST['user_login'])) 
-        //         {
-        //             $email = $_POST['email'];
-        //             $password = $_POST['password'];
-        //             $connection = $this->openConn();
-        //             // Check if the email exists in tbl_user
-        //             $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
-        //             $stmt->execute([$email]);
-        //             $user = $stmt->fetch();
-        //             // If the email is found in tbl_user and password is correct
-        //             if ($user && password_verify($password, $user['password'])) {
-        //                 $this->set_userdata($user);
-        //                 header('Location: user_home.php');
-        //                 exit();
-        //             } else {
-        //                 // If the email is not found in tbl_user or password is incorrect
-        //                 echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
-        //             }
-        //         }
-        //     } 
-        //     catch (Exception $e) 
-        //     {
-        //         echo 'Caught exception: ',  $e->getMessage(), "\n";
-        //     }
-        // }
         
 
     //eto yung function na mag e end ng session tas i l logout ka 
@@ -313,37 +258,39 @@ class BMISClass {
 
 
  //----------------------------------------------------- ADMIN CRUD ---------------------------------------------------------
-    public function create_admin() {
+ 
+    // public function create_admin() 
+    // {
 
-        if(isset($_POST['add_admin'])) {
+    //     if(isset($_POST['add_admin'])) {
         
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $lname = ucfirst($_POST['lname']); // Convert to uppercase
-            $fname = ucfirst($_POST['fname']); // Convert to uppercase
-            $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
-            $role = $_POST['role'];
+    //         $email = $_POST['email'];
+    //         $password = $_POST['password'];
+    //         $lname = ucfirst($_POST['lname']); // Convert to uppercase
+    //         $fname = ucfirst($_POST['fname']); // Convert to uppercase
+    //         $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
+    //         $role = $_POST['role'];
     
-                if ($this->check_admin($email) == 0 ) {
+    //             if ($this->check_admin($email) == 0 ) {
 
-                    $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    //                 $password_hash = password_hash($password, PASSWORD_BCRYPT);
         
-                    $connection = $this->openConn();
-                    $stmt = $connection->prepare("INSERT INTO tbl_admin 
-                    (`email`,`password`,`lname`,`fname`,`mi`, `role` ) 
-                    VALUES (?, ?, ?, ?, ?, ?)");
+    //                 $connection = $this->openConn();
+    //                 $stmt = $connection->prepare("INSERT INTO tbl_admin 
+    //                 (`email`,`password`,`lname`,`fname`,`mi`, `role` ) 
+    //                 VALUES (?, ?, ?, ?, ?, ?)");
                     
-                    $stmt->Execute([$email, $password_hash, $lname, $fname, $mi, $role]);
+    //                 $stmt->Execute([$email, $password_hash, $lname, $fname, $mi, $role]);
                     
-                    $message2 = "Administrator account added, you can now continue logging in";
-                    echo "<script type='text/javascript'>alert('$message2');</script>";
-                }
-            }
+    //                 $message2 = "Administrator account added, you can now continue logging in";
+    //                 echo "<script type='text/javascript'>alert('$message2');</script>";
+    //             }
+    //         }
     
-            else {
-                echo "<script type='text/javascript'>alert('Account already exists');</script>";
-            }
-    }
+    //         else {
+    //             echo "<script type='text/javascript'>alert('Account already exists');</script>";
+    //         }
+    // }
 
     public function get_single_admin($id_admin){
 
@@ -1568,20 +1515,20 @@ class BMISClass {
     }
 
     //eto yung function na mag bibigay restriction sa mga admin pages
-    public function validate_admin(){
+    public function validate_admin() {
         $userdetails = $this->get_userdata();
-
+    
         if (isset($userdetails)) {
-            
-            if($userdetails['role'] != "administrator") {
+            if ($userdetails['role'] == "administrator" || $userdetails['role'] == "Staff") {
+                return $userdetails;
+            } else {
                 $this->show_404();
             }
-
-            else {
-                return $userdetails;
-            }
+        } else {
+            $this->show_404();
         }
     }
+    
 
     public function validate_staff() {
 

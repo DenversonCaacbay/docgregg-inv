@@ -92,7 +92,7 @@
                                 <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-syringe fa-2x text-dark"></i>
+                            <i class="fa-solid fa-syringe fa-2x text-dark"></i>
               
                         </div>
                     </div>

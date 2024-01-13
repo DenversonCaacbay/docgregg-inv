@@ -37,46 +37,128 @@ use PHPMailer\PHPMailer\Exception;
     class ResidentClass extends BMISClass {
         //------------------------------------ RESIDENT CRUD FUNCTIONS ----------------------------------------
 
-        public function create_user()
-{
-    if (isset($_POST['add_user'])) {
-        ob_start();
-        $email = $_POST['email'];
-        $password = ($_POST['password']);
-        $confirm_password = ($_POST['confirm_password']);
-        $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
-        $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
-        $mi = ucfirst(strtolower($_POST['mi']));
-        $sex = $_POST['sex'];
-        $address = $_POST['address'];
-        $contact = $_POST['contact'];
-        $bdate = $_POST['bdate'];
-        $current_year = date("Y");
-        $birth_year = date("Y", strtotime($bdate));
-        $age = $current_year - $birth_year;
-        $nationality = $_POST['nationality'];
-        $role = $_POST['role'];
+        // public function create_user()
+        // {
+        //     if (isset($_POST['add_user'])) {
+        //         ob_start();
+        //         $email = $_POST['email'];
+        //         $password = ($_POST['password']);
+        //         $confirm_password = ($_POST['confirm_password']);
+        //         $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
+        //         $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
+        //         $mi = ucfirst(strtolower($_POST['mi']));
+        //         $sex = $_POST['sex'];
+        //         $address = $_POST['address'];
+        //         $contact = $_POST['contact'];
+        //         $bdate = $_POST['bdate'];
+        //         $current_year = date("Y");
+        //         $birth_year = date("Y", strtotime($bdate));
+        //         $age = $current_year - $birth_year;
+        //         $nationality = $_POST['nationality'];
+        //         $role = $_POST['role'];
 
-        if ($this->check_resident($email) == 0) {
+        //         if ($this->check_resident($email) == 0) {
 
-            // check if the user is 18
-            if ($age < 18) {
-                $message = "Sorry, you are still underage to register an account";
-                echo "<script type='text/javascript'>alert('$message');</script>";
-                return false;
-            } else {
-                // Check if the password and confirm password match
-                if ($password !== $confirm_password) {
-                    $message = "Password and Confirm Password do not match";
-                    echo "<script type='text/javascript'>alert('$message');</script>";
-                    return false;
-                }
+        //             // check if the user is 18
+        //             if ($age < 18) {
+        //                 $message = "Sorry, you are still underage to register an account";
+        //                 echo "<script type='text/javascript'>alert('$message');</script>";
+        //                 return false;
+        //             } else {
+        //                 // Check if the password and confirm password match
+        //                 if ($password !== $confirm_password) {
+        //                     $message = "Password and Confirm Password do not match";
+        //                     echo "<script type='text/javascript'>alert('$message');</script>";
+        //                     return false;
+        //                 }
 
-                // Check if the password is at least 8 characters long
-                if (strlen($password) < 8) {
-                    $message = "Password must be at least 8 characters long";
-                    echo "<script type='text/javascript'>alert('$message');</script>";
-                    return false;
+        //                 // Check if the password is at least 8 characters long
+        //                 if (strlen($password) < 8) {
+        //                     $message = "Password must be at least 8 characters long";
+        //                     echo "<script type='text/javascript'>alert('$message');</script>";
+        //                     return false;
+        //                 }
+
+        //                 // Hash the password
+        //                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        //                 // proceed to create
+        //                 $connection = $this->openConn();
+        //                 $verification_code = bin2hex(random_bytes(16));
+        //                 $stmt = $connection->prepare("INSERT INTO tbl_user (`email`, `password`, `lname`, `fname`, `mi`, `sex`, `contact`, `address`, `birthdate`, `nationality`, `verification_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        //                 $stmt->Execute([$email, $hashed_password, $lname, $fname, $mi, $sex, $contact, $address, $bdate, $nationality, $verification_code]);
+
+        //                 // Check if the query was successful
+        //                 if ($stmt->rowCount() > 0) {
+        //                     // Send verification email using PHPMailer
+        //                     $mail = new PHPMailer(true);
+
+        //                     try {
+        //                         // SMTP settings (replace with your SMTP server details)
+        //                         $mail->isSMTP();
+        //                         $mail->Host = 'smtp.gmail.com';
+        //                         $mail->SMTPAuth = true;
+        //                         $mail->Username = 'dgvetclinic@gmail.com';
+        //                         $mail->Password = 'uxpq syxi hxte ootg';
+        //                         $mail->SMTPSecure = 'tls';
+        //                         $mail->Port = 587;
+
+        //                         // Set "From" address
+        //                         $mail->setFrom('dgvetclinic@gmail.com', 'DG Veterinary Clinic');
+
+        //                         // Set "To" address
+        //                         $mail->addAddress($email);
+
+        //                         // Set email subject and body
+        //                         $mail->Subject = 'Email Verification';
+        //                         $mail->Body = "Thank you for signing up! Your verification code is: $verification_code";
+
+        //                         // Enable verbose debug output
+        //                         $mail->SMTPDebug = 2;
+
+        //                         // Send the email
+        //                         $mail->send();
+
+        //                         // Redirect to a verification page
+        //                         header("Location: user_verification.php?email=$email");
+        //                         ob_end_flush();
+        //                         exit();
+        //                     } catch (Exception $e) {
+        //                         // Log the error
+        //                         error_log("Email sending failed for $email: " . $mail->ErrorInfo, 1, "your_error_log.txt");
+        //                         echo "Email sending failed. Please try again later.";
+        //                     }
+        //                 } else {
+        //                     $message2 = "Failed to add the account. Please try again.";
+        //                     echo "<script type='text/javascript'>alert('$message2');</script>";
+        //                 }
+        //             }
+        //         } else 
+        //         {
+        //     // This 'else' is associated with the 'if ($this->check_resident($email) == 0)' statement
+        //         echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
+        //         }
+        //     }
+        // }
+        public function create_staff()
+        {
+            if (isset($_POST['add_staff'])) 
+            {
+                ob_start();
+                $email = $_POST['email'];
+                $password = ($_POST['password']);
+                $confirm_password = ($_POST['confirm_password']);
+                $lname = ucfirst(strtolower($_POST['lname']));
+                $fname = ucfirst(strtolower($_POST['fname'])); 
+                $role = $_POST['role'];
+
+                // Check if email already exists
+                if ($this->check_staff($email) > 0) 
+                {
+                    echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
+                    // You might want to redirect the user or perform some other action here.
+                    return;
                 }
 
                 // Hash the password
@@ -85,16 +167,17 @@ use PHPMailer\PHPMailer\Exception;
                 // proceed to create
                 $connection = $this->openConn();
                 $verification_code = bin2hex(random_bytes(16));
-                $stmt = $connection->prepare("INSERT INTO tbl_user (`email`, `password`, `lname`, `fname`, `mi`, `sex`, `contact`, `address`, `birthdate`, `nationality`, `verification_code`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                try {
+                    $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `password`, `lname`, `fname`, `verification_code`, `role`) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$email, $hashed_password, $lname, $fname, $verification_code, $role]);       
 
-                $stmt->Execute([$email, $hashed_password, $lname, $fname, $mi, $sex, $contact, $address, $bdate, $nationality, $verification_code]);
-
-                // Check if the query was successful
-                if ($stmt->rowCount() > 0) {
-                    // Send verification email using PHPMailer
-                    $mail = new PHPMailer(true);
-
-                    try {
+                    // Check if the query was successful
+                    if ($stmt->rowCount() > 0) 
+                    {
+                        // Send verification email using PHPMailer
+                        $mail = new PHPMailer(true);       
+                        // (the rest of your email sending code)
                         // SMTP settings (replace with your SMTP server details)
                         $mail->isSMTP();
                         $mail->Host = 'smtp.gmail.com';
@@ -102,44 +185,37 @@ use PHPMailer\PHPMailer\Exception;
                         $mail->Username = 'dgvetclinic@gmail.com';
                         $mail->Password = 'uxpq syxi hxte ootg';
                         $mail->SMTPSecure = 'tls';
-                        $mail->Port = 587;
-
+                        $mail->Port = 587;       
                         // Set "From" address
-                        $mail->setFrom('dgvetclinic@gmail.com', 'DG Veterinary Clinic');
-
+                        $mail->setFrom('dgvetclinic@gmail.com', 'DG Veterinary Clinic');       
                         // Set "To" address
-                        $mail->addAddress($email);
-
+                        $mail->addAddress($email);        
                         // Set email subject and body
                         $mail->Subject = 'Email Verification';
-                        $mail->Body = "Thank you for signing up! Your verification code is: $verification_code";
-
+                        $mail->Body = "Thank you for signing up! Your verification code is: $verification_code";        
                         // Enable verbose debug output
-                        $mail->SMTPDebug = 2;
-
+                        $mail->SMTPDebug = 2;       
                         // Send the email
                         $mail->send();
-
                         // Redirect to a verification page
-                        header("Location: user_verification.php?email=$email");
+                        header("Location: staff_verification.php?email=$email");
                         ob_end_flush();
                         exit();
-                    } catch (Exception $e) {
-                        // Log the error
-                        error_log("Email sending failed for $email: " . $mail->ErrorInfo, 1, "your_error_log.txt");
-                        echo "Email sending failed. Please try again later.";
+                    } 
+                    else 
+                    {
+                        $message2 = "Failed to add the account. Please try again.";
+                        echo "<script type='text/javascript'>alert('$message2');</script>";
                     }
-                } else {
-                    $message2 = "Failed to add the account. Please try again.";
-                    echo "<script type='text/javascript'>alert('$message2');</script>";
+                } 
+                catch (Exception $e) 
+                {
+                    // Log the error
+                    error_log("Database error: " . $e->getMessage(), 1, "your_error_log.txt");
+                    echo "Database error. Please try again later.";
                 }
-            }
-        } else {
-            // This 'else' is associated with the 'if ($this->check_resident($email) == 0)' statement
-            echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
+            } 
         }
-    }
-}
 
 
         public function view_resident(){
@@ -239,6 +315,15 @@ use PHPMailer\PHPMailer\Exception;
 
         $connection = $this->openConn();
         $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
+        $stmt->Execute([$email]);
+        $total = $stmt->rowCount(); 
+
+        return $total;
+    }
+    public function check_staff($email) {
+
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ?");
         $stmt->Execute([$email]);
         $total = $stmt->rowCount(); 
 

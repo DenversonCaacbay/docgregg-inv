@@ -54,7 +54,6 @@
                 $confirm_password = ($_POST['confirm_password']);
                 $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
                 $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
-                $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
                 $role = $_POST['role'];
 
                 // Check password length
