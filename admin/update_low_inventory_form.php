@@ -5,7 +5,7 @@
    $bmis->validate_admin();
     $staffbmis->update_inventory();
     $item = $staffbmis->view_single_inventory();
-    if ($userdetails['role'] !== 'Administrator') {
+    if ($userdetails['role'] !== 'administrator') {
         // User is not an admin, display an alert
         echo '<script>alert("You are not authorized to access this page as admin.");</script>';
         // Redirect or take appropriate action if needed

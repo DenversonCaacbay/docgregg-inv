@@ -14,7 +14,9 @@
 
 // Calculate the total number of pages
     $totalPages = ceil($totalRecords / $recordsPerPage);
-    if ($userdetails['role'] !== 'Administrator') {
+
+    //Para di ma access ni Staff yung page
+    if ($userdetails['role'] !== 'administrator') {
         // User is not an admin, display an alert
         echo '<script>alert("You are not authorized to access this page as admin.");</script>';
         // Redirect or take appropriate action if needed
