@@ -284,7 +284,7 @@
         public function view_services_all(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_services");
+            $stmt = $connection->prepare("SELECT * FROM tbl_services ORDER BY created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -1250,6 +1250,30 @@
 
             return $view;
         }
+
+        public function create_service(){
+            if (isset($_POST['create_service'])) {
+                $customer_name = ucwords(strtolower($_POST['customer_name']));
+                $services_list = $_POST['services_list'];
+                $service_get = '';
+        
+                foreach($services_list as $item){
+                    $service_get .= $item . ', ';
+                }
+        
+                // Remove the trailing comma and space
+                $service_get = rtrim($service_get, ', ');
+        
+                // echo $service_get;
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, created_at) VALUES (?, ?, NOW())");
+                $stmt->execute([$customer_name, $service_get]);
+        
+                $message2 = "Item created";
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header("refresh: 0");
+            }
+        }        
 
 
         //===================================== SCOPE CHANGED FEATURES =======================================

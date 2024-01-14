@@ -9,6 +9,9 @@
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
+
+    $staffbmis->create_service();
+
     $id_user = $_GET['id_user'];
     $staffbmis->create_pet($id_user);
     // echo $id_user;
@@ -67,31 +70,31 @@
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
                                     <label> Customer Name: </label>
-                                    <input type="text" class="form-control" name="pet_name" required>
+                                    <input type="text" class="form-control" name="customer_name" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Consultation" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Consultation
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Vaccination" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Vaccination
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Deworming" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Deworming
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="HeartWorm" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             HeartWorm
                                         </label>
@@ -99,25 +102,25 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Treatment" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                            Treatment
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Surgery" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                            Surgery
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Laboratory" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                            Laboratory
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Confinement" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Confinement
                                         </label>
@@ -125,25 +128,25 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Diagnostic" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Diagnostic
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Grooming" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Grooming
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Cesarian Section Surgery" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Cesarian Section Surgery
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="Blood Chemistry Test" name="services_list[]" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Blood Chemistry Test
                                         </label>
@@ -151,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <input type="submit" class="btn btn-primary w-100 mb-3" name="add_pet" value="Add Service"/>
+                                <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service"/>
                             </div>
                             
                             
