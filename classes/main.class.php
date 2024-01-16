@@ -100,7 +100,7 @@ class BMISClass {
                     $connection = $this->openConn();
 
                     // Check if the email exists in tbl_user
-                    $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ?");
+                    $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ? AND deleted_at IS NULL");
                     $stmt->execute([$email]);
                     $user = $stmt->fetch();
 

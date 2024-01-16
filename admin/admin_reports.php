@@ -45,9 +45,9 @@
     }
     .custom-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
         padding-left:10px;
-    content: "|";
-    padding: 0 5px;
-    color: #6c757d; /* Set the color of the divider */
+        content: "|";
+        padding: 0 5px;
+        color: #6c757d; /* Set the color of the divider */
   }
 </style>
 
@@ -65,8 +65,9 @@
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><a href="admin_reports.php">Stocks</a></li>
-                    <li class="breadcrumb-item"><a href="admin_reports_clients.php">Clients</a></li>
                     <li class="breadcrumb-item"><a href="admin_reports_services.php">Services</a></li>
+                    <li class="breadcrumb-item"><a href="admin_reports_staff.php">Staff</a></li>
+                    <li class="breadcrumb-item"><a href="admin_reports_inventory.php">Inventory</a></li>
                 </ol>
             </nav>
         </div>
@@ -181,23 +182,23 @@
     
     <!-- /.container-fluid -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+                    <div id="productDetails"></div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div> -->
             </div>
-            <div class="modal-body">
-                <div id="productDetails"></div>
-            </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div> -->
         </div>
     </div>
-</div>
     
 </div>
 <!-- Bootstrap Modal -->

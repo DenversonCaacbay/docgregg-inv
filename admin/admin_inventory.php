@@ -245,7 +245,3 @@
     });
 </script>
 <!-- End of Main Content -->
-
-<?php 
-    include('dashboard_sidebar_end.php');
-?>

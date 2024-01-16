@@ -147,19 +147,19 @@ $userRole = $userdetails['role'];
             </a>
         </li>
 
+        <li class="nav-item" id="staff">
+                <a class="nav-link text-light" href="../admin_staff_list.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Staff List</span>
+                </a>
+            </li>
+
         <li class="nav-item" id="reports">
             <a class="nav-link text-light" href="../admin_reports.php">
                 <i class="fas fa-bullhorn"></i>
                 <span>Reports</span>
             </a>
         </li>
-
-        <!-- <li class="nav-item" id="staff">
-            <a class="nav-link text-light" href="../admin_staff_list.php">
-                <i class="fas fa-bullhorn"></i>
-                <span>Staff List</span>
-            </a>
-        </li> -->
 
         <!-- ... Other sidebar elements ... -->
 

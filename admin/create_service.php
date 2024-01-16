@@ -67,7 +67,7 @@
                     <div class="col-md-12">
                         <div class="container">
                              <div class="row me-5 mt-3">
-                            <div class="col-md-12 mt-3">
+                            <div class="col-md-12 mt-5">
                                 <div class="form-group">
                                     <label> Customer Name: </label>
                                     <input type="text" class="form-control" name="customer_name" required>
@@ -151,6 +151,10 @@
                                             Blood Chemistry Test
                                         </label>
                                     </div>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label> Staff Name: </label>
+                                    <input type="text" class="form-control" name="staff_name" value="<?= $userdetails['firstname']?> <?= $userdetails['surname']?>">
                                 </div>
                             </div>
                             <div class="mt-3">

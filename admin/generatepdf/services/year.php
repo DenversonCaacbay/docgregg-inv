@@ -2,25 +2,16 @@
 session_start();
 
 require_once '../pdf.php';
+require_once '../config.php';
 // Fetch today's date
 $today = date('Y-m-d');
 $currentMonth = date('Y-m');
 
 // Connect to your database (replace with your own credentials)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dgvc";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-  die('Connection failed: ' . $conn->connect_error);
-}
 
 // Fetch data from the shop_inventory table based on today's date
-$query = "SELECT * FROM tbl_pet
-INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id 
-WHERE DATE_FORMAT(tbl_pet.created_at, '%Y-%m') = '$currentMonth'";
+$query = "SELECT * FROM tbl_services WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
 $result = $conn->query($query);
 
 // Generate the report HTML
@@ -52,20 +43,19 @@ $html = '
 </style>
 
 
-<h1 style="text-align:center">Yearly Client Report</h1>
+<h1 style="text-align:center">Yearly Availed Services Report</h1>
 <h4>Year Generated:  '.date("Y", strtotime($today)).'</h4>
 
 ';
 $rowCount = $result->num_rows;
 
-$html .= '<h5>Total Clients Registered this Year: ' . $rowCount . '</h5>';
 
 $html .= '<table  id="customers">';
 $html .= '<tr>
-<th width="50%">Pet Name</th>
-<th width="50%">Pet Condition</th>
-<th width="50%">Vaccine Taken</th>
-<th width="50%">Date Vaccinated</th>
+<th>Customer Name</th>
+<th>Service Availed</th>
+<th>Staff Name</th>
+<th>Date Created</th>
 
 </tr>';
 $totalSales = 0;
@@ -73,17 +63,16 @@ if ($result->num_rows > 0) {
   // $total = $quantity * $unitPrice;
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
-    $html .= '<td>' . $row['pet_name'] .'</td>';
-    $html .= '<td>' . $row['vac_condition'] .'</td>';
-    $html .= '<td>' . $row['vac_used'] .'</td>';
-    $html .= '<td>' . $row['created_at'] .  '.00</td>';
-   
+    $html .= '<td>' . $row['customer_name'] . '</td>';
+    $html .= '<td>' . $row['service_availed'] . '</td>';
+    $html .= '<td>' . $row['staff_name'] . '</td>';
+    $html .= '<td>' . date('Y-m-d H:i:s', strtotime($row['created_at'])) . '</td>';
+
+
     $html .= '</tr>';
   }
-  $html .= '<tr>';
-  $html .= '</tr>';
 } else {
-  $html .= '<tr><td colspan="5">No Client Registered This Year.</td></tr>';
+  $html .= '<tr><td colspan="5">No Availed Services This Year.</td></tr>';
 }
 $html .= '</table>';
 // $pdf = new Pdf();

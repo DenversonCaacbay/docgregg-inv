@@ -564,6 +564,22 @@
                 header('refresh:0');
             }
         }
+
+        public function delete_staff(){
+            $id_admin = $_POST['id_admin'];
+        
+            if(isset($_POST['delete_staff'])) {
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("UPDATE tbl_admin SET deleted_at = NOW() WHERE id_admin = ?");
+                $stmt->execute([$id_admin]);
+                
+                $message2 = "Staff Removed";
+                
+                echo "<script type='text/javascript'>alert('$message2');</script>";
+                header('refresh:0');
+            }
+        }
+        
         
 
         //View User
@@ -572,7 +588,20 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_user WHERE deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * from tbl_admin WHERE deleted_at IS NULL ");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            //$rows = $stmt->
+            return $view;
+           
+        }
+
+        public function view_staff_report(){
+
+            $connection = $this->openConn();
+
+            // $stmt = $connection->prepare("SELECT * from tbl_user");
+            $stmt = $connection->prepare("SELECT * from tbl_admin WHERE deleted_at IS NOT NULL ");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
@@ -869,22 +898,22 @@
         
         
 
-        public function delete_staff(){
+        // public function delete_staff(){
 
-            $id_user = $_POST['id_user'];
+        //     $id_user = $_POST['id_user'];
 
-            if(isset($_POST['delete_staff'])) {
-                $connection = $this->openConn();
-                // $stmt = $connection->prepare("DELETE FROM tbl_user where id_user = ?");
-                $stmt = $connection->prepare("DELETE FROM tbl_admin where id_admin = ?");
-                $stmt->execute([$id_user]);
+        //     if(isset($_POST['delete_staff'])) {
+        //         $connection = $this->openConn();
+        //         // $stmt = $connection->prepare("DELETE FROM tbl_user where id_user = ?");
+        //         $stmt = $connection->prepare("DELETE FROM tbl_admin where id_admin = ?");
+        //         $stmt->execute([$id_user]);
                 
-                $message2 = "Staff Account Deleted";
+        //         $message2 = "Staff Account Deleted";
                 
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                 header('refresh:0');
-            }
-        }
+        //         echo "<script type='text/javascript'>alert('$message2');</script>";
+        //          header('refresh:0');
+        //     }
+        // }
 
     //--------------------------------------------- EXTRA FUNCTIONS FOR STAFF -------------------------------------------------
 
@@ -958,6 +987,18 @@
         
             $stmt = $connection->prepare("SELECT * FROM tbl_pet
                                           INNER JOIN tbl_vaccination ON tbl_pet.pet_id = tbl_vaccination.pet_id");
+        
+            $stmt->execute();
+        
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+            return $result;
+        }
+
+        public function count_services_report() {
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_services");
         
             $stmt->execute();
         
@@ -1254,6 +1295,7 @@
         public function create_service(){
             if (isset($_POST['create_service'])) {
                 $customer_name = ucwords(strtolower($_POST['customer_name']));
+                $staff_name = $_POST['staff_name'];
                 $services_list = $_POST['services_list'];
                 $service_get = '';
         
@@ -1266,10 +1308,10 @@
         
                 // echo $service_get;
                 $connection = $this->openConn();
-                $stmt = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, created_at) VALUES (?, ?, NOW())");
-                $stmt->execute([$customer_name, $service_get]);
+                $stmt = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, staff_name, created_at) VALUES (?, ?, ?,NOW())");
+                $stmt->execute([$customer_name, $service_get, $staff_name]);
         
-                $message2 = "Item created";
+                $message2 = "Service created";
                 echo "<script type='text/javascript'>alert('$message2');</script>";
                 header("refresh: 0");
             }

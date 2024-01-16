@@ -130,13 +130,6 @@
                     <span>Service</span></a>
             </li>
 
-            <!-- Vaccination -->
-            <!-- <li class="nav-item" id="vaccination">
-                <a class="nav-link  text-light" href="admin_vaccination_record.php">
-                    <i class="fas fa-users"></i>
-                    <span>Vaccination Record</span></a>
-            </li> -->
-
 
             <!-- Inventory Management -->
             <li class="nav-item" id="inventory">
@@ -149,23 +142,18 @@
                     <i class="fas fa-bullhorn"></i>
                     <span>Product Sales</span></a>
             </li>
+            <li class="nav-item" id="staff">
+                <a class="nav-link text-light" href="../admin_staff_list.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Staff List</span>
+                </a>
+            </li>
             <li class="nav-item" id="reports">
                 <a class="nav-link  text-light" href="../admin_reports.php">
                     <i class="fas fa-bullhorn"></i>
                     <span>Reports</span></a>
             </li>
-            <!-- <li class="nav-item" id="staff">
-                <a class="nav-link  text-light" href="admin_staff_list.php">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Staff List</span></a>
-            </li> -->
 
-            <!-- Profile -->
-            <!-- <li class="nav-item" id="profile">
-                <a class="nav-link  text-light" href="admin_myprofile.php">
-                    <i class="fas fa-id-card"></i>
-                    <span>My Profile </span></a>
-            </li> -->
 
             <!-- Help and Support -->
             <li class="nav-item" id="help">

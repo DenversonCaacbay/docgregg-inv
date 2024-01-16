@@ -60,7 +60,7 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h1 class="text-gray">Reports - Services</h1>
+            <h1 class="text-gray">Logs - Inventory</h1>
         </div>
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
@@ -126,18 +126,6 @@
         window.open(pdfLink, '_blank');
     }
 </script>
-
-                <div class="col-md-5 text-md-right mt-4">
-                    Generate Report by:  &nbsp
-                    <!-- <button type="button" class="btn btn-primary">Day</button> -->
-                    <a href="generatepdf/services/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
-                    <a href="generatepdf/services/week.php" class="btn btn-primary" target="_blank" id="generatePDF">Weekly</a>
-                    <a href="generatepdf/services/month.php" class="btn btn-primary" target="_blank" id="generatePDF">Monthly</a>
-                    <a href="generatepdf/services/year.php" class="btn btn-primary" target="_blank" id="generatePDF">Yearly</a>
-                    <!-- <button type="button" class="btn btn-primary">Week</button>
-                    <button type="button" class="btn btn-primary">Month</button> -->
-                    <!-- <button type="button" class="btn btn-primary">Year</button> -->
-                </div>
             </div>
             <table class="table table-hover text-center table-bordered mt-3">
                 <form action="" method="post">

@@ -71,9 +71,10 @@ img{
 
 
     <div class="row"> 
+        <div class="col-md-6"><h3>Dashboard</h3></div>
+        <div class="col-md-6"><a class="btn btn-primary mb-3" style="float:right" href="admin_service_data.php">See More</a></div>
+
         <div class="col-md-3">
-            <h4>Dashboard</h4>
-            <br>
             <div class="card border-left-primary shadow">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -96,8 +97,7 @@ img{
         </div>
 
         <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
+            <div class="card border-left-primary shadow">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -118,8 +118,7 @@ img{
         </div>
 
         <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
+            <div class="card border-left-primary shadow">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -138,8 +137,7 @@ img{
         </div>
 
         <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
+            <div class="card border-left-primary shadow">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -156,166 +154,12 @@ img{
                 </div>
             </div>
         </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Treatment</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser2 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                            <!-- <i class="fas fa-first-aid fa-2x text-dark"></i> -->
-                            <img src="../assets/treatment.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Surgery</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser6 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                            <!-- <i class="fas fa-money-bill fa-2x text-dark"></i> -->
-                            <img src="../assets/surgery.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Laboratory</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser10 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/laboratory.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Confinement</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser9 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/confinement.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Diagnotics</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser11 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/diagnostic.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Grooming</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser5 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/grooming.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Cesarian Section Surgery</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser4 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/surgery.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Blood Chemistry Test</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser7 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/blood-test.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 
     <br>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="d-flex align-items-center">
                 <label for="timePeriod" class="me-2 mt-2">Select Time Period:</label>
                 <select id="timePeriod" style="width:120px;" class="form-select" onchange="updateChart()">
@@ -327,7 +171,7 @@ img{
             </div>
 
             <div>
-                <canvas style="height:100%" id="myBarChart"></canvas>
+                <canvas style="height:95%" id="myBarChart"></canvas>
             </div>
 
                 <script>
@@ -368,59 +212,70 @@ img{
                     updateChart();
                 </script>
             </div>
-        </div>
+            <div class="col-md-4">
+            <canvas class="mt-3" id="pieChart" width="400" height="400"></canvas>
 
-        <div class="row mt-5"> 
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6"><h4 class="mb-4">New Added Pets</h4></div>
-                    <div class="col-md-6"><a href="admin_pets.php" style="float:right;padding: 10px" class="btn btn-primary">View All Pets</a></div>
+                <script>
+                    // Fetch data from PHP file using Fetch API
+                    document.addEventListener('DOMContentLoaded', function () {
+    // Fetch data from PHP file using Fetch API
+                        fetch('pos/fetch_pie.php')
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log(data); // Check the data in the console
+
+                                // Process the data to extract service names and counts
+                                var labels = data.map(item => item.service_name);
+                                var values = data.map(item => item.count);
+
+                                // Create a pie chart
+                                var ctx = document.getElementById('pieChart').getContext('2d');
+                                var myPieChart = new Chart(ctx, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            data: values,
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.7)',
+                                                'rgba(54, 162, 235, 0.7)',
+                                                'rgba(255, 206, 86, 0.7)',
+                                                'rgba(75, 192, 192, 0.7)',
+                                                'rgba(153, 102, 255, 0.7)',
+                                                'rgba(255, 159, 64, 0.7)',
+                                                'rgba(0, 128, 0, 0.7)',   // Green
+                                                'rgba(255, 0, 0, 0.7)',   // Red
+                                                'rgba(0, 0, 255, 0.7)',   // Blue
+                                                'rgba(255, 140, 0, 0.7)', // Dark Orange
+                                                'rgba(128, 0, 128, 0.7)', // Purple
+                                                'rgba(0, 255, 255, 0.7)', // Cyan
+                                            ],
+                                        }],
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            })
+                            .catch(error => console.error('Error fetching data:', error));
+                    });
+
+                </script>
             </div>
-            <br>
-            <table class="table">
-                <th>Full Name</th>
-                <th>Pet Name</th>
-                <th>Date</th>
-                <th></th>
-
-                <?php if(is_array($recent_user)) {?>
-                    <?php foreach($recent_user as $view) {?>
-                    <tr>
-                        <td><?= $view['fname'];?> <?= $view['lname'];?></td>
-                        <td><?= $view['pet_name'];?></td>
-                        <td> <?= date("F d, Y - l", strtotime($view['created_at'])); ?> </td>
-                        <td><span class="badge bg-danger">New</span></td>
-                        <!-- <td>Dog Hat</td>
-                        <td>Ruby</td>
-                        <td>January 01, 2024</td> -->
-                    </tr>
-                    <?php }?>
-                <?php } ?>
-            </table>    
         </div>
-    </div>
-
-
+       
 <!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
-
-<br>
-<br>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
-<!-- responsive tags for screen compatibility -->
-<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-<!-- custom css --> 
-<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
-<!-- bootstrap css --> 
-<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
-<!-- fontawesome icons -->
-<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
-<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
-                
-<?php 
-    include('dashboard_sidebar_end.php');
-?>
