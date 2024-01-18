@@ -71,245 +71,79 @@ img{
 
 
     <div class="row"> 
-        <div class="col-md-3">
-            <h4>All Services</h4>
-            <br>
-            <div class="card border-left-primary shadow">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Consultation</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalres.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                            <span style="color: #4e73df;"> 
-                                <!-- <i class="fas fa-user-friends fa-2x text-dark "></i> -->
-                                <img src="../assets/consulrtation.png">
-                            </span>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-12">
+            <div class="d-flex align-items-center">
+                <a class="btn btn-primary" href="admin_dashboard.php">Back</a>
+                <h1 class="mb-0 ml-2">All Services</h1>
             </div>
+            
+            <br>
         </div>
+        <div id="serviceCardsContainer"></div>
+        <script>
+    fetch('pos/fetch_pie.php')
+        .then(response => response.json())
+        .then(data => {
+            // Sort the data by count in descending order
+            data.sort((a, b) => b.count - a.count);
 
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Vaccination</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser1?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                            <!-- <i class="fas fa-syringe fa-2x text-dark"></i> -->
-                            <img src="../assets/vaccination.png">
-              
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            // Service images mapping (replace with your actual image URLs)
+            const serviceImages = {
+                'Consultation': '../assets/consulrtation.png',
+                'Vaccination': '../assets/vaccination.png',
+                'Treatment': '../assets/treatment.png',
+                'BloodTest': '../assets/blood-test.png',
+                'Deworming': '../assets/deworming.png',
+                'Diagnostic': '../assets/diagnostic.png',
+                'Grooming': '../assets/grooming.png',
+                'HeartWorm': '../assets/heartworm.png',
+                'Laboratory': '../assets/laboratory.png',
+                'Surgery': '../assets/surgery.png',
+                'Confinement': '../assets/confinement.png',
+                // Add more mappings as needed
+            };
 
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Deworming</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser3 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/deworming.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            // Process the data and create HTML cards
+            const container = document.getElementById('serviceCardsContainer');
+            let row;
 
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Heartworm</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser8 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/heartworm.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Treatment</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser2 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                            <!-- <i class="fas fa-first-aid fa-2x text-dark"></i> -->
-                            <img src="../assets/treatment.png">
+            for (let i = 0; i < data.length; i++) {
+                // Create a new row for every third card
+                if (i % 4 === 0) {
+                    row = document.createElement('div');
+                    row.classList.add('row', 'mb-4');
+                    container.appendChild(row);
+                }
+
+                // Get the image URL based on the service name
+                const imageUrl = serviceImages[data[i].service_name] || '../assets/confinement.png';
+
+                // Create card and add to the current row
+                const card = document.createElement('div');
+                card.classList.add('col-md-3');
+                card.innerHTML = `
+                    <div class="card border-left-primary shadow">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${data[i].service_name}</h5>
+                                    <p class="h5 mb-0 font-weight-bold text-dark">Count: ${data[i].count}</p>
+                                </div>
+                                <div class="col-auto">
+                                    <img src="${imageUrl}" style="width:50px" alt="${data[i].service_name}">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Surgery</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser6 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                            <!-- <i class="fas fa-money-bill fa-2x text-dark"></i> -->
-                            <img src="../assets/surgery.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Laboratory</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser10 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/laboratory.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Confinement</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser9 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/confinement.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Diagnotics</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser11 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/diagnostic.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Grooming</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser5 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/grooming.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Cesarian Section Surgery</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser4 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/surgery.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">  
-            <br>
-            <div class="card border-left-primary shadow card-upper-space">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Blood Chemistry Test</div>
-                                <div class="h5 mb-0 font-weight-bold text-dark"><?= $rescountuser7 ?></div>
-                                <br>
-                                <!-- <a href="admn_table_totalhouse.php"> View Records </a> -->
-                        </div>
-                        <div class="col-auto">
-                        <img src="../assets/blood-test.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                `;
+
+                // Append the card to the current row
+                row.appendChild(card);
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
     </div>
 
 
