@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" href="../../assets/logo.png">
+    <link rel="icon" href="../assets/logo.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,6 +27,13 @@
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Place this at the end of your HTML body -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- SweetAlert 2 JS (including dependencies) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
+    
 </head>
 
 
@@ -43,18 +50,14 @@
     }
     .sidebar .active{
         background: #31206c;
-        opacity: 0.8;
+        /* opacity: 0.8; */
     }
     label{
         font-weight: 500;
         font-size: 18px;
         /* color: #0296be; */
     }
-    /* .card{
-        border: none;
-        box-shadow: 0px 5px 10px rgb(34, 32, 32,0.1),
-        0px 5px 10px rgba(0,0,0,0.1);
-    } */
+
     .btn-primary{
         background:  #0296be !important;
 
@@ -63,27 +66,10 @@
         background: #0296be;
         color: white;
     }
-    thead.sticky {
-        position: sticky;
-        top: 0;
-        z-index: 100;
+    .logo{
+        width:100px;
+        height: 100px;
     }
-    /* .btn-primary:hover{
-        background:  #ffffff !important;
-        color: 0296be;
-    } */
-    /* .fixed-sidebar {
-        position: fixed;
-        height: 100%;
-        z-index: 1031;
-        overflow-y: auto; 
-    }
-
-    .fixed-navbar {
-        position: fixed;
-        width: 100%;
-        z-index: 1030; 
-    } */
 
 </style>
 
@@ -92,116 +78,125 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-    <?php
-$userdetails = $bmis->get_userdata();
-$userRole = $userdetails['role'];
-?>
 
-<ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
-    <div class="card p-2 m-2">
-        <img src="../../assets/logo.png" width="100" height="100">
-        <div class="sidebar-brand-text">
-            Doc Gregg <br>Veterinary Clinic
+        <!-- Sidebar -->
+        <?php
+            $userdetails = $bmis->get_userdata();
+            $userRole = $userdetails['role'];
+        ?>
+
+    <ul class="navbar-nav sidebar sidebar-dark fixed-sidebar shadow accordion" id="accordionSidebar">
+        <div class="card p-2 m-2">
+            <img class="logo" src="../../assets/logo.png">
+            <div class="sidebar-brand-text">
+                Doc Gregg <br>Veterinary Clinic
+            </div>
         </div>
-    </div>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item" id="dashboard">
-        <a class="nav-link text-light" href="../admin_dashboard.php">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Menu
-    </div>
-
-    <?php if ($userRole === 'administrator') : ?>
-        <!-- Admin sees all items -->
-        <li class="nav-item" id="client">
-            <a class="nav-link text-light" href="../services.php">
-                <i class="fas fa-users"></i>
-                <span>Services</span>
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item" id="dashboard">
+            <a class="nav-link text-light" href="../admin_dashboard.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
             </a>
         </li>
 
-        <li class="nav-item" id="inventory">
-            <a class="nav-link text-light" href="../admin_inventory.php">
-                <i class="fas fa-bullhorn"></i>
-                <span>Inventory</span>
-            </a>
-        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
-        <li class="nav-item" id="sales">
-            <a class="nav-link text-light" href="../admin_product_sale.php">
-                <i class="fas fa-bullhorn"></i>
-                <span>Product Sales</span>
-            </a>
-        </li>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Menu
+        </div>
 
-        <li class="nav-item" id="staff">
+        <?php if ($userRole === 'administrator') : ?>
+            <!-- Admin sees all items -->
+            <li class="nav-item" id="client">
+                <a class="nav-link text-light" href="../services.php">
+                    <i class="fas fa-users"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+
+            <li class="nav-item" id="inventory">
+                <a class="nav-link text-light" href="../admin_inventory.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Inventory</span>
+                </a>
+            </li>
+
+            <li class="nav-item" id="sales">
+                <a class="nav-link text-light" href="../admin_product_sale.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Product Sales</span>
+                </a>
+            </li>
+
+            <li class="nav-item" id="staff">
                 <a class="nav-link text-light" href="../admin_staff_list.php">
                     <i class="fas fa-bullhorn"></i>
                     <span>Staff List</span>
                 </a>
             </li>
 
-        <li class="nav-item" id="reports">
-            <a class="nav-link text-light" href="../admin_reports.php">
-                <i class="fas fa-bullhorn"></i>
-                <span>Reports</span>
-            </a>
-        </li>
+            <li class="nav-item" id="reports">
+                <a class="nav-link text-light" href="../admin_reports_logs.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Logs & Reports</span>
+                </a>
+            </li>
+            
+
+           
+
+            <!-- ... Other sidebar elements ... -->
+
+        <?php elseif ($userRole === 'Staff') : ?>
+            <!-- Staff sees specific items -->
+            <li class="nav-item" id="client">
+                <a class="nav-link text-light" href="services.php">
+                    <i class="fas fa-users"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+
+            <li class="nav-item" id="sales">
+                <a class="nav-link text-light" href="admin_product_sale.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Product Sales</span>
+                </a>
+            </li>
+
+        <?php endif; ?>
 
         <!-- ... Other sidebar elements ... -->
 
-    <?php elseif ($userRole === 'Staff') : ?>
-        <!-- Staff sees specific items -->
-        <li class="nav-item" id="client">
-            <a class="nav-link text-light" href="../services.php">
-                <i class="fas fa-users"></i>
-                <span>Services</span>
+        <li class="nav-item" id="help">
+            <a class="nav-link text-light" href="../admin_help.php">
+                <i class="fas fa-file-contract"></i>
+                <span>Help & Support</span>
             </a>
         </li>
 
-        <li class="nav-item" id="sales">
-            <a class="nav-link text-light" href="../admin_product_sale.php">
-                <i class="fas fa-bullhorn"></i>
-                <span>Product Sales</span>
+        <li class="nav-item" id="logout">
+            <a class="nav-link text-light" href="../logout.php">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
             </a>
         </li>
 
-    <?php endif; ?>
+    </ul>
 
-    <!-- ... Other sidebar elements ... -->
 
-    <li class="nav-item" id="help">
-        <a class="nav-link text-light" href="../admin_help.php">
-            <i class="fas fa-file-contract"></i>
-            <span>Help & Support</span>
-        </a>
-    </li>
 
-    <li class="nav-item" id="logout">
-        <a class="nav-link text-light" href="../logout.php">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
-    </li>
 
-</ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper">
 
             <!-- Main Content -->
             <div id="content">
@@ -250,7 +245,7 @@ $userRole = $userdetails['role'];
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
                             <?php endif; ?>
-                            <?php endif; ?>
+                        <?php endif; ?>
                         </li>
 
                         <!-- Nav Item - User Information -->
@@ -266,7 +261,6 @@ $userRole = $userdetails['role'];
                 </nav>
 
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
                 <script>
                     $(document).ready(function () {
                         // Retrieve the active item from localStorage

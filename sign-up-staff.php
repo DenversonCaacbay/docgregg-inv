@@ -90,31 +90,31 @@ $residentbmis->create_staff();
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-floating mt-3">
-                                                    <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="fname" require>
+                                                    <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="fname" required>
                                                     <label for="floatingInputInvalid">First Name</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mt-3">
-                                                    <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="lname" require>
+                                                    <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="lname" required>
                                                     <label for="floatingInputInvalid">Last Name</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-floating mt-3">
-                                                    <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" autocomplete="off" name="email" require>
+                                                    <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" autocomplete="off" name="email" required>
                                                     <label for="floatingInputInvalid">Email</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mt-3">
-                                                    <input type="password" class="form-control" id="myInput" placeholder="" autocomplete="off" name="password" require>
+                                                    <input type="password" class="form-control" id="myInput" placeholder="" autocomplete="off" name="password" required>
                                                     <label for="floatingInputInvalid">Password</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mt-3">
-                                                    <input type="password" class="form-control" id="myInput1" placeholder="" name="confirm_password" require>
+                                                    <input type="password" class="form-control" id="myInput1" placeholder="" name="confirm_password" required>
                                                     <label for="floatingInputInvalid">Confirm Password</label>
                                                 </div>
                                             </div>

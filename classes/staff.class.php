@@ -1,3 +1,9 @@
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- SweetAlert 2 JS (including dependencies) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
 <?php 
 
     require_once('main.class.php');
@@ -284,7 +290,7 @@
         public function view_services_all(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_services ORDER BY created_at DESC");
+            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE deleted_at IS NULL ORDER BY created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -473,9 +479,18 @@
                         $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
                         $stmt->execute([$name, $price, $qty, $target_file, $category, $exp, $bought_date]);
         
-                        $message2 = "Item created!";
-                        echo "<script type='text/javascript'>alert('$message2');</script>";
-                        header("refresh: 0");
+                        echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Created',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                      </script>";
+                // Redirect after showing the alert
+                    header("refresh: 1; url=admin_inventory.php");
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                     }
@@ -484,9 +499,18 @@
                     $stmt = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?)");
                     $stmt->execute([$name, $price, $qty, $category, $exp, $bought_date]);
         
-                    $message2 = "Item created";
-                    echo "<script type='text/javascript'>alert('$message2');</script>";
-                    header("refresh: 0");
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Created',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                      </script>";
+                // Redirect after showing the alert
+                header("refresh: 1; url=admin_inventory.php");
                 }
             }
         }        
@@ -526,9 +550,18 @@
                                 WHERE inv_id = ?");
                             $stmt->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
         
-                            $message2 = "Item Updated";
-                            echo "<script type='text/javascript'>alert('$message2');</script>";
-                            header("refresh: 0");
+                            echo "<script type='text/javascript'>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Item Updated',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                });
+                            </script>";
+                        // Redirect after showing the alert
+                        header("refresh: 1; url=admin_inventory.php");
                         } else {
                             echo "Sorry, there was an error uploading your file.";
                         }
@@ -538,9 +571,18 @@
                             WHERE inv_id = ?");
                         $stmt->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
         
-                        $message2 = "Item Updated";
-                        echo "<script type='text/javascript'>alert('$message2');</script>";
-                        header("refresh: 0");
+                        echo "<script type='text/javascript'>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Item Updated',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            });
+                        </script>";
+                    // Redirect after showing the alert
+                    header("refresh: 1; url=admin_inventory.php");
                     }
                 } else {
                     // Quantity is lower than the previous quantity, show an alert
@@ -558,10 +600,60 @@
                 $stmt = $connection->prepare("UPDATE tbl_inventory set deleted_at = NOW() where inv_id = ?");
                 $stmt->execute([$inv_id]);
                 
-                $message2 = "Item Removed";
                 
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                header('refresh:0');
+                echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item Removed',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
+                      
+                // Refresh the page after displaying the alert
+                header('refresh:1');
+            }
+        }
+
+        // public function delete_services(){
+        //     $serv_id = $_POST['serv_id'];
+    
+        //     if(isset($_POST['delete_services'])) {
+        //         $connection = $this->openConn();
+        //         $stmt = $connection->prepare("UPDATE tbl_services set deleted_at = NOW() WHERE serv_id = ?");
+        //         $stmt->execute([$serv_id]);
+                
+        //         $message2 = "Item Removed";
+                
+        //         echo "<script type='text/javascript'>alert('$message2');</script>";
+        //         header('refresh:0');
+        //     }
+        // }
+
+        public function delete_services() {
+            $serv_id = $_POST['serv_id'];
+        
+            if(isset($_POST['delete_services'])) {
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("UPDATE tbl_services SET deleted_at = NOW() WHERE serv_id = ?");
+                $stmt->execute([$serv_id]);
+        
+                // Use SweetAlert for the confirmation message
+                echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Availed Service Removed',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
+                      
+                // Refresh the page after displaying the alert
+                header('refresh:1');
             }
         }
 
@@ -575,8 +667,19 @@
                 
                 $message2 = "Staff Removed";
                 
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                header('refresh:0');
+                echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Staff Removed',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
+                      
+                // Refresh the page after displaying the alert
+                header('refresh:1');
             }
         }
         
@@ -1291,7 +1394,6 @@
 
             return $view;
         }
-
         public function create_service(){
             if (isset($_POST['create_service'])) {
                 $customer_name = ucwords(strtolower($_POST['customer_name']));
@@ -1306,16 +1408,51 @@
                 // Remove the trailing comma and space
                 $service_get = rtrim($service_get, ', ');
         
-                // echo $service_get;
                 $connection = $this->openConn();
-                $stmt = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, staff_name, created_at) VALUES (?, ?, ?,NOW())");
+                $stmt = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, staff_name, created_at) VALUES (?, ?, ?, NOW())");
                 $stmt->execute([$customer_name, $service_get, $staff_name]);
         
-                $message2 = "Service created";
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                header("refresh: 0");
+                // Use SweetAlert for the alert
+                echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Service Created',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                      </script>";
+                // Redirect after showing the alert
+                header("refresh: 1; url=services.php");
             }
-        }        
+        }
+        
+        //Using Alert
+        // public function create_service(){
+        //     if (isset($_POST['create_service'])) {
+        //         $customer_name = ucwords(strtolower($_POST['customer_name']));
+        //         $staff_name = $_POST['staff_name'];
+        //         $services_list = $_POST['services_list'];
+        //         $service_get = '';
+        
+        //         foreach($services_list as $item){
+        //             $service_get .= $item . ', ';
+        //         }
+        
+        //         // Remove the trailing comma and space
+        //         $service_get = rtrim($service_get, ', ');
+        
+        //         // echo $service_get;
+        //         $connection = $this->openConn();
+        //         $stmt = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, staff_name, created_at) VALUES (?, ?, ?,NOW())");
+        //         $stmt->execute([$customer_name, $service_get, $staff_name]);
+        
+        //         $message2 = "Service created";
+        //         echo "<script type='text/javascript'>alert('$message2');</script>";
+        //         header("refresh: 0");
+        //     }
+        // }        
 
 
         //===================================== SCOPE CHANGED FEATURES =======================================

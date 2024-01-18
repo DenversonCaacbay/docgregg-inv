@@ -1,10 +1,95 @@
+<!-- SweetAlert 2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+
+<!-- SweetAlert 2 JS (including dependencies) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+<style>
+    .your-custom-font-class {
+        font-family: 'Nunito', sans-serif;
+    }
+</style>
 <?php
-// Check if email is not set in the GET parameters
-if (!isset($_GET['email'])) {
-    // Redirect to user_registration.php
-    header("Location: index.php");
-    exit(); // Ensure that the script stops executing after the redirection
+
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dgvc";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+if (isset($_POST['verify'])) {
+    $email = $_POST['email'];
+    $verification_code = $_POST['verification_code'];
+
+    // Check if the verification code matches
+    $query = "SELECT * FROM tbl_admin WHERE email='$email' AND verification_code='$verification_code' AND verified=0";
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        // If a matching record is found, update the user as verified
+        $updateQuery = "UPDATE tbl_admin SET verified=1 WHERE email='$email'";
+        if ($conn->query($updateQuery) === TRUE) {
+            // Redirect to a login page or wherever appropriate
+            echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Account Verified. You can now login',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            customClass: {
+                                title: 'your-custom-font-class'
+                            }
+                        });
+                    });
+                  </script>";
+            // Redirect after showing the alert
+            header("refresh: 1; url=index.php");
+            exit();
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
+    } else {
+        echo "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Incorrect Verification Code',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    title: 'your-custom-font-class'
+                }
+            }).then(function() {
+                // Redirect after showing the alert
+                window.location.href = 'staff_verification.php?email=$email';
+            });
+        });
+      </script>";
+
+
+        
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+<?php
+      if (!isset($_GET['email'])) {
+        // If email is not set in GET parameters, redirect to staff_verification.php
+        header("Location: index.php");
+        exit(); // Ensure that the script stops executing after the redirection
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,10 +126,10 @@ if (!isset($_GET['email'])) {
 </nav>
 <div class="container mt-5">
     <div class="card p-2">
-        <form method="post" class="p-2" action="staff_verify_code.php">
+        <form method="post" class="p-2" action="">
                 <h5 class="text-header">Enter Verification code sent to your Email</h5>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="verification_code" require>
+                <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="verification_code" value="" required>
                     <label for="floatingInputInvalid">Verification Code: </label>
                 </div>
                 <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>"><br>

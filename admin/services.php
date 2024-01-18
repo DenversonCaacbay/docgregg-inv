@@ -5,16 +5,16 @@
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     
-    $staffbmis->delete_invetory();
+    $staffbmis->delete_services();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $recordsPerPage = 5; // set the number of records to display per page
     $view = $staffbmis->view_services_all($page, $recordsPerPage);
-    $totalRecords = $staffbmis->count_inventory(); // get the total number of records
+    // $totalRecords = $staffbmis->count_inventory(); // get the total number of records
 
 // Calculate the total number of pages
     $totalPages = ceil($totalRecords / $recordsPerPage);
-    
+
 
 ?>
 
@@ -101,8 +101,8 @@
                                         <td>    
                                             <form action="" method="post">
                                                 <!-- <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a> -->
-                                                <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
-                                                <button class="btn btn-primary" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Archive </button>
+                                                <input type="hidden" name="serv_id" value="<?= $view['serv_id'];?>">
+                                                <button class="btn btn-primary" type="submit" name="delete_services"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to Archive this data?')"> Archive </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -207,21 +207,6 @@
         }
 
         // Handle form submission to filter results
-        $("form").submit(function(e) {
-            e.preventDefault();
-            var fromDate = new Date($("#fromDate").val());
-            var toDate = new Date($("#toDate").val());
-
-            // Iterate through each row and hide/show based on the date range
-            $("tbody tr").each(function() {
-                var rowDate = new Date($(this).find("td:last-child").text());
-                if (rowDate >= fromDate && rowDate <= toDate) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
     });
 </script>
 

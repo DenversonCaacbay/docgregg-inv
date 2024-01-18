@@ -18,6 +18,11 @@
     });
     });
 </script> -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- SweetAlert 2 JS (including dependencies) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
 <script>
     $(document).ready(function(){
         $("#myInput").on("keyup", function() {
@@ -54,7 +59,18 @@ if(isset($_POST["add_to_cart"]))
     $hiddenStocks = isset($_POST["hidden_stocks"]) ? intval($_POST["hidden_stocks"]) : 0;
 
     if ($quantity <= 0) {
-        echo "<script>alert('Please enter a quantity greater than 0.');</script>";
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Please enter a quantity greater than 0',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        </script>";
+        // Redirect after showing the alert
+        header("refresh: 1; url=admin_product_sale.php");
     } elseif ($quantity > $hiddenStocks) {
         echo "<script>alert('The quantity entered is higher than the available stock.');</script>";
     } else {
@@ -84,7 +100,7 @@ if(isset($_POST["add_to_cart"]))
             }
             else
             {
-                echo '<script>alert("Item Already Added")</script>';
+                
                 echo '<script>window.location="admin_product_sale.php"</script>';
             }
         }
@@ -251,7 +267,7 @@ if(isset($_GET["action"]))
                             <td colspan="2" align="right"><input type="number" step="any" name="processChange" id="resultpayment" class="form-control" readonly></td>
                         </tr>
                         <tr>
-                            <td colspan="3" align="right">Staff Name</td>
+                            <td colspan="3" align="right" hidden>Staff Name</td>
                             <td colspan="2" align="right">
                                 <input type="hidden" step="any" name="staff_name" id="staff" value="<?= $userdetails['firstname']?> <?= $userdetails['surname']?>" class="form-control" readonly>
                             </td>

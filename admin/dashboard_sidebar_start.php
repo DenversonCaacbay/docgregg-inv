@@ -27,6 +27,12 @@
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Place this at the end of your HTML body -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- SweetAlert 2 JS (including dependencies) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
     
 </head>
 
@@ -44,7 +50,7 @@
     }
     .sidebar .active{
         background: #31206c;
-        opacity: 0.8;
+        /* opacity: 0.8; */
     }
     label{
         font-weight: 500;
@@ -137,7 +143,7 @@
             </li>
 
             <li class="nav-item" id="reports">
-                <a class="nav-link text-light" href="admin_reports.php">
+                <a class="nav-link text-light" href="admin_reports_logs.php">
                     <i class="fas fa-bullhorn"></i>
                     <span>Logs & Reports</span>
                 </a>
@@ -246,7 +252,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     
-                                        <span class="mr-2 d-none d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['firstname']?> <?= $userdetails['surname']?></span>
+                                        <span class="mr-2 d-none d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></span>
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>

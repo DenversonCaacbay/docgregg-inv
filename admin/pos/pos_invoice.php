@@ -1,3 +1,15 @@
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- SweetAlert 2 JS (including dependencies) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+<style>
+    .your-custom-font-class {
+        font-family: 'Nunito', sans-serif;
+    }
+</style>
+
 <?php 
     $pdo = require 'connection.php';
     session_start();
@@ -82,10 +94,21 @@
         $statement->execute();
 
         unset($_SESSION["shopping_cart"]);
-        echo "<script>
-        alert('Successfull! Create new transaction');
-        window.location.href='../admin_product_sale.php';
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfull, Create New Transaction',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass: {
+                        title: 'your-custom-font-class'
+                    }
+                });
+            });
         </script>";
+        // Redirect after showing the alert
+        header("refresh: 1; url=../admin_product_sale.php");
         exit();
     }
 

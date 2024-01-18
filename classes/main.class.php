@@ -1,4 +1,18 @@
+<!-- SweetAlert 2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+
+<!-- SweetAlert 2 JS (including dependencies) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+<style>
+    .your-custom-font-class {
+        font-family: 'Nunito', sans-serif;
+    }
+</style>
+
 <?php 
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -114,18 +128,45 @@ class BMISClass {
                             if (password_verify($password, $user['password'])) 
                             {
                                 $this->set_userdata($user);
-                                header('Location: admin/admin_dashboard.php');
+                                echo "<script type='text/javascript'>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Login Successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        customClass: {
+                                            title: 'your-custom-font-class'
+                                        }
+                                    });
+                                });
+                            </script>";
+                        // Redirect after showing the alert
+                            header("refresh: 1; url=admin/admin_dashboard.php");
                                 exit();
                             } 
                             else 
                             {
-                                echo "<script type='text/javascript'>alert('Invalid Password');</script>";
+                                echo "<script type='text/javascript'>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Invalid Credential',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                });
+                            </script>";
+                        // Redirect after showing the alert
+                            header("refresh: 1; url=index.php");
                             }
                         } 
                         else 
                         {
                             // Account is not verified, send verification code and redirect to verify_code.php
-                            $verificationCode = bin2hex(random_bytes(16));
+                            // $verificationCode = bin2hex(random_bytes(16));
+                            $verificationCode = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+
                             $this->sendVerificationEmail($email, $verificationCode);
 
                             // Update verification_code in tbl_user
@@ -140,7 +181,18 @@ class BMISClass {
                     else 
                     {
                         // Email not found, alert and prompt to register
-                        echo "<script type='text/javascript'>alert('No Account Found. Please Register First.');</script>";
+                        echo "<script type='text/javascript'>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'No Account Found, Please Register',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            });
+                        </script>";
+                    // Redirect after showing the alert
+                        header("refresh: 1; url=index.php");
                     }
                 }
             } 
@@ -229,28 +281,9 @@ class BMISClass {
         //eto si userdata yung mag s set ng name mo tsaka role/access habang ikaw ay nag b browse at gumagamit ng store management
         $_SESSION['userdata'] = array(
             "id_admin" => $array['id_admin'],
-            "id_resident" => $array['id_resident'],
-            "id_user" => $array['id_user'],
-            "emailadd" => $array['email'],
-            "password" => $array['password'],
-            //"fullname" => $array['lname']. " ".$array['fname']. " ".$array['mi'],
-            "surname" => $array['lname'],
-            "firstname" => $array['fname'],
-            "mname" => $array['mi'],
-            "age" => $array['age'],
-            "sex" => $array['sex'],
-            "status" => $array['status'],
-            "address" => $array['address'],
-            "contact" => $array['contact'],
-            "bdate" => $array['bdate'],
-            "bplace" => $array['bplace'],
-            "nationality" => $array['nationality'],
-            "family_role" => $array['family_role'],
+            "fname" => $array['fname'],
+            "lname" => $array['lname'],
             "role" => $array['role'],
-            "houseno" => $array['houseno'],
-            "street" => $array['street'],
-            "brgy" => $array['brgy'],
-            "municipal" => $array['municipal']
         );
         return $_SESSION['userdata'];
     }

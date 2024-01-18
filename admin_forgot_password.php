@@ -1,12 +1,23 @@
+<!-- SweetAlert 2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
 
+<!-- SweetAlert 2 JS (including dependencies) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+<style>
+    .your-custom-font-class {
+        font-family: 'Nunito', sans-serif;
+    }
+</style>
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Include PHPMailer autoloader
-require '../classes/PHPMailer/src/Exception.php';
-require '../classes/PHPMailer/src/PHPMailer.php';
-require '../classes/PHPMailer/src/SMTP.php';
+require 'classes/PHPMailer/src/Exception.php';
+require 'classes/PHPMailer/src/PHPMailer.php';
+require 'classes/PHPMailer/src/SMTP.php';
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Your database connection code here (replace with your actual credentials)
     $servername = "localhost";
-    $username = "u579189311_dgvetclinic";
-    $password = "Intelliware556";
-    $dbname = "u579189311_dgvc";
+    $username = "root";
+    $password = "";
+    $dbname = "dgvc";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -33,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result->num_rows > 0) {
         // User exists, generate verification code and send email
-        $verificationCode = bin2hex(random_bytes(16));
+        $verificationCode = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
         sendVerificationEmail($email, $verificationCode);
 
         // Update the verification_code column in the database
@@ -47,7 +58,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         // User does not exist, redirect to login page
-        echo "<script type='text/javascript'>alert('No Account Found. Please Register First.'); window.location.href='index.php';</script>";
+        echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'No Account Found. Please Register First.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            customClass: {
+                                title: 'your-custom-font-class'
+                            }
+                        });
+                    });
+                  </script>";
+            // Redirect after showing the alert
+            header("refresh: 1; url=index.php");
         // header("Location: index.php");
         exit();
     }
@@ -99,7 +124,7 @@ function sendVerificationEmail($email, $verificationCode) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email</title>
-    <link href="../css/user.css" rel="stylesheet" type="text/css"> 
+    <link href="css/user.css" rel="stylesheet" type="text/css"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>

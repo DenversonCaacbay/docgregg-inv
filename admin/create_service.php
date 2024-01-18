@@ -16,13 +16,13 @@
     $staffbmis->create_pet($id_user);
     // echo $id_user;
     // $resident = $residentbmis->get_single_bspermit($id_resident);
-    if ($userdetails['role'] !== 'administrator') {
-        // User is not an admin, display an alert
-        echo '<script>alert("You are not authorized to access this page as admin.");</script>';
-        // Redirect or take appropriate action if needed
-        header('Location: admin_dashboard.php');
-        exit();
-    }
+    // if ($userdetails['role'] !== 'administrator') {
+    //     // User is not an admin, display an alert
+    //     echo '<script>alert("You are not authorized to access this page as admin.");</script>';
+    //     // Redirect or take appropriate action if needed
+    //     header('Location: admin_dashboard.php');
+    //     exit();
+    // }
 ?>
 
 <?php 
@@ -62,7 +62,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <form method="post" enctype='multipart/form-data' class="mt-1 p-2">
+            <form method="post" enctype='multipart/form-data' class="mt-1 p-2" onsubmit="return validateForm()">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="container">
@@ -158,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service"/>
+                                <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" disabled />
                             </div>
                             
                             
@@ -170,136 +170,29 @@
         </div>
     </div> 
 </div>
+
 <script>
-    $(document).ready(function() {
-        var breedContainer = $('#breedContainer');
-        var otherBreedInput = $('#otherBreedInput');
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
+        var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
 
-        $('#pet_type').change(function() {
-            var selectedPetType = $(this).val();
+        // Initial check and set the button state
+        checkAndUpdateButtonState();
 
-            // Clear previous options
-            $('#pet_breed').empty();
-
-            if (selectedPetType === 'Dog') {
-                // Show the breed select and populate it with dog breeds
-                breedContainer.show();
-                $('#pet_breed').append('<option value="Labrador">Labrador Retriever</option>');
-                $('#pet_breed').append('<option value="Golden_Retriever">Golden Retriever</option>');
-                $('#pet_breed').append('<option value="German_Shepherd">German Shepherd</option>');
-                $('#pet_breed').append('<option value="Bulldog">Bulldog</option>');
-                $('#pet_breed').append('<option value="Beagle">Beagle</option>');
-                $('#pet_breed').append('<option value="Poodle">Poodle</option>');
-                $('#pet_breed').append('<option value="Rottweiler">Rottweiler</option>');
-                $('#pet_breed').append('<option value="Husky">Siberian Husky</option>');
-                $('#pet_breed').append('<option value="Dachshund">Dachshund</option>');
-                $('#pet_breed').append('<option value="Azkal">Azkal</option>');
-                $('#pet_breed').append('<option value="Other">Other</option>');
-            } else if (selectedPetType === 'Cat') {
-                // Show the breed select and populate it with cat breeds
-                breedContainer.show();
-                $('#pet_breed').append('<option value="Siamese">Siamese</option>');
-                $('#pet_breed').append('<option value="Persian">Persian</option>');
-                $('#pet_breed').append('<option value="Maine_Coon">Maine Coon</option>');
-                $('#pet_breed').append('<option value="Sphynx">Sphynx</option>');
-                $('#pet_breed').append('<option value="Ragdoll">Ragdoll</option>');
-                $('#pet_breed').append('<option value="British_Shorthair">British Shorthair</option>');
-                $('#pet_breed').append('<option value="Bengal">Bengal</option>');
-                $('#pet_breed').append('<option value="Abyssinian">Abyssinian</option>');
-                $('#pet_breed').append('<option value="Scottish_Fold">Scottish Fold</option>');
-                $('#pet_breed').append('<option value="Other">Other</option>');
-            } else {
-                // Hide the breed select if neither Dog nor Cat is selected
-                breedContainer.hide();
-            }
+        // Add event listener to each checkbox to update the button state
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', checkAndUpdateButtonState);
         });
 
-        $('#pet_breed').change(function() {
-            var selectedBreed = $(this).val();
-
-            // Show additional input if "Other" is selected
-            if (selectedBreed === 'Other') {
-                otherBreedInput.show();
-            } else {
-                otherBreedInput.hide();
-            }
-        });
+        // Function to check the status of checkboxes and update the button state
+        function checkAndUpdateButtonState() {
+            var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            submitButton.disabled = !atLeastOneChecked;
+        }
     });
 </script>
 
-<!-- <script>
-    $(document).ready(function() {
-        $('#pet_type').change(function() {
-            var selectedPetType = $(this).val();
-            var breedContainer = $('#breedContainer');
-            // Clear previous options
-            $('#pet_breed').empty();
-            if (selectedPetType === 'Dog') {
-                // Show the breed select and populate it with dog breeds
-                breedContainer.show();
-                $('#pet_breed').append('<option value="Labrador">Labrador Retriever</option>');
-                $('#pet_breed').append('<option value="Golden_Retriever">Golden Retriever</option>');
-                $('#pet_breed').append('<option value="German_Shepherd">German Shepherd</option>');
-                $('#pet_breed').append('<option value="Bulldog">Bulldog</option>');
-                $('#pet_breed').append('<option value="Beagle">Beagle</option>');
-                $('#pet_breed').append('<option value="Poodle">Poodle</option>');
-                $('#pet_breed').append('<option value="Rottweiler">Rottweiler</option>');
-                $('#pet_breed').append('<option value="Husky">Siberian Husky</option>');
-                $('#pet_breed').append('<option value="Dachshund">Dachshund</option>');
-                $('#pet_breed').append('<option value="Azkal">Azkal</option>');
-                $('#pet_breed').append('<option value="Other">Other...</option>');
-                // Add more dog breeds as needed
-            } else if (selectedPetType === 'Cat') {
-                // Show the breed select and populate it with cat breeds
-                breedContainer.show();
-                $('#pet_breed').append('<option value="Siamese">Siamese</option>');
-                $('#pet_breed').append('<option value="Persian">Persian</option>');
-                $('#pet_breed').append('<option value="Maine_Coon">Maine Coon</option>');
-                $('#pet_breed').append('<option value="Sphynx">Sphynx</option>');
-                $('#pet_breed').append('<option value="Ragdoll">Ragdoll</option>');
-                $('#pet_breed').append('<option value="British_Shorthair">British Shorthair</option>');
-                $('#pet_breed').append('<option value="Bengal">Bengal</option>');
-                $('#pet_breed').append('<option value="Abyssinian">Abyssinian</option>');
-                $('#pet_breed').append('<option value="Scottish_Fold">Scottish Fold</option>');
-                $('#pet_breed').append('<option value="Other">Other</option>');
-                // Add more cat breeds as needed
-            } else {
-                // Hide the breed select if neither Dog nor Cat is selected
-                breedContainer.show();
-            }
-        });
-    });
-</script> -->
-<script>
-    
-function calculateAge() {
-    // Get the entered birthdate from the input field
-    var birthdateInput = document.getElementById("birthdate");
-    var birthdate = new Date(birthdateInput.value);
 
-    // Get the current date
-    var currentDate = new Date();
-
-    // Calculate the age in years
-    var ageInMilliseconds = currentDate - birthdate;
-    var ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
-
-    // Display the calculated age in the second input field
-    var ageInput = document.getElementById("age");
-    ageInput.value = ageInYears.toFixed(2) + " years";
-}
-</scrip>
 <!-- End of Main Content -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
-<!-- responsive tags for screen compatibility -->
-<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-<!-- custom css --> 
-<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
-<!-- bootstrap css --> 
-<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
-<!-- fontawesome icons -->
-<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
-<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
 

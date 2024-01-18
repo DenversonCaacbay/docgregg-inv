@@ -166,7 +166,7 @@ use PHPMailer\PHPMailer\Exception;
 
                 // proceed to create
                 $connection = $this->openConn();
-                $verification_code = bin2hex(random_bytes(16));
+                $verification_code = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
                 
                 try {
                     $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `password`, `lname`, `fname`, `verification_code`, `role`) VALUES (?, ?, ?, ?, ?, ?)");

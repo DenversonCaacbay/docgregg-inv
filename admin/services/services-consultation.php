@@ -5,7 +5,7 @@
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
     
-    $staffbmis->delete_invetory();
+    $staffbmis->delete_services();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $recordsPerPage = 5; // set the number of records to display per page
@@ -49,7 +49,7 @@
     
     <div class="row">
         <div class="col-md-6"><h1 class="">Services</h1></div>
-        <div class="col-md-6"><a href="create_service.php" style="float:right;padding: 10px" class="btn btn-primary">Add Data</a></div>
+        <div class="col-md-6"><a href="../create_service.php" style="float:right;padding: 10px" class="btn btn-primary">Add Data</a></div>
     </div>
 
     <div class="row"> 
@@ -89,7 +89,7 @@
                             <th> Customer Name </th>
                             <th> Availed Service </th>
                             <th> Date Availed </th>
-                            <th> Actions </th>
+                         
                         </tr>
                     </thead>
 
@@ -101,13 +101,7 @@
                                     <td><?= strlen($view['customer_name']) > 20 ? substr($view['customer_name'], 0, 20) . '...' : $view['customer_name']; ?></td>
                                     <td><?= getServiceConsultation($view['service_availed']); ?></td>
                                     <td> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
-                                    <td>    
-                                        <form action="" method="post">
-                                            <!-- <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a> -->
-                                            <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
-                                            <button class="btn btn-primary" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to Archive this data?')"> Archive </button>
-                                        </form>
-                                    </td>
+                                    
                                 </tr>
                             <?php }?>
                         <?php } ?>
