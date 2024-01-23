@@ -80,72 +80,110 @@ img{
     
 
     <script>
-    // Fetch data from the PHP script
-    fetch('pos/fetch_pie.php')
-        .then(response => response.json())
-        .then(data => {
-            // Sort the data by count in descending order
-            data.sort((a, b) => b.count - a.count);
+    // Function to create cards based on the data
+    const createCards = (data) => {
+        const container = document.getElementById('serviceCardsContainer');
 
-            // Take only the first 4 items
-            const topFourData = data.slice(0, 4);
+        // Service images mapping (replace with your actual image URLs)
+        const serviceImages = {
+            'Consultation': '../assets/consulrtation.png',
+            'Vaccination': '../assets/vaccination.png',
+            'Treatment': '../assets/treatment.png',
+            'Blood Chemistry Test': '../assets/blood-test.png',
+            'Deworming': '../assets/deworming.png',
+            'Diagnostic': '../assets/diagnostic.png',
+            'Grooming': '../assets/grooming.png',
+            'HeartWorm': '../assets/heartworm.png',
+            'Laboratory': '../assets/laboratory.png',
+            'Surgery': '../assets/surgery.png',
+            'Confinement': '../assets/confinement.png',
+            'Cesarian Section Surgery': '../assets/confinement.png',
+            // Add more mappings as needed
+        };
 
-            // Service images mapping (replace with your actual image URLs)
-            const serviceImages = {
-                'Consultation': '../assets/consulrtation.png',
-                'Vaccination': '../assets/vaccination.png',
-                'Treatment': '../assets/treatment.png',
-                'BloodTest': '../assets/blood-test.png',
-                'Deworming': '../assets/deworming.png',
-                'Diagnostic': '../assets/diagnostic.png',
-                'Grooming': '../assets/grooming.png',
-                'HeartWorm': '../assets/heartworm.png',
-                'Laboratory': '../assets/laboratory.png',
-                'Surgery': '../assets/surgery.png',
-                'Confinement': '../assets/confinement.png',
-                // Add more mappings as needed
-            };
+        // Sort the data based on count in descending order
+        data.sort((a, b) => b.count - a.count);
 
-            // Process the data and create HTML cards
-            const container = document.getElementById('serviceCardsContainer');
+        // Create default cards with placeholder data and images for each service
+        for (let i = 0; i < Math.min(4, Object.keys(serviceImages).length); i++) {
+            if (i % 4 === 0) {
+                // Create a new row for every four cards
+                const row = document.createElement('div');
+                row.classList.add('row');
+                container.appendChild(row);
+            }
 
-            for (let i = 0; i < topFourData.length; i++) {
-                if (i % 4 === 0) {
-                    // Create a new row for every three cards
-                    const row = document.createElement('div');
-                    row.classList.add('row');
-                    container.appendChild(row);
-                }
+            const currentService = Object.keys(serviceImages)[i];
 
-                // Get the image URL based on the service name
-                const imageUrl = serviceImages[topFourData[i].service_name] || '../assets/confinement.png';
+            // Get the image URL based on the service name
+            const imageUrl = serviceImages[currentService];
 
-                // Create card and add to the current row
-                const card = document.createElement('div');
-                card.classList.add('col-md-3');
-                card.innerHTML = `
-                    <div class="card border-left-primary shadow">
+            // Create card and add to the current row
+            const card = document.createElement('div');
+            card.classList.add('col-md-3');
+            card.innerHTML = `
+                <div class="card border-left-primary shadow mt-2">
+                    
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
+                                <p class="h5 mb-0 font-weight-bold text-dark">Count: 0</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="${imageUrl}" style="width:50px" alt="${currentService}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Append the card to the current row
+            container.lastChild.appendChild(card);
+        }
+
+        // If data is available, replace the placeholder cards with fetched data
+        if (data && data.length > 0) {
+            for (let i = 0; i < Math.min(4, data.length); i++) {
+                const currentData = data[i];
+                const currentService = currentData.service_name;
+
+                // Get the corresponding card
+                const currentCard = container.children[Math.floor(i / 4)].children[i % 4];
+
+                // Update the card with fetched data
+                currentCard.innerHTML = `
+                    <div class="card border-left-primary shadow mt-2">
                         
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${topFourData[i].service_name}</h5>
-                                    <p class="h5 mb-0 font-weight-bold text-dark">Count: ${topFourData[i].count}</p>
+                                    <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
+                                    <p class="h5 mb-0 font-weight-bold text-dark">Count: ${currentData.count}</p>
                                 </div>
                                 <div class="col-auto">
-                                    <img src="${imageUrl}" style="width:50px" alt="${topFourData[i].service_name}">
+                                    <img src="${serviceImages[currentService]}" style="width:50px" alt="${currentService}">
                                 </div>
                             </div>
                         </div>
                     </div>
                 `;
-
-                // Append the card to the current row
-                container.lastChild.appendChild(card);
             }
-        })
+        }
+    };
+
+    // Fetch data from the PHP script and create cards
+    fetch('pos/fetch_pie.php')
+        .then(response => response.json())
+        .then(data => createCards(data))
         .catch(error => console.error('Error fetching data:', error));
 </script>
+
+
+
+
+
+
 
 
 

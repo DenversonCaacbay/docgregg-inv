@@ -3,7 +3,7 @@
    require('../classes/staff.class.php');
    $userdetails = $bmis->get_userdata();
    $bmis->validate_admin();
-    $staffbmis->update_inventory();
+    $staffbmis->update_inventory_low();
     $item = $staffbmis->view_single_inventory();
     if ($userdetails['role'] !== 'administrator') {
         // User is not an admin, display an alert
@@ -98,7 +98,7 @@
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
                             
-                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update Quantity </button>
+                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Add Stocks </button>
 
                         </div>
                     </div>

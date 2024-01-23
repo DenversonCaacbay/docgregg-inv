@@ -76,7 +76,7 @@
                     </thead>
 
                     <tbody>
-                        <?php if(is_array($view)) {?>
+                        <?php if(is_array($view) && count($view) > 0) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
                                 <td>
@@ -104,11 +104,19 @@
                                         </form>
                                     </td>
                                 </tr>
-                            <?php }?>
-                        <?php } ?>
+                                <?php }?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td colspan="9">No Data Found</td>
+                                </tr>
+                            <?php } ?>
+                        
                     </tbody>
                 </form>
             </table>
+            <div id="noDataFound" style="display: none;text-align:center">
+                    <p>No Data Found</p>
+                </div>
         </div>
  
             <!-- Pagination links -->

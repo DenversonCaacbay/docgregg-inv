@@ -67,13 +67,15 @@
     <div class="row mt-5">
         <div class="col-md-6">
             <div class="card text-center p-5">
-                <h4>Reports</h4>
+                <i class="fas fa-file-alt fa-5x text-primary"></i>
+                <h4 class="mt-3">Reports</h4>
                 <a class="btn btn-primary" href="reports/report_stock.php">Visit</a>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card text-center p-5">
-                <h4>Logs</h4>
+                <i class="fas fa-cogs fa-5x text-primary"></i>
+                <h4 class="mt-3">Logs</h4>
                 <a class="btn btn-primary" href="logs/logs_staff.php">Visit</a>
             </div>
         </div>

@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="form-group" hidden>
                                     <label> Staff Name: </label>
-                                    <input type="text" class="form-control" name="staff_name" value="<?= $userdetails['firstname']?> <?= $userdetails['surname']?>">
+                                    <input type="text" class="form-control" name="staff_name" value="<?= $userdetails['fname']?> <?= $userdetails['lname']?>">
                                 </div>
                             </div>
                             <div class="mt-3">

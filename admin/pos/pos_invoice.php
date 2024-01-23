@@ -98,7 +98,7 @@
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Successfull, Create New Transaction',
+                    title: 'Successful, Create New Transaction',
                     showConfirmButton: false,
                     timer: 1500,
                     customClass: {

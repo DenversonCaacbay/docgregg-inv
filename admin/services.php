@@ -85,32 +85,41 @@
                         </thead>
 
                         <tbody>
-                            <?php if(is_array($view)) {?>
-                                <?php foreach($view as $view) {?>
+                            <?php if (is_array($view) && count($view) > 0) { ?>
+                                <?php foreach ($view as $item) { ?>
                                     <tr>
-
-                                        <td data-fullname="<?= htmlspecialchars($view['customer_name']); ?>">
-                                            <?= strlen($view['customer_name']) > 20 ? substr($view['customer_name'], 0, 20) . '...' : $view['customer_name']; ?>
+                                        <td data-fullname="<?= htmlspecialchars($item['customer_name']); ?>">
+                                            <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
                                         </td>
-                                        <td data-service="<?= htmlspecialchars($view['service_availed']); ?>"> 
-                                            <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($view), ENT_QUOTES, 'UTF-8'); ?>">
-                                                <?= strlen($view['service_availed']) > 30 ? substr($view['service_availed'], 0, 30) . '...' : $view['service_availed']; ?>
+                                        <td data-service="<?= htmlspecialchars($item['service_availed']); ?>">
+                                            <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8'); ?>">
+                                                <?= strlen($item['service_availed']) > 30 ? substr($item['service_availed'], 0, 30) . '...' : $item['service_availed']; ?>
                                             </a>
                                         </td>
-                                        <td> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
-                                        <td>    
+                                        <td> <?= date("F d, Y", strtotime($item['created_at'])); ?> </td>
+                                        <td>
                                             <form action="" method="post">
-                                                <!-- <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a> -->
-                                                <input type="hidden" name="serv_id" value="<?= $view['serv_id'];?>">
-                                                <button class="btn btn-primary" type="submit" name="delete_services"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to Archive this data?')"> Archive </button>
+                                                <input type="hidden" name="serv_id" value="<?= $item['serv_id']; ?>">
+                                                <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
+                                                <input type="hidden" name="service_availed" value="<?= $item['service_availed']; ?>">
+                                                <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
+                                                <button class="btn btn-primary" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;" onclick="return confirm('Are you sure you want to Archive this data?')"> Remove </button>
                                             </form>
                                         </td>
                                     </tr>
-                                <?php }?>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td colspan="4">No Data Found</td>
+                                </tr>
                             <?php } ?>
                         </tbody>
+
                     </form>
                 </table>
+                <div id="noDataFound" style="display: none;text-align:center">
+                    <p>No Data Found</p>
+                </div>
             </div>
         </div>
     </div>
@@ -135,41 +144,6 @@
     </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    // Get the input field and table
-    var input = document.getElementById('searchInput');
-    var table = document.querySelector('.table');
-
-    // Add an event listener to the input field
-    input.addEventListener('input', function () {
-        // Get the search query and convert it to lowercase
-        var query = input.value.toLowerCase();
-
-        // Get all table rows in the tbody
-        var rows = table.querySelectorAll('tbody tr');
-
-        // Loop through each row and hide/show based on the search query
-        rows.forEach(function (row) {
-            var customerNameCell = row.querySelector('td:nth-child(1)');
-            var serviceCell = row.querySelector('td:nth-child(2)');
-            var customer_name = customerNameCell.innerText.toLowerCase();
-            var fullCustomerName = customerNameCell.getAttribute('data-fullname').toLowerCase();
-            var fullService = serviceCell.getAttribute('data-service').toLowerCase();
-            var service_availed = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-
-            // Check if the query matches the shortened or full customer name, or service availed
-            if (customer_name.includes(query) || fullCustomerName.includes(query) || service_availed.includes(query) || fullService.includes(query)) {
-                row.style.display = ''; // Show the row
-            } else {
-                row.style.display = 'none'; // Hide the row
-            }
-        });
-    });
-});
-
-</script>
 <script>
     $(document).ready(function () {
         $('#categorySelect').on('change', function () {

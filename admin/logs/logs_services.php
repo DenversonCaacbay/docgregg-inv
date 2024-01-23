@@ -5,7 +5,7 @@
     require('../../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
     $bmis->validate_admin();
-    $view = $staffbmis->view_inventory_logs();
+    $view = $staffbmis->view_services_logs();
     // $bmis->validate_admin();
     // $bmis->delete_bspermit();
     // $view = $bmis->view_bspermit();
@@ -50,7 +50,7 @@
     padding: 0 5px;
     color: #6c757d; /* Set the color of the divider */
   }
-  thead.sticky {
+    thead.sticky {
         position: sticky;
         top: 0;
         z-index: 100;
@@ -67,7 +67,7 @@
         <div class="col-md-9">
             <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
-                <h1 class="mb-0 ml-2">Logs - Inventory</h1>
+                <h1 class="mb-0 ml-2">Logs - Services</h1>
             </div>
         </div>
         <div class="col-md-3 text-md-right">
@@ -134,7 +134,9 @@
                     <form action="" method="post">
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
                             <tr>
-                                <th> Product Name </th>
+                                <th> Customer Name </th>
+                                <th> Services Availed </th>
+                                <th> Staff Name </th>
                                 <th> Type </th>
                                 <th> Date </th>
                             </tr>
@@ -144,9 +146,11 @@
                             <?php if(is_array($view)) {?>
                                 <?php foreach($view as $view) {?>
                                     <tr>
-                                        <td> <?= $view['name'];?></td>
+                                        <td> <?= $view['customer_name'];?></td>
+                                        <td> <?= $view['service_availed'];?> </td>
+                                        <td> <?= $view['staff_name'];?> </td>
                                         <td> <?= $view['log_type'];?> </td>
-                                        <td> <?= $view['log_date'];?> </td>
+                                        <td><?= (new DateTime($view['log_date']))->format('F d, Y g:i a');?></td>
                                     </tr>
                                 <?php }?>
                             <?php } ?>

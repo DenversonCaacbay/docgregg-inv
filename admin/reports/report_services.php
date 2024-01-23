@@ -50,6 +50,11 @@
     padding: 0 5px;
     color: #6c757d; /* Set the color of the divider */
   }
+  thead.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
 </style>
 
 <!-- Begin Page Content -->
@@ -60,7 +65,7 @@
 
     <div class="row">
         <div class="col-md-10">
-        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
                 <h1 class="mb-0 ml-2">Reports - Services</h1>
             </div>
@@ -140,9 +145,10 @@
                     <!-- <button type="button" class="btn btn-primary">Year</button> -->
                 </div>
             </div>
-            <table class="table table-hover text-center table-bordered mt-3">
+            <div class="card" style="height: 500px; overflow: auto;">
+            <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
-                    <thead style="background: #0296be;color:#fff;"> 
+                    <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
                             <th> Customer Name </th>
                             <th> Availed Services </th>
@@ -170,6 +176,7 @@
                     </tbody>
                 </form>
             </table>
+        </div>
         </div>
     </div>
     

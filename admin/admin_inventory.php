@@ -93,7 +93,7 @@
                     </thead>
 
                     <tbody>
-                        <?php if(is_array($view)) {?>
+                        <?php if(is_array($view) && count($view) > 0) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
                                 <td>
@@ -119,15 +119,24 @@
                                         <form action="" method="post">
                                             <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
+                                            <input type="hidden" name="name" value="<?= $view['name'];?>">
                                             <button class="btn btn-danger" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
                                         </form>
                                     </td>
                                 </tr>
                             <?php }?>
-                        <?php } ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td colspan="9">No Data Found</td>
+                                </tr>
+                            <?php } ?>
+                        
                     </tbody>
                 </form>
             </table>
+            <div id="noDataFound" style="display: none;text-align:center">
+                    <p>No Data Found</p>
+                </div>
         </div>
  
             <!-- Pagination links -->
@@ -215,33 +224,5 @@
     });
 </script> 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get the input field and table
-        var input = document.getElementById('searchInput');
-        var table = document.querySelector('.table');
 
-        // Add an event listener to the input field
-        input.addEventListener('input', function () {
-            // Get the search query and convert it to lowercase
-            var query = input.value.toLowerCase();
-
-            // Get all table rows in the tbody
-            var rows = table.querySelectorAll('tbody tr');
-
-            // Loop through each row and hide/show based on the search query
-            rows.forEach(function (row) {
-                var productName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                var category = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
-
-                // Check if the query matches the product name or category
-                if (productName.includes(query) || category.includes(query)) {
-                    row.style.display = ''; // Show the row
-                } else {
-                    row.style.display = 'none'; // Hide the row
-                }
-            });
-        });
-    });
-</script>
 <!-- End of Main Content -->

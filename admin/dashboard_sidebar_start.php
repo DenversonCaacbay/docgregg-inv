@@ -33,7 +33,8 @@
 <!-- SweetAlert 2 JS (including dependencies) -->
     <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 
-    
+    <script src="../js/services_search.js"></script>
+    <script src="../js/inventory_search.js"></script>
 </head>
 
 
@@ -49,7 +50,8 @@
         background: #0296be !important;
     }
     .sidebar .active{
-        background: #31206c;
+        background: #191970;
+        border-radius: 10px;
         /* opacity: 0.8; */
     }
     label{
@@ -67,8 +69,29 @@
         color: white;
     }
     .logo{
-        width:100px;
-        height: 100px;
+        width:80px;
+        height: 80px;
+    }
+    .sss .sidebar-brand-text{
+        font-size: 17px;
+    }
+    @media only screen and (max-width: 767px) { 
+        .logo{
+            display:none;
+        }
+        .sss{
+            padding: 0;
+        }
+        .sidebar{
+            display:none;
+        }
+        .sidebar-heading{
+            text-align:left;
+        }
+        .nav-link{
+            margin:auto;
+        }
+        
     }
 
 </style>
@@ -85,8 +108,8 @@
             $userRole = $userdetails['role'];
         ?>
 
-    <ul class="navbar-nav sidebar sidebar-dark fixed-sidebar shadow accordion" id="accordionSidebar">
-        <div class="card p-2 m-2">
+    <ul class="navbar-nav sidebar p-2 sidebar-dark fixed-sidebar shadow accordion" id="accordionSidebar">
+        <div class="card sss m-2">
             <img class="logo" src="../assets/logo.png">
             <div class="sidebar-brand-text">
                 Doc Gregg <br>Veterinary Clinic
@@ -252,7 +275,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     
-                                        <span class="mr-2 d-none d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></span>
+                                        <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>
@@ -291,6 +314,66 @@
                         });
                     });
                 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.querySelector('.sidebar');
+        var sidebarToggleTop = document.getElementById('sidebarToggleTop');
+
+        // Function to check if the viewport is in desktop view
+        function isDesktopView() {
+            return window.innerWidth > 768; // Adjust the threshold as needed
+        }
+
+        // Function to update the sidebar visibility based on viewport
+        function updateSidebarVisibility() {
+            if (isDesktopView()) {
+                sidebar.style.display = 'block';
+                sidebar.style.width = '150px';
+            } else {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Function to save sidebar state in local storage
+        function saveSidebarState(state) {
+            localStorage.setItem('sidebarState', state);
+        }
+
+        // Function to get sidebar state from local storage
+        function getSidebarState() {
+            return localStorage.getItem('sidebarState');
+        }
+
+        // Initial update on page load
+        updateSidebarVisibility();
+
+        // Check local storage for sidebar state
+        var storedSidebarState = getSidebarState();
+        if (storedSidebarState === 'open') {
+            sidebar.style.display = 'block';
+            sidebar.style.width = '150px';
+        }
+
+        // Event listener for button click
+        sidebarToggleTop.addEventListener('click', function () {
+            if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+                sidebar.style.display = 'block';
+                sidebar.style.width = '150px';
+                saveSidebarState('open');
+            } else {
+                sidebar.style.display = 'none';
+                saveSidebarState('closed');
+            }
+        });
+
+        // Event listener for window resize to handle responsive changes
+        window.addEventListener('resize', function () {
+            updateSidebarVisibility();
+        });
+    });
+</script>
+
 
 
                 

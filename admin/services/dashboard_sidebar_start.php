@@ -27,6 +27,9 @@
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../js/services_search1.js"></script>
 </head>
 
 
@@ -42,8 +45,9 @@
         background: #0296be !important;
     }
     .sidebar .active{
-        background: #31206c;
-        opacity: 0.8;
+        background: #191970;
+        border-radius: 10px;
+        /* opacity: 0.8; */
     }
     label{
         font-weight: 500;
@@ -68,22 +72,31 @@
         top: 0;
         z-index: 100;
     }
-    /* .btn-primary:hover{
-        background:  #ffffff !important;
-        color: 0296be;
-    } */
-    /* .fixed-sidebar {
-        position: fixed;
-        height: 100%;
-        z-index: 1031;
-        overflow-y: auto; 
+    .logo{
+        width:80px;
+        height: 80px;
     }
-
-    .fixed-navbar {
-        position: fixed;
-        width: 100%;
-        z-index: 1030; 
-    } */
+    .sss .sidebar-brand-text{
+        font-size: 17px;
+    }
+    @media only screen and (max-width: 767px) { 
+        .logo{
+            display:none;
+        }
+        .sss{
+            padding: 0;
+        }
+        .sidebar{
+            display:none;
+        }
+        .sidebar-heading{
+            text-align:left;
+        }
+        .nav-link{
+            margin:auto;
+        }
+        
+    }
 
 </style>
 
@@ -97,9 +110,9 @@ $userdetails = $bmis->get_userdata();
 $userRole = $userdetails['role'];
 ?>
 
-<ul class="navbar-nav sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
-    <div class="card p-2 m-2">
-        <img src="../../assets/logo.png" width="100" height="100">
+<ul class="navbar-nav p-2 sidebar sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
+    <div class="card sss m-2">
+        <img class="logo" src="../../assets/logo.png">
         <div class="sidebar-brand-text">
             Doc Gregg <br>Veterinary Clinic
         </div>
@@ -297,7 +310,64 @@ $userRole = $userdetails['role'];
                         });
                     });
                 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.querySelector('.sidebar');
+        var sidebarToggleTop = document.getElementById('sidebarToggleTop');
 
+        // Function to check if the viewport is in desktop view
+        function isDesktopView() {
+            return window.innerWidth > 768; // Adjust the threshold as needed
+        }
+
+        // Function to update the sidebar visibility based on viewport
+        function updateSidebarVisibility() {
+            if (isDesktopView()) {
+                sidebar.style.display = 'block';
+                sidebar.style.width = '150px';
+            } else {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Function to save sidebar state in local storage
+        function saveSidebarState(state) {
+            localStorage.setItem('sidebarState', state);
+        }
+
+        // Function to get sidebar state from local storage
+        function getSidebarState() {
+            return localStorage.getItem('sidebarState');
+        }
+
+        // Initial update on page load
+        updateSidebarVisibility();
+
+        // Check local storage for sidebar state
+        var storedSidebarState = getSidebarState();
+        if (storedSidebarState === 'open') {
+            sidebar.style.display = 'block';
+            sidebar.style.width = '150px';
+        }
+
+        // Event listener for button click
+        sidebarToggleTop.addEventListener('click', function () {
+            if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+                sidebar.style.display = 'block';
+                sidebar.style.width = '150px';
+                saveSidebarState('open');
+            } else {
+                sidebar.style.display = 'none';
+                saveSidebarState('closed');
+            }
+        });
+
+        // Event listener for window resize to handle responsive changes
+        window.addEventListener('resize', function () {
+            updateSidebarVisibility();
+        });
+    });
+</script>
 
                 
                 <!-- End of Topbar -->

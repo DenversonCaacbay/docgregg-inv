@@ -48,6 +48,11 @@
     padding: 0 5px;
     color: #6c757d; /* Set the color of the divider */
   }
+  thead.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
 </style>
 
 <!-- Begin Page Content -->
@@ -57,16 +62,17 @@
     <!-- Page Heading -->
 
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
                 <h1 class="mb-0 ml-2">Logs - Staff</h1>
             </div>
         </div>
-        <div class="col-md-2 text-md-right">
+        <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li>
+                    <li class="breadcrumb-item"><a href="logs_services.php">Services</a></li>
                     <li class="breadcrumb-item"><a href="logs_inventory.php">Inventory</a></li>
                 </ol>
             </nav>
@@ -90,9 +96,9 @@
                                     <input type="date" class="form-control" id="toDate" name="toDate" required>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div> -->
+                            <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div>
                             <div class="col-md-1 mt-4"><a  href="admin_reports.php" class="btn btn-primary p-2 mt-3"><i class="fas fa-redo"></i></a></div>            
-                            <div class="col-md-2 mt-4"><a href="#" class="btn btn-primary p-2" style="margin-top:15px" onclick="validateDates()" id="pdfLink"><i class="fas fa-print"></i></a></div>
+                            <!-- <div class="col-md-2 mt-4"><a href="#" class="btn btn-primary p-2" style="margin-top:15px" onclick="validateDates()" id="pdfLink"><i class="fas fa-print"></i></a></div> -->
                         </div>
                     </form> 
                 </div>  
@@ -122,27 +128,29 @@
 
                 
             </div>
-            <table class="table table-hover text-center table-bordered mt-3">
-                <form action="" method="post">
-                    <thead style="background: #0296be;color:#fff;"> 
-                        <tr>
-                            <th> Full Name </th>
-                            <th> Date Archive </th>
-                        </tr>
-                    </thead>
+            <div class="card" style="height: 500px; overflow: auto;">
+                <table class="table table-hover text-center table-bordered">
+                    <form action="" method="post">
+                        <thead style="background: #0296be;color:#fff;" class="sticky"> 
+                            <tr>
+                                <th> Full Name </th>
+                                <th> Date Archive </th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <?php if(is_array($view)) {?>
-                            <?php foreach($view as $view) {?>
-                                <tr>
-                                    <td> <?= $view['fname'];?> <?= $view['mi'];?> <?= $view['lname'];?></td>
-                                    <td> <?= $view['deleted_at'];?> </td>
-                                </tr>
-                            <?php }?>
-                        <?php } ?>
-                    </tbody>
-                </form>
-            </table>
+                        <tbody>
+                            <?php if(is_array($view)) {?>
+                                <?php foreach($view as $view) {?>
+                                    <tr>
+                                        <td> <?= $view['fname'];?> <?= $view['mi'];?> <?= $view['lname'];?></td>
+                                        <td> <?= $view['deleted_at'];?> </td>
+                                    </tr>
+                                <?php }?>
+                            <?php } ?>
+                        </tbody>
+                    </form>
+                </table>
+            </div>
         </div>
     </div>
     

@@ -75,7 +75,7 @@
                                             <!-- Display the form if the role is not 'administrator' -->
                                             <form action="" method="post">
                                                 <input type="hidden" name="id_admin" value="<?= $view['id_admin'];?>">
-                                                <button class="btn btn-primary" type="submit" name="delete_staff" style="width: 70px; padding: 5px; font-size: 15px; border-radius: 5px;" onclick="return confirm('Are you sure you want to remove this staff?')">Archive</button>
+                                                <button class="btn btn-primary" type="submit" name="delete_staff" style="width: 70px; padding: 5px; font-size: 15px; border-radius: 5px;" onclick="return confirm('Are you sure you want to remove this staff?')">Remove</button>
                                             </form>
                                         <?php endif; ?>
                                     </td>
