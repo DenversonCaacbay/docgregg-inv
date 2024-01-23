@@ -1541,9 +1541,15 @@
                 $staff_name = $_POST['staff_name'];
                 $services_list = $_POST['services_list'];
                 $service_get = '';
+                $treatment_check = false;
         
                 foreach($services_list as $item){
                     $service_get .= $item . ', ';
+
+                    // Check if the current item contains the string "Treatment"
+                    if (strpos($item, 'Treatment') !== false) {
+                        $treatment_check = true;
+                    }
                 }
         
                 // Remove the trailing comma and space
@@ -1553,6 +1559,23 @@
                 $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, staff_name, created_at) VALUES (?, ?, ?, NOW())");
                 $stmt_services->execute([$customer_name, $service_get, $staff_name]);
 
+                // check if treatment has content
+                if($treatment_check){
+                    $treatmet_list = $_POST['treatment_list'];
+                    $treatmet_get = '';
+                    $service_last_id = $connection->lastInsertId(); // get id from last created services
+
+                    foreach($treatmet_list as $item){
+                        $treatmet_get .= $item . ', ';
+                    }
+
+                    // Remove the trailing comma
+                    $treatmet_get = rtrim($treatmet_get, ', ');
+
+                    $stmt_treatment = $connection->prepare("INSERT INTO tbl_treatment (serv_id, treatment_name) VALUES (?, ?)");
+                    $stmt_treatment->execute([$service_last_id, $treatmet_get]);
+                }
+
 
                 // Insert into tbl_inventory_logs
                 try {
@@ -1561,6 +1584,7 @@
                 } catch (PDOException $e) {
                     echo "Error: " . $e->getMessage();
                 }
+                
                 // Use SweetAlert for the alert
                 echo "<script type='text/javascript'>
                         document.addEventListener('DOMContentLoaded', function() {

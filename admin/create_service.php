@@ -151,6 +151,23 @@
                                             Blood Chemistry Test
                                         </label>
                                     </div>
+
+                                    <!-- test for treatment here. feel free to edit -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Treatment test" name="treatment_list[]" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Treatment test
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Treatment test2" name="treatment_list[]" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Treatment test 2
+                                        </label>
+                                    </div>
+                                    <!-- treatment test end -->
+
                                 </div>
                                 <div class="form-group" hidden>
                                     <label> Staff Name: </label>
