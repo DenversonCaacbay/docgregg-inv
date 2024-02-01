@@ -312,7 +312,11 @@
         public function view_services_all(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_services WHERE deleted_at IS NULL ORDER BY created_at DESC");
+            $stmt = $connection->prepare("SELECT s.*, t.treatment_name 
+                                  FROM tbl_services s 
+                                  LEFT JOIN tbl_treatment t ON s.serv_id = t.serv_id 
+                                  WHERE s.deleted_at IS NULL 
+                                  ORDER BY s.created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -1538,6 +1542,8 @@
         public function create_service(){
             if (isset($_POST['create_service'])) {
                 $customer_name = ucwords(strtolower($_POST['customer_name']));
+                $customer_contact = ucwords(strtolower($_POST['customer_contact']));
+                $customer_address = ucwords(strtolower($_POST['customer_address']));
                 $staff_name = $_POST['staff_name'];
                 $services_list = $_POST['services_list'];
                 $service_get = '';
@@ -1556,8 +1562,8 @@
                 $service_get = rtrim($service_get, ', ');
         
                 $connection = $this->openConn();
-                $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name, service_availed, staff_name, created_at) VALUES (?, ?, ?, NOW())");
-                $stmt_services->execute([$customer_name, $service_get, $staff_name]);
+                $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name,customer_contact,customer_address, service_availed, staff_name, created_at) VALUES (?,?,?, ?, ?, NOW())");
+                $stmt_services->execute([$customer_name,$customer_contact,$customer_address, $service_get, $staff_name]);
 
                 // check if treatment has content
                 if($treatment_check){
@@ -1580,8 +1586,8 @@
 
                 // Insert into tbl_inventory_logs
                 try {
-                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name, service_availed, log_type, staff_name) VALUES (?, ?, ?, ?)");
-                    $stmt_logs->execute([$customer_name, $service_get, 'Added', $staff_name]);
+                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name,customer_contact,customer_address, service_availed, log_type, staff_name) VALUES (?,?,?, ?, ?, ?)");
+                    $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $service_get, 'Added', $staff_name]);
                 } catch (PDOException $e) {
                     echo "Error: " . $e->getMessage();
                 }

@@ -78,6 +78,8 @@
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
                             <tr>
                                 <th> Customer Name </th>
+                                <th> Contact </th>
+                                <th> Address </th>
                                 <th> Availed Service </th>
                                 <th> Date Availed </th>
                                 <th> Actions </th>
@@ -91,11 +93,14 @@
                                         <td data-fullname="<?= htmlspecialchars($item['customer_name']); ?>">
                                             <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
                                         </td>
+                                        <td> <?= $item['customer_contact'] ?> </td>
+                                        <td> <?= $item['customer_address'] ?> </td>
                                         <td data-service="<?= htmlspecialchars($item['service_availed']); ?>">
                                             <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8'); ?>">
                                                 <?= strlen($item['service_availed']) > 30 ? substr($item['service_availed'], 0, 30) . '...' : $item['service_availed']; ?>
                                             </a>
                                         </td>
+                                        <td hidden><?= $item['treatment_name']; ?></td>
                                         <td> <?= date("F d, Y", strtotime($item['created_at'])); ?> </td>
                                         <td>
                                             <form action="" method="post">
@@ -170,6 +175,14 @@
             // You can customize this function based on how you want to display product details
             var detailsHtml = "<p><strong>Customer Name:</strong> " + product.customer_name + "</p>";
             detailsHtml += "<p><strong>Services Availed:</strong> " + product.service_availed + "</p>";
+            
+
+            // Check if there is treatment information
+            if (product.treatment_name) {
+                detailsHtml += "<p>" + product.treatment_name + "</p>";
+            } else {
+                detailsHtml += "<p>No Treatment Information</p>";
+            }
             detailsHtml += "<p><strong>Staff:</strong>" + product.staff_name + "</p>";
             detailsHtml += "<p><strong>Created At:</strong> " + product.created_at + "</p>";
 
@@ -183,6 +196,7 @@
         // Handle form submission to filter results
     });
 </script>
+
 
 
 <!-- End of Main Content -->
