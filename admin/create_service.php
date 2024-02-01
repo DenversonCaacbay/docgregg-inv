@@ -1,6 +1,6 @@
 <?php
     
-    ini_set('display_errors',0);
+    // ini_set('display_errors',0);
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
@@ -174,6 +174,11 @@
                                     <input type="text" class="form-control" name="staff_name" value="<?= $userdetails['fname']?> <?= $userdetails['lname']?>">
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <input id="treatmentInput" type="text" class="form-control" name="treatment_input" placeholder="Treatment Name Here" style="display: none;" required>
+                            </div>
+                            
                             <div class="mt-3">
                                 <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" disabled />
                             </div>
@@ -188,7 +193,7 @@
     </div> 
 </div>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
         var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
@@ -207,7 +212,53 @@
             submitButton.disabled = !atLeastOneChecked;
         }
     });
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
+        var treatmentCheckbox = document.querySelector('input[type="checkbox"][value="Treatment"]');
+        var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
+        var treatmentInput = document.getElementById('treatmentInput');
+
+        // Initial check and set the button state
+        checkAndUpdateButtonState();
+
+        // Add event listener to each checkbox to update the button state
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', checkAndUpdateButtonState);
+        });
+
+        // Add event listener to the treatment checkbox
+        treatmentCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                // Show the treatment input field
+                treatmentInput.style.display = 'block';
+                treatmentInput.setAttribute('required', true); // Make the input field required
+            } else {
+                // Hide the treatment input field
+                treatmentInput.style.display = 'none';
+                treatmentInput.removeAttribute('required'); // Remove the required attribute
+            }
+            checkAndUpdateButtonState(); // Update button state when treatment checkbox changes
+        });
+
+        // Add event listener to the treatment input field
+        treatmentInput.addEventListener('input', function () {
+            checkAndUpdateButtonState();
+        });
+
+        // Function to check the status of checkboxes and update the button state
+        function checkAndUpdateButtonState() {
+            var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            var treatmentValue = treatmentInput.value.trim(); // Get trimmed value of treatment input
+
+            // Enable submit button if at least one checkbox is checked and treatment input has value
+            submitButton.disabled = !atLeastOneChecked || (treatmentCheckbox.checked && treatmentValue === '');
+        }
+    });
 </script>
+
 
 
 <!-- End of Main Content -->

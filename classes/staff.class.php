@@ -1561,13 +1561,14 @@
 
                 // check if treatment has content
                 if($treatment_check){
+                    $treatmet_get = "Treatment".": ".$_POST['treatment_input'];
                     $treatmet_list = $_POST['treatment_list'];
-                    $treatmet_get = '';
+                    // $treatmet_get = '';
                     $service_last_id = $connection->lastInsertId(); // get id from last created services
 
-                    foreach($treatmet_list as $item){
-                        $treatmet_get .= $item . ', ';
-                    }
+                    // foreach($treatmet_list as $item){
+                    //     $treatmet_get .= $item . ', ';
+                    // }
 
                     // Remove the trailing comma
                     $treatmet_get = rtrim($treatmet_get, ', ');
