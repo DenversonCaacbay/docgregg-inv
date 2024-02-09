@@ -101,75 +101,50 @@ img{
             // Add more mappings as needed
         };
 
-        // Sort the data based on count in descending order
-        data.sort((a, b) => b.count - a.count);
+        // Sort the services based on count in descending order
+        const sortedServices = Object.keys(serviceImages).sort((a, b) => {
+            const countA = (data.find(item => item.service_name === a) || { count: 0 }).count;
+            const countB = (data.find(item => item.service_name === b) || { count: 0 }).count;
+            return countB - countA;
+        });
 
-        // Create default cards with placeholder data and images for each service
-        for (let i = 0; i < Math.min(4, Object.keys(serviceImages).length); i++) {
-            if (i % 4 === 0) {
-                // Create a new row for every four cards
-                const row = document.createElement('div');
-                row.classList.add('row');
-                container.appendChild(row);
-            }
+        // Create only the first four cards
+        const rowContainer = document.createElement('div');
+rowContainer.classList.add('row');
 
-            const currentService = Object.keys(serviceImages)[i];
+for (let index = 0; index < 4; index++) {
+    // Get the image URL based on the service name
+    const currentService = sortedServices[index];
+    const imageUrl = serviceImages[currentService];
 
-            // Get the image URL based on the service name
-            const imageUrl = serviceImages[currentService];
+    // Find data for the current service
+    const currentData = data.find(item => item.service_name === currentService) || { count: 0 };
 
-            // Create card and add to the current row
-            const card = document.createElement('div');
-            card.classList.add('col-md-3');
-            card.innerHTML = `
-                <div class="card border-left-primary shadow mt-2">
-                    
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
-                                <p class="h5 mb-0 font-weight-bold text-dark">Count: 0</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="${imageUrl}" style="width:50px" alt="${currentService}">
-                            </div>
-                        </div>
+    // Create card
+    const card = document.createElement('div');
+    card.classList.add('col-md-3');
+    card.innerHTML = `
+        <div class="card border-left-primary shadow mt-1">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <h5 style="font-size: 16px;" class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
+                        <p class="h5 mb-0 text-dark">Count: ${currentData.count}</p>
+                    </div>
+                    <div class="col-auto">
+                        <img src="${imageUrl}" style="width:50px" alt="${currentService}">
                     </div>
                 </div>
-            `;
+            </div>
+        </div>
+    `;
 
-            // Append the card to the current row
-            container.lastChild.appendChild(card);
-        }
+    // Append the card to the row container
+    rowContainer.appendChild(card);
+}
 
-        // If data is available, replace the placeholder cards with fetched data
-        if (data && data.length > 0) {
-            for (let i = 0; i < Math.min(4, data.length); i++) {
-                const currentData = data[i];
-                const currentService = currentData.service_name;
-
-                // Get the corresponding card
-                const currentCard = container.children[Math.floor(i / 4)].children[i % 4];
-
-                // Update the card with fetched data
-                currentCard.innerHTML = `
-                    <div class="card border-left-primary shadow mt-2">
-                        
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
-                                    <p class="h5 mb-0 font-weight-bold text-dark">Count: ${currentData.count}</p>
-                                </div>
-                                <div class="col-auto">
-                                    <img src="${serviceImages[currentService]}" style="width:50px" alt="${currentService}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
+// Append the row container to the main container
+container.appendChild(rowContainer);
     };
 
     // Fetch data from the PHP script and create cards
@@ -178,6 +153,7 @@ img{
         .then(data => createCards(data))
         .catch(error => console.error('Error fetching data:', error));
 </script>
+
 
 
 

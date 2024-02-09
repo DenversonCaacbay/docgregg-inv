@@ -76,7 +76,7 @@
                             <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label> Contact Number: </label>
-                                    <input type="text" class="form-control" name="customer_contact" required>
+                                    <input type="number" class="form-control" name="customer_contact" required>
                                 </div>
                             </div>
                             <div class="col-md-6 mt-2">
@@ -189,10 +189,19 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mt-3">
+                            <!-- <div class="form-group mt-3">
                                 
-                                <input id="treatmentInput" type="text" class="form-control" name="treatment_input" placeholder="Enter Treatment: " style="display: none;">
+                                <input  type="text" class="form-control" name="treatment_input" placeholder="Enter Treatment: " id="treatmentInput" style="display: none;">
+                            </div> -->
+                            <div class="input-group mt-3" id="showTreatment" style="display:none;">
+                            <label>Select Treatment</label>
+                                <select class="form-select w-100" name="treatment_input">
+                                    <option selected></option>
+                                    <option value="Surgical">Surgical</option>
+                                    <option value="Disease Management">Disease Management</option>
+                                </select>
                             </div>
+
                             
                             <div class="mt-3">
                                 <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" disabled />
@@ -234,7 +243,7 @@
         var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
         var treatmentCheckbox = document.querySelector('input[type="checkbox"][value="Treatment"]');
         var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
-        var treatmentInput = document.getElementById('treatmentInput');
+        var treatmentInput = document.getElementById('showTreatment'); // Corrected element ID
 
         // Initial check and set the button state
         checkAndUpdateButtonState();
@@ -249,30 +258,27 @@
             if (this.checked) {
                 // Show the treatment input field
                 treatmentInput.style.display = 'block';
-                treatmentInput.setAttribute('required', true); // Make the input field required
+                treatmentInput.querySelector('select').setAttribute('required', true); // Make the input field required
             } else {
                 // Hide the treatment input field
                 treatmentInput.style.display = 'none';
-                treatmentInput.removeAttribute('required'); // Remove the required attribute
+                treatmentInput.querySelector('select').removeAttribute('required'); // Remove the required attribute
+                treatmentInput.querySelector('select').selectedIndex = 0; // Reset the selected index
             }
             checkAndUpdateButtonState(); // Update button state when treatment checkbox changes
-        });
-
-        // Add event listener to the treatment input field
-        treatmentInput.addEventListener('input', function () {
-            checkAndUpdateButtonState();
         });
 
         // Function to check the status of checkboxes and update the button state
         function checkAndUpdateButtonState() {
             var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-            var treatmentValue = treatmentInput.value.trim(); // Get trimmed value of treatment input
+            var treatmentValue = treatmentInput.querySelector('select').value.trim(); // Get trimmed value of treatment input
 
             // Enable submit button if at least one checkbox is checked and treatment input has value
             submitButton.disabled = !atLeastOneChecked || (treatmentCheckbox.checked && treatmentValue === '');
         }
     });
 </script>
+
 
 
 

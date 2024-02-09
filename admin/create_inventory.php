@@ -73,6 +73,19 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mtop" >Capital:  </label>
+                                    <input type="number" class="form-control" name="capital"  required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mtop" >Profit:  </label>
+                                    <input type="number" class="form-control" name="profit"  required>
+                                </div>
+                            </div>
+
                             
                             <div class="col-md-12">
                                 <div class="form-group">

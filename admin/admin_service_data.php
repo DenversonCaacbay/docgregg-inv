@@ -133,8 +133,8 @@ img{
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <h5 class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
-                                <p class="h5 mb-0 font-weight-bold text-dark">Count: ${currentData.count}</p>
+                                <h5 style="font-size: 16px;" class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
+                                <p class="h5 mb-0 -bold text-dark">Count: ${currentData.count}</p>
                             </div>
                             <div class="col-auto">
                                 <img src="${imageUrl}" style="width:50px" alt="${currentService}">
