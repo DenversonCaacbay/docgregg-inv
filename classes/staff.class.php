@@ -483,6 +483,8 @@
             if (isset($_POST['create_inventory'])) {
                 $name = $_POST['name'];
                 $price = $_POST['price'];
+                $capital = $_POST['input_capital'];
+                $profit = $_POST['input_profit'];
                 $qty = $_POST['qty'];
                 $category = $_POST['category'];
                 $bought_date = $_POST['bought_date'];
@@ -504,8 +506,8 @@
                         $connection = $this->openConn();
 
                         // Insert into tbl_inventory
-                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        $stmt_inventory->execute([$name, $price, $qty, $target_file, $category, $exp, $bought_date]);
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
 
                         // Insert into tbl_inventory_logs
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
@@ -530,8 +532,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, quantity, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt_inventory->execute([$name, $price, $qty, $category, $exp, $bought_date]);
+                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                     $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
         
@@ -1542,7 +1544,7 @@
         public function create_service(){
             if (isset($_POST['create_service'])) {
                 $customer_name = ucwords(strtolower($_POST['customer_name']));
-                $customer_contact = ucwords(strtolower($_POST['customer_contact']));
+                $customer_contact = $_POST['customer_contact'];
                 $customer_address = ucwords(strtolower($_POST['customer_address']));
                 $staff_name = $_POST['staff_name'];
                 $services_list = $_POST['services_list'];
@@ -1562,7 +1564,7 @@
                 $service_get = rtrim($service_get, ', ');
         
                 $connection = $this->openConn();
-                $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name,customer_contact,customer_address, service_availed, staff_name, created_at) VALUES (?,?,?, ?, ?, NOW())");
+                $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name,customer_contact,customer_address, service_availed, staff_name, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
                 $stmt_services->execute([$customer_name,$customer_contact,$customer_address, $service_get, $staff_name]);
 
                 // check if treatment has content
@@ -1587,7 +1589,7 @@
                 // Insert into tbl_inventory_logs
                 try {
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name,customer_contact,customer_address, service_availed, log_type, staff_name) VALUES (?,?,?, ?, ?, ?)");
-                    $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $service_get, 'Added', $staff_name]);
+                    $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $treatmet_get, 'Added', $staff_name]);
                 } catch (PDOException $e) {
                     echo "Error: " . $e->getMessage();
                 }
@@ -1696,6 +1698,7 @@
         }
     }
 </script>
+
 <?php 
     include('dashboard_sidebar_end.php');
 ?>

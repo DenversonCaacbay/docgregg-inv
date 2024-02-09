@@ -4,6 +4,7 @@
    $userdetails = $bmis->get_userdata();
    $bmis->validate_admin();
    $staffbmis->create_inventory();
+//    print_r($userdetails['role']);
    if ($userdetails['role'] !== 'administrator') {
     // User is not an admin, display an alert
     echo '<script>alert("You are not authorized to access this page as admin.");</script>';
@@ -63,7 +64,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop" >Price: </label>
-                                    <input type="number" class="form-control" name="price"  required>
+                                    <input type="number" class="form-control" id="total_price" name="price" readonly required>
                                 </div>
                             </div>
                             <div class="col-md-6"> 
@@ -76,13 +77,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop" >Capital:  </label>
-                                    <input type="number" class="form-control" name="capital"  required>
+                                    <input type="number" class="form-control" id="capital" name="input_capital" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop" >Profit:  </label>
-                                    <input type="number" class="form-control" name="profit"  required>
+                                    <input type="number" class="form-control" id="profit" name="input_profit" required>
                                 </div>
                             </div>
 
@@ -158,6 +159,26 @@
             var day = date.getDate().toString().padStart(2, '0');
             return year + '-' + month + '-' + day;
         }
+    });
+</script>
+
+<!-- for capital, profit, price -->
+<script>
+    $(document).ready(function () {
+        // Function to calculate total price
+        function calculateTotalPrice() {
+            var capital = parseFloat($('#capital').val());
+            var profit = parseFloat($('#profit').val());
+
+            // Check if capital and profit are valid numbers
+            if (!isNaN(capital) && !isNaN(profit)) {
+                var totalPrice = capital + profit;
+                $('#total_price').val(totalPrice.toFixed(2)); // Display total price with 2 decimal places
+            }
+        }
+
+        // Call calculateTotalPrice function when capital or profit changes
+        $('#capital, #profit').on('input', calculateTotalPrice);
     });
 </script>
 
