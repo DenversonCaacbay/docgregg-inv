@@ -52,6 +52,10 @@
         font-size: 18px;
         /* color: #0296be; */
     }
+    .fas{
+        color: #fff !important;
+        font-size: 18px !important;
+    }
     /* .card{
         border: none;
         box-shadow: 0px 5px 10px rgb(34, 32, 32,0.1),
@@ -145,23 +149,23 @@
             <!-- Inventory Management -->
             <li class="nav-item" id="inventory">
                 <a class="nav-link  text-light" href="../admin_inventory.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-clipboard-list"></i>
                     <span>Inventory</span></a>
             </li>
             <li class="nav-item" id="sales">
                 <a class="nav-link  text-light" href="../admin_product_sale.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span></a>
             </li>
             <li class="nav-item" id="staff">
                 <a class="nav-link text-light" href="../admin_staff_list.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-users"></i>
                     <span>Staff List</span>
                 </a>
             </li>
             <li class="nav-item" id="reports">
                 <a class="nav-link  text-light" href="../admin_reports.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-flag"></i>
                     <span>Reports</span></a>
             </li>
 
@@ -169,7 +173,7 @@
             <!-- Help and Support -->
             <li class="nav-item" id="help">
                 <a class="nav-link  text-light" href="../admin_help.php">
-                    <i class="fas fa-file-contract"></i>
+                <i class="fas fa-file-contract"></i>
                     <span>Help & Support</span></a>
             </li>
             <li class="nav-item" id="logout">
@@ -225,7 +229,7 @@
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
                             
                                 <a href="../admin_low_inventory.php" style="position: relative;">
-                                    <i class="fas fa-bell" style="font-size: 20px;"></i>
+                                    <i class="fas fa-bell" style="font-size: 20px;;color: #0296be !important;"></i>
                                     <?php if($lowInventoryCount > 0) : ?>
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
@@ -233,10 +237,15 @@
                         </li>
 
                         <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="../admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    
-                                        <span class="mr-2 d-none d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['firstname']?> <?= $userdetails['surname']?></span>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                
+                                <?php if (empty($user['picture'])): ?>
+                                    <img id="blah" src="../../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px;" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                <?php else: ?>
+                                    <img id="blah" src="../<?= $user['picture']?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                <?php endif; ?>
+                                <!-- <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6><i class="fas fa-user text-primary mb-1 ml-1" style="font-size: 20px;"></i> -->
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>

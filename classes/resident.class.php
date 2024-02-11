@@ -151,6 +151,7 @@ use PHPMailer\PHPMailer\Exception;
                 $confirm_password = ($_POST['confirm_password']);
                 $lname = ucfirst(strtolower($_POST['lname']));
                 $fname = ucfirst(strtolower($_POST['fname'])); 
+                $position = $_POST['position'];
                 $role = $_POST['role'];
 
                 // Check if email already exists
@@ -169,8 +170,8 @@ use PHPMailer\PHPMailer\Exception;
                 $verification_code = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
                 
                 try {
-                    $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `password`, `lname`, `fname`, `verification_code`, `role`) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$email, $hashed_password, $lname, $fname, $verification_code, $role]);       
+                    $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `password`, `lname`, `fname`, `verification_code`,`position`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$email, $hashed_password, $lname, $fname, $verification_code, $position,$role]);       
 
                     // Check if the query was successful
                     if ($stmt->rowCount() > 0) 

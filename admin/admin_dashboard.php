@@ -4,6 +4,7 @@
     // include('../classes/resident.class.php');
 
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $recent_user = $staffbmis->recent_user();
     // print_r($recent_user);
@@ -56,6 +57,15 @@ img{
 .card-img-top{
     width: 50px;
 }
+.container-fluid {
+    height: 650px;
+    overflow: auto; /* This enables scrolling */
+}
+
+/* Hide scrollbar for WebKit (Safari and Chrome) */
+.container-fluid::-webkit-scrollbar {
+    display: none;
+}
 </style>
 
 
@@ -67,7 +77,7 @@ img{
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" style="height: 650px;overflow: auto;">
 
 <!-- Page Heading -->
 
@@ -281,6 +291,33 @@ container.appendChild(rowContainer);
                     });
 
                 </script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><h3>Recently Availed Service</h3></div>
+            <div class="col-md-12">
+                <table class="table reponsive">
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                    <th>Service Availed</th>
+                    <th>Staff Name</th>
+                    <th></th>
+
+                    <?php if(is_array($recent_user)) {?>
+                        <?php foreach($recent_user as $view) {?>
+                        <tr>
+                            <td><?= date("F d, Y - l", strtotime($view['created_at'])); ?></td>
+                            <td><?= $view['customer_name'];?></td>
+                            <td><?= $view['service_availed'];?></td>
+                            <td><?= $view['staff_name'];?></td>
+                            <td><span class="badge bg-danger">New</span></td>
+                            <!-- <td>Dog Hat</td>
+                            <td>Ruby</td>
+                            <td>January 01, 2024</td> -->
+                        </tr>
+                        <?php }?>
+                    <?php } ?>
+                </table>    
             </div>
         </div>
        

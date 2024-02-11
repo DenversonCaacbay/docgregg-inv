@@ -46,12 +46,13 @@
                             <div class="row me-3">
                             <div class="col-md-12">
                                     <!-- <label>Item Picture:</label> -->
-                                    <div class="custom-file form-group">
+                                    <!-- <div class="custom-file form-group">
                                         <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
                                         <label class="custom-file-label" for="customFile">Choose File Photo</label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
+                                    </div> -->
+                                    <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <div class="form-group">
@@ -62,7 +63,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="mtop" >Price: </label>
-                                        <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" required>
+                                        <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6"> 

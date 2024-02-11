@@ -2,6 +2,7 @@
    error_reporting(E_ALL ^ E_WARNING);
    require('../classes/staff.class.php');
    $userdetails = $bmis->get_userdata();
+   $user = $staffbmis->view_single_staff($userdetails['id_admin']);
    $bmis->validate_admin();
     $staffbmis->update_inventory_low();
     $item = $staffbmis->view_single_inventory();

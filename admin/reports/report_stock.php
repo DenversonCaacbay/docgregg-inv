@@ -3,6 +3,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $view = $staffbmis->view_invoice();
     $staffcount = $staffbmis->count_invoice();
@@ -201,9 +202,9 @@
                 <div class="modal-body">
                     <div id="productDetails"></div>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

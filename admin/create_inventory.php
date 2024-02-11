@@ -2,6 +2,7 @@
    error_reporting(E_ALL ^ E_WARNING);
    require('../classes/staff.class.php');
    $userdetails = $bmis->get_userdata();
+   $user = $staffbmis->view_single_staff($userdetails['id_admin']);
    $bmis->validate_admin();
    $staffbmis->create_inventory();
 //    print_r($userdetails['role']);
@@ -48,10 +49,12 @@
                         <div class="container">
                             <div class="row me-3">
                             <div class="col-md-12">
-                                <div class="custom-file form-group">
-                                    <input type="file" onchange="readURL(this, 'blah');" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
+                                <!-- <div class="custom-file form-group">
+                                    <input type="file" onchange="readURL(this, 'blah');" class="form-control" id="customFile" name="new_picture">
                                     <label class="custom-file-label" for="customFile">Choose File Photo</label>
-                                </div>
+                                </div> -->
+
+                                <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
@@ -60,7 +63,18 @@
                                 </div>
                             </div>
                             
-                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mtop" >Capital:  </label>
+                                    <input type="number" class="form-control" id="capital" name="input_capital" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mtop" >Profit:  </label>
+                                    <input type="number" class="form-control" id="profit" name="input_profit" required>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop" >Price: </label>

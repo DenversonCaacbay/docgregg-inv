@@ -4,6 +4,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $view = $staffbmis->view_user();
     // $bmis->validate_admin();
@@ -56,16 +57,16 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Client List Tab
+                    Service Tab
                 </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <code>1.</code> You can view the records of the clients<br>
-                    <code>2.</code> You can add the pets of the client<br>
-                    <code>3.</code> You can view the pets information in Pet records<br>
-                    <code>4.</code> You can add vaccination information of each pet<br>
-                    <code>5.</code> You can view the records information of each pet<br>
+                    <code>1.</code> You can view the availed services of the clients<br>
+                    <code>2.</code> You can add data by the clicking Add Data which will be done upon clients availing the service<br>
+                    <code>3.</code> Clients need to provide there basic informations <br>
+                    <code>4.</code> You can select what type of service the clients want to avail<br>
+                    <code><i>Note: </i></code> If Treatment is selected you have to select what type of Treatment<br>
                 </div>
                 </div>
             </div>
@@ -77,10 +78,11 @@
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <code>1.</code> You can see all the product added in your database<br>
+                    <code>1.</code> You can see all the product added in your Inventory<br>
                     <code>2.</code> You can add Product via Add Item button, and fill up the product information needed<br>
                     <code>3.</code> You can Update the product information through the Inventory tab in the right column there is an Update Button where you can update the information<br>
                     <code>4.</code> You can also delete the product if needed.<br>
+                    <code><i>Note: </i></code> If product is Low kindly check the notification in the Upper Right corner you can see all the low on stocks product there<br>
                 </div>
                 </div>
             </div>
@@ -102,19 +104,21 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                   Reports Tab
+                   Logs & Reports Tab
                 </button>
                 </h2>
                 <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <code>1.</code> There are three sections which is Stocks, Clients and Vaccinations<br>
-                    <code>2.</code> In the stocks you can see all the bought products of the client.<br>
-                    <code>3.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
-                    <code>2.</code> In the Clients you can see all the client who registered.<br>
-                    <code>3.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
-                    <code>2.</code> In the Vaccination you can see all the client pet records listed.<br>
-                    <code>3.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
-                </div>
+                    <code>1.</code> There are 2 sections which is Stocks and Services<br>
+                    <code>Reports</code><br>
+                    <code>1.</code> In the stocks you can see all the bought products of the client.<br>
+                    <code>2.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
+                    <code>3.</code> In the Services you can see all the availed services and who make the list.<br>
+                    <code>4.</code>  There are 4 button in the upper right corner which is Daily, Weekly, Monthly, Yearly, You can generate report by clicking what report you needed<br>
+                    <code>Logs</code><br>
+                    <code>1.</code> There are 3 sections which is Staff, Services and Inventory<br>
+                    <code>2.</code> You can view all the logs in each sections.
+
                 </div>
             </div>
         </div>

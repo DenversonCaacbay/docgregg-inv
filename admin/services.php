@@ -3,6 +3,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     
     $staffbmis->delete_services();
@@ -99,6 +100,7 @@
                                             <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8'); ?>">
                                                 <?= strlen($item['service_availed']) > 30 ? substr($item['service_availed'], 0, 30) . '...' : $item['service_availed']; ?>
                                             </a>
+                                            
                                         </td>
                                         <td hidden><?= $item['treatment_name']; ?></td>
                                         <td> <?= date("F d, Y", strtotime($item['created_at'])); ?> </td>
@@ -129,26 +131,22 @@
         </div>
     </div>
 </div>
-    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">Details</h5>
-                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button> -->
-                </div>
-                <div class="modal-body">
-                    <div id="productDetails"></div>
-                </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div> -->
+<div class="modal fade" id="productModal" tabindex="-1"  aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Details</h5>
+            </div>
+            <div class="modal-body">
+                <div id="productDetails"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</div>
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
 <script>
     $(document).ready(function () {
         $('#categorySelect').on('change', function () {

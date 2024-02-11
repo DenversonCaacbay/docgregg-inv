@@ -102,6 +102,17 @@ $residentbmis->create_staff();
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-floating mt-3">
+                                                    <select class="form-select" id="floatingSelect" name="position" aria-label="Floating label select example" required>
+                                                        <option selected disabled></option>
+                                                        <option value="Groomer">Groomer</option>
+                                                        <option value="Assistant Groomer">Assistant Groomer</option>
+                                                        <option value="Veterinary Assistant">Veterinary Assistant</option>
+                                                    </select>
+                                                    <label for="floatingSelect">Select Position</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-floating mt-3">
                                                     <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" autocomplete="off" name="email" required>
                                                     <label for="floatingInputInvalid">Email</label>
                                                 </div>

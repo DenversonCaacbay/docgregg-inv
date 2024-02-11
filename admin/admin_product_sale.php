@@ -4,6 +4,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
 
    
@@ -94,7 +95,8 @@ if(isset($_POST["add_to_cart"]))
                     'item_id'			=>	$_GET["id"],
                     'item_name'			=>	$_POST["hidden_name"],
                     'item_price'		=>	$_POST["hidden_price"],
-                    'item_quantity'		=>	$_POST["quantity"]
+                    'item_quantity'		=>	$_POST["quantity"],
+                    'item_profit'		=>	$_POST["hidden_profit"],
                 );
                 $_SESSION["shopping_cart"][$count] = $item_array;
             }
@@ -176,8 +178,10 @@ if(isset($_GET["action"]))
                                 <th width="20%" style="background: #0296be;color:white;">Price</th>
                                 <th width="20%" style="background: #0296be;color:white;">Stocks</th>
                                 <th width="10%" style="background: #0296be;color:white;">Quantity</th>
-                                <th style="background: #0296be;color:white;"></th>
-                                <th style="background: #0296be;color:white;"></th>
+                                <!-- <th width="10%" style="background: #0296be;color:white;" >Profit</th> -->
+                                <th style="background: #0296be;color:white;display:none"></th>
+                                <th style="background: #0296be;color:white;display:none"></th>
+                                <th style="background: #0296be;color:white;display:none"></th>
                                 <th width="10%"colspan="2" class="text-center" style="background: #0296be;color:white;">Add</th>
                             </tr>   
                             <?php
@@ -196,10 +200,14 @@ if(isset($_GET["action"]))
                                         <td width="20%"><h5 class=""><?php echo strlen($row['name']) > 20 ? substr($row['name'], 0, 20) . '...' : $row['name']; ?></h5></td>
                                         <td width="20%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
                                         <td width="20%"><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
-                                        <td><input type="text" name="quantity" class="inputQuantity form-control" value="1" /></td>
-                                        <td><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
-                                        <td><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
-                                        <td><input type="hidden" name="hidden_stocks" class="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
+                                        
+                                        <td><input type="number" name="quantity" class="form-control inputQuantity " value="1" /></td>
+                                        <!-- <td width="20%" hidden><h5><?php echo $row["profit"]; ?></h5></td> -->
+                                        <td style="display:none"><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
+                                        <td style="display:none"><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
+                                        <td style="display:none"><input type="hidden" name="hidden_stocks" class="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
+                                        <td style="display:none"><input type="hidden" name="hidden_profit" value="<?php echo $row["profit"]; ?>" /></td>
+                                        
                                         <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary addToCartBtn" value="Add to Cart" /></td>
                                     </form>
                                 </tr>                   
@@ -220,12 +228,13 @@ if(isset($_GET["action"]))
                 <div style="clear:both"></div>
                 <br>
                 <h3>Order Details</h3>
-                <div class="table-responsive">
+                <div class="table-responsive" style="height:500px;">
                     <table class="table table-light">
-                        <tr>
+                        <tr class="sticky-top">
                             <th style="background: #0296be;color:white;">Name</th>
                             <th width="10%" style="background: #0296be;color:white;">Quantity</th>
                             <th style="background: #0296be;color:white;">Price</th>
+                            <th style="background: #0296be;color:white;display:none">Profit</th>
                             <th width="20%" style="background: #0296be;color:white;">Total</th>
                             <th style="background: #0296be;color:white;">Action</th>
                         </tr>
@@ -233,6 +242,7 @@ if(isset($_GET["action"]))
                         if(!empty($_SESSION["shopping_cart"]))
                         {
                             $total = 0;
+                            $profit = 0;
                             foreach($_SESSION["shopping_cart"] as $keys => $values)
                             {
                         ?>
@@ -240,10 +250,12 @@ if(isset($_GET["action"]))
                             <td width="40%"><?php echo strlen($values['item_name']) > 20 ? substr($values['item_name'], 0, 20) . '...' : $values['item_name']; ?></td>
                             <td width="20%"><?php echo $values["item_quantity"]; ?></td>
                             <td width="20%">₱ <?php echo $values["item_price"]; ?></td>
+                            <td style="display:none" width="20%">₱ <?php echo $values["item_quantity"] * $values["item_profit"];?></td>
                             <td width="20%">₱ <?php echo $values["item_quantity"] * $values["item_price"];?></td>
                             <td><a href="admin_product_sale.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
                         </tr>
                         <?php
+                                $profit = $profit + ($values["item_quantity"] * $values["item_profit"]);
                                 $total = $total + ($values["item_quantity"] * $values["item_price"]);
                             }
                         ?>
@@ -252,6 +264,12 @@ if(isset($_GET["action"]))
                             <td colspan="3" align="right">Total</td>
                             <td colspan="2" align="right">
                                 <input type="number" name="processTotal" id="total_id" step="any" value="<?php echo $total; ?>" class="form-control" placeholder="₱ " readonly>
+                            </td>
+                        </tr>
+                        <tr hidden>
+                            <td colspan="3" align="right">Total Profit</td>
+                            <td colspan="2" align="right">
+                                <input type="number" name="processProfit" id="total_id" step="any" value="<?php echo $profit; ?>" class="form-control" placeholder="₱ " readonly>
                             </td>
                         </tr>
                         <tr>
@@ -295,10 +313,10 @@ if(isset($_GET["action"]))
                         </tr>
                     </table>
                     
-                    <input type="submit" class="btn btn-primary w-100 mb-3" id="proceed" value="PROCEED PAYMENT">
+                    <input type="submit" class="btn btn-primary w-100 mb-3 sticky-bottom" id="proceed" value="PROCEED PAYMENT">
                     </form>
-                    <button style="width:50%;" name="updatedata" onclick="checkpayment();" class="btn btn-primary paymentbtn">Calculate</button>
-                    <a href="pos/pos_clear.php"><button style="width:49%;" class="btn btn-primary">Clear Orders</button></a>
+                    <button style="width:50%;" name="updatedata" onclick="checkpayment();" class="btn btn-primary paymentbtn sticky-bottom">Calculate</button>
+                    <a href="pos/pos_clear.php"><button style="width:49%;" class="btn btn-primary sticky-bottom">Clear Orders</button></a>
                     
                     <script>
                     $proceed = document.getElementById("proceed").disabled = true;

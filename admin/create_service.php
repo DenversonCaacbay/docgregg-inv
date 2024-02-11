@@ -4,6 +4,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $view = $staffbmis->view_user();
     // $bmis->validate_admin();
@@ -58,7 +59,7 @@
 
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="services.php">Back</a>
-        <h1 class="mb-0 ml-2">Availed Service</h1>
+        <h1 class="mb-0 ms-5">Availed Service</h1>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -194,9 +195,9 @@
                                 <input  type="text" class="form-control" name="treatment_input" placeholder="Enter Treatment: " id="treatmentInput" style="display: none;">
                             </div> -->
                             <div class="input-group mt-3" id="showTreatment" style="display:none;">
-                            <label>Select Treatment</label>
+                                <label>Select Treatment</label>
                                 <select class="form-select w-100" name="treatment_input">
-                                    <option selected>--Select Treatment--</option>
+                                    <option selected></option>
                                     <option value="Surgical">Surgical</option>
                                     <option value="Disease Management">Disease Management</option>
                                 </select>
@@ -204,7 +205,7 @@
 
                             
                             <div class="mt-3">
-                                <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" disabled />
+                                <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" onclick="return confirm('Are you sure you want to Avail this Services?')" disabled />
                             </div>
                             
                             
@@ -217,26 +218,7 @@
     </div> 
 </div>
 
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
-        var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
 
-        // Initial check and set the button state
-        checkAndUpdateButtonState();
-
-        // Add event listener to each checkbox to update the button state
-        checkboxes.forEach(function (checkbox) {
-            checkbox.addEventListener('change', checkAndUpdateButtonState);
-        });
-
-        // Function to check the status of checkboxes and update the button state
-        function checkAndUpdateButtonState() {
-            var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-            submitButton.disabled = !atLeastOneChecked;
-        }
-    });
-</script> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -299,3 +281,23 @@
 <!-- End of Main Content -->
 
 
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
+        var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
+
+        // Initial check and set the button state
+        checkAndUpdateButtonState();
+
+        // Add event listener to each checkbox to update the button state
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', checkAndUpdateButtonState);
+        });
+
+        // Function to check the status of checkboxes and update the button state
+        function checkAndUpdateButtonState() {
+            var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            submitButton.disabled = !atLeastOneChecked;
+        }
+    });
+</script> -->

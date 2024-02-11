@@ -4,6 +4,7 @@
     // include('../classes/resident.class.php');
 
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $recent_user = $staffbmis->recent_user();
     // print_r($recent_user);

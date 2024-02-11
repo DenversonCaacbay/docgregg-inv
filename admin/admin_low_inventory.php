@@ -3,6 +3,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     
     
@@ -84,10 +85,10 @@ if ($userdetails['role'] !== 'administrator') {
                                     <td>₱ <?= $view['price'];?> </td>
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
-                                    <td> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
+                                    <td> <?= date("F d, Y", strtotime($view['created_at'])); ?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="update_low_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <a href="update_low_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Add Stocks </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
                                            
                                         </form>

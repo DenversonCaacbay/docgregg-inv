@@ -1049,7 +1049,7 @@
 
         public function view_single_staff($id_admin){
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT id_admin, email, fname, lname, mi, role, picture FROM tbl_admin where id_admin = '$id_admin'");
+            $stmt = $connection->prepare("SELECT id_admin, email, fname, lname, mi,position, role, picture FROM tbl_admin where id_admin = '$id_admin'");
             $stmt->execute();
             $view = $stmt->fetch(); 
             $total = $stmt->rowCount();
@@ -1518,10 +1518,7 @@
             $connection = $this->openConn();
             $limit = 5;
 
-            $stmt = $connection->prepare("SELECT * FROM tbl_user 
-            JOIN tbl_pet ON tbl_pet.pet_owner_id = tbl_user.id_user
-            WHERE tbl_user.deleted_at IS NULL AND tbl_pet.deleted_at IS NULL
-            ORDER BY tbl_pet.created_at DESC
+            $stmt = $connection->prepare("SELECT * FROM tbl_services ORDER BY created_at DESC
             LIMIT ".$limit);    
             $stmt->execute();
             $view = $stmt->fetchAll();
@@ -1567,6 +1564,8 @@
                 $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name,customer_contact,customer_address, service_availed, staff_name, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
                 $stmt_services->execute([$customer_name,$customer_contact,$customer_address, $service_get, $staff_name]);
 
+                
+
                 // check if treatment has content
                 if($treatment_check){
                     $treatmet_get = "Treatment".": ".$_POST['treatment_input'];
@@ -1584,15 +1583,17 @@
                     $stmt_treatment = $connection->prepare("INSERT INTO tbl_treatment (serv_id, treatment_name) VALUES (?, ?)");
                     $stmt_treatment->execute([$service_last_id, $treatmet_get]);
                 }
+                $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name,customer_contact,customer_address, service_availed, log_type, staff_name) VALUES (?,?,?, ?, ?, ?)");
+                $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $service_get, 'Added', $staff_name]);
 
 
                 // Insert into tbl_inventory_logs
-                try {
-                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name,customer_contact,customer_address, service_availed, log_type, staff_name) VALUES (?,?,?, ?, ?, ?)");
-                    $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $treatmet_get, 'Added', $staff_name]);
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
+                // try {
+                //     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name,customer_contact,customer_address, service_availed, log_type, staff_name) VALUES (?,?,?, ?, ?, ?)");
+                //     $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $treatmet_get, 'Added', $staff_name]);
+                // } catch (PDOException $e) {
+                //     echo "Error: " . $e->getMessage();
+                // }
                 
                 // Use SweetAlert for the alert
                 echo "<script type='text/javascript'>
@@ -1670,16 +1671,16 @@
 <!-- responsive tags for screen compatibility -->
 <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
 <!-- custom css --> 
-<link href="customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<!-- <link href="customcss/regiformstyle.css" rel="stylesheet" type="text/css"> -->
 <link href="../css/custom.css" rel="stylesheet" type="text/css">
 <!-- bootstrap css --> 
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
 <!-- fontawesome icons -->
 <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
-<script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+<!-- <script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
 <!-- custom js -->
 <script>

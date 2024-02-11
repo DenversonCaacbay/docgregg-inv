@@ -4,6 +4,7 @@
     error_reporting(E_ALL ^ E_WARNING);
     require('../classes/staff.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $view = $staffbmis->view_user();
     $staffbmis->delete_staff();
@@ -41,6 +42,7 @@
                             <th> Picture </th>
                             <th> Staff Name </th>
                             <th> Email</th>
+                            <th> Position</th>
                             <th> Role </th>
                             <th> Created at </th>
                             <th> Action </th>
@@ -48,42 +50,48 @@
                     </thead>
 
                     <tbody>
-                    <tbody>
-                        <?php if(is_array($view)) {?>
-                            <?php foreach($view as $view) {?>
-                                <tr>
-                                <td>
-                                    <?php if (is_null($view['picture'])): ?>
-                                        <img id="blah" src="../assets/placeholder/user-placeholder.PNG" class="img-fluid" width="50" height="50" alt="Staff Picture">
-                                    <?php else: ?>
-            
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $view['picture'] ?>', '<?= $view['fname'] ?>')">
-                                            <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
-                                        </a>
+    <?php 
+    $hasAdministrator = false; // Flag to track if there's an administrator
+    if(is_array($view)) {
+        foreach($view as $user) {
+            if ($user['role'] == 'administrator') {
+                $hasAdministrator = true; // Set the flag if an administrator is found
+                break; // No need to continue checking once an administrator is found
+            }
+        }
 
-                                        <?php endif; ?>
-                                    </td>
+        foreach($view as $user) {
+            // If no administrator is found or if the current user is not an administrator, display the row with the "Remove" button
+            if (!$hasAdministrator || $user['role'] != 'administrator') {
+                ?>
+                <tr>
+                    <td>
+                        <?php if (is_null($user['picture'])): ?>
+                            <img id="blah" src="../assets/placeholder/user-placeholder.PNG" class="img-fluid" width="50" height="50" alt="Staff Picture">
+                        <?php else: ?>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('<?= $user['picture'] ?>', '<?= $user['fname'] ?>')">
+                                <img src="<?= $user['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= $user['fname']; ?> <?= $user['lname']; ?></td>
+                    <td><?= $user['email']; ?></td>
+                    <td><?= $user['position']; ?></td>
+                    <td><?= $user['role']; ?></td>
+                    <td><?= $user['created_at']; ?></td>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="id_admin" value="<?= $user['id_admin'];?>">
+                            <button class="btn btn-primary" type="submit" name="delete_staff" style="width: 70px; padding: 5px; font-size: 15px; border-radius: 5px;" onclick="return confirm('Are you sure you want to remove <?= $user['fname']; ?>?')">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php
+            }
+        }
+    } ?>
+</tbody>
 
-                                    <td> <?= $view['fname']; ?> <?= $view['lname']; ?></td>
-                                    <td> <?= $view['email']; ?></td>
-                                    <td> <?= $view['role']; ?></td>
-                                    <td> <?= $view['created_at']; ?> </td>
-                                    <td>
-                                        <?php if ($view['role'] == 'administrator') : ?>
-                                            <!-- Nothing is displayed if the role is 'administrator' -->
-                                        <?php else: ?>
-                                            <!-- Display the form if the role is not 'administrator' -->
-                                            <form action="" method="post">
-                                                <input type="hidden" name="id_admin" value="<?= $view['id_admin'];?>">
-                                                <button class="btn btn-primary" type="submit" name="delete_staff" style="width: 70px; padding: 5px; font-size: 15px; border-radius: 5px;" onclick="return confirm('Are you sure you want to remove this staff?')">Remove</button>
-                                            </form>
-                                        <?php endif; ?>
-                                    </td>
-
-                                </tr>
-                            <?php }?>
-                        <?php } ?>
-                    </tbody>
 
                 </form>
             </table>

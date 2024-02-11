@@ -67,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
     
     <h1 style="text-align:center">Stocks Report</h1>
-    <h4>From: ' . $fromDate . '</h4>
-    <h4>To:   	&nbsp;	&nbsp;	&nbsp;' . $toDate . '</h4>
+    <h4>From: ' . date('F d, Y', strtotime($fromDate)) . '</h4>
+    <h4>To:   	&nbsp;	&nbsp;	&nbsp;' .date('F d, Y', strtotime($toDate)). '</h4>
     ';
 
     $html .= '
@@ -82,24 +82,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </tr>';
 
     $totalSales = 0;
-
+    $totalProfit = 0;
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $html .= '<tr>';
-            $html .= '<td>' . date('Y-m-d H:i:s', strtotime($row['created_at'])) . '</td>';
+            $html .= '<td>' . date('F d, Y h:i A', strtotime($row['created_at'])) . '</td>';
             $html .= '<td>' . $row['customer_name'] .  '</td>';
             $html .= '<td class="product-name">' . $row['product'] .  '</td>';
+
+            $html .= '<td style="display:none">' . $row['profit'] .'</td>';
             $html .= '<td> ₱' . $row['total'] .  '.00</td>';
             $totalSales += $row['total']; // Accumulate total sales
+            $totalProfit += $row['profit'];
 
             $html .= '</tr>';
         }
 
         // Display total sales row
         $html .= '<tr>';
-        $html .= '<td colspan="2" style="text-align: right;">Total Sales:</td>';
+        $html .= '<td colspan="3" style="text-align: right;">Total Sales:</td>';
         $html .= '<td> ₱' . $totalSales . '.00</td>';
         $html .= '</tr>';
+        $html .= '<tr>';
+        $html .= '<td colspan="3" style="text-align: right;">Total Profit:</td>';
+        $html .= '<td> ₱' . $totalProfit . '.00</td>';
+        // $html .= '<td> ₱' . $totalProfit . '.00</td>';
+
+  $html .= '</tr>';
     } else {
         $html .= '<tr><td colspan="3">No Sales Recorded today.</td></tr>';
     }

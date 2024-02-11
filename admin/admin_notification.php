@@ -4,6 +4,7 @@
     ini_set('display_errors',0);
     require('../classes/resident.class.php');
     $userdetails = $bmis->get_userdata();
+    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     // $bmis->delete_certofres();
     // $view = $bmis->view_certofres();

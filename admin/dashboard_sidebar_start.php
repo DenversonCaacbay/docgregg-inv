@@ -54,6 +54,10 @@
         border-radius: 10px;
         /* opacity: 0.8; */
     }
+    .fas{
+        color: #fff !important;
+        font-size: 18px !important;
+    }
     label{
         font-weight: 500;
         font-size: 18px;
@@ -146,28 +150,28 @@
 
             <li class="nav-item" id="inventory">
                 <a class="nav-link text-light" href="admin_inventory.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-clipboard-list"></i>
                     <span>Inventory</span>
                 </a>
             </li>
 
             <li class="nav-item" id="sales">
                 <a class="nav-link text-light" href="admin_product_sale.php">
-                    <i class="fas fa-bullhorn"></i>
+                    <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span>
                 </a>
             </li>
 
             <li class="nav-item" id="staff">
                 <a class="nav-link text-light" href="admin_staff_list.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-users"></i>
                     <span>Staff List</span>
                 </a>
             </li>
 
             <li class="nav-item" id="reports">
                 <a class="nav-link text-light" href="admin_reports_logs.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-flag"></i>
                     <span>Logs & Reports</span>
                 </a>
             </li>
@@ -188,7 +192,7 @@
 
             <li class="nav-item" id="sales">
                 <a class="nav-link text-light" href="admin_product_sale.php">
-                    <i class="fas fa-bullhorn"></i>
+                <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span>
                 </a>
             </li>
@@ -237,12 +241,12 @@
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                            <!-- <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
-                            </a>
+                            </a> -->
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
@@ -256,26 +260,36 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </li>
                         <li class="nav-item mt-4">
                         <?php if ($userRole === 'administrator') : ?>
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
                             
                                 <a href="admin_low_inventory.php" style="position: relative;">
-                                    <i class="fas fa-bell" style="font-size: 20px;"></i>
+                                    <i class="fas fa-bell " style="font-size: 20px;color: #0296be !important;"></i>
                                     <?php if($lowInventoryCount > 0) : ?>
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
                             <?php endif; ?>
                         <?php endif; ?>
                         </li>
+                        <!-- <li class="nav-item mt-4">
+                                <a href="#" style="position: relative;">
+                                    <i class="fas fa-user text-primary" style="font-size: 20px;"></i>
+                                </a>&nbsp;
+                        </li> -->
 
                         <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    
-                                        <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                
+                                <?php if (empty($user['picture'])): ?>
+                                    <img id="blah" src="../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px;" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                <?php else: ?>
+                                    <img id="blah" src="<?= $user['picture']?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                <?php endif; ?>
+                                <!-- <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6><i class="fas fa-user text-primary mb-1 ml-1" style="font-size: 20px;"></i> -->
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>

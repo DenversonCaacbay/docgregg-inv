@@ -17,6 +17,7 @@
     //
     $productAll = '';
     $processTotal = '';
+    $processProfit = '';
     $processCustomer = '';
     $processCash = '';
     $processChange = '';
@@ -28,7 +29,7 @@
         foreach($_SESSION['shopping_cart'] as $data){
             $prod_id = $data['item_id'];
             $prod_qty = $data['item_quantity'];
-            $processTotalQty += $data['item_quantity'];;
+            $processTotalQty += $data['item_quantity'];
 
             // echo $data['item_id']."<br>";
             // echo $data['item_quantity']."<br>";
@@ -58,8 +59,8 @@
         }
 
         // create invoice
-        $sql = 'INSERT INTO invoice(customer_name, product, total, totalQty,cash, cash_change, staff_name) 
-            VALUES (:customer_name, :products, :total, :totalQty, :cash, :cash_change, :staff_name)';
+        $sql = 'INSERT INTO invoice(customer_name, product, total,profit, totalQty,cash, cash_change, staff_name) 
+            VALUES (:customer_name, :products, :total,:profit, :totalQty, :cash, :cash_change, :staff_name)';
 
         $statement = $pdo->prepare($sql);
 
@@ -67,6 +68,7 @@
             'customer_name' => 'text',
             'products' => 'text',
             'total' => '9',
+            'profit' => '9',
             'totalQty' => '0',
             'cash' => 9,
             'cash_change' => 9,
@@ -76,6 +78,7 @@
         $statement->bindParam(':customer_name', $newInv['customer_name']);
         $statement->bindParam(':products', $newInv['products']);
         $statement->bindParam(':total', $newInv['total']);
+         $statement->bindParam(':profit', $newInv['profit']);
         $statement->bindParam(':totalQty', $newInv['totalQty']);
         $statement->bindParam(':cash', $newInv['cash']);
         $statement->bindParam(':cash_change', $newInv['cash_change']);
@@ -86,6 +89,7 @@
         $newInv['products'] = $_POST['productAll'];
         $newInv['totalQty'] = $processTotalQty;
         $newInv['total'] = $_POST['processTotal'];
+        $newInv['profit'] = $_POST['processProfit'];
         $newInv['cash'] = $_POST['processCash'];
         $newInv['cash_change'] = $_POST['processChange'];
         $newInv['staff_name'] = $_POST['staff_name'];
