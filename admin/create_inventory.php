@@ -87,21 +87,6 @@
                                     <input type="number" class="form-control" name="qty" required>
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="mtop" >Capital:  </label>
-                                    <input type="number" class="form-control" id="capital" name="input_capital" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="mtop" >Profit:  </label>
-                                    <input type="number" class="form-control" id="profit" name="input_profit" required>
-                                </div>
-                            </div>
-
-                            
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="mtop">Category</label>

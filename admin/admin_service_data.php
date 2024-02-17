@@ -129,16 +129,33 @@ img{
             const card = document.createElement('div');
             card.classList.add('col-md-3');
             card.innerHTML = `
-                <div class="card border-left-primary shadow mt-3">
+            <style>
+            .col-md-3 {
+        display: flex;
+        
+    }
+            .card-ui {
+                display: flex;
+                flex-direction: column;
+                width:100%;
+            }
+            .item-header {
+                margin-bottom: 10px;
+            }
+            .card-ui h5:last-child {
+                flex-grow: 1;
+            }
+            </style>
+                <div class="card card-ui border-left-primary shadow mt-3">
                     
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <h5 style="font-size: 16px;" class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
-                                <p class="h5 mb-0 -bold text-dark">Count: ${currentData.count}</p>
+                                <p style="font-size: 16px;" class="h5 mb-0 -bold text-dark">Count: ${currentData.count}</p>
                             </div>
                             <div class="col-auto">
-                                <img src="${imageUrl}" style="width:50px" alt="${currentService}">
+                                <img src="${imageUrl}" style="width:35px" alt="${currentService}">
                             </div>
                         </div>
                     </div>

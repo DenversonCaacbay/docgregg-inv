@@ -150,6 +150,13 @@ if(isset($_GET["action"]))
     table td h5{
         font-size: 18px;
     }
+    .inputQuantity{
+        border: 1px rgba(2,150,190,1) solid;
+        text-align:center;
+        padding: 5px;
+        width: 90%;
+        border-radius: 5px;
+    }
 </style>
 
 <!-- Begin Page Content -->
@@ -201,7 +208,7 @@ if(isset($_GET["action"]))
                                         <td width="20%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
                                         <td width="20%"><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
                                         
-                                        <td><input type="number" name="quantity" class="form-control inputQuantity " value="1" /></td>
+                                        <td><input type="number" name="quantity" class=" inputQuantity " value="1" /></td>
                                         <!-- <td width="20%" hidden><h5><?php echo $row["profit"]; ?></h5></td> -->
                                         <td style="display:none"><input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" /></td>
                                         <td style="display:none"><input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" /></td>
