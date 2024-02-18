@@ -3,6 +3,9 @@
 
 <!-- SweetAlert 2 JS (including dependencies) -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
 
 <?php 
 
@@ -1068,42 +1071,54 @@
                 $password = ($_POST['password']);
                 $lname = ucfirst(strtolower($_POST['lname'])); // Convert to uppercase
                 $fname = ucfirst(strtolower($_POST['fname'])); // Convert to uppercase
-                // $mi = strtoupper(substr($_POST['mi'], 0, 1)) . '.'; // Get first letter in uppercase and add '.'
-                $mi = ""; // Get first letter in uppercase and add '.'
+                $mi = ""; // Assuming you're not using this field
                 $role = $_POST['role'];
                 $email = $_POST['email'];
-        
+            
                 // Check if a new picture is uploaded
                 $new_picture = $_FILES['new_picture'];
                 $target_dir = "../uploads/admin/";
-        
+            
                 // Function to handle image upload
                 function uploadImage($new_picture, $target_dir) {
                     $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
-        
+            
                     if (!is_dir($target_dir)) {
                         mkdir($target_dir, 0755, true);
                     }
-        
+            
                     $target_file = $target_dir . time() . '.' . $file_extension;
-        
+            
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         return $target_file;
                     } else {
                         return false;
                     }
                 }
-        
+            
                 // Check if a new picture is uploaded
                 if (!empty($new_picture['name'])) {
                     $uploaded_file = uploadImage($new_picture, $target_dir);
-        
+            
                     if ($uploaded_file !== false) {
+                        // Include Cropper.js to handle image cropping
+                        // require 'path/to/cropperjs/cropper.min.php';
+            
+                        // Get the cropped image data from the form submission
+                        $cropped_image_data = $_POST['cropped_image'];
+                        
+                        // Convert base64 encoded cropped image data to image file
+                        $cropped_image = base64_decode(str_replace('data:image/png;base64,', '', $cropped_image_data));
+            
+                        // Save the cropped image to the uploads directory
+                        $cropped_file = $target_dir . 'cropped_' . time() . '.png';
+                        file_put_contents($cropped_file, $cropped_image);
+            
                         $connection = $this->openConn();
-        
+            
                         // Update the staff information including the new picture
                         $stmt = $connection->prepare("UPDATE tbl_admin SET lname = ?, fname = ?, mi = ?, role = ?, email = ?, picture = ? WHERE id_admin = ?");
-                        $stmt->execute([$lname, $fname, $mi, $role, $email, $uploaded_file, $id_user]);
+                        $stmt->execute([$lname, $fname, $mi, $role, $email, $cropped_file, $id_user]);
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                         return;
@@ -1114,7 +1129,7 @@
                     $stmt = $connection->prepare("UPDATE tbl_admin SET lname = ?, fname = ?, mi = ?, role = ?, email = ? WHERE id_admin = ?");
                     $stmt->execute([$lname, $fname, $mi, $role, $email, $id_user]);
                 }
-        
+            
                 $message2 = "Admin Account Updated";
                 echo "<script type='text/javascript'>alert('$message2');</script>";
                 header('refresh:0');
