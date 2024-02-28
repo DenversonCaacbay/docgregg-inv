@@ -319,8 +319,25 @@ if(isset($_GET["action"]))
                             </td>
                         </tr>
                     </table>
-                    
-                    <input type="submit" class="btn btn-primary w-100 mb-3 sticky-bottom" id="proceed" value="PROCEED PAYMENT">
+                    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-md">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="orderDetails">
+                                <!-- Order details will be loaded dynamically here -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Edit Orders</button>
+                                <button type="submit" class="btn btn-primary" id="proceedPaymentModal">Proceed Payment</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary mb-3 ms-auto fixed-bottom" style="width: 34%; margin-right:1.5%" id="proceed" value="Proceed Payment">
+
                     </form>
                     <button style="width:50%;" name="updatedata" onclick="checkpayment();" class="btn btn-primary paymentbtn sticky-bottom">Calculate</button>
                     <a href="pos/pos_clear.php"><button style="width:49%;" class="btn btn-primary sticky-bottom">Clear Orders</button></a>
@@ -356,6 +373,50 @@ if(isset($_GET["action"]))
 </div>
 
 
+
+<!-- Modal -->
+
+<script>
+  // JavaScript to handle displaying orders in modal
+  document.getElementById('proceed').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Extract last table data (td) element and get its content
+    var lastTDContent = document.querySelector('.table-responsive tr:last-of-type td:last-of-type').textContent;
+
+    // Create an h5 element and set its content to the last td content
+    var lastTDH5 = document.createElement('h5');
+    lastTDH5.textContent = lastTDContent;
+
+    // Extract input field values
+    var customerName = document.getElementById('customer_id').value;
+    var cashAmount = document.getElementById('cash_id').value;
+
+    // Combine last td content, customer name, and cash amount into one HTML string
+    var orderDetailsHTML = "<h5><strong>List of Orders:</strong><br> " + lastTDContent.split(',').join('<br>') + "</h5>";
+
+    orderDetailsHTML += "<h5><strong>Customer Name:</strong> " + customerName + "</h5>";
+    orderDetailsHTML += "<h5><strong>Cash Amount:</strong> ₱" + cashAmount + ".00</h5>";
+
+    // Clear any existing content in the modal body
+    document.getElementById('orderDetails').innerHTML = '';
+
+    // Append the h5 elements to the modal body
+    // document.getElementById('orderDetails').appendChild(lastTDH5);
+    document.getElementById('orderDetails').insertAdjacentHTML('beforeend', orderDetailsHTML);
+
+    // Show the modal
+    var orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+    orderModal.show();
+  });
+
+  // JavaScript to handle proceeding payment within the modal
+  document.getElementById('proceedPaymentModal').addEventListener('click', function(event) {
+    // Here you can write code to submit the form data to your PHP script for database insertion
+    // Example: document.getElementById('yourFormId').submit();
+    console.log('Proceed Payment button clicked within modal');
+  });
+</script>
 
 
 <!-- End of Main Content -->
