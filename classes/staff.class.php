@@ -1625,6 +1625,33 @@
                 header("refresh: 1; url=services.php");
             }
         }
+
+        public function create_customer(){
+            if (isset($_POST['create_customer'])) {
+                $customer_name = ucwords(strtolower($_POST['customer_name']));
+                $customer_contact = $_POST['customer_contact'];
+                $customer_address = ucwords(strtolower($_POST['customer_address']));
+                $staff_name = $_POST['staff_name'];
+
+                $connection = $this->openConn();
+                $stmt_services = $connection->prepare("INSERT INTO tbl_user (customer_name,customer_contact,customer_address, staff_name, created_at) VALUES (?, ?, ?, ?, NOW())");
+                $stmt_services->execute([$customer_name,$customer_contact,$customer_address,  $staff_name]);
+
+                // Use SweetAlert for the alert
+                echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Customer Added',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                      </script>";
+                // Redirect after showing the alert
+                header("refresh: 1; url=services.php");
+            }
+        }
         
         //Using Alert
         // public function create_service(){

@@ -316,33 +316,6 @@ container.appendChild(rowContainer);
                 </script>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12"><h3>Recently Availed Service</h3></div>
-            <div class="col-md-12">
-                <table class="table reponsive">
-                    <th>Date</th>
-                    <th>Customer Name</th>
-                    <th>Service Availed</th>
-                    <th>Staff Name</th>
-                    <th></th>
-
-                    <?php if(is_array($recent_user)) {?>
-                        <?php foreach($recent_user as $view) {?>
-                        <tr>
-                            <td><?= date("F d, Y - l", strtotime($view['created_at'])); ?></td>
-                            <td><?= $view['customer_name'];?></td>
-                            <td><?= $view['service_availed'];?></td>
-                            <td><?= $view['staff_name'];?></td>
-                            <td><span class="badge bg-danger">New</span></td>
-                            <!-- <td>Dog Hat</td>
-                            <td>Ruby</td>
-                            <td>January 01, 2024</td> -->
-                        </tr>
-                        <?php }?>
-                    <?php } ?>
-                </table>    
-            </div>
-        </div>
        
 <!-- /.container-fluid -->
 

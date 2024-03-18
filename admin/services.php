@@ -41,35 +41,17 @@
     
     <div class="row">
         <div class="col-md-6"><h1 class="">Services</h1></div>
-        <div class="col-md-6"><a href="create_service.php" style="float:right;padding: 10px" class="btn btn-primary">Add Data</a></div>
+        <div class="col-md-6"><a href="create_customer.php" style="float:right;padding: 10px" class="btn btn-primary">Add Customer</a></div>
     </div>
 
     <div class="row"> 
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label> Search </label>
                         <input type="text" class="form-control" id="searchInput" name="name"  value="" required>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <label> Services </label>
-                    <select id="categorySelect" class="form-select" aria-label="Default select example">
-                        <option>All</option>
-                        <option value="consultation">Consultation</option>
-                        <option value="vaccination">Vaccination</option>
-                        <option value="deworming">Deworming</option>
-                        <option value="heartworm">HeartWorm</option>
-                        <option value="treatment">Treatment</option>
-                        <option value="surgery">Surgery</option>
-                        <option value="laboratory">Laboratory</option>
-                        <option value="confinement">Confinement</option>
-                        <option value="diagnostic">Diagnostic</option>
-                        <option value="grooming">Grooming</option>
-                        <option value="cesarian">Cesarian Section Surgery</option>
-                        <option value="bloodchemtest">Blood Chemistry Test</option>
-                    </select>
                 </div>
             </div>
             
@@ -81,8 +63,6 @@
                                 <th> Customer Name </th>
                                 <th> Contact </th>
                                 <th> Address </th>
-                                <th> Availed Service </th>
-                                <th> Date Availed </th>
                                 <th> Actions </th>
                             </tr>
                         </thead>
@@ -96,21 +76,15 @@
                                         </td>
                                         <td> <?= $item['customer_contact'] ?> </td>
                                         <td> <?= $item['customer_address'] ?> </td>
-                                        <td data-service="<?= htmlspecialchars($item['service_availed']); ?>">
-                                            <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8'); ?>">
-                                                <?= strlen($item['service_availed']) > 30 ? substr($item['service_availed'], 0, 30) . '...' : $item['service_availed']; ?>
-                                            </a>
-                                            
-                                        </td>
-                                        <td hidden><?= $item['treatment_name']; ?></td>
-                                        <td> <?= date("F d, Y", strtotime($item['created_at'])); ?> </td>
                                         <td>
                                             <form action="" method="post">
                                                 <input type="hidden" name="serv_id" value="<?= $item['serv_id']; ?>">
                                                 <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
                                                 <input type="hidden" name="service_availed" value="<?= $item['service_availed']; ?>">
+                                                
                                                 <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
-                                                <button class="btn btn-primary" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;" onclick="return confirm('Are you sure you want to Archive this data?')"> Remove </button>
+                                                <button class="btn btn-primary" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> View </button>
+                                                <button class="btn btn-danger" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;" onclick="return confirm('Are you sure you want to Archive this data?')"> Remove </button>
                                             </form>
                                         </td>
                                     </tr>
