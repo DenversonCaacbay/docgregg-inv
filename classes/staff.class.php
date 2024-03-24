@@ -311,6 +311,15 @@
         
             return $view;
         }
+        public function view_customers(){
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_user");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+            
+            return $view;
+        }
 
         public function view_services_all(){
             $connection = $this->openConn();

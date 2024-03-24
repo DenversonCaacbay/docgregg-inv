@@ -37,6 +37,11 @@
     $rescountuser10 = $staffbmis->count_services_laboratory();
     $rescountuser11 = $staffbmis->count_services_diagnostic();
 
+    // For Low Inventory
+    $recordsPerPage = 3; // set the number of records to display per page
+    $view = $staffbmis->view_low_inventory($page, $recordsPerPage);
+    $totalRecords = $staffbmis->count_low_inventory(); // get the total number of records
+
 
 
 ?>
@@ -198,10 +203,37 @@ container.appendChild(rowContainer);
 
 
 
+    <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between">
+                    <h3>Low Stock</h3>
+                    <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
+                </div>
+                
+            </div>
+            <div class="col-md-12">
+                <table class="table reponsive">
+                    <th> Product Name </th>
+                    <th> Quantity </th>
+                    <th> Category </th>
+                    <th></th>
 
+                    <?php if(is_array($view)) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                    <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
+                                    <td> <?= $view['quantity'];?> </td>
+                                    <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
+                                    <td class="text-center"><span class="badge bg-danger">Low Stocks</span></td>
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                </table>    
+            </div>
+        </div>
     <br>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="d-flex align-items-center">
                 <label for="timePeriod" class="me-2 mt-2">Select Time Period:</label>
                 <select id="timePeriod" style="width:120px;" class="form-select" onchange="updateChart()">
@@ -254,8 +286,10 @@ container.appendChild(rowContainer);
                     updateChart();
                 </script>
             </div>
-            <div class="col-md-4">
-            <canvas class="mt-3" id="pieChart" width="400" height="400"></canvas>
+            <h3 class="mt-3">Availed Service</h3>
+            <div class="col-md-12">
+                
+                <canvas  id="barChart" width="400" height="400"></canvas>
 
                 <script>
                     // Fetch data from PHP file using Fetch API
@@ -275,29 +309,19 @@ container.appendChild(rowContainer);
                                 var labels = data.map(item => item.service_name);
                                 var values = data.map(item => item.count);
 
-                                // Create a pie chart
-                                var ctx = document.getElementById('pieChart').getContext('2d');
-                                var myPieChart = new Chart(ctx, {
-                                    type: 'pie',
+                                // Create a bar chart
+                                var ctx = document.getElementById('barChart').getContext('2d');
+                                var myBarChart = new Chart(ctx, {
+                                    type: 'bar',
                                     data: {
                                         labels: labels,
                                         datasets: [{
+                                            label: 'Availed Per Services',
                                             data: values,
-                                            backgroundColor: [
-                                                'rgba(255, 99, 132, 0.7)',
-                                                'rgba(54, 162, 235, 0.7)',
-                                                'rgba(255, 206, 86, 0.7)',
-                                                'rgba(75, 192, 192, 0.7)',
-                                                'rgba(153, 102, 255, 0.7)',
-                                                'rgba(255, 159, 64, 0.7)',
-                                                'rgba(0, 128, 0, 0.7)',   // Green
-                                                'rgba(255, 0, 0, 0.7)',   // Red
-                                                'rgba(0, 0, 255, 0.7)',   // Blue
-                                                'rgba(255, 140, 0, 0.7)', // Dark Orange
-                                                'rgba(128, 0, 128, 0.7)', // Purple
-                                                'rgba(0, 255, 255, 0.7)', // Cyan
-                                            ],
-                                        }],
+                                            backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
+                                            borderColor: 'rgba(54, 162, 235, 1)',
+                                            borderWidth: 1
+                                        }]
                                     },
                                     options: {
                                         responsive: true,
@@ -312,9 +336,9 @@ container.appendChild(rowContainer);
                             })
                             .catch(error => console.error('Error fetching data:', error));
                     });
-
                 </script>
             </div>
+
         </div>
        
 <!-- /.container-fluid -->

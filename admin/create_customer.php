@@ -50,7 +50,7 @@
 
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="services.php">Back</a>
-        <h1 class="mb-0 ms-5">Add Customer</h1>
+        <h1 class="mb-0 ms-4">Add Customer</h1>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -76,6 +76,9 @@
                                     <label> Address: </label>
                                     <input type="text" class="form-control" name="customer_address" required>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="hidden" class="form-control" value="<?= $userdetails['fname']?> <?= $userdetails['lname']?>" name="staff_name">
                             </div>
 
                             

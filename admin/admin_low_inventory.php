@@ -78,7 +78,7 @@ if ($userdetails['role'] !== 'administrator') {
                                     <?php if (is_null($view['picture'])): ?>
                                         <img id="blah" src="../assets/placeholder/item-placeholder.png" width="50" alt="Item Picture" width="150">
                                     <?php else: ?>
-                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
+                                        <img src="<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" style="width: 50px; height:50px;">
                                         <?php endif; ?>
                                     </td>
                                     <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>

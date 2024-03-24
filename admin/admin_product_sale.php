@@ -205,7 +205,7 @@ if(isset($_GET["action"]))
                                 <tr>
                                     <form method="post" action="admin_product_sale.php?action=add&id=<?php echo $row["inv_id"]; ?>">
                                         <td width="20%"><h5 class=""><?php echo strlen($row['name']) > 20 ? substr($row['name'], 0, 20) . '...' : $row['name']; ?></h5></td>
-                                        <td width="20%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
+                                        <td width="10%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
                                         <td width="20%"><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
                                         
                                         <td><input type="number" name="quantity" class=" inputQuantity " value="1" /></td>
@@ -215,7 +215,7 @@ if(isset($_GET["action"]))
                                         <td style="display:none"><input type="hidden" name="hidden_stocks" class="hidden_stocks" value="<?php echo $row["quantity"]; ?>" /></td>
                                         <td style="display:none"><input type="hidden" name="hidden_profit" value="<?php echo $row["profit"]; ?>" /></td>
                                         
-                                        <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary addToCartBtn" value="Add to Cart" /></td>
+                                        <td><input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary addToCartBtn" value="Add to Orders" /></td>
                                     </form>
                                 </tr>                   
                             <?php

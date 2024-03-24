@@ -124,7 +124,7 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-
+        <?php if ($userRole === 'administrator') : ?>
         <!-- Nav Item - Dashboard -->
         <li class="nav-item" id="dashboard">
             <a class="nav-link text-light" href="admin_dashboard.php">
@@ -141,7 +141,7 @@
             Menu
         </div>
 
-        <?php if ($userRole === 'administrator') : ?>
+        
             <!-- Admin sees all items -->
             <li class="nav-item" id="client">
                 <a class="nav-link text-light" href="services.php">

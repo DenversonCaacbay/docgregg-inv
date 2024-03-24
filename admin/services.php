@@ -10,7 +10,8 @@
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $recordsPerPage = 5; // set the number of records to display per page
-    $view = $staffbmis->view_services_all($page, $recordsPerPage);
+    // $view = $staffbmis->view_services_all($page, $recordsPerPage);
+    $view = $staffbmis->view_customers($page, $recordsPerPage);
     // $totalRecords = $staffbmis->count_inventory(); // get the total number of records
 
 // Calculate the total number of pages
@@ -78,12 +79,12 @@
                                         <td> <?= $item['customer_address'] ?> </td>
                                         <td>
                                             <form action="" method="post">
-                                                <input type="hidden" name="serv_id" value="<?= $item['serv_id']; ?>">
+                                                <input type="hidden" name="serv_id" value="<?= $item['customer_id']; ?>">
                                                 <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
-                                                <input type="hidden" name="service_availed" value="<?= $item['service_availed']; ?>">
                                                 
                                                 <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
-                                                <button class="btn btn-primary" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> View </button>
+                                                <a href="view_customer.php" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
+                                                <!-- <button class="btn btn-primary" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> View </button> -->
                                                 <button class="btn btn-danger" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;" onclick="return confirm('Are you sure you want to Archive this data?')"> Remove </button>
                                             </form>
                                         </td>
