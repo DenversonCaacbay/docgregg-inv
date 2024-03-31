@@ -68,7 +68,7 @@
                     <div class="col-md-12">
                         <div class="container">
                             <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <!-- First Card -->
                                 <label>Select Pet Type:</label>
                                 <select class="form-select">
@@ -174,112 +174,6 @@
                                 <!-- <div class="mt-3">
                                     <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" onclick="return confirm('Are you sure you want to Avail this Services?')" disabled />
                                 </div> -->
-                            </div>
-                            <div class="col-md-6">
-                                <!-- Second Card -->
-                                <label>Select Pet Type:</label>
-                                <select class="form-select">
-                                    <option></option>
-                                    <option>Dog</option>
-                                    <option>Cat</option>
-                                </select>
-                            
-                                <div class="row mt-3">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Consultation" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Consultation
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Vaccination" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Vaccination
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Deworming" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Deworming
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="HeartWorm" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                HeartWorm
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Treatment" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                            Treatment
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Surgery" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                            Surgery
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Laboratory" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                            Laboratory
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Confinement" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Confinement
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Diagnostic" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Diagnostic
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Grooming" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Grooming
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Cesarian Section Surgery" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Cesarian Section Surgery
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Blood Chemistry Test" name="services_list[]" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Blood Chemistry Test
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" hidden>
-                                        <label> Staff Name: </label>
-                                        <input type="text" class="form-control" name="staff_name" value="<?= $userdetails['fname']?> <?= $userdetails['lname']?>">
-                                    </div>
-                                </div>
-                                <div class="input-group mt-3" id="showTreatment" style="display:none;">
-                                    <label>Select Treatment</label>
-                                    <select class="form-select w-100" name="treatment_input">
-                                        <option selected></option>
-                                        <option value="Surgical">Surgical</option>
-                                        <option value="Disease Management">Disease Management</option>
-                                    </select>
-                                </div>
-
-                            
-                                 
-
                             </div>
                             <div class="mt-3">
                                     <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" onclick="return confirm('Are you sure you want to Avail this Services?')" disabled />
