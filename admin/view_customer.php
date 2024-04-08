@@ -61,7 +61,7 @@
                 <input class="form-control" type="text">
                 <label class="mt-3">Address:</label>
                 <input class="form-control" type="text">
-                <button class="btn btn-primary mt-3">Update Information</button>
+                <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Update Information</button>
                 <button class="btn btn-danger mt-3">Remove Data</button>
             </div>
         </div>
@@ -77,6 +77,45 @@
                     <h5>Treatment : Surgical</h5>
                     <h5>Medicine: Sample Medicine</h5>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Profile-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Customer Information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data"> 
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label> Customer Name: </label>
+                                <input type="text" class="form-control" name="fname" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-12"> 
+                            <div class="form-group">
+                                <label> Customer Contact: </label>
+                                <input type="text" class="form-control" name="position" value="" >
+                            </div>
+                        </div>
+                        <div class="col-12"> 
+                            <div class="form-group">
+                                <label> Address: </label>
+                                <input type="text" class="form-control" name="role" value="" >
+                            </div>
+                        </div>
+                        <div class="col-12"><button class="btn btn-primary w-100" style="margin-top: 35px;font-size: 18px; border-radius:5px;" type="submit" name="update_staff"> Save </button></div>
+                    </div>
+                </form>
+            </div>
             </div>
         </div>
     </div>

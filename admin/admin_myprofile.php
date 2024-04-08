@@ -147,13 +147,6 @@
         <form method="post" enctype="multipart/form-data"> 
             <div class="row">
                 <div class="col-md-12 mb-2">
-                <!-- <div class="custom-file form-group">
-                    <input type="file" onchange="readURL(this);" value="<?= $user['new_picture']?>" class="custom-file-input" id="customFile" name="new_picture">
-                    <label class="custom-file-label" for="customFile">Choose File Photo</label>
-                </div>
-                <div class="cropper-container">
-                    <img id="cropper-image" src="../assets/placeholder/user-placeholder.png" class="img-fluid mt-5" width="300" alt="User Picture">
-                </div> -->
                 </div>
                 <div class="col-6">
                     <div class="form-group">
