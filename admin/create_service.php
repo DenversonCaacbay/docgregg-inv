@@ -161,19 +161,34 @@
                                         <input type="text" class="form-control" name="staff_name" value="<?= $userdetails['fname']?> <?= $userdetails['lname']?>">
                                     </div>
                                 </div>
+                                <!-- For Treatment -->
                                 <div class="input-group mt-3" id="showTreatment" style="display:none;">
-                                    <label>Select Treatment</label>
+                                    <label>Select Treatment: </label>
                                     <select class="form-select w-100" name="treatment_input">
                                         <option selected></option>
                                         <option value="Surgical">Surgical</option>
-                                        <option value="Disease Management">Disease Management</option>
+                                        <option value="Disease Management">Medicine</option>
                                     </select>
                                 </div>
-
-                            
-                                <!-- <div class="mt-3">
-                                    <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" onclick="return confirm('Are you sure you want to Avail this Services?')" disabled />
-                                </div> -->
+                                <!-- For Laboratory -->
+                                <div class="input-group mt-3" id="showLaboratory" style="display:none;">
+                                    <label>Select Laboratory: </label>
+                                    <select class="form-select w-100" name="laboratory_input">
+                                        <option selected></option>
+                                        <option value="CBC">CBC</option>
+                                        <option value="DIAGNOSTIC">DIAGNOSTIC</option>
+                                        <option value="ULTRASOUND">ULTRASOUND</option>
+                                    </select>
+                                </div>
+                                <!-- For Grooming -->
+                                <div class="input-group mt-3" id="showGrooming" style="display:none;">
+                                    <label>Select Grooming: </label>
+                                    <select class="form-select w-100" name="grooming_input">
+                                        <option selected></option>
+                                        <option value="Basic Groom">Basic Groom</option>
+                                        <option value="Full Groom">Full Groom</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="mt-3">
                                     <input type="submit" class="btn btn-primary w-100 mb-3" name="create_service" value="Add Service" onclick="return confirm('Are you sure you want to Avail this Services?')" disabled />
@@ -193,9 +208,18 @@
     document.addEventListener('DOMContentLoaded', function () {
     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
     var treatmentCheckbox = document.querySelector('input[type="checkbox"][value="Treatment"]');
+    var laboratoryCheckbox = document.querySelector('input[type="checkbox"][value="Laboratory"]');
+    var groomingCheckbox = document.querySelector('input[type="checkbox"][value="Grooming"]');
+
     var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
     var treatmentInput = document.getElementById('showTreatment'); // Corrected element ID
     var treatmentDropdown = document.querySelector('select[name="treatment_input"]'); // Selecting the treatment dropdown
+
+    var laboratoryInput = document.getElementById('showLaboratory');
+    var laboratoryDropdown = document.querySelector('select[name="laboratory_input"]'); 
+
+    var groomingInput = document.getElementById('showGrooming');
+    var groomingDropdown = document.querySelector('select[name="grooming_input"]'); 
 
     // Initial check and set the button state
     checkAndUpdateButtonState();
@@ -205,6 +229,8 @@
         checkbox.addEventListener('change', checkAndUpdateButtonState);
     });
 
+
+    // For Treatment
     // Add event listener to the treatment checkbox
     treatmentCheckbox.addEventListener('change', function () {
         if (this.checked) {
@@ -220,8 +246,64 @@
         checkAndUpdateButtonState(); // Update button state when treatment checkbox changes
     });
 
+    // For Laboratory
+    // Add event listener to the treatment checkbox
+    laboratoryCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            // Show the treatment input field
+            laboratoryInput.style.display = 'block';
+            laboratoryDropdown.setAttribute('required', 'required'); // Make the dropdown required
+        } else {
+            // Hide the treatment input field
+            laboratoryInput.style.display = 'none';
+            laboratoryDropdown.removeAttribute('required'); // Remove the required attribute from the dropdown
+            laboratoryDropdown.selectedIndex = 0; // Reset the selected index
+        }
+        checkAndUpdateButtonState(); // Update button state when treatment checkbox changes
+    });
+
+    // For Grooming
+    // Add event listener to the treatment checkbox
+    groomingCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            // Show the treatment input field
+            groomingInput.style.display = 'block';
+            groomingDropdown.setAttribute('required', 'required'); // Make the dropdown required
+        } else {
+            // Hide the treatment input field
+            groomingInput.style.display = 'none';
+            groomingDropdown.removeAttribute('required'); // Remove the required attribute from the dropdown
+            groomingDropdown.selectedIndex = 0; // Reset the selected index
+        }
+        checkAndUpdateButtonState(); // Update button state when treatment checkbox changes
+    });
+
+
+    // IF NONE IS SELECTED IN DROPDOWN IT WILL BE REQUIRED
     // Add event listener to the treatment dropdown
     treatmentDropdown.addEventListener('change', function () {
+        if (this.value.trim() !== '') {
+            // Make the treatment dropdown required if it has a selected value
+            this.setAttribute('required', 'required');
+        } else {
+            // Remove the required attribute from the treatment dropdown if no value is selected
+            this.removeAttribute('required');
+        }
+        checkAndUpdateButtonState(); // Update button state when treatment dropdown changes
+    });
+
+    laboratoryDropdown.addEventListener('change', function () {
+        if (this.value.trim() !== '') {
+            // Make the treatment dropdown required if it has a selected value
+            this.setAttribute('required', 'required');
+        } else {
+            // Remove the required attribute from the treatment dropdown if no value is selected
+            this.removeAttribute('required');
+        }
+        checkAndUpdateButtonState(); // Update button state when treatment dropdown changes
+    });
+
+    groomingDropdown.addEventListener('change', function () {
         if (this.value.trim() !== '') {
             // Make the treatment dropdown required if it has a selected value
             this.setAttribute('required', 'required');
@@ -248,25 +330,3 @@
 
 
 <!-- End of Main Content -->
-
-
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="services_list[]"]');
-        var submitButton = document.querySelector('input[type="submit"][name="create_service"]');
-
-        // Initial check and set the button state
-        checkAndUpdateButtonState();
-
-        // Add event listener to each checkbox to update the button state
-        checkboxes.forEach(function (checkbox) {
-            checkbox.addEventListener('change', checkAndUpdateButtonState);
-        });
-
-        // Function to check the status of checkboxes and update the button state
-        function checkAndUpdateButtonState() {
-            var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-            submitButton.disabled = !atLeastOneChecked;
-        }
-    });
-</script> -->

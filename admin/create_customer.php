@@ -83,7 +83,7 @@
 
                             
                             <div class="mt-3">
-                                <input type="submit" class="btn btn-primary w-100 mb-3" name="create_customer" value="Add Customer" onclick="return confirm('Are you sure you want to Add Customer?')" />
+                                <input type="submit" class="btn btn-primary w-100 mb-3 p-2" name="create_customer" value="Add Customer" onclick="return confirm('Are you sure you want to Add Customer?')" />
                             </div>
                             
                             

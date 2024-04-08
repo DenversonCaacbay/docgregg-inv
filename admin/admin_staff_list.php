@@ -82,7 +82,7 @@
                     <td>
                         <form action="" method="post">
                             <input type="hidden" name="id_admin" value="<?= $user['id_admin'];?>">
-                            <button class="btn btn-primary" type="submit" name="delete_staff" style="width: 70px; padding: 5px; font-size: 15px; border-radius: 5px;" onclick="return confirm('Are you sure you want to remove <?= $user['fname']; ?>?')">Remove</button>
+                            <button class="btn btn-danger" type="submit" name="delete_staff" style="width: 70px; padding: 5px; font-size: 15px; border-radius: 5px;" onclick="return confirm('Are you sure you want to remove <?= $user['fname']; ?>?')">Remove</button>
                         </form>
                     </td>
                 </tr>
