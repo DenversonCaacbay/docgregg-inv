@@ -83,7 +83,7 @@
                                                 <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
                                                 
                                                 <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
-                                                <a href="view_customer.php" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
+                                                <a href="view_customer.php?id=<?= $item['id_user'] ?>" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
                                                 <!-- <button class="btn btn-primary" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"> View </button> -->
                                                 <!-- <button class="btn btn-danger" type="submit" name="delete_services" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;" onclick="return confirm('Are you sure you want to Archive this data?')"> Remove </button> -->
                                             </form>

@@ -311,14 +311,65 @@
         
             return $view;
         }
+
+        public function view_single_customers(){
+            $id_user = $_GET['id'];
+
+            $connection = $this->openConn();
+    
+            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE id_user = ".$id_user);
+            $stmt->execute();
+            $view = $stmt->fetch();
+            
+            return $view;
+        }
+
         public function view_customers(){
             $connection = $this->openConn();
     
-            $stmt = $connection->prepare("SELECT * FROM tbl_user");
+            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
             
             return $view;
+        }
+
+        public function update_customer(){
+            $id_user = $_GET['id'];
+
+            $customer_name = $_POST['customer_name'];
+            $customer_contact = $_POST['customer_contact'];
+            $customer_address = $_POST['customer_address'];
+
+            if (isset($_POST['update_customer'])) {
+                $connection = $this->openConn();
+
+                $stmt = $connection->prepare("UPDATE tbl_user SET  
+                    `customer_name` = ?,  `customer_contact` = ?, 
+                    `customer_address` = ?
+                WHERE id_user = ?");
+
+                $stmt->execute([ $customer_name, $customer_contact, 
+                $customer_address, $id_user]);
+                
+                echo "<script type='text/javascript'>alert('Customer updated!');</script>";
+                header("Refresh:0");
+            }
+        }
+
+        public function delete_customer(){
+            $id_user = $_GET['id'];
+    
+            if(isset($_POST['delete_customer'])) {
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("UPDATE tbl_user set deleted_at = NOW() where id_user = ?");
+                $stmt->execute([$id_user]);
+                
+                echo "<script type='text/javascript'>
+                    alert('Customer removed!');
+                    location.href = 'services.php';
+                </script>";
+            }
         }
 
         public function view_services_all(){
