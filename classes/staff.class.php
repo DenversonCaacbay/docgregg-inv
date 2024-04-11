@@ -314,15 +314,56 @@
 
         public function view_single_customers(){
             $id_user = $_GET['id'];
-
             $connection = $this->openConn();
-    
-            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE id_user = ".$id_user);
-            $stmt->execute();
+        
+            // Retrieve user information
+            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE id_user = ?");
+            $stmt->execute([$id_user]);
             $view = $stmt->fetch();
-            
+
             return $view;
         }
+
+        
+        public function view_customer_services(){
+            $id_user = $_GET['id'];
+            $connection = $this->openConn();
+        
+            // get pets
+            $stmt_pets = $connection->prepare("SELECT pet_id FROM tbl_pet WHERE pet_owner_id = ?");
+            $stmt_pets->execute([$id_user]);
+            $pets = $stmt_pets->fetchAll(PDO::FETCH_COLUMN);
+
+            // Convert pets array into comma-separated string
+            $pet_ids_str = implode(',', $pets);
+
+            // get pet services
+            if(!empty($pet_ids_str)) {
+                $stmt_services = $connection->prepare("SELECT * FROM tbl_pet
+                    JOIN tbl_services ON tbl_pet.pet_id = tbl_services.pet_id
+                    WHERE tbl_pet.pet_id IN ($pet_ids_str)");
+                $stmt_services->execute();
+                $view = $stmt_services->fetchAll();
+            } else {
+                // If no pets found, return an empty array
+                $view = [];
+            }
+
+            return $view;
+        }
+
+        public function view_customer_pets(){
+            $id_user = $_GET['id'];
+            $connection = $this->openConn();
+        
+            // get pets
+            $stmt_pets = $connection->prepare("SELECT * FROM tbl_pet WHERE pet_owner_id = ?");
+            $stmt_pets->execute([$id_user]);
+            $view = $stmt_pets->fetchAll();
+
+            return $view;
+        }
+        
 
         public function view_customers(){
             $connection = $this->openConn();
@@ -1615,11 +1656,13 @@
         }
         public function create_service(){
             if (isset($_POST['create_service'])) {
-                $customer_name = ucwords(strtolower($_POST['customer_name']));
-                $customer_contact = $_POST['customer_contact'];
-                $customer_address = ucwords(strtolower($_POST['customer_address']));
+                // $customer_name = ucwords(strtolower($_POST['customer_name']));
+                // $customer_contact = $_POST['customer_contact'];
+                // $customer_address = ucwords(strtolower($_POST['customer_address']));
                 $staff_name = $_POST['staff_name'];
                 $services_list = $_POST['services_list'];
+                $pet = $_POST['chosen_pet'];
+                $customer = $_GET['id'];
                 $service_get = '';
                 $treatment_check = false;
         
@@ -1636,10 +1679,13 @@
                 $service_get = rtrim($service_get, ', ');
         
                 $connection = $this->openConn();
-                $stmt_services = $connection->prepare("INSERT INTO tbl_services (customer_name,customer_contact,customer_address, service_availed, staff_name, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-                $stmt_services->execute([$customer_name,$customer_contact,$customer_address, $service_get, $staff_name]);
+                $stmt_services = $connection->prepare("INSERT INTO tbl_services (id_user, pet_id, service_availed, staff_name, created_at) VALUES (?, ?, ?, ?, NOW())");
+                $stmt_services->execute([$customer, $pet, $service_get, $staff_name]);
 
-                
+                // temporary
+                $stmt_get_user = $connection->prepare("SELECT * FROM tbl_user WHERE id_user = ?");
+                $stmt_get_user->execute([$customer]);
+                $user_result = $stmt_get_user->fetch(PDO::FETCH_ASSOC);
 
                 // check if treatment has content
                 if($treatment_check){
@@ -1659,7 +1705,8 @@
                     $stmt_treatment->execute([$service_last_id, $treatmet_get]);
                 }
                 $stmt_logs = $connection->prepare("INSERT INTO tbl_log_services (customer_name,customer_contact,customer_address, service_availed, log_type, staff_name) VALUES (?,?,?, ?, ?, ?)");
-                $stmt_logs->execute([$customer_name,$customer_contact,$customer_address, $service_get, 'Added', $staff_name]);
+                $stmt_logs->execute([$user_result['customer_name'], $user_result['customer_contact'],
+                    $user_result['customer_address'], $service_get, 'Added', $staff_name]);
 
 
                 // Insert into tbl_inventory_logs

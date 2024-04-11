@@ -6,7 +6,9 @@
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
 
-    $view = $staffbmis->view_single_customers();
+    $view_profile = $staffbmis->view_single_customers();
+    $view = $staffbmis->view_customer_services();
+
     $staffbmis->update_customer();
     $staffbmis->delete_customer();
 
@@ -40,7 +42,7 @@
             </div>
            
         </div>
-        <div class="col-md-6"><a href="create_service.php" style="float:right;padding: 10px" class="btn btn-primary">Avail Service</a></div>
+        <div class="col-md-6"><a href="create_service.php?id=<?= $_GET['id'] ?>" style="float:right;padding: 10px" class="btn btn-primary">Avail Service</a></div>
     </div>
 
     <div class="row"> 
@@ -49,11 +51,11 @@
                 <form method="post">
                     <h3>Customer Information</h3>
                     <label class="mt-3">Name: </label>
-                    <input class="form-control" type="text" name="customer_name" value="<?= $view['customer_name'] ?>">
+                    <input class="form-control" type="text" name="customer_name" value="<?= $view_profile['customer_name'] ?>">
                     <label class="mt-3">Contact:</label>
-                    <input class="form-control" type="text" name="customer_contact" value="<?= $view['customer_contact'] ?>">
+                    <input class="form-control" type="text" name="customer_contact" value="<?= $view_profile['customer_contact'] ?>">
                     <label class="mt-3">Address:</label>
-                    <input class="form-control" type="text"  name="customer_address"  value="<?= $view['customer_address'] ?>">
+                    <input class="form-control" type="text"  name="customer_address"  value="<?= $view_profile['customer_address'] ?>">
                     <button class="btn btn-primary mt-3" type="submit" name="update_customer">Update Information</button>
                     <!-- <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Update Information</button> -->
                     <button class="btn btn-danger mt-3" type="submit" name="delete_customer" onclick="return confirm('Are you sure you want to remove this customer?')">Remove Data</button>
@@ -64,16 +66,25 @@
         <div class="col-md-8">
             <h3>Availed Services</h3>
             
-            <div class="card">
-                <div class="card-header bg-primary text-light d-flex justify-content-between">
-                    Date: January 1, 1999
-                </div>
-                <div class="card-body">
-                    <h5>Pet Type: Dog</h5>
-                    <h5>Treatment : Surgical</h5>
-                    <h5>Medicine: Sample Medicine</h5>
-                </div>
-            </div>
+            <?php if(is_array($view) && count($view) > 0) {?>
+                <?php foreach($view as $view) {?>
+                    <div class="card">
+                        <div class="card-header bg-primary text-light d-flex justify-content-between">
+                            Date: <?= date("F d, Y", strtotime($view['created_at'])) ?>
+                        </div>
+                        <div class="card-body">
+                            <h5>Pet Name: <?= $view['pet_name'] ?></h5>
+                            <h5>Pet Type: <?= $view['pet_type'] ?></h5>
+                            <h5>Treatment : <?= $view['service_availed'] ?></h5>
+                            <!-- <h5>Medicine: Sample Medicine</h5> -->
+                        </div>
+                    </div>
+            <?php }?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="9">No Data Found</td>
+                    </tr>
+                <?php } ?>
         </div>
     </div>
 

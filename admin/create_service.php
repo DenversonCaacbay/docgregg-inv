@@ -13,6 +13,8 @@
 
     $staffbmis->create_service();
 
+    $pets = $staffbmis->view_customer_pets();
+    // print_r($pets);
     $id_user = $_GET['id_user'];
     $staffbmis->create_pet($id_user);
     // echo $id_user;
@@ -58,7 +60,7 @@
     <!-- Page Heading -->
 
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="view_customer.php">Back</a>
+        <a class="btn btn-primary" href="view_customer.php?id=<?= $_GET['id'] ?>">Back</a>
         <h1 class="mb-0 ms-4">Avail Service</h1>
     </div>
     <div class="row">
@@ -71,10 +73,16 @@
                             <div class="col-md-12">
                                 <!-- First Card -->
                                 <label>Select Pet Type:</label>
-                                <select class="form-select">
-                                    <option></option>
-                                    <option>Dog</option>
-                                    <option>Cat</option>
+                                <select class="form-select" name="chosen_pet">
+                                <?php if(is_array($pets) && count($pets) > 0) {?>
+                                    <?php foreach($pets as $view) {?>
+                                        <option value="<?= $view['pet_id'] ?>"><?= $view['pet_name'] ?> (<?= $view['pet_type'] ?>)</option>
+                                        <?php }?>
+                                <?php } else { ?>
+                                        <tr>
+                                            <option colspan="9">No Data Found</option>
+                                        </tr>
+                                    <?php } ?>
                                 </select>
                             
                                 <div class="row mt-3">
