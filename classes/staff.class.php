@@ -220,6 +220,17 @@
             return $view;
         }
 
+         // inventory Internal
+         public function view_inventory_internal(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE deleted_at IS NULL AND quantity !='0'");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
         public function view_inventory_logs(){
             $connection = $this->openConn();
         
@@ -271,6 +282,16 @@
         
             return $view;
         }
+        //For Internal Medicine
+        public function view_inventory_internal_medicine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE category = 'Medicine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
         //For Syringe
         public function view_inventory_syringe(){
             $connection = $this->openConn();
@@ -281,11 +302,31 @@
         
             return $view;
         }
+        //For Internal Syringe
+        public function view_inventory_internal_syringe(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE category = 'Syringe' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
         //For Vaccine
         public function view_inventory_vaccine(){
             $connection = $this->openConn();
         
             $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For Iternal Vaccine
+        public function view_inventory_internal_vaccine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE category = 'Vaccine' AND deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -380,6 +421,7 @@
 
             $customer_name = $_POST['customer_name'];
             $customer_contact = $_POST['customer_contact'];
+            $customer_email = $_POST['customer_email'];
             $customer_address = $_POST['customer_address'];
 
             if (isset($_POST['update_customer'])) {
@@ -387,14 +429,29 @@
 
                 $stmt = $connection->prepare("UPDATE tbl_user SET  
                     `customer_name` = ?,  `customer_contact` = ?, 
-                    `customer_address` = ?
+                    `customer_email` = ?,  `customer_address` = ?
                 WHERE id_user = ?");
 
-                $stmt->execute([ $customer_name, $customer_contact, 
+                $stmt->execute([ $customer_name, $customer_contact, $customer_email, 
                 $customer_address, $id_user]);
                 
-                echo "<script type='text/javascript'>alert('Customer updated!');</script>";
-                header("Refresh:0");
+                echo "
+                    <script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Updated Sucessfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                    </script>
+                ";
+
+                        // Redirect after showing the alert
+                header("refresh: 1; url=view_customer.php?id=$id_user");
+                // echo "<script type='text/javascript'>alert('Customer updated!');</script>";
+                // header("Refresh:0");
             }
         }
 
@@ -655,10 +712,167 @@
                 header("refresh: 1; url=admin_inventory.php");
                 }
             }
-        }        
+        }    
+        // For Internal Inventory
+        public function create_inventory_internal() {
+            if (isset($_POST['create_inventory_internal'])) {
+                $name = $_POST['name'];
+                $price = $_POST['price'];
+                $capital = $_POST['input_capital'];
+                $profit = $_POST['input_profit'];
+                $qty = $_POST['qty'];
+                $category = $_POST['category'];
+                $bought_date = $_POST['bought_date'];
+                $exp = $_POST['exp_date'];
+                $new_picture = $_FILES['new_picture'];
+
+        
+                if (!empty($new_picture['name'])) {
+                    $target_dir = "../uploads/inventory/";
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        $connection = $this->openConn();
+
+                        // Insert into tbl_inventory
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+
+                        // Insert into tbl_inventory_logs
+                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
+                        $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
+
+                        // Show success alert
+                        echo "<script type='text/javascript'>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Item Created',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                });
+                            </script>";
+
+                        // Redirect after showing the alert
+                        header("refresh: 1; url=admin_inventory.php");
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                } else {
+                    $connection = $this->openConn();
+                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
+                    $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
+        
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Created',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                      </script>";
+                // Redirect after showing the alert
+                header("refresh: 1; url=admin_inventory.php");
+                }
+            }
+        }    
 
         public function update_inventory() {
             if (isset($_POST['update_inventory'])) {
+                $inv_id = $_GET['inv_id'];
+                $name = $_POST['name'];
+                $price = $_POST['price'];
+                $qty = $_POST['qty'];
+                $category = $_POST['category'];
+                $bought_date = $_POST['bought_date'];
+                $exp = $_POST['exp_date'];
+                $new_picture = $_FILES['new_picture'];
+        
+                // Fetch the old quantity from the database
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("SELECT quantity FROM tbl_inventory WHERE inv_id = ?");
+                $stmt->execute([$inv_id]);
+                $oldQuantity = $stmt->fetchColumn();
+        
+                // Compare old quantity with new quantity
+                if ($qty >= $oldQuantity) {
+                    if (!empty($new_picture['name'])) {
+                        $target_dir = "../uploads/inventory/";
+                        $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                        if (!is_dir($target_dir)) {
+                            mkdir($target_dir, 0755, true);
+                        }
+        
+                        $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                        if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                            $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
+                                SET name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
+                                WHERE inv_id = ?");
+                            $stmt_inventory->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
+
+                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
+                            $stmt_logs->execute([$name,  'Updated']); // Assuming 'create' is the log type for creating an item
+        
+                            echo "<script type='text/javascript'>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Item Updated',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                });
+                            </script>";
+                        // Redirect after showing the alert
+                        header("refresh: 1; url=admin_inventory.php");
+                        } else {
+                            echo "Sorry, there was an error uploading your file.";
+                        }
+                    } else {
+                        $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
+                            SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
+                            WHERE inv_id = ?");
+                        $stmt_inventory->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
+                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
+                        $stmt_logs->execute([$name,  'Updated']); // Assuming 'create' is the log type for creating an item
+        
+                        echo "<script type='text/javascript'>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Item Updated',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            });
+                        </script>";
+                    // Redirect after showing the alert
+                    header("refresh: 1; url=admin_inventory.php");
+                    }
+                } else {
+                    // Quantity is lower than the previous quantity, show an alert
+                    $message = "Cannot update! Quantity is lower than the previous quantity.";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                }
+            }
+        }
+
+        // Update Internal Inventory
+        public function update_inventory_internal() {
+            if (isset($_POST['update_inventory_internal'])) {
                 $inv_id = $_GET['inv_id'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
@@ -834,6 +1048,36 @@
         
                 // Update tbl_inventory to set deleted_at
                 $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET deleted_at = NOW() WHERE inv_id = ?");
+                $stmt_inventory->execute([$inv_id]);
+        
+                // Insert into tbl_log_inventory for the delete
+                $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES (?, ?)");
+                $stmt_logs->execute([$name, 'Deleted']); // Assuming 'Deleted' is the log type for deleting an item
+        
+                echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item Removed',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
+        
+                // Refresh the page after displaying the alert
+                header('refresh:1');
+            }
+        }
+        // Delete item in inventory Internal 
+        public function delete_invetory_internal() {
+            $inv_id = $_POST['inv_id'];
+            $name = $_POST['name'];
+            if (isset($_POST['delete_inventory_internal'])) {
+                $connection = $this->openConn();
+        
+                // Update tbl_inventory to set deleted_at
+                $stmt_inventory = $connection->prepare("UPDATE tbl_inventory_internal SET deleted_at = NOW() WHERE inv_id = ?");
                 $stmt_inventory->execute([$inv_id]);
         
                 // Insert into tbl_log_inventory for the delete
@@ -1382,6 +1626,14 @@
     
             return $result['count'];
         }
+        public function count_inventory_internal() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory_internal WHERE deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
         //Count Cat food
         public function count_inventory_catfood() {
             $connection = $this->openConn();
@@ -1409,10 +1661,28 @@
     
             return $result['count'];
         }
+        //Count Internal medicine
+        public function count_inventory_internal_medicine() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Medicine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
         //Count syringe
         public function count_inventory_syringe() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Syringe' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count Internal syringe
+        public function count_inventory_internal_syringe() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory_internal WHERE category = 'Syringe' AND deleted_at IS NULL");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -1431,6 +1701,15 @@
         public function count_inventory_vaccine() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result['count'];
+        }
+        //Count Internal vaccine
+        public function count_inventory_internal_vaccine() {
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory_internal WHERE category = 'Vaccine' AND deleted_at IS NULL");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -1737,12 +2016,13 @@
             if (isset($_POST['create_customer'])) {
                 $customer_name = ucwords(strtolower($_POST['customer_name']));
                 $customer_contact = $_POST['customer_contact'];
+                $customer_email = $_POST['customer_email'];
                 $customer_address = ucwords(strtolower($_POST['customer_address']));
                 $staff_name = $_POST['staff_name'];
 
                 $connection = $this->openConn();
-                $stmt_services = $connection->prepare("INSERT INTO tbl_user (customer_name,customer_contact,customer_address, staff_name, created_at) VALUES (?, ?, ?, ?, NOW())");
-                $stmt_services->execute([$customer_name,$customer_contact,$customer_address,  $staff_name]);
+                $stmt_services = $connection->prepare("INSERT INTO tbl_user (customer_name,customer_contact,customer_email,customer_address, staff_name, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+                $stmt_services->execute([$customer_name,$customer_contact,$customer_email,$customer_address,  $staff_name]);
 
                 // Use SweetAlert for the alert
                 echo "<script type='text/javascript'>

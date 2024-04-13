@@ -73,7 +73,13 @@
                             </div>
                             <div class="col-md-6 mt-2">
                                 <div class="form-group">
-                                    <label> Address: </label>
+                                    <label> Email: </label>
+                                    <input type="email" class="form-control"  name="customer_email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <div class="form-group">
+                                    <label> Address: (Street/Barangay, City, Province)</label>
                                     <input type="text" class="form-control" name="customer_address" required>
                                 </div>
                             </div>

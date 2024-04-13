@@ -41,7 +41,7 @@
     
     
     <div class="row">
-        <div class="col-md-6"><h1 class="">Services</h1></div>
+        <div class="col-md-6"><h1 class="">Customers</h1></div>
         <div class="col-md-6"><a href="create_customer.php" style="float:right;padding: 10px" class="btn btn-primary">Add Customer</a></div>
     </div>
 
@@ -63,6 +63,7 @@
                             <tr>
                                 <th> Customer Name </th>
                                 <th> Contact </th>
+                                <th> Email </th>
                                 <th> Address </th>
                                 <th> View </th>
                             </tr>
@@ -76,6 +77,7 @@
                                             <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
                                         </td>
                                         <td> <?= $item['customer_contact'] ?> </td>
+                                        <td> <?= $item['customer_email'] ?> </td>
                                         <td> <?= $item['customer_address'] ?> </td>
                                         <td>
                                             <form action="" method="post">

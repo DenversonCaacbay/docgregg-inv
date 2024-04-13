@@ -24,6 +24,37 @@
         top: 0;
         z-index: 100;
     }
+    .services--btn{
+        display:flex;
+        align-items:center;
+        align-content: center;
+        justify-content:end;
+    }
+    .service--card{
+        height:100%;
+        overflow-x: auto;
+    }
+
+    @media screen and (max-width: 1536px){
+        .service--card{
+            height:80%;
+        } 
+    }
+    @media screen and (max-width: 1280px){
+        .service--card{
+            height:80%;
+        } 
+    }
+    @media screen and (max-width: 1024px){
+        .service--card{
+            height:80%;
+        } 
+    }
+    @media screen and (max-width: 768px){
+        .service--card{
+            height:100%;
+        } 
+    }
 </style>
 
 <!-- Begin Page Content -->
@@ -38,11 +69,14 @@
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <a href="services.php" class="btn btn-primary">Back</a>
-                <h1 class="ms-2 mt-2">Services</h1>
+                <h1 class="ms-2 mt-2"></h1>
             </div>
            
         </div>
-        <div class="col-md-6"><a href="create_service.php?id=<?= $_GET['id'] ?>" style="float:right;padding: 10px" class="btn btn-primary">Avail Service</a></div>
+        <div class="col-md-6 services--btn">
+            <a href="create_pet.php?id=<?= $_GET['id'] ?>" style="padding: 10px;" class="btn btn-primary me-3">Add Pet</a>
+            <a href="create_service.php?id=<?= $_GET['id'] ?>" style="padding: 10px" class="btn btn-primary">Avail Service</a>
+        </div>
     </div>
 
     <div class="row"> 
@@ -54,6 +88,8 @@
                     <input class="form-control" type="text" name="customer_name" value="<?= $view_profile['customer_name'] ?>">
                     <label class="mt-3">Contact:</label>
                     <input class="form-control" type="text" name="customer_contact" value="<?= $view_profile['customer_contact'] ?>">
+                    <label class="mt-3">Email:</label>
+                    <input class="form-control" type="text" name="customer_email" value="<?= $view_profile['customer_email'] ?>">
                     <label class="mt-3">Address:</label>
                     <input class="form-control" type="text"  name="customer_address"  value="<?= $view_profile['customer_address'] ?>">
                     <button class="btn btn-primary mt-3" type="submit" name="update_customer">Update Information</button>
@@ -65,26 +101,30 @@
 
         <div class="col-md-8">
             <h3>Availed Services</h3>
-            
-            <?php if(is_array($view) && count($view) > 0) {?>
-                <?php foreach($view as $view) {?>
-                    <div class="card">
-                        <div class="card-header bg-primary text-light d-flex justify-content-between">
-                            Date: <?= date("F d, Y", strtotime($view['created_at'])) ?>
+            <div class="service--card">
+                <?php if(is_array($view) && count($view) > 0) {?>
+                    <?php foreach($view as $view) {?>
+                        <div class="card mt-3">
+                            <div class="card-header bg-primary text-light d-flex justify-content-between">
+                                Date: <?= date("F d, Y", strtotime($view['created_at'])) ?>
+                            </div>
+                            <div class="card-body">
+                                <h5>Pet Name: <?= $view['pet_name'] ?></h5>
+                                <h5>Pet Type: <?= $view['pet_type'] ?></h5>
+                                <h5>Availed Service : <?= $view['service_availed'] ?></h5>
+                                <h5>Type:</h5>
+                                <h5>Equiptment:</h5>
+                                <h5>Medicine:</h5>
+                                <!-- <h5>Medicine: Sample Medicine</h5> -->
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <h5>Pet Name: <?= $view['pet_name'] ?></h5>
-                            <h5>Pet Type: <?= $view['pet_type'] ?></h5>
-                            <h5>Treatment : <?= $view['service_availed'] ?></h5>
-                            <!-- <h5>Medicine: Sample Medicine</h5> -->
-                        </div>
-                    </div>
-            <?php }?>
+                <?php }?>
                 <?php } else { ?>
                     <tr>
                         <td colspan="9">No Data Found</td>
                     </tr>
                 <?php } ?>
+            </div>
         </div>
     </div>
 

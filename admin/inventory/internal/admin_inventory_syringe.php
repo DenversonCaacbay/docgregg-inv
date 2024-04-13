@@ -5,13 +5,15 @@
     $userdetails = $bmis->get_userdata();
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
+
+    $staffbmis->delete_invetory_internal();
     
-    $staffbmis->delete_invetory();
+    // $staffbmis->delete_invetory();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $recordsPerPage = 5; // set the number of records to display per page
-    $view = $staffbmis->view_inventory_syringe($page, $recordsPerPage);
-    $totalRecords = $staffbmis->count_inventory_syringe(); // get the total number of records
+    $view = $staffbmis->view_inventory_internal_syringe($page, $recordsPerPage);
+    $totalRecords = $staffbmis->count_inventory_internal_syringe(); // get the total number of records
 
 // Calculate the total number of pages
     $totalPages = ceil($totalRecords / $recordsPerPage);
@@ -34,7 +36,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <a class="btn btn-primary" href="../../admin_inventory.php">Back</a>
+                <a class="btn btn-primary" href="../../admin_inventory_internal.php">Back</a>
                 <h1 class="ms-2 mt-2">Internal Inventory</h1>
             </div>
             
@@ -102,9 +104,9 @@
                                     <td> <?= $view['expired_at'] ? date("M d, Y", strtotime($view['expired_at'])) : "N/A"; ?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="../update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <a href="../../update_inventory_internal_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
+                                            <button class="btn btn-danger" type="submit" name="delete_inventory_internal"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
                                         </form>
                                     </td>
                                 </tr>
