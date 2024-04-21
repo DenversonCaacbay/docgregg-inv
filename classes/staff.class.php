@@ -642,6 +642,7 @@
 
         public function create_inventory() {
             if (isset($_POST['create_inventory'])) {
+                $type = $_POST['type'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $capital = $_POST['input_capital'];
@@ -667,8 +668,8 @@
                         $connection = $this->openConn();
 
                         // Insert into tbl_inventory
-                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
 
                         // Insert into tbl_inventory_logs
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");

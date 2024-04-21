@@ -149,40 +149,42 @@
                     <span>Services</span>
                 </a>
             </li>
-
-            <li class="nav-item" id="inventory">
+            <!-- <li class="nav-item" id="inventory">
                 <a class="nav-link text-light" href="admin_inventory.php">
                 <i class="fas fa-clipboard-list"></i>
                     <span>Inventory</span>
                 </a>
+            </li> -->
+            <li class="nav-item dropdown"  id="inventory">
+            <a class="nav-link  dropdown-toggle" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Inventory</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="admin_inventory_internal.php">Internal Inventory</a></li>
+                <li><a class="dropdown-item" href="admin_inventory_external.php">External Inventory</a></li>
+                <li><a class="dropdown-item" href="create_inventory.php">Add Products</a></li>
+            </ul>
             </li>
-
             <li class="nav-item" id="sales">
                 <a class="nav-link text-light" href="admin_product_sale.php">
                     <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span>
                 </a>
             </li>
-
             <li class="nav-item" id="staff">
                 <a class="nav-link text-light" href="admin_staff_list.php">
                 <i class="fas fa-users"></i>
                     <span>Staff List</span>
                 </a>
             </li>
-
             <li class="nav-item" id="reports">
                 <a class="nav-link text-light" href="admin_reports_logs.php">
                 <i class="fas fa-flag"></i>
                     <span>Logs & Reports</span>
                 </a>
             </li>
-            
-
-           
-
             <!-- ... Other sidebar elements ... -->
-
         <?php elseif ($userRole === 'Staff') : ?>
             <!-- Staff sees specific items -->
             <li class="nav-item" id="client">
@@ -191,32 +193,26 @@
                     <span>Services</span>
                 </a>
             </li>
-
             <li class="nav-item" id="sales">
                 <a class="nav-link text-light" href="admin_product_sale.php">
                 <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span>
                 </a>
             </li>
-
         <?php endif; ?>
-
         <!-- ... Other sidebar elements ... -->
-
         <li class="nav-item" id="help">
             <a class="nav-link text-light" href="admin_help.php">
                 <i class="fas fa-file-contract"></i>
                 <span>Help & Support</span>
             </a>
         </li>
-
         <li class="nav-item" id="logout">
             <a class="nav-link text-light" href="logout.php">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
         </li>
-
     </ul>
 
 

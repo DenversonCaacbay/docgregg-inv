@@ -19,16 +19,18 @@
     include('dashboard_sidebar_start.php');
 ?>
 
+<link rel="stylesheet" href="../css/inventory.css"/>
+
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page--container">
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_inventory.php">Back</a>
-        <h1 class="mb-0 ml-2">Add Item Data</h1>
+        <h1 class="mb-0 ml-2">Add Product</h1>
     </div>
     <!-- Page Heading -->
                 
-    <div class="row mt-3"> 
+    <div class="row"> 
         <div class="col-md-12"> 
             <form method="post" enctype="multipart/form-data"> 
                 <div class="row">
@@ -48,6 +50,16 @@
                     <div class="col-md-7">
                         <div class="container">
                             <div class="row me-3">
+                            <div class="col-md-12 mt-3">
+                                <div class="form-group">
+                                    <label> Type of Inventory </label>
+                                    <select class="form-control" name="type" required>
+                                        <option value="" class="text-center">--Select Type--</option>
+                                        <option value="Internal">Internal Inventory</option>
+                                        <option value="External">External Inventory</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <!-- <div class="custom-file form-group">
                                     <input type="file" onchange="readURL(this, 'blah');" class="form-control" id="customFile" name="new_picture">

@@ -56,7 +56,7 @@
             </div>
             
         </div>
-        <div class="col-md-6"><a href="create_inventory_internal.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
+        <!-- <div class="col-md-6"><a href="create_inventory_internal.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div> -->
     </div>
 
     <div class="row"> 

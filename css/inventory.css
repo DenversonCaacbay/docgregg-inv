@@ -1,0 +1,8 @@
+.page--container{
+    height: 80vh;
+    overflow: auto;
+}
+
+/* .page--container::-webkit-scrollbar{
+    display: none;
+} */

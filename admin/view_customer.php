@@ -100,7 +100,7 @@
         </div>
 
         <div class="col-md-8">
-            <h3>Availed Services</h3>
+            <h3>Pets</h3>
             <div class="service--card">
                 <?php if(is_array($view) && count($view) > 0) {?>
                     <?php foreach($view as $view) {?>
@@ -115,6 +115,7 @@
                                 <h5>Type:</h5>
                                 <h5>Equiptment:</h5>
                                 <h5>Medicine:</h5>
+                                <button class="btn btn-primary">View Records</button>
                                 <!-- <h5>Medicine: Sample Medicine</h5> -->
                             </div>
                         </div>
