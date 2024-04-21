@@ -156,15 +156,15 @@
                 </a>
             </li> -->
             <li class="nav-item dropdown"  id="inventory">
-            <a class="nav-link  dropdown-toggle" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-clipboard-list"></i>
-                <span>Inventory</span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="admin_inventory_internal.php">Internal Inventory</a></li>
-                <li><a class="dropdown-item" href="admin_inventory_external.php">External Inventory</a></li>
-                <li><a class="dropdown-item" href="create_inventory.php">Add Products</a></li>
-            </ul>
+                <a class="nav-link  dropdown-toggle" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Inventory</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="admin_inventory_internal.php">Internal Inventory</a></li>
+                    <li><a class="dropdown-item" href="admin_inventory_external.php">External Inventory</a></li>
+                    <li><a class="dropdown-item" href="create_inventory.php">Add Products</a></li>
+                </ul>
             </li>
             <li class="nav-item" id="sales">
                 <a class="nav-link text-light" href="admin_product_sale.php">
