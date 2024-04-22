@@ -17,10 +17,10 @@
 <?php 
     include('dashboard_sidebar_start.php');
 ?>
-
+<link rel="stylesheet" href="../css/inventory.css"/>
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page--container">
 
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
@@ -44,6 +44,10 @@
                     <div class="col-md-7">
                         <div class="container ">
                             <div class="row me-3">
+                                <div class="col-md-12 mb-3">
+                                    <label>Type of Inventory</label>
+                                    <input type="text" class="form-control" name="type" value="<?= $item['type']?>" readonly/>
+                                </div>
                             <div class="col-md-12">
                                     <!-- <label>Item Picture:</label> -->
                                     <!-- <div class="custom-file form-group">
@@ -61,6 +65,18 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mtop" >Capital:  </label>
+                                    <input type="number" class="form-control" id="capital" name="input_capital" value="<?= $item['capital']?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mtop" >Profit: % </label>
+                                    <input type="number" class="form-control" id="profit" name="input_profit" value="<?= $item['profit']?>" readonly>
+                                </div>
+                            </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="mtop" >Price: </label>
                                         <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" readonly>
@@ -72,28 +88,29 @@
                                         <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" readonly>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="mtop">Category</label>
                                         <input type="text" class="form-control" name="category" value="<?= $item['category']?>" readonly>
                                     </div>
                                 </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="mtop"> Purchased Date: </label>
                                             <input type="date" class="form-control" name="bought_date" value="<?= $item['purchased_at']?>" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="mtop"> Expiration Date: </label>
                                             <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                         </div>
-                                    <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
-                                    <input type="hidden" class="form-control" name="role" value="resident">
-                                        
-                                    <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
-                                </div>
+                                        <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
+                                        <input type="hidden" class="form-control" name="role" value="resident">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
+                                    </div>
                                 
 
                             </div>

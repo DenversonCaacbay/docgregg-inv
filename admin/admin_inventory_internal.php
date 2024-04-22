@@ -51,12 +51,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <a class="btn btn-primary" href="admin_inventory.php">Back</a>
-                <h1 class="ms-2 mt-2">Internal Inventory</h1>
+                <!-- <a class="btn btn-primary" href="admin_inventory.php">Back</a> -->
+                <h1 class=" mt-2">Internal Inventory</h1>
             </div>
             
         </div>
-        <!-- <div class="col-md-6"><a href="create_inventory_internal.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div> -->
+        <div class="col-md-6"><a href="create_inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
     </div>
 
     <div class="row"> 
@@ -121,7 +121,7 @@
                                     <td> <?= $view['expired_at'] ? date("M d, Y", strtotime($view['expired_at'])) : "N/A"; ?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="update_inventory_internal_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
                                             <input type="hidden" name="name" value="<?= $view['name'];?>">
                                             <button class="btn btn-danger" type="submit" name="delete_inventory_internal"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>

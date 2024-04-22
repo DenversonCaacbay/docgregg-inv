@@ -125,7 +125,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item" id="dashboard">
-                <a class="nav-link text-light" href="../admin_dashboard.php">
+                <a class="nav-link text-light" href="../../admin_dashboard.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -140,7 +140,7 @@
 
             <!-- Client List -->
             <li class="nav-item" id="client">
-                <a class="nav-link  text-light" href="../services.php">
+                <a class="nav-link  text-light" href="../../services.php">
                     <i class="fas fa-users"></i>
                     <span>Service</span></a>
             </li>
@@ -153,29 +153,29 @@
                     <span>Inventory</span></a>
             </li> -->
             <li class="nav-item dropdown"  id="inventory">
-                <a class="nav-link  dropdown-toggle" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link  dropdown-toggle" href="../admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-clipboard-list"></i>
                     <span>Inventory</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="admin_inventory_internal.php">Internal Inventory</a></li>
-                    <li><a class="dropdown-item" href="admin_inventory_external.php">External Inventory</a></li>
-                    <li><a class="dropdown-item" href="create_inventory.php">Add Products</a></li>
+                    <li><a class="dropdown-item" href="../../admin_inventory_internal.php">Internal Inventory</a></li>
+                    <li><a class="dropdown-item" href="../../admin_inventory_external.php">External Inventory</a></li>
+                    <li><a class="dropdown-item" href="../../create_inventory.php">Add Products</a></li>
                 </ul>
             </li>
             <li class="nav-item" id="sales">
-                <a class="nav-link  text-light" href="../admin_product_sale.php">
+                <a class="nav-link  text-light" href="../../admin_product_sale.php">
                 <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span></a>
             </li>
             <li class="nav-item" id="staff">
-                <a class="nav-link text-light" href="../admin_staff_list.php">
+                <a class="nav-link text-light" href="../../admin_staff_list.php">
                 <i class="fas fa-users"></i>
                     <span>Staff List</span>
                 </a>
             </li>
             <li class="nav-item" id="reports">
-                <a class="nav-link  text-light" href="../admin_reports.php">
+                <a class="nav-link  text-light" href="../../admin_reports.php">
                 <i class="fas fa-flag"></i>
                     <span>Reports</span></a>
             </li>

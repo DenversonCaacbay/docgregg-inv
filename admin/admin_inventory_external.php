@@ -10,7 +10,7 @@
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $recordsPerPage = 5; // set the number of records to display per page
-    $view = $staffbmis->view_inventory($page, $recordsPerPage);
+    $view = $staffbmis->view_inventory_external($page, $recordsPerPage);
     $totalRecords = $staffbmis->count_inventory(); // get the total number of records
 
 // Calculate the total number of pages
@@ -51,7 +51,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <a class="btn btn-primary" href="admin_inventory.php">Back</a>
+                <!-- <a class="btn btn-primary" href="admin_inventory.php">Back</a> -->
                 <h1 class="ms-2 mt-2">External Inventory</h1>
             </div>
             
@@ -225,7 +225,7 @@
         $('#categorySelect').on('change', function () {
             var selectedValue = $(this).val();
             if (selectedValue !== 'all') {
-                window.location.href = 'inventory/admin_inventory_' + selectedValue + '.php';
+                window.location.href = 'inventory/external/admin_inventory_' + selectedValue + '.php';
             }
         });
     });

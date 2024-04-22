@@ -220,16 +220,17 @@
             return $view;
         }
 
-         // inventory Internal
-         public function view_inventory_internal(){
+        // inventory Internal
+        public function view_inventory_internal(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE deleted_at IS NULL AND quantity !='0'");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='Internal' OR type='Both') AND deleted_at IS NULL AND quantity != '0'");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
             return $view;
         }
+        
 
         public function view_inventory_logs(){
             $connection = $this->openConn();
@@ -286,7 +287,7 @@
         public function view_inventory_internal_medicine(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE category = 'Medicine' AND deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='Internal' OR type='Both') AND category = 'Medicine' AND deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -306,7 +307,7 @@
         public function view_inventory_internal_syringe(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE category = 'Syringe' AND deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='Internal' OR type='Both') AND category = 'Syringe' AND deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -326,7 +327,7 @@
         public function view_inventory_internal_vaccine(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='Internal' OR type='Both') AND category = 'Vaccine' AND deleted_at IS NULL");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -593,6 +594,161 @@
             return $view;
         }
 
+// ------------------------------------------------------------------------START EXTERNAL INVENTORY --------------------------------------- //
+        // Inventory External
+        public function view_inventory_external(){
+            $connection = $this->openConn();
+
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND deleted_at IS NULL AND quantity !='0'");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+
+            return $view;
+        }
+
+        //For External Cat food
+        public function view_inventory_external_catfood(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND category = 'Cat Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For External Dog Food
+        public function view_inventory_external_dogfood(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND category = 'Dog Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+        //For External Medicine
+        public function view_inventory_external_medicine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND category = 'Medicine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+ 
+        //For External Syringe
+        public function view_inventory_external_syringe(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND category = 'Syringe' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+        //For External Vaccine
+        public function view_inventory_external_vaccine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For External Shampoo
+        public function view_inventory_external_shampoo(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND category = 'Shampoo' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+// ------------------------------------------------------------------------ END EXTERNAL INVENTORY --------------------------------------- //
+
+// ------------------------------------------------------------------------START BOTH INVENTORY --------------------------------------- //
+        // Inventory External
+        public function view_inventory_both(){
+            $connection = $this->openConn();
+
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND deleted_at IS NULL AND quantity !='0'");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+
+            return $view;
+        }
+
+        //For External Cat food
+        public function view_inventory_both_catfood(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND category = 'Cat Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For External Dog Food
+        public function view_inventory_both_dogfood(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND category = 'Dog Food' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+        //For External Medicine
+        public function view_inventory_both_medicine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND category = 'Medicine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+ 
+        //For External Syringe
+        public function view_inventory_both_syringe(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND category = 'Syringe' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+        //For External Vaccine
+        public function view_inventory_both_vaccine(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        //For External Shampoo
+        public function view_inventory_both_shampoo(){
+            $connection = $this->openConn();
+        
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE type='Both' AND category = 'Shampoo' AND deleted_at IS NULL");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+// ------------------------------------------------------------------------ END BOTH INVENTORY --------------------------------------- //
 
         //with pagination
         // public function view_inventory($page = 1, $recordsPerPage = 3){
@@ -652,7 +808,6 @@
                 $bought_date = $_POST['bought_date'];
                 $exp = $_POST['exp_date'];
                 $new_picture = $_FILES['new_picture'];
-
         
                 if (!empty($new_picture['name'])) {
                     $target_dir = "../uploads/inventory/";
@@ -666,15 +821,15 @@
         
                     if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                         $connection = $this->openConn();
-
+        
                         // Insert into tbl_inventory
                         $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                         $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
-
+        
                         // Insert into tbl_inventory_logs
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                         $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
-
+        
                         // Show success alert
                         echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
@@ -686,9 +841,16 @@
                                     });
                                 });
                             </script>";
-
-                        // Redirect after showing the alert
-                        header("refresh: 1; url=admin_inventory.php");
+        
+                        // Redirect based on type
+                        if ($type === "Both") {
+                            header("refresh: 1; url=admin_inventory.php");
+                        }
+                        elseif ($type === "Internal") {
+                            header("refresh: 1; url=admin_inventory_internal.php");
+                        } elseif ($type === "External") {
+                            header("refresh: 1; url=admin_inventory_external.php");
+                        }
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                     }
@@ -709,11 +871,17 @@
                             });
                         });
                       </script>";
-                // Redirect after showing the alert
-                header("refresh: 1; url=admin_inventory.php");
+        
+                    // Redirect based on type
+                    if ($type === "Internal") {
+                        header("refresh: 1; url=admin_inventory_internal.php");
+                    } elseif ($type === "External") {
+                        header("refresh: 1; url=admin_inventory_external.php");
+                    }
                 }
             }
-        }    
+        }
+        
         // For Internal Inventory
         public function create_inventory_internal() {
             if (isset($_POST['create_inventory_internal'])) {
@@ -792,6 +960,7 @@
         public function update_inventory() {
             if (isset($_POST['update_inventory'])) {
                 $inv_id = $_GET['inv_id'];
+                $type = $_POST['type'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
@@ -823,9 +992,9 @@
                                 SET name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
                                 WHERE inv_id = ?");
                             $stmt_inventory->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
-
+        
                             $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                            $stmt_logs->execute([$name,  'Updated']); // Assuming 'create' is the log type for creating an item
+                            $stmt_logs->execute([$name,  'Updated']);
         
                             echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
@@ -837,8 +1006,15 @@
                                     });
                                 });
                             </script>";
-                        // Redirect after showing the alert
-                        header("refresh: 1; url=admin_inventory.php");
+                            // Redirect after showing the alert
+                            if ($type === "Both") {
+                                header("refresh: 1; url=admin_inventory.php");
+                            } 
+                            elseif ($type === "Internal") {
+                                header("refresh: 1; url=admin_inventory_internal.php");
+                            } elseif ($type === "External") {
+                                header("refresh: 1; url=admin_inventory_external.php");
+                            }
                         } else {
                             echo "Sorry, there was an error uploading your file.";
                         }
@@ -848,7 +1024,7 @@
                             WHERE inv_id = ?");
                         $stmt_inventory->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                        $stmt_logs->execute([$name,  'Updated']); // Assuming 'create' is the log type for creating an item
+                        $stmt_logs->execute([$name,  'Updated']);
         
                         echo "<script type='text/javascript'>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -860,8 +1036,12 @@
                                 });
                             });
                         </script>";
-                    // Redirect after showing the alert
-                    header("refresh: 1; url=admin_inventory.php");
+                        // Redirect after showing the alert
+                        if ($type === "Internal") {
+                            header("refresh: 1; url=admin_inventory_internal.php");
+                        } elseif ($type === "External") {
+                            header("refresh: 1; url=admin_inventory_external.php");
+                        }
                     }
                 } else {
                     // Quantity is lower than the previous quantity, show an alert
@@ -1629,7 +1809,7 @@
         }
         public function count_inventory_internal() {
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory_internal WHERE deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -1683,7 +1863,7 @@
         //Count Internal syringe
         public function count_inventory_internal_syringe() {
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory_internal WHERE category = 'Syringe' AND deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Syringe' AND deleted_at IS NULL");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -1710,7 +1890,7 @@
         //Count Internal vaccine
         public function count_inventory_internal_vaccine() {
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory_internal WHERE category = 'Vaccine' AND deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE category = 'Vaccine' AND deleted_at IS NULL");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     

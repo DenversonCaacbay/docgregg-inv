@@ -35,13 +35,13 @@
     
     <div class="row">
         <div class="col-md-6">
-            <div class="d-flex align-items-center">
-                <a class="btn btn-primary" href="../../admin_inventory_internal.php">Back</a>
-                <h1 class="ms-2 mt-2">Internal Inventory</h1>
+        <div class="d-flex align-items-center">
+                <!-- <a class="btn btn-primary" href="admin_inventory.php">Back</a> -->
+                <h1 class=" mt-2">Internal Inventory</h1>
             </div>
             
         </div>
-        <!-- <div class="col-md-6"><a href="../create_inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div> -->
+        <div class="col-md-6"><a href="../../create_inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
     </div>
 
     <div class="row"> 
@@ -89,8 +89,8 @@
                                     <?php if (is_null($view['picture'])): ?>
                                         <img id="blah" src="../../images/placeholder/item-placeholder.png" class="img-fluid" width="50" height="50" alt="Item Picture">
                                     <?php else: ?>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('../<?= $view['picture'] ?>')">
-                                            <img src="../<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal('../../<?= $view['picture'] ?>')">
+                                            <img src="../../<?= $view['picture'] ?>" class="img-fluid" alt="Modal Image" width="50">
                                         </a>
                                         <?php endif; ?>
                                     </td>

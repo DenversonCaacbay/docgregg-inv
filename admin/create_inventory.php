@@ -54,7 +54,8 @@
                                 <div class="form-group">
                                     <label> Type of Inventory </label>
                                     <select class="form-control" name="type" required>
-                                        <option value="" class="text-center">--Select Type--</option>
+                                        <option value="" class="text-center">-- Select Type --</option>
+                                        <option value="Both">Both</option>
                                         <option value="Internal">Internal Inventory</option>
                                         <option value="External">External Inventory</option>
                                     </select>
@@ -83,8 +84,20 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="mtop" >Profit:  </label>
-                                    <input type="number" class="form-control" id="profit" name="input_profit" required>
+                                    <label class="mtop" >Profit: % </label>
+                                    <!-- <input type="number" class="form-control" id="profit" name="input_profit" required> -->
+                                    <select class="form-control" id="profit" name="input_profit">
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="99">99%</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -113,19 +126,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop"> Purchased Date: </label>
                                     <input type="date" class="form-control" name="bought_date" required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="mtop"> Expiration Date: </label>
                                     <input type="date" class="form-control" name="exp_date" required>
                                 </div>
-                                 <button class="btn btn-primary w-100" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
                             </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary w-100" style="font-size: 18px; border-radius:5px;" type="submit" name="create_inventory"> Create </button>
+                            </div>
+                            
                         </div>
                         </div>
                         
@@ -179,16 +195,18 @@
         // Function to calculate total price
         function calculateTotalPrice() {
             var capital = parseFloat($('#capital').val());
-            var profit = parseFloat($('#profit').val());
+            var profitPercentage = parseFloat($('#profit').val());
 
-            // Check if capital and profit are valid numbers
-            if (!isNaN(capital) && !isNaN(profit)) {
-                var totalPrice = capital + profit;
+            // Check if capital and profit percentage are valid numbers
+            if (!isNaN(capital) && !isNaN(profitPercentage)) {
+                // Calculate total price using percentage profit
+                var profitAmount = capital * (profitPercentage / 100);
+                var totalPrice = capital + profitAmount;
                 $('#total_price').val(totalPrice.toFixed(2)); // Display total price with 2 decimal places
             }
         }
 
-        // Call calculateTotalPrice function when capital or profit changes
+        // Call calculateTotalPrice function when capital or profit percentage changes
         $('#capital, #profit').on('input', calculateTotalPrice);
     });
 </script>
