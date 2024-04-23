@@ -1,8 +1,16 @@
 .page--container{
-    height: 80vh;
-    overflow: auto;
+    height: 85% !important;
+    
 }
+
 
 /* .page--container::-webkit-scrollbar{
     display: none;
 } */
+
+@media screen and (max-width: 1280px) {
+    .page--container{
+        /* background-color: aqua; */
+    }
+    
+}

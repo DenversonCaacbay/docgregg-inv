@@ -367,32 +367,45 @@
         }
 
         
+        // public function view_customer_services(){
+        //     $id_user = $_GET['id'];
+        //     $connection = $this->openConn();
+        
+        //     // get pets
+        //     $stmt_pets = $connection->prepare("SELECT serv_id FROM tbl_services WHERE cli_id = ?");
+        //     $stmt_pets->execute([$id_user]);
+        //     $pets = $stmt_pets->fetchAll(PDO::FETCH_COLUMN);
+
+        //     // Convert pets array into comma-separated string
+        //     $pet_ids_str = implode(',', $pets);
+
+        //     // get pet services
+        //     if(!empty($pet_ids_str)) {
+        //         $stmt_services = $connection->prepare("SELECT * FROM tbl_pet
+        //             JOIN tbl_services ON tbl_pet.pet_id = tbl_services.pet_id
+        //             WHERE tbl_pet.pet_id IN ($pet_ids_str)");
+        //         $stmt_services->execute();
+        //         $view = $stmt_services->fetchAll();
+        //     } else {
+        //         // If no pets found, return an empty array
+        //         $view = [];
+        //     }
+
+        //     return $view;
+        // }
+
         public function view_customer_services(){
             $id_user = $_GET['id'];
             $connection = $this->openConn();
         
-            // get pets
-            $stmt_pets = $connection->prepare("SELECT pet_id FROM tbl_pet WHERE pet_owner_id = ?");
-            $stmt_pets->execute([$id_user]);
-            $pets = $stmt_pets->fetchAll(PDO::FETCH_COLUMN);
-
-            // Convert pets array into comma-separated string
-            $pet_ids_str = implode(',', $pets);
-
             // get pet services
-            if(!empty($pet_ids_str)) {
-                $stmt_services = $connection->prepare("SELECT * FROM tbl_pet
-                    JOIN tbl_services ON tbl_pet.pet_id = tbl_services.pet_id
-                    WHERE tbl_pet.pet_id IN ($pet_ids_str)");
-                $stmt_services->execute();
-                $view = $stmt_services->fetchAll();
-            } else {
-                // If no pets found, return an empty array
-                $view = [];
-            }
-
+            $stmt_services = $connection->prepare("SELECT * FROM tbl_services WHERE cli_id = ?");
+            $stmt_services->execute([$id_user]);
+            $view = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
+        
             return $view;
         }
+        
 
         public function view_customer_pets(){
             $id_user = $_GET['id'];

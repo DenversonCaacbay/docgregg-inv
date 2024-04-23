@@ -88,8 +88,7 @@ img{
 
 
     <div class="row"> 
-        <div class="col-md-6"><h3>Dashboard</h3></div>
-        <div class="col-md-6"><a class="btn btn-primary mb-3" style="float:right" href="admin_service_data.php">See More</a></div>
+        <div class="col-md-12 d-flex justify-content-between align-items-center"><h5>Dashboard</h5><a class="btn btn-primary mb-3" style="float:right" href="admin_service_data.php">See More</a></div>
         <div id="serviceCardsContainer"></div>
     </div>
     
@@ -125,110 +124,113 @@ img{
 
         // Create only the first four cards
         const rowContainer = document.createElement('div');
-rowContainer.classList.add('row');
+        rowContainer.classList.add('row');
 
-for (let index = 0; index < 4; index++) {
-    // Get the image URL based on the service name
-    const currentService = sortedServices[index];
-    const imageUrl = serviceImages[currentService];
+        for (let index = 0; index < 4; index++) {
+            // Get the image URL based on the service name
+            const currentService = sortedServices[index];
+            const imageUrl = serviceImages[currentService];
 
-    // Find data for the current service
-    const currentData = data.find(item => item.service_name === currentService) || { count: 0 };
+            // Find data for the current service
+            const currentData = data.find(item => item.service_name === currentService) || { count: 0 };
 
-    // Create card
-    const card = document.createElement('div');
-    card.classList.add('col-md-3');
-    card.innerHTML = `
-    <style>
-            .col-md-3 {
-        display: flex;
-        
-    }
-            .card-ui {
+            // Create card
+            const card = document.createElement('div');
+            card.classList.add('col-md-3');
+            card.innerHTML = `
+            <style>
+                    .col-md-3 {
                 display: flex;
-                flex-direction: column;
-                width:100%;
+                
             }
-            .item-header {
-                margin-bottom: 10px;
-            }
-            .card-ui h5:last-child {
-                flex-grow: 1;
-            }
-            </style>
-        <div class="card card-ui border-left-primary shadow mt-1">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                    <h5 id="currentServiceHeading" style="font-size: 16px;" class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
-                        <p style="font-size: 16px;" class="h5 mb-0 text-dark">Count: ${currentData.count}</p>
-                    </div>
-                    <div class="col-auto">
-                        <img src="${imageUrl}" style="width:35px" alt="${currentService}">
+                    .card-ui {
+                        display: flex;
+                        flex-direction: column;
+                        width:100%;
+                    }
+                    .item-header {
+                        margin-bottom: 10px;
+                    }
+                    .card-ui h5:last-child {
+                        flex-grow: 1;
+                    }
+                    </style>
+                <div class="card card-ui border-left-primary shadow mt-1">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                            <h5 id="currentServiceHeading" style="font-size: 16px;" class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
+                                <p style="font-size: 16px;" class="h5 mb-0 text-dark">Count: ${currentData.count}</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="${imageUrl}" style="width:35px" alt="${currentService}">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    `;
+            `;
+            rowContainer.appendChild(card);
+        }
 
-//     const currentServiceHeading = document.getElementById('currentServiceHeading');
+        // Append the row container to the main container
+        container.appendChild(rowContainer);
+            };
 
-// // Get the text content of the element
-// const currentService = currentServiceHeading.textContent;
+            // Fetch data from the PHP script and create cards
+            fetch('pos/fetch_pie.php')
+                .then(response => response.json())
+                .then(data => createCards(data))
+                .catch(error => console.error('Error fetching data:', error));
+        </script>
 
-// // Check if the length of the text content is greater than 30 characters
-// currentServiceHeading.textContent = currentService.length > 12 ? currentService.substring(0, 12) + '...' : currentService;
-    // Append the card to the row container
-    rowContainer.appendChild(card);
-}
-
-// Append the row container to the main container
-container.appendChild(rowContainer);
-    };
-
-    // Fetch data from the PHP script and create cards
-    fetch('pos/fetch_pie.php')
-        .then(response => response.json())
-        .then(data => createCards(data))
-        .catch(error => console.error('Error fetching data:', error));
-</script>
-
-
-<script>
-  // Get the element by its ID
-
-</script>
 
 
 
 
 
     <div class="row mt-5">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="d-flex justify-content-between">
-                    <h3>Low Stock</h3>
+                    <h5>Low Stock Internal</h5>
                     <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-reponsive">
+                        <th> Product Name </th>
+                        <th> Quantity </th>
+                        <th> Category </th>
+                        <!-- <th></th> -->
+
+                        <?php if(is_array($view)) {?>
+                                <?php foreach($view as $view) {?>
+                                    <tr>
+                                        <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
+                                        <td> <?= $view['quantity'];?> </td>
+                                        <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
+                                        <!-- <td class="text-center"><span class="badge bg-danger">Low Stocks</span></td> -->
+                                    </tr>
+                                <?php }?>
+                            <?php } ?>
+                    </table>  
+                    <span>10 More in the list</span>  
                 </div>
                 
             </div>
-            <div class="col-md-12">
-                <table class="table reponsive">
-                    <th> Product Name </th>
-                    <th> Quantity </th>
-                    <th> Category </th>
-                    <th></th>
-
-                    <?php if(is_array($view)) {?>
-                            <?php foreach($view as $view) {?>
-                                <tr>
-                                    <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
-                                    <td> <?= $view['quantity'];?> </td>
-                                    <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
-                                    <td class="text-center"><span class="badge bg-danger">Low Stocks</span></td>
-                                </tr>
-                            <?php }?>
-                        <?php } ?>
-                </table>    
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between">
+                    <h5>Low Stock External</h5>
+                    <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-reponsive">
+                        <th> Product Name </th>
+                        <th> Quantity </th>
+                        <th> Category </th>
+                        <th></th>
+                    </table>    
+                    <span>10 More in the list</span>
+                </div>
+                
             </div>
         </div>
     <br>

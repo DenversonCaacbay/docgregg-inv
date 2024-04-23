@@ -49,6 +49,11 @@
     .bg-primary{
         background: #0296be !important;
     }
+    .sidebar{
+        width: 240px !important;
+        height: 100vh !important;
+        /* overflow-: auto !important; */
+    }
     .sidebar .active{
         background: #191970;
         border-radius: 10px;
@@ -56,7 +61,7 @@
     }
     .fas{
         color: #fff !important;
-        font-size: 18px !important;
+        font-size: 12px !important;
     }
     label{
         font-weight: 500;
@@ -78,6 +83,12 @@
     }
     .sss .sidebar-brand-text{
         font-size: 17px;
+    }
+    @media only screen and (max-width: 1280px) { 
+        .logo{
+            width:60px;
+            height: 60px;
+        }
     }
     @media only screen and (max-width: 767px) { 
         .logo{
@@ -114,7 +125,7 @@
             $user_picture = $user['picture'];
         ?>
 
-    <ul class="navbar-nav sidebar p-2 sidebar-dark fixed-sidebar shadow accordion" id="accordionSidebar">
+    <ul class="navbar-nav sidebar p-2 sidebar-dark  shadow accordion" id="accordionSidebar">
         <div class="card sss m-2">
             <img class="logo" src="../assets/logo.png">
             <div class="sidebar-brand-text">
@@ -156,9 +167,15 @@
                 </a>
             </li> -->
             <li class="nav-item dropdown"  id="inventory">
-                <a class="nav-link  dropdown-toggle" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Inventory</span>
+                <a class="nav-link" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="d-flex justify-content-between align-items-center">
+                    
+                    <div><i class="fas fa-clipboard-list"></i>
+                    <span>Inventory</span></div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>    
+                
+                    
                 </a>
                 <ul class="dropdown-menu ms-2 text-center">
                     <li><a class="dropdown-item" href="admin_inventory.php">All Products</a></li>
