@@ -108,7 +108,7 @@
                     </form>
                 </div>
                 <div class="col-md-8">
-                    <form class="mt-3" action="../classes/insert_data.php?id=<?= $_GET['id'] ?>" method="post">
+                    <form class="form--card mt-3" action="../classes/insert_data.php?id=<?= $_GET['id'] ?>" method="post">
                         <table id="itemTable" class="table table-border">
                             <thead>
                                 <th>Pet</th>
@@ -127,7 +127,7 @@
                             <div class="col-md-6"><button type="button" class="btn btn-danger w-100 mt-3" onclick="clearTable()">Clear Table</button></div>
                             <div class="col-md-6">
                             <input type="hidden" name="tableData" id="tableDataInput">
-                            <input type="submit" class="btn btn-primary w-100 mt-3" value="submit">
+                            <input type="submit" class="btn btn-primary w-100 mt-3" onclick="clearTable()" value="Avail Service">
                     
                             </div>
                         </div>
@@ -215,6 +215,8 @@
             additionalOptionsDiv.style.display = "none"; // Hide additional options if no service selected
         }
     }
+
+
     function availService() {
     var petInput = document.querySelector('input[name="chosen_pet"]');
     var staffInput = document.querySelector('input[name="staff"]');
@@ -281,7 +283,6 @@
 
 
 
-// Load table data from local storage when the page loads
 // Load table data from local storage when the page loads
 window.onload = function() {
     // Get the table data from localStorage

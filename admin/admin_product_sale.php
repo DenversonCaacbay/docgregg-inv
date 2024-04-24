@@ -157,6 +157,20 @@ if(isset($_GET["action"]))
         width: 90%;
         border-radius: 5px;
     }
+    .form--card{
+        height: 750px;
+        overflow: auto;
+    }
+    th,td{
+        /* justify-content: center; */
+        align-content: center;
+    }
+    @media screen and (max-width: 1280px) {
+        .form--card{
+            height: 450px;
+            overflow: auto;
+        }
+    }
 </style>
 
 <!-- Begin Page Content -->
@@ -167,7 +181,7 @@ if(isset($_GET["action"]))
 
     <div class="row"> 
         <div class=""> 
-            <h1 class="text-gray">Sales</h1>
+            <h4 class="text-gray">Product Sales</h4>
         </div>
     </div>
     <div class="row">
@@ -178,7 +192,7 @@ if(isset($_GET["action"]))
                         <input type="text" class="form-control" style="width:100%;height:40px;" id="myInput" placeholder="Search Product..." autocomplete="off">
                     </div>
                     <br>
-                    <div class="card" style="height: 500px; overflow: auto;">
+                    <div class="card form--card">
                         <table style="width:100%;" id="myTable datatableid" class="table table-light">
                             <tr>
                                 <th width="40%" style="background: #0296be;color:white;">Product Name</th>

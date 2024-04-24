@@ -61,7 +61,7 @@
     }
     .fas{
         color: #fff !important;
-        font-size: 12px !important;
+        font-size: 14px !important;
     }
     label{
         font-weight: 500;

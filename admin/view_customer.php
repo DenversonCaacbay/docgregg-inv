@@ -34,17 +34,31 @@
         height:100%;
         overflow-x: auto;
     }
+    .form--card{
+        height: 100%;
+        overflow: auto;
+    }
+    th,td{
+        /* justify-content: center; */
+        align-content: center;
+    }
+    @media screen and (max-width: 1280px) {
+        .form--card{
+            height: 400px;
+            overflow: auto;
+        }
+    }
 
     @media screen and (max-width: 1536px){
         .service--card{
             height:80%;
         } 
     }
-    @media screen and (max-width: 1280px){
+    /* @media screen and (max-width: 1280px){
         .service--card{
             height:70vh;
         } 
-    }
+    } */
     @media screen and (max-width: 1024px){
         .service--card{
             height:80%;
@@ -66,14 +80,11 @@
     
     
     <div class="row">
-        <div class="col-md-6">
-            <div class="d-flex align-items-center">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center">
                 <a href="services.php" class="btn btn-primary">Back</a>
+                <a href="create_service.php?id=<?= $_GET['id'] ?>" class="btn btn-primary">Avail Service</a>
             </div>
-        </div>
-        <div class="col-md-6 services--btn">
-            <!-- <a href="create_pet.php?id=<?= $_GET['id'] ?>" style="padding: 10px;" class="btn btn-primary me-3">Add Pet</a> -->
-            <a href="create_service.php?id=<?= $_GET['id'] ?>" style="padding: 10px" class="btn btn-primary">Avail Service</a>
         </div>
     </div>
 
@@ -103,32 +114,35 @@
 
         <div class="col-md-8">
             <h3>Availed Services</h3>
-            <table class="table table-bordered">
-                <thead>
-                    <th>Pet Name</th>
-                    <th>Pet Type</th>
-                    <th>Service</th>
-                    <th>Type / Medicine / Equipment</th>
-                    <th>Date</th>
-                </thead>
-                <tbody>
-                    <?php if(is_array($view) && count($view) > 0) {?>
-                        <?php foreach($view as $view) {?>
-                            <tr>
-                                <td> <?= $view['pet_name'];?> </td>
-                                <td> <?= $view['pet_type'];?> </td>
-                                <td> <?= $view['service_availed'];?> </td>
-                                <td><?= $view['type_med_equip'];?> </td>
-                                <td><?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
-                            </tr>
-                        <?php }?>
-                        <?php } else { ?>
-                            <tr>
-                                <td colspan="9">No Data Found</td>
-                            </tr>
-                        <?php } ?> 
-                    </tbody>
-            </table>
+                <div class="form--card">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Pet Name</th>
+                            <th>Pet Type</th>
+                            <th>Service</th>
+                            <th>Type / Medicine / Equipment</th>
+                            <th>Date</th>
+                        </thead>
+                        <tbody>
+                        <?php if(is_array($view) && count($view) > 0) {?>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                    <td> <?= $view['pet_name'];?> </td>
+                                    <td> <?= $view['pet_type'];?> </td>
+                                    <td> <?= $view['service_availed'];?> </td>
+                                    <td><?= $view['type_med_equip'];?> </td>
+                                    <td><?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
+                                </tr>
+                            <?php }?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td colspan="9">No Data Found</td>
+                                </tr>
+                            <?php } ?> 
+                        </tbody>
+                    </table>
+            </div>
+            
 
 
             <!-- Viewing of Pets -->
