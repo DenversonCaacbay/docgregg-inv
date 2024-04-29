@@ -212,7 +212,7 @@ img{
                                 <?php }?>
                             <?php } ?>
                     </table>  
-                    <span>10 More in the list</span>  
+                    <!-- <span>10 More in the list</span>   -->
                 </div>
                 
             </div>
@@ -228,7 +228,21 @@ img{
                         <th> Category </th>
                         <th></th>
                     </table>    
-                    <span>10 More in the list</span>
+                    <!-- <span>10 More in the list</span> -->
+                </div>
+                
+            </div>
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between">
+                    <h5>Top 3 Most Sold Product</h5>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-reponsive">
+                        <th> Product Name </th>
+                        <th> Category </th>
+                        <th></th>
+                    </table>    
+                    <!-- <span>10 More in the list</span> -->
                 </div>
                 
             </div>

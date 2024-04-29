@@ -67,7 +67,7 @@
         <div class="col-md-10">
             <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
-                <h1 class="mb-0 ml-2">Reports - Stocks</h1>
+                <h1 class="mb-0 ml-2">Reports - Sales</h1>
             </div>
         </div>
         <div class="col-md-2 text-md-right">

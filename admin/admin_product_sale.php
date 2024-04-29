@@ -165,6 +165,12 @@ if(isset($_GET["action"]))
         /* justify-content: center; */
         align-content: center;
     }
+    @media screen and (max-width: 1580px) {
+        .form--card{
+            height: 500px;
+            overflow: auto;
+        }
+    }
     @media screen and (max-width: 1280px) {
         .form--card{
             height: 450px;
@@ -206,7 +212,7 @@ if(isset($_GET["action"]))
                                 <th width="10%"colspan="2" class="text-center" style="background: #0296be;color:white;">Add</th>
                             </tr>   
                             <?php
-                                $query = "SELECT * FROM tbl_inventory WHERE deleted_at IS NULL ORDER BY inv_id ASC";
+                                $query = "SELECT * FROM tbl_inventory WHERE type='External' AND deleted_at IS NULL ORDER BY inv_id ASC";
                                 $result = mysqli_query($connect, $query);
                                 if(mysqli_num_rows($result) > 0)
                                 {

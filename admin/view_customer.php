@@ -35,7 +35,7 @@
         overflow-x: auto;
     }
     .form--card{
-        height: 100%;
+        height: 700px;
         overflow: auto;
     }
     th,td{
@@ -49,7 +49,11 @@
         }
     }
 
-    @media screen and (max-width: 1536px){
+    @media screen and (max-width: 1580px){
+        .form--card{
+            height: 500px;
+            overflow: auto;
+        }
         .service--card{
             height:80%;
         } 
@@ -124,99 +128,44 @@
                             <th>Date</th>
                         </thead>
                         <tbody>
-                        <?php if(is_array($view) && count($view) > 0) {?>
-                            <?php foreach($view as $view) {?>
+                        <?php
+                        
+                        
+                        if (is_array($view) && count($view) > 0) : ?>
+                            <?php foreach ($view as $views)  : ?> 
                                 <tr>
-                                    <td> <?= $view['pet_name'];?> </td>
-                                    <td> <?= $view['pet_type'];?> </td>
-                                    <td> <?= $view['service_availed'];?> </td>
-                                    <td><?= $view['type_med_equip'];?> </td>
-                                    <td><?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
+                                    <td> <?= $views['pet_name'];?> </td>
+                                    <td> <?= $views['pet_type'];?> </td>
+                                    <td> <?= $views['service_availed'];?> </td>
+                                    <td>
+                                        <?php foreach (json_decode($views['type_med_equip'], true) as $view): ?>
+                                            <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($view), ENT_QUOTES, 'UTF-8'); ?>">
+                                                <?= strlen($view) > 10 ? substr($view, 0, 10) . '...' : $view; ?>
+                                            </a>
+                                            <br>
+                                        <?php endforeach; ?>
+                                    </td>
+                                    <!-- <td><?= implode(', ', json_decode($views['type_med_equip'], true)); ?></td> -->
+                                    <td><?= date("M d, Y", strtotime($views['created_at'])); ?> </td>
                                 </tr>
-                            <?php }?>
-                            <?php } else { ?>
+                            <?php endforeach; ?>
+                            <?php else : ?>
                                 <tr>
-                                    <td colspan="9">No Data Found</td>
+                                    <td colspan="5">No Data Found</td>
                                 </tr>
-                            <?php } ?> 
+                            <?php endif; ?>
                         </tbody>
                     </table>
-            </div>
+                </div>
             
 
 
             <!-- Viewing of Pets -->
-            <!-- <div class="service--card">
-                <?php if(is_array($view) && count($view) > 0) {?>
-                    <?php foreach($view as $view) {?>
-                        <div class="card mt-3">
-                            <div class="card-header bg-primary text-light d-flex justify-content-between">
-                                Date: <?= date("F d, Y", strtotime($view['created_at'])) ?>
-                            </div>
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h5>Pet Name: <?= $view['pet_name'] ?></h5>
-                                        <h5>Pet Type: <?= $view['pet_type'] ?></h5>
-                                    </div>
-                                    <div class="ms-5">
-                                        <h5>Breed: <?= $view['breed'] ?></h5>
-                                        <h5>Sex: <?= $view['sex'] ?></h5>
-                                    </div>
-                                    
-                                </div>
-                                
-                                <button class="btn btn-primary">View Records</button>
-                            </div>
-                        </div>
-                <?php }?>
-                <?php } else { ?>
-                    <tr>
-                        <td colspan="9">No Data Found</td>
-                    </tr>
-                <?php } ?>
-            </div> -->
         </div>
     </div>
 
     <!-- Modal Profile-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Customer Information</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data"> 
-                    <div class="row">
-                        <div class="col-md-12 mb-2">
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label> Customer Name: </label>
-                                <input type="text" class="form-control" name="fname" value="" required>
-                            </div>
-                        </div>
-                        <div class="col-12"> 
-                            <div class="form-group">
-                                <label> Customer Contact: </label>
-                                <input type="text" class="form-control" name="position" value="" >
-                            </div>
-                        </div>
-                        <div class="col-12"> 
-                            <div class="form-group">
-                                <label> Address: </label>
-                                <input type="text" class="form-control" name="role" value="" >
-                            </div>
-                        </div>
-                        <div class="col-12"><button class="btn btn-primary w-100" style="margin-top: 35px;font-size: 18px; border-radius:5px;" type="submit" name="update_staff"> Save </button></div>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 <!-- End of Main Content -->
