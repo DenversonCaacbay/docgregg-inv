@@ -30,25 +30,15 @@
         top: 0;
         z-index: 100;
     }
-    .customer--card{
-        height: 100%;
-        overflow: auto;
-    }
     th,td{
         /* justify-content: center; */
         align-content: center;
-    }
-    @media screen and (max-width: 1280px) {
-        .customer--card{
-            height: 400px;
-            overflow: auto;
-        }
     }
 </style>
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 

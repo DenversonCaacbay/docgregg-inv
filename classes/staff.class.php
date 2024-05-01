@@ -894,6 +894,82 @@
                 }
             }
         }
+
+        public function create_inventory_all() {
+            if (isset($_POST['create_inventory'])) {
+                $type = $_POST['type'];
+                $name = $_POST['name'];
+                $price = $_POST['price'];
+                $capital = $_POST['input_capital'];
+                $profit = $_POST['input_profit'];
+                $qty = $_POST['qty'];
+                $category = $_POST['category'];
+                $bought_date = $_POST['bought_date'];
+                $exp = $_POST['exp_date'];
+                $new_picture = $_FILES['new_picture'];
+        
+                if (!empty($new_picture['name'])) {
+                    $target_dir = "../uploads/inventory/";
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+        
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
+        
+                    $target_file = $target_dir . time() . '.' . $file_extension;
+        
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        $connection = $this->openConn();
+        
+                        // Insert into tbl_inventory
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+        
+                        // Insert into tbl_inventory_logs
+                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
+                        $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
+        
+                        // Show success alert
+                        echo "<script type='text/javascript'>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Item Created',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                });
+                            </script>";
+        
+                         // Redirect based on type
+                         header("refresh: 1; url=admin_inventory.php");
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                } else {
+                    $connection = $this->openConn();
+                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
+                    $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
+        
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Created',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                      </script>";
+        
+                        // Redirect based on type
+                        header("refresh: 1; url=admin_inventory.php");
+
+                }
+            }
+        }
         
         // For Internal Inventory
         public function create_inventory_internal() {
@@ -2129,10 +2205,8 @@
         }
         public function create_service(){
             if (isset($_POST['create_service'])) {
-                // $customer_name = ucwords(strtolower($_POST['customer_name']));
-                // $customer_contact = $_POST['customer_contact'];
-                // $customer_address = ucwords(strtolower($_POST['customer_address']));
                 $staff_name = $_POST['staff_name'];
+                $quantity = $_POST['quantity'];
                 $services_list = $_POST['services_list'];
                 $pet = $_POST['chosen_pet'];
                 $customer = $_GET['id'];
@@ -2152,8 +2226,8 @@
                 $service_get = rtrim($service_get, ', ');
         
                 $connection = $this->openConn();
-                $stmt_services = $connection->prepare("INSERT INTO tbl_services (id_user, pet_id, service_availed, staff_name, created_at) VALUES (?, ?, ?, ?, NOW())");
-                $stmt_services->execute([$customer, $pet, $service_get, $staff_name]);
+                $stmt_services = $connection->prepare("INSERT INTO tbl_services (id_user, pet_id, service_availed,quantity, staff_name, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+                $stmt_services->execute([$customer, $pet, $service_get,  $quantity ,$staff_name]);
 
                 // temporary
                 $stmt_get_user = $connection->prepare("SELECT * FROM tbl_user WHERE id_user = ?");

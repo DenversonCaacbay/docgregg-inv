@@ -17,10 +17,9 @@
 <?php 
     include('dashboard_sidebar_start.php');
 ?>
-<link rel="stylesheet" href="../css/inventory.css"/>
 <!-- Begin Page Content -->
 
-<div class="container-fluid page--container">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
     <div class="d-flex align-items-center">

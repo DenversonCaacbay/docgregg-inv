@@ -76,13 +76,13 @@ img{
 
 <?php 
     include('dashboard_sidebar_start.php');
-    
 ?>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Begin Page Content -->
-<div class="container-fluid" style="height: 650px;overflow: auto;">
+<!-- <div class="container-fluid" style="height: 650px;overflow: auto;"> -->
+<div class="container-fluid page-container">
 
 <!-- Page Heading -->
 
@@ -190,11 +190,10 @@ img{
 
     <div class="row mt-5">
             <div class="col-md-6">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center">
                     <h5>Low Stock Internal</h5>
                     <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
                 </div>
-                <div class="col-md-12">
                     <table class="table table-reponsive">
                         <th> Product Name </th>
                         <th> Quantity </th>
@@ -202,18 +201,16 @@ img{
                         <!-- <th></th> -->
 
                         <?php if(is_array($view)) {?>
-                                <?php foreach($view as $view) {?>
-                                    <tr>
-                                        <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
-                                        <td> <?= $view['quantity'];?> </td>
-                                        <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
-                                        <!-- <td class="text-center"><span class="badge bg-danger">Low Stocks</span></td> -->
-                                    </tr>
-                                <?php }?>
-                            <?php } ?>
-                    </table>  
-                    <!-- <span>10 More in the list</span>   -->
-                </div>
+                            <?php foreach($view as $view) {?>
+                                <tr>
+                                    <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
+                                    <td> <?= $view['quantity'];?> </td>
+                                    <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
+                                    <!-- <td class="text-center"><span class="badge bg-danger">Low Stocks</span></td> -->
+                                </tr>
+                            <?php }?>
+                        <?php } ?>
+                    </table> 
                 
             </div>
             <div class="col-md-6">
@@ -221,29 +218,23 @@ img{
                     <h5>Low Stock External</h5>
                     <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
                 </div>
-                <div class="col-md-12">
-                    <table class="table table-reponsive">
-                        <th> Product Name </th>
-                        <th> Quantity </th>
-                        <th> Category </th>
-                        <th></th>
-                    </table>    
-                    <!-- <span>10 More in the list</span> -->
-                </div>
+                <table class="table table-reponsive">
+                    <th> Product Name </th>
+                    <th> Quantity </th>
+                    <th> Category </th>
+                    <th></th>
+                </table>
                 
             </div>
             <div class="col-md-12">
                 <div class="d-flex justify-content-between">
                     <h5>Top 3 Most Sold Product</h5>
                 </div>
-                <div class="col-md-12">
-                    <table class="table table-reponsive">
-                        <th> Product Name </th>
-                        <th> Category </th>
-                        <th></th>
-                    </table>    
-                    <!-- <span>10 More in the list</span> -->
-                </div>
+                <table class="table table-reponsive">
+                    <th> Product Name </th>
+                    <th> Category </th>
+                    <th></th>
+                </table>
                 
             </div>
         </div>

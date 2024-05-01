@@ -4,7 +4,7 @@
    $userdetails = $bmis->get_userdata();
    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
    $bmis->validate_admin();
-   $staffbmis->create_inventory();
+   $staffbmis->create_inventory_all();
 //    print_r($userdetails['role']);
    if ($userdetails['role'] !== 'administrator') {
     // User is not an admin, display an alert
@@ -18,6 +18,7 @@
 <?php 
     include('dashboard_sidebar_start.php');
 ?>
+
 
 <!-- Begin Page Content -->
 
@@ -53,14 +54,14 @@
                                     <label> Type of Inventory </label>
                                     <select class="form-control" name="type" required>
                                         <option value="" class="text-center">-- Select Type --</option>
-                                        <option value="Both">Both</option>
                                         <option value="Internal">Internal Inventory</option>
                                         <option value="External">External Inventory</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label> Choose Image:  </label>
+                                <label> Type of Inventory </label>
+
                                 <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                             </div>
                             <div class="col-md-12 mt-3">

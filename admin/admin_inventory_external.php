@@ -42,7 +42,7 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
@@ -82,7 +82,7 @@
             </div>
         </div>
             
-        <div class="card" style="height: 500px; overflow: auto;">
+        <div class="card">
         <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 

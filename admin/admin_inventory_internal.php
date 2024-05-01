@@ -42,7 +42,7 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
@@ -51,7 +51,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <!-- <a class="btn btn-primary" href="admin_inventory.php">Back</a> -->
                 <h1 class=" mt-2">Internal Inventory</h1>
             </div>
             
@@ -79,7 +78,7 @@
             </div>
         </div>
             
-        <div class="card" style="height: 500px; overflow: auto;">
+        <div class="card">
         <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 

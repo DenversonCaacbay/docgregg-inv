@@ -17,7 +17,6 @@
 <?php 
     include('dashboard_sidebar_start.php');
 ?>
-<link rel="stylesheet" href="../css/inventory.css">
 <style>
     thead.sticky {
         position: sticky;
@@ -35,7 +34,7 @@
         overflow-x: auto;
     }
     .form--card{
-        height: 700px;
+        height: 650px;
         overflow: auto;
     }
     th,td{
@@ -51,7 +50,8 @@
 
     @media screen and (max-width: 1580px){
         .form--card{
-            height: 500px;
+            
+            height: 490px;
             overflow: auto;
         }
         .service--card{
@@ -77,24 +77,26 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid customer--container">
+<div class="container-fluid page-container">
 
-    <!-- Page Heading -->
-
-    
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="services.php" class="btn btn-primary">Back</a>
-                <a href="create_service.php?id=<?= $_GET['id'] ?>" class="btn btn-primary">Avail Service</a>
+    <div class="d-flex justify-content-between align-items-center">
+        <a href="services.php" class="btn btn-primary">Back</a>
+        <!-- <a href="create_service.php?id=<?= $_GET['id'] ?>" class="btn btn-primary">Avail Service</a> -->
+        <div style="width: 30%">
+            <div class="input-group">
+                <label class="input-group-text" for="inputGroupSelect01">Avail Service:</label>
+                    <select class="form-select text-center" id="selectType">
+                    <option value="">-- Select Type --</option>
+                    <option value="./avail_service_cat.php?id=<?= $_GET['id'] ?>">Cat</option>
+                    <option value="./avail_service_dog.php?id=<?= $_GET['id'] ?>">Dog</option>
+                </select>
             </div>
         </div>
     </div>
 
     <div class="row"> 
         <div class="col-md-4">
-            <div class="card p-3 mt-2">
+            <div class="card p-3 mt-3">
                 <form method="post">
                     <h3>Customer Information</h3>
                     <label>Name: </label>
@@ -118,54 +120,84 @@
 
         <div class="col-md-8">
             <h3>Availed Services</h3>
-                <div class="form--card">
-                    <table class="table table-bordered">
-                        <thead>
-                            <th>Pet Name</th>
-                            <th>Pet Type</th>
-                            <th>Service</th>
-                            <th>Type / Medicine / Equipment</th>
-                            <th>Date</th>
-                        </thead>
-                        <tbody>
-                        <?php
-                        
-                        
-                        if (is_array($view) && count($view) > 0) : ?>
-                            <?php foreach ($view as $views)  : ?> 
-                                <tr>
-                                    <td> <?= $views['pet_name'];?> </td>
-                                    <td> <?= $views['pet_type'];?> </td>
-                                    <td> <?= $views['service_availed'];?> </td>
-                                    <td>
-                                        <?php foreach (json_decode($views['type_med_equip'], true) as $view): ?>
-                                            <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($view), ENT_QUOTES, 'UTF-8'); ?>">
-                                                <?= strlen($view) > 10 ? substr($view, 0, 10) . '...' : $view; ?>
-                                            </a>
-                                            <br>
-                                        <?php endforeach; ?>
-                                    </td>
-                                    <!-- <td><?= implode(', ', json_decode($views['type_med_equip'], true)); ?></td> -->
-                                    <td><?= date("M d, Y", strtotime($views['created_at'])); ?> </td>
-                                </tr>
-                            <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="5">No Data Found</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+            <div class="form--card">
+    <?php
+    if (is_array($view) && count($view) > 0) {
+        $groupedData = [];
+        foreach ($view as $views) {
+            $date = date("F d, Y", strtotime($views['created_at']));
+            if (!isset($groupedData[$date])) {
+                $groupedData[$date] = [];
+            }
+            $serviceKey = $views['service_availed'];
+            $petType = $views['pet_type'];
+            if (!isset($groupedData[$date][$serviceKey])) {
+                $groupedData[$date][$serviceKey] = [];
+            }
+            if (!isset($groupedData[$date][$serviceKey][$petType])) {
+                $groupedData[$date][$serviceKey][$petType] = [];
+            }
+            $groupedData[$date][$serviceKey][$petType][] = $views;
+        }
+        foreach ($groupedData as $date => $services) {
+            ?>
+            <div class="card mt-3">
+                <div class="card-header sticky-top bg-primary text-light">Date: <?= $date ?>
+                    <hr style="border: 1px solid #fff;" />
+                    <div class="row text-center bg-primary text-light p-0" style="border-radius: 5px">
+                        <div class="col-md-4">Pet Type</div>
+                        <div class="col-md-4">Service Availed</div>
+                        <div class="col-md-4">Type / Medicine / Equipment</div>
+                    </div>
                 </div>
+
+                <div class="card-body">
+                    <?php foreach ($services as $service => $petTypes) : ?>
+                        <?php foreach ($petTypes as $petType => $data) : ?>
+                            <div class="card border-0 p-0">
+                                <div class="card-body p-1">
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <p class="card-title"><?= $petType; ?></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="card-title"><?= $service; ?></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                        <p class="card-text">
+                                            <?php foreach ($data as $views) : ?>
+                                                <?php foreach (json_decode($views['type_med_equip'], true) as $index => $view) : ?>
+                                                         <?= $view; ?>-<?= $views['quantity']; ?>pcs <br>
+                                                <?php endforeach; ?>
+                                            <?php endforeach; ?>
+                                        </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+    <?php
+        }
+    } else {
+        echo "<p>No Data Found</p>";
+    }
+    ?>
+</div>
+
             
 
-
-            <!-- Viewing of Pets -->
         </div>
     </div>
 
-    <!-- Modal Profile-->
 
 </div>
-
-<!-- End of Main Content -->
+<script>
+    // Add event listener to the select element
+    document.getElementById("selectType").addEventListener("change", function() {
+        // Redirect to the selected option's value
+        window.location.href = this.value;
+    });
+</script>

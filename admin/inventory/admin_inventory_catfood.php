@@ -25,16 +25,15 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
     
     
-    <div class="row">
-        <div class="col-md-6"><h1 class="">All Inventory</h1></div>
-        <div class="col-md-6"><a href="../create_inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
-    </div>
+    <?php 
+    include('header.php');
+?>
 
     <div class="row"> 
         <div class="col-md-12">
@@ -59,7 +58,7 @@
             </div>
         </div>
             
-        <div class="card" style="height: 500px; overflow: auto;">
+        <div class="card">
         <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 

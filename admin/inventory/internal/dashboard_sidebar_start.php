@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" href="../../assets/logo.png">
+    <link rel="icon" href="../assets/logo.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,10 +23,17 @@
     <link href="../../../css/sb-admin-2.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     
-    
+    <link rel="stylesheet" href="../../../css/pagestyle.css" />
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Place this at the end of your HTML body -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- SweetAlert 2 JS (including dependencies) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
+    <script src="../../../js/services_search.js"></script>
     <script src="../../../js/inventory_search.js"></script>
 </head>
 
@@ -42,25 +49,26 @@
     .bg-primary{
         background: #0296be !important;
     }
+    .sidebar{
+        width: 240px !important;
+        height: 100vh !important;
+        /* overflow-: auto !important; */
+    }
     .sidebar .active{
         background: #191970;
         border-radius: 10px;
         /* opacity: 0.8; */
+    }
+    .fas{
+        color: #fff !important;
+        font-size: 14px !important;
     }
     label{
         font-weight: 500;
         font-size: 18px;
         /* color: #0296be; */
     }
-    .fas{
-        color: #fff !important;
-        font-size: 18px !important;
-    }
-    /* .card{
-        border: none;
-        box-shadow: 0px 5px 10px rgb(34, 32, 32,0.1),
-        0px 5px 10px rgba(0,0,0,0.1);
-    } */
+
     .btn-primary{
         background:  #0296be !important;
 
@@ -69,17 +77,39 @@
         background: #0296be;
         color: white;
     }
-    thead.sticky {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
     .logo{
         width:80px;
         height: 80px;
     }
     .sss .sidebar-brand-text{
         font-size: 17px;
+    }
+    .nav-item{
+        padding: 0;
+    }
+    #logout.nav-item:last-child{
+        bottom: 0;
+        position: absolute;
+        background: #fff !important;
+        
+        border-radius: 10px;
+        padding: 0;
+    }
+    #logout.nav-item:last-child .nav-link{
+        text-align:center;
+        letter-spacing: 2px;
+        color: #0296be !important;
+    }
+    thead.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    @media only screen and (max-width: 1280px) { 
+        .logo{
+            width:60px;
+            height: 60px;
+        }
     }
     @media only screen and (max-width: 767px) { 
         .logo{
@@ -109,64 +139,71 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar p-2 sidebar-dark fixed-sidebar accordion" id="accordionSidebar">
+        <?php
+            $userdetails = $bmis->get_userdata();
+            $userRole = $userdetails['role'];
 
-            
-                <div class="card sss m-2">
-                    <img class="logo" src="../../../assets/logo.png">
-                    <div class="sidebar-brand-text">
-                        Doc Gregg <br>Veterinary Clinic 
-                    </div>
-                </div>
+            $user_picture = $user['picture'];
+        ?>
 
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item" id="dashboard">
-                <a class="nav-link text-light" href="../../admin_dashboard.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Menu
+    <ul class="navbar-nav sidebar p-2 sidebar-dark  shadow accordion" id="accordionSidebar">
+        <div class="card sss m-2">
+            <img class="logo" src="../../../assets/logo.png">
+            <div class="sidebar-brand-text">
+                Doc Gregg <br>Veterinary Clinic
             </div>
+        </div>
 
-            <!-- Client List -->
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <?php if ($userRole === 'administrator') : ?>
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item" id="dashboard">
+            <a class="nav-link text-light" href="../../admin_dashboard.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Menu
+        </div>
+
+        
+            <!-- Admin sees all items -->
             <li class="nav-item" id="client">
-                <a class="nav-link  text-light" href="../../services.php">
+                <a class="nav-link text-light" href="../../services.php">
                     <i class="fas fa-users"></i>
-                    <span>Service</span></a>
-            </li>
-
-
-            <!-- Inventory Management -->
-            <!-- <li class="nav-item" id="inventory">
-                <a class="nav-link  text-light" href="../admin_inventory.php">
-                <i class="fas fa-clipboard-list"></i>
-                    <span>Inventory</span></a>
-            </li> -->
-            <li class="nav-item dropdown"  id="inventory">
-                <a class="nav-link  dropdown-toggle" href="../admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Inventory</span>
+                    <span>Services</span>
                 </a>
-                <ul class="dropdown-menu">
+            </li>
+            <li class="nav-item dropdown"  id="inventory">
+                <a class="nav-link" href="../../admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div><i class="fas fa-clipboard-list"></i>
+                    <span>Inventory</span></div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>    
+                
+                    
+                </a>
+                <ul class="dropdown-menu ms-2 text-center">
+                    <li><a class="dropdown-item" href="../../admin_inventory.php">All Products</a></li>
                     <li><a class="dropdown-item" href="../../admin_inventory_internal.php">Internal Inventory</a></li>
                     <li><a class="dropdown-item" href="../../admin_inventory_external.php">External Inventory</a></li>
+                    <!-- <li><a class="dropdown-item" href="admin_inventory_both.php">Both Internal / External</a></li> -->
                     <li><a class="dropdown-item" href="../../create_inventory.php">Add Products</a></li>
                 </ul>
             </li>
             <li class="nav-item" id="sales">
-                <a class="nav-link  text-light" href="../../admin_product_sale.php">
-                <i class="fas fa-cart-plus"></i>
-                    <span>Product Sales</span></a>
+                <a class="nav-link text-light" href="../../admin_product_sale.php">
+                    <i class="fas fa-cart-plus"></i>
+                    <span>Product Sales</span>
+                </a>
             </li>
             <li class="nav-item" id="staff">
                 <a class="nav-link text-light" href="../../admin_staff_list.php">
@@ -175,29 +212,48 @@
                 </a>
             </li>
             <li class="nav-item" id="reports">
-                <a class="nav-link  text-light" href="../../admin_reports.php">
+                <a class="nav-link text-light" href="../../admin_reports_logs.php">
                 <i class="fas fa-flag"></i>
-                    <span>Reports</span></a>
+                    <span>Logs & Reports</span>
+                </a>
             </li>
-
-
-            <!-- Help and Support -->
-            <li class="nav-item" id="help">
-                <a class="nav-link  text-light" href="../admin_help.php">
+            <!-- ... Other sidebar elements ... -->
+        <?php elseif ($userRole === 'Staff') : ?>
+            <!-- Staff sees specific items -->
+            <li class="nav-item" id="client">
+                <a class="nav-link text-light" href="../../services.php">
+                    <i class="fas fa-users"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+            <li class="nav-item" id="sales">
+                <a class="nav-link text-light" href="../../admin_product_sale.php">
+                <i class="fas fa-cart-plus"></i>
+                    <span>Product Sales</span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <!-- ... Other sidebar elements ... -->
+        <li class="nav-item" id="help">
+            <a class="nav-link text-light" href="../../admin_help.php">
                 <i class="fas fa-file-contract"></i>
-                    <span>Help & Support</span></a>
-            </li>
-            <li class="nav-item" id="logout">
-                <a class="nav-link  text-light" href="../logout.php">
-                <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span></a>
-            </li>
+                <span>Help & Support</span>
+            </a>
+        </li>
+        <li class="nav-item" id="logout">
+            <a class="nav-link text-light" href="../../logout.php">
+                <span class="fw-bold">Logout</span>
+            </a>
+        </li>
+    </ul>
 
-        </ul>
+
+
+
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper">
 
             <!-- Main Content -->
             <div id="content">
@@ -212,91 +268,63 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </li>
                         <li class="nav-item mt-4">
+                        <?php if ($userRole === 'administrator') : ?>
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
                             
-                                <a href="../admin_low_inventory.php" style="position: relative;">
-                                    <i class="fas fa-bell" style="font-size: 20px;;color: #0296be !important;"></i>
+                                <a href="admin_low_inventory.php" style="position: relative;">
+                                    <i class="fas fa-bell" style="font-size: 30px;color: #0296be !important;"></i>
                                     <?php if($lowInventoryCount > 0) : ?>
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
                             <?php endif; ?>
+                        <?php endif; ?>
                         </li>
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown">
-                                <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="../../admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 
-                                <?php if (empty($user['picture'])): ?>
-                                    <img id="blah" src="../../../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px;" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                <?php if (empty($user_picture)): ?>
+                                    <img src="../../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px;" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php else: ?>
-                                    <img id="blah" src="../../<?= $user['picture']?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                    <img src="../../<?= $user_picture ?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php endif; ?>
-                                <!-- <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6><i class="fas fa-user text-primary mb-1 ml-1" style="font-size: 20px;"></i> -->
-                                    <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>
                         </li>
                     </ul>
                 </nav>
 
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Retrieve the active item from localStorage
+        var activeItem = localStorage.getItem('activeNavItem');
+        // Set the default active item to 'dashboard' if not already set
+        if (!activeItem) {
+            activeItem = 'dashboard';
+            localStorage.setItem('activeNavItem', activeItem);
+        }
+        // Remove the 'active' class from all items
+        $('.nav-item').removeClass('active');
+        // Add the 'active' class to the stored active item
+        $('#' + activeItem).addClass('active');
+        // Add a click event handler to all the navigation items
+        $('.nav-item').on('click', function () {
+            // Remove the 'active' class from all items
+            $('.nav-item').removeClass('active');
+            // Add the 'active' class to the clicked item
+            $(this).addClass('active');
+            // Store the id of the clicked item in localStorage
+            localStorage.setItem('activeNavItem', $(this).attr('id'));
+        });
+    });
+</script>
 
-                <script>
-                    $(document).ready(function () {
-                        // Retrieve the active item from localStorage
-                        var activeItem = localStorage.getItem('activeNavItem');
-
-                        // Set the default active item to 'dashboard' if not already set
-                        if (!activeItem) {
-                            activeItem = 'dashboard';
-                            localStorage.setItem('activeNavItem', activeItem);
-                        }
-
-                        // Remove the 'active' class from all items
-                        $('.nav-item').removeClass('active');
-
-                        // Add the 'active' class to the stored active item
-                        $('#' + activeItem).addClass('active');
-
-                        // Add a click event handler to all the navigation items
-                        $('.nav-item').on('click', function () {
-                            // Remove the 'active' class from all items
-                            $('.nav-item').removeClass('active');
-
-                            // Add the 'active' class to the clicked item
-                            $(this).addClass('active');
-
-                            // Store the id of the clicked item in localStorage
-                            localStorage.setItem('activeNavItem', $(this).attr('id'));
-                        });
-                    });
-                </script>
-                <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         var sidebar = document.querySelector('.sidebar');
         var sidebarToggleTop = document.getElementById('sidebarToggleTop');
@@ -354,6 +382,7 @@
         });
     });
 </script>
+
 
 
                 

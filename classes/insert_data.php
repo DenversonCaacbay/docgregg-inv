@@ -25,7 +25,8 @@ if(isset($_POST["tableData"]) && isset($_GET["id"])) {
     $cli_id = $_GET["id"];
 
     // Prepare and execute SQL statement to insert data into the database
-    $stmt = $conn->prepare("INSERT INTO tbl_services (cli_id, pet_name, pet_type, service_availed, type_med_equip, staff) VALUES (?, ?, ?, ?, ?, ?)");
+    // $stmt = $conn->prepare("INSERT INTO tbl_services (cli_id, pet_name, pet_type, service_availed, type_med_equip, quantity, staff) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO tbl_services (cli_id, pet_name, pet_type, service_availed, type_med_equip, quantity, staff) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters and execute the statement for each row of data
     foreach ($tableData as $row) {
@@ -34,15 +35,29 @@ if(isset($_POST["tableData"]) && isset($_GET["id"])) {
         $service_availed = $row['service'];
         // Serialize the $type_med_equip array
         $type_med_equip_serialized = json_encode($row['options']);
+        $quantity = $row['quantity'];
         $staff = $row['staff'] ;
-        $stmt->bind_param("isssss", $cli_id, $pet_name, $pet_type, $service_availed, $type_med_equip_serialized, $staff);
+        // $stmt->bind_param("isssss", $cli_id, $pet_name, $pet_type, $service_availed, $type_med_equip_serialized, $quantity, $staff);
+        $stmt->bind_param("issssss", $cli_id, $pet_name, $pet_type, $service_availed, $type_med_equip_serialized, $quantity, $staff);
+
         $stmt->execute();
     }
 
     // Close the statement and database connection
     $stmt->close();
     $conn->close();
-
+    // echo "<script type='text/javascript'>
+    //     document.addEventListener('DOMContentLoaded', function() {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Service Created',
+    //             showConfirmButton: false,
+    //             timer: 1500
+    //         });
+    //     });
+    // </script>";
+    // Redirect after showing the alert
+    // header("refresh: 1; url=../admin/view_customer.php?id=" . $cli_id);
     // Redirect back to the form page or display a success message
     header("Location: ../admin/view_customer.php?id=" . $cli_id);
     exit();

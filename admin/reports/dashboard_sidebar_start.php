@@ -23,7 +23,7 @@
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     
-    
+    <link rel="stylesheet" href="../../css/pagestyle.css" />
     
     <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,7 +33,8 @@
 <!-- SweetAlert 2 JS (including dependencies) -->
     <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 
-    
+    <script src="../../js/services_search.js"></script>
+    <script src="../../js/inventory_search.js"></script>
 </head>
 
 
@@ -48,6 +49,11 @@
     .bg-primary{
         background: #0296be !important;
     }
+    .sidebar{
+        width: 240px !important;
+        height: 100vh !important;
+        /* overflow-: auto !important; */
+    }
     .sidebar .active{
         background: #191970;
         border-radius: 10px;
@@ -55,7 +61,7 @@
     }
     .fas{
         color: #fff !important;
-        font-size: 18px !important;
+        font-size: 14px !important;
     }
     label{
         font-weight: 500;
@@ -77,6 +83,33 @@
     }
     .sss .sidebar-brand-text{
         font-size: 17px;
+    }
+    .nav-item{
+        padding: 0;
+    }
+    #logout.nav-item:last-child{
+        bottom: 0;
+        position: absolute;
+        background: #fff !important;
+        
+        border-radius: 10px;
+        padding: 0;
+    }
+    #logout.nav-item:last-child .nav-link{
+        text-align:center;
+        letter-spacing: 2px;
+        color: #0296be !important;
+    }
+    thead.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    @media only screen and (max-width: 1280px) { 
+        .logo{
+            width:60px;
+            height: 60px;
+        }
     }
     @media only screen and (max-width: 767px) { 
         .logo{
@@ -109,9 +142,11 @@
         <?php
             $userdetails = $bmis->get_userdata();
             $userRole = $userdetails['role'];
+
+            $user_picture = $user['picture'];
         ?>
 
-    <ul class="navbar-nav p-2 sidebar sidebar-dark fixed-sidebar shadow accordion" id="accordionSidebar">
+    <ul class="navbar-nav sidebar p-2 sidebar-dark  shadow accordion" id="accordionSidebar">
         <div class="card sss m-2">
             <img class="logo" src="../../assets/logo.png">
             <div class="sidebar-brand-text">
@@ -121,7 +156,7 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-
+        <?php if ($userRole === 'administrator') : ?>
         <!-- Nav Item - Dashboard -->
         <li class="nav-item" id="dashboard">
             <a class="nav-link text-light" href="../admin_dashboard.php">
@@ -138,7 +173,7 @@
             Menu
         </div>
 
-        <?php if ($userRole === 'administrator') : ?>
+        
             <!-- Admin sees all items -->
             <li class="nav-item" id="client">
                 <a class="nav-link text-light" href="../services.php">
@@ -146,74 +181,76 @@
                     <span>Services</span>
                 </a>
             </li>
-
-            <li class="nav-item" id="inventory">
-                <a class="nav-link text-light" href="../admin_inventory.php">
+            <!-- <li class="nav-item" id="inventory">
+                <a class="nav-link text-light" href="admin_inventory.php">
                 <i class="fas fa-clipboard-list"></i>
                     <span>Inventory</span>
                 </a>
+            </li> -->
+            <li class="nav-item dropdown"  id="inventory">
+                <a class="nav-link" href="../admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div><i class="fas fa-clipboard-list"></i>
+                    <span>Inventory</span></div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>    
+                
+                    
+                </a>
+                <ul class="dropdown-menu ms-2 text-center">
+                    <li><a class="dropdown-item" href="../admin_inventory.php">All Products</a></li>
+                    <li><a class="dropdown-item" href="../admin_inventory_internal.php">Internal Inventory</a></li>
+                    <li><a class="dropdown-item" href="../admin_inventory_external.php">External Inventory</a></li>
+                    <!-- <li><a class="dropdown-item" href="admin_inventory_both.php">Both Internal / External</a></li> -->
+                    <li><a class="dropdown-item" href="../create_inventory.php">Add Products</a></li>
+                </ul>
             </li>
-
             <li class="nav-item" id="sales">
                 <a class="nav-link text-light" href="../admin_product_sale.php">
-                <i class="fas fa-cart-plus"></i>
+                    <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span>
                 </a>
             </li>
-
             <li class="nav-item" id="staff">
                 <a class="nav-link text-light" href="../admin_staff_list.php">
                 <i class="fas fa-users"></i>
                     <span>Staff List</span>
                 </a>
             </li>
-
             <li class="nav-item" id="reports">
                 <a class="nav-link text-light" href="../admin_reports_logs.php">
                 <i class="fas fa-flag"></i>
                     <span>Logs & Reports</span>
                 </a>
             </li>
-            
-
-           
-
             <!-- ... Other sidebar elements ... -->
-
         <?php elseif ($userRole === 'Staff') : ?>
             <!-- Staff sees specific items -->
             <li class="nav-item" id="client">
-                <a class="nav-link text-light" href="services.php">
-                <i class="fas fa-users"></i>
+                <a class="nav-link text-light" href="../services.php">
+                    <i class="fas fa-users"></i>
                     <span>Services</span>
                 </a>
             </li>
-
             <li class="nav-item" id="sales">
-                <a class="nav-link text-light" href="admin_product_sale.php">
+                <a class="nav-link text-light" href="../admin_product_sale.php">
                 <i class="fas fa-cart-plus"></i>
                     <span>Product Sales</span>
                 </a>
             </li>
-
         <?php endif; ?>
-
         <!-- ... Other sidebar elements ... -->
-
         <li class="nav-item" id="help">
             <a class="nav-link text-light" href="../admin_help.php">
-            <i class="fas fa-file-contract"></i>
+                <i class="fas fa-file-contract"></i>
                 <span>Help & Support</span>
             </a>
         </li>
-
         <li class="nav-item" id="logout">
             <a class="nav-link text-light" href="../logout.php">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
+                <span class="fw-bold">Logout</span>
             </a>
         </li>
-
     </ul>
 
 
@@ -240,12 +277,12 @@
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                            <!-- <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
-                            </a>
+                            </a> -->
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
@@ -259,29 +296,34 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </li>
                         <li class="nav-item mt-4">
                         <?php if ($userRole === 'administrator') : ?>
                             <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
                             
-                                <a href="../admin_low_inventory.php" style="position: relative;">
-                                    <i class="fas fa-bell" style="font-size: 20px;color: #0296be !important;"></i>
+                                <a href="admin_low_inventory.php" style="position: relative;">
+                                    <i class="fas fa-bell" style="font-size: 30px;color: #0296be !important;"></i>
                                     <?php if($lowInventoryCount > 0) : ?>
                                     <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
                                 </a>&nbsp;
                             <?php endif; ?>
                         <?php endif; ?>
                         </li>
+                        <!-- <li class="nav-item mt-4">
+                                <a href="#" style="position: relative;">
+                                    <i class="fas fa-user text-primary" style="font-size: 20px;"></i>
+                                </a>&nbsp;
+                        </li> -->
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 
-                                <?php if (empty($user['picture'])): ?>
-                                    <img id="blah" src="../../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px;" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                <?php if (empty($user_picture)): ?>
+                                    <img src="../../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px;" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php else: ?>
-                                    <img id="blah" src="../<?= $user['picture']?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                    <img src="../<?= $user_picture ?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php endif; ?>
                                 <!-- <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6><i class="fas fa-user text-primary mb-1 ml-1" style="font-size: 20px;"></i> -->
                                     <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
@@ -322,7 +364,8 @@
                         });
                     });
                 </script>
-                <script>
+
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         var sidebar = document.querySelector('.sidebar');
         var sidebarToggleTop = document.getElementById('sidebarToggleTop');
@@ -380,6 +423,7 @@
         });
     });
 </script>
+
 
 
                 
