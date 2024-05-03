@@ -121,74 +121,71 @@
         <div class="col-md-8">
             <h3>Availed Services</h3>
             <div class="form--card">
-    <?php
-    if (is_array($view) && count($view) > 0) {
-        $groupedData = [];
-        foreach ($view as $views) {
-            $date = date("F d, Y", strtotime($views['created_at']));
-            if (!isset($groupedData[$date])) {
-                $groupedData[$date] = [];
-            }
-            $serviceKey = $views['service_availed'];
-            $petType = $views['pet_type'];
-            if (!isset($groupedData[$date][$serviceKey])) {
-                $groupedData[$date][$serviceKey] = [];
-            }
-            if (!isset($groupedData[$date][$serviceKey][$petType])) {
-                $groupedData[$date][$serviceKey][$petType] = [];
-            }
-            $groupedData[$date][$serviceKey][$petType][] = $views;
-        }
-        foreach ($groupedData as $date => $services) {
-            ?>
-            <div class="card mt-3">
-                <div class="card-header sticky-top bg-primary text-light">Date: <?= $date ?>
-                    <hr style="border: 1px solid #fff;" />
-                    <div class="row text-center bg-primary text-light p-0" style="border-radius: 5px">
-                        <div class="col-md-4">Pet Type</div>
-                        <div class="col-md-4">Service Availed</div>
-                        <div class="col-md-4">Type / Medicine / Equipment</div>
-                    </div>
-                </div>
+            <?php
+            if (is_array($view) && count($view) > 0) {
+                $groupedData = [];
+                foreach ($view as $views) {
+                    $date = date("F d, Y", strtotime($views['created_at']));
+                    if (!isset($groupedData[$date])) {
+                        $groupedData[$date] = [];
+                    }
+                    $serviceKey = $views['service_availed'];
+                    $petType = $views['pet_type'];
+                    if (!isset($groupedData[$date][$serviceKey])) {
+                        $groupedData[$date][$serviceKey] = [];
+                    }
+                    if (!isset($groupedData[$date][$serviceKey][$petType])) {
+                        $groupedData[$date][$serviceKey][$petType] = [];
+                    }
+                    $groupedData[$date][$serviceKey][$petType][] = $views;
+                }
+                foreach ($groupedData as $date => $services) {
+                    ?>
+                    <div class="card mt-3">
+                        <div class="card-header sticky-top bg-primary text-light">Date: <?= $date ?>
+                            <hr style="border: 1px solid #fff;" />
+                            <div class="row text-center bg-primary text-light p-0" style="border-radius: 5px">
+                                <div class="col-md-3">Pet Type</div>
+                                <div class="col-md-4">Service Availed</div>
+                                <div class="col-md-5">Type / Medicine / Equipment</div>
+                            </div>
+                        </div>
 
-                <div class="card-body">
-                    <?php foreach ($services as $service => $petTypes) : ?>
-                        <?php foreach ($petTypes as $petType => $data) : ?>
-                            <div class="card border-0 p-0">
-                                <div class="card-body p-1">
-                                    <div class="row text-center">
-                                        <div class="col-md-4">
-                                            <p class="card-title"><?= $petType; ?></p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p class="card-title"><?= $service; ?></p>
-                                        </div>
-                                        <div class="col-md-4">
-                                        <p class="card-text">
-                                            <?php foreach ($data as $views) : ?>
-                                                <?php foreach (json_decode($views['type_med_equip'], true) as $index => $view) : ?>
-                                                         <?= $view; ?>-<?= $views['quantity']; ?>pcs <br>
-                                                <?php endforeach; ?>
-                                            <?php endforeach; ?>
-                                        </p>
+                        <div class="card-body">
+                            <?php foreach ($services as $service => $petTypes) : ?>
+                                <?php foreach ($petTypes as $petType => $data) : ?>
+                                    <div class="card border-0 p-0">
+                                        <div class="card-body p-0">
+                                            <div class="row text-center">
+                                                <div class="col-md-3">
+                                                    <p class="card-title"><?= $petType; ?></p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="card-title"><?= $service; ?></p>
+                                                </div>
+                                                <div class="col-md-5">
+                                                <p class="card-text">
+                                                    <?php foreach ($data as $views) : ?>
+                                                        <?php foreach (json_decode($views['type_med_equip'], true) as $index => $view) : ?>
+                                                                <?= $view; ?>-<?= $views['quantity']; ?>pcs
+                                                        <?php endforeach; ?>
+                                                    <?php endforeach; ?>
+                                                </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-    <?php
-        }
-    } else {
-        echo "<p>No Data Found</p>";
-    }
-    ?>
-</div>
-
-            
-
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+            <?php
+                }
+            } else {
+                echo "<p>No Data Found</p>";
+            }
+            ?>
+        </div>
         </div>
     </div>
 

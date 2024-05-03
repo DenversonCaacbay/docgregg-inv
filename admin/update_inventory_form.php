@@ -17,6 +17,14 @@
 <?php 
     include('dashboard_sidebar_start.php');
 ?>
+<style>
+    label{
+        font-size: 14px !important;
+    }
+    .form-control{
+        font-size: 14px !important;
+    }
+</style>
 <!-- Begin Page Content -->
 
 <div class="container-fluid page-container">
@@ -24,64 +32,58 @@
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_inventory.php">Back</a>
-        <h1 class="mb-0 ml-2">Update Item Data</h1>
+        <h4 class="mb-0 ml-2">Update Item Data</h4>
     </div>
                 
     <div class="row"> 
         <div class="col-md-12"> 
             <form method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-md-5">
-                        <div class="col-md-12 mt-5">   
+                    <div class="col-md-12">
+                        <div class="col-md-12">   
                             <?php if (is_null($item['picture'])): ?>
-                                <img id="blah" src="../images/placeholder/item-placeholder.png" height="400" width="400" alt="Item Picture">
+                                <img id="blah" src="../images/placeholder/item-placeholder.png" height="150" width="150" alt="Item Picture">
                             <?php else: ?>
-                                <img id="blah" src="../uploads/<?= $item['picture']?>" height="400" width="400" alt="Item Picture">
+                                <img id="blah" src="../uploads/<?= $item['picture']?>" height="150" width="150" alt="Item Picture">
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <div class="container ">
-                            <div class="row me-3">
-                                <div class="col-md-12 mb-3">
+                    <div class="col-md-12">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
                                     <label>Type of Inventory</label>
                                     <input type="text" class="form-control" name="type" value="<?= $item['type']?>" readonly/>
                                 </div>
-                            <div class="col-md-12">
-                                    <!-- <label>Item Picture:</label> -->
-                                    <!-- <div class="custom-file form-group">
-                                        <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
-                                        <label class="custom-file-label" for="customFile">Choose File Photo</label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div> -->
+                                <div class="col-md-6">
+                                    <label> Select Image File:  </label>
                                     <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                                 </div>
-                                <div class="col-md-12 mt-3">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label> Product Name: </label>
                                         <input type="text" class="form-control" name="name"  value="<?= $item['name']?>" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="mtop" >Capital:  </label>
                                     <input type="number" class="form-control" id="capital" name="input_capital" value="<?= $item['capital']?>" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="mtop" >Profit: % </label>
                                     <input type="number" class="form-control" id="profit" name="input_profit" value="<?= $item['profit']?>" readonly>
                                 </div>
                             </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="mtop" >Price: </label>
                                         <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-6"> 
+                                <div class="col-md-3"> 
                                     <div class="form-group">
                                         <label class="mtop"> Quantity: </label>
                                         <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" readonly>

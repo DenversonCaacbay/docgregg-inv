@@ -59,19 +59,19 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
-                <h1 class="mb-0 ml-2">Reports - Sales</h1>
+                <h4 class="mb-0 ml-2">Reports - Sales</h4>
             </div>
         </div>
-        <div class="col-md-2 text-md-right">
-            <nav aria-label="breadcrumb" class="custom-breadcrumb">
+        <div class="col-md-6">
+            <nav aria-label="breadcrumb" class="custom-breadcrumb d-flex justify-content-end">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><a href="report_stock.php">Stocks</a></li>
                     <li class="breadcrumb-item"><a href="report_services.php">Services</a></li>
@@ -82,7 +82,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <form id="pdfForm" method="post" action="../generatepdf/random/stocks.php" style="display: inline-block; margin-right: 10px;">
                         <div class="row">
                             <div class="col-md-4">
@@ -137,7 +137,7 @@
 
 
 
-                <div class="col-md-5 text-md-right" style="margin-top:30px;">
+                <div class="col-md-6 text-md-right" style="margin-top:30px;">
                     Generate Report by:  &nbsp
                     <!-- <button type="button" class="btn btn-primary">Day</button> -->
                     <a href="../generatepdf/stocks/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
@@ -149,7 +149,7 @@
                     <!-- <button type="button" class="btn btn-primary">Year</button> -->
                 </div>
             </div>
-            <div class="card" style="height: 500px; overflow: auto;">
+            <div class="card">
             <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 

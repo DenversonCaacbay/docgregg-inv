@@ -147,7 +147,7 @@
         ?>
 
     <ul class="navbar-nav sidebar p-2 sidebar-dark  shadow accordion" id="accordionSidebar">
-        <div class="card sss m-2">
+        <div class="card sss m-1">
             <img class="logo" src="../../assets/logo.png">
             <div class="sidebar-brand-text">
                 Doc Gregg <br>Veterinary Clinic

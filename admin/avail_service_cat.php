@@ -78,7 +78,7 @@
                         <label hidden>Pet Name:</label>
                         <input type="text" name="chosen_pet"  class=" form-control" value="Not Needed" hidden/>
                         <label hidden>Pet Type:</label>
-                        <input type="text" name="chosen_type"  class=" form-control" value="Dog" hidden/>
+                        <input type="text" name="chosen_type"  class=" form-control" value="Cat" hidden/>
                         <!-- <select class="form-select" name="chosen_type" required>
                             <option value="">-- Select Type --</option>
                             <option value="Dog">Dog</option>

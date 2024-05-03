@@ -35,7 +35,7 @@
         <div class="col-md-6">
         <div class="d-flex align-items-center">
                 <!-- <a class="btn btn-primary" href="admin_inventory.php">Back</a> -->
-                <h1 class=" mt-2">Internal Inventory</h1>
+                <h4 class=" mt-2">Internal Inventory</h4>
             </div>
             
         </div>

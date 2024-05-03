@@ -38,6 +38,7 @@
         top: 0;
         z-index: 100;
     }
+    
 </style>
 
 <!-- Begin Page Content -->
@@ -49,7 +50,7 @@
     
     
     <div class="row">
-        <div class="col-md-6"><h1 class="">All Products</h1></div>
+        <div class="col-md-6"><h4 class="">All Products</h4></div>
         <div class="col-md-6"><a href="create-inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
     </div>
 

@@ -44,14 +44,14 @@ if ($userdetails['role'] !== 'administrator') {
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
     
     
     <div class="row">
-        <div class="col-md-6"><h1 class="mb-4">Low Inventory</h1></div>
+        <div class="col-md-6"><h4 class="mb-4">Low Inventory</h4></div>
     </div>
 
     <div class="row"> 

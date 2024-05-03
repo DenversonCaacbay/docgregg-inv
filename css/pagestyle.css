@@ -14,8 +14,9 @@
 
 @media screen and (max-width: 1280px) {
     .page-container{
-        height: 500px;
+        height: 570px;
         overflow: auto;
+        /* background: red; */
     }
 }
 

@@ -44,7 +44,7 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 

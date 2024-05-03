@@ -420,15 +420,30 @@
         }
         
 
-        public function view_customers(){
-            $connection = $this->openConn();
+        // public function view_customers(){
+        //     $connection = $this->openConn();
     
-            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL");
+        //     $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL");
+        //     $stmt->execute();
+        //     $view = $stmt->fetchAll();
+            
+        //     return $view;
+        // }
+        public function view_customers($limit = 5, $offset = 0){
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL LIMIT :limit OFFSET :offset");
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
             $view = $stmt->fetchAll();
             
-            return $view;
+            // Fetch one extra record beyond the limit to check if there are more records
+            $stmt->fetch(PDO::FETCH_ASSOC);
+            $moreRecords = $stmt->rowCount() > 0;
+            
+            return [$view, $moreRecords];
         }
+        
 
         public function update_customer(){
             $id_user = $_GET['id'];

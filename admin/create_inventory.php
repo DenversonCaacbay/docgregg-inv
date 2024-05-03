@@ -18,13 +18,20 @@
 <?php 
     include('dashboard_sidebar_start.php');
 ?>
-
+<style>
+    label{
+        font-size: 14px !important;
+    }
+    .form-control{
+        font-size: 14px !important;
+    }
+</style>
 <!-- Begin Page Content -->
 
 <div class="container-fluid page-container">
     <div class="d-flex align-items-center">
         <a class="btn btn-primary" href="admin_inventory.php">Back</a>
-        <h1 class="mb-0 ml-2">Add Product</h1>
+        <h4 class="mb-0 ml-2">Add Product</h4>
     </div>
     <!-- Page Heading -->
                 
@@ -32,20 +39,20 @@
         <div class="col-md-12"> 
             <form method="post" enctype="multipart/form-data"> 
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-12 mt-5">
+                            <div class="col-md-12">
                                 <?php if (is_null($item['picture'])): ?>
-                                    <img id="blah" src="../assets/placeholder/item-placeholder.png" height="400" width="400" alt="Pet Picture">
+                                    <img id="blah" src="../assets/placeholder/item-placeholder.png" height="150" width="150" alt="Pet Picture">
                                 <?php else: ?>
-                                    <img id="blah" src="../<?= $item['picture']?>" width="400" height="400" alt="Pet Picture">
+                                    <img id="blah" src="../<?= $item['picture']?>" width="150" height="150" alt="Pet Picture">
                                 <?php endif; ?>
                             </div>
                         </div>
                         
                        
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <div class="container">
                             <div class="row me-3">
                             <div class="col-md-6 mt-3">
@@ -63,7 +70,7 @@
                                 <label> Choose Image:  </label>
                                 <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                             </div>
-                            <div class="col-md-12 mt-3">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label> Product Name: </label>
                                     <input type="text" class="form-control" name="name" required>
@@ -130,6 +137,12 @@
                                 <div class="form-group">
                                     <label class="mtop"> Expiration Date: </label>
                                     <input type="date" class="form-control" name="exp_date" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label> Notify When low Stock: </label>
+                                    <input type="number" class="form-control" name="low_quantity" required>
                                 </div>
                             </div>
                             <div class="col-md-12">

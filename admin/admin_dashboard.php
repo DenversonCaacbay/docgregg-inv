@@ -160,7 +160,7 @@ img{
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                             <h5 id="currentServiceHeading" style="font-size: 16px;" class="text-xs font-weight-bold text-primary text-uppercase mb-1">${currentService}</h5>
-                                <p style="font-size: 16px;" class="h5 mb-0 text-dark">Count: ${currentData.count}</p>
+                                <p style="font-size: 16px;" class=" mb-0 text-dark">Count: ${currentData.count}</p>
                             </div>
                             <div class="col-auto">
                                 <img src="${imageUrl}" style="width:35px" alt="${currentService}">

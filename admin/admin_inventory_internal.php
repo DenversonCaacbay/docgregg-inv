@@ -51,7 +51,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <h1 class=" mt-2">Internal Inventory</h1>
+                <h4 class="mt-2">Internal Inventory</h4>
             </div>
             
         </div>
@@ -63,7 +63,7 @@
         <div class="row">
             <div class="col-md-8">
                  <div class="form-group">
-                    <label> Search </label>
+                    <label> Search: </label>
                     <input type="text" class="form-control" id="searchInput" name="name"  value="" required>
                 </div>
             </div>

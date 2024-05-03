@@ -65,6 +65,7 @@
     } */
     .btn-primary{
         background: #0296be !important;
+        font-size: 14px;
     }
     .bg-primary{
         background: #0296be !important;
@@ -93,9 +94,16 @@
         background:  #0296be !important;
 
     }
+    .table th td{
+        align-content: center;
+    }
     .table th{
         background: #0296be;
         color: white;
+        font-size: 14px;
+    }
+    .table td{
+        font-size: 14px;
     }
     .logo{
         width:80px;
@@ -114,6 +122,8 @@
         
         border-radius: 10px;
         padding: 0;
+    }
+    .dropdown-menu li{
     }
     #logout.nav-item:last-child .nav-link{
         text-align:center;
@@ -162,7 +172,7 @@
         ?>
 
     <ul class="navbar-nav sidebar p-2 sidebar-dark  shadow accordion" id="accordionSidebar">
-        <div class="card sss m-2">
+        <div class="card sss m-1">
             <img class="logo" src="../assets/logo.png">
             <div class="sidebar-brand-text">
                 Doc Gregg <br>Veterinary Clinic
@@ -205,18 +215,20 @@
             <li class="nav-item dropdown"  id="inventory">
                 <a class="nav-link" href="admin_inventory.php" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="d-flex justify-content-between align-items-center">
-                    
-                    <div><i class="fas fa-clipboard-list"></i>
-                    <span>Inventory</span></div>
-                    <i class="fas fa-chevron-down"></i>
+                    <div>
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Inventory</span>
+                    </div>
+                    <i class="fas fa-chevron-down" style="font-size: 12px !important;"></i>
                 </div>    
                 
                     
                 </a>
-                <ul class="dropdown-menu ms-2 text-center">
+                <ul class="dropdown-menu w-100 text-center">
                     <li><a class="dropdown-item" href="admin_inventory.php">All Products</a></li>
                     <li><a class="dropdown-item" href="admin_inventory_internal.php">Internal Inventory</a></li>
                     <li><a class="dropdown-item" href="admin_inventory_external.php">External Inventory</a></li>
+                    <li><a class="dropdown-item" href="admin_low_inventory.php">Low Stocks Inventory</a></li>
                     <!-- <li><a class="dropdown-item" href="admin_inventory_both.php">Both Internal / External</a></li> -->
                     <li><a class="dropdown-item" href="create-inventory.php">Add Products</a></li>
                 </ul>
@@ -293,26 +305,7 @@
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <!-- <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a> -->
-                            <!-- Dropdown - Messages -->
-                            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div> -->
+                          
                         </li>
                         <li class="nav-item mt-4">
                         <?php if ($userRole === 'administrator') : ?>
@@ -326,11 +319,6 @@
                             <?php endif; ?>
                         <?php endif; ?>
                         </li>
-                        <!-- <li class="nav-item mt-4">
-                                <a href="#" style="position: relative;">
-                                    <i class="fas fa-user text-primary" style="font-size: 20px;"></i>
-                                </a>&nbsp;
-                        </li> -->
 
                         <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown">
@@ -341,8 +329,6 @@
                                 <?php else: ?>
                                     <img src="<?= $user_picture ?>" class="rounded-circle mr-2" style="width: 30px;"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php endif; ?>
-                                <!-- <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6><i class="fas fa-user text-primary mb-1 ml-1" style="font-size: 20px;"></i> -->
-                                    <!-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> -->
                                 </a>
                             </li>
                         </li>

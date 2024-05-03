@@ -73,29 +73,37 @@
         background: rgb(255,255,255);
         background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 100%);
     }
-    .card{
+    .login-container{
+        padding: 0px 90px;
+    }
+    .login-container .card{
         border: none;
+        margin-top: 20%;
+        box-shadow: 0px 10px 13px 0px rgba(0,0,0,0.10);
     }
-    .input-container {
-    display: -ms-flexbox;
-    display: flex;
+    .form-floating {
     width: 100%;
-    margin-bottom: 10px;
+    /* padding: 10px; */
+    outline: none;
+    border: none;
     }
-    .icon {
-    padding: 15px;
-    background: dodgerblue;
-    color: white;
-    min-width: 50px;
-    text-align: center;
-    }
-    .input-field {
+    .form-control {
     width: 100%;
     padding: 10px;
     outline: none;
+    border-bottom: 3px #0296be solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
     }
-    .input-field:focus {
-    border: 2px solid dodgerblue;
+    .form-floating:focus {
+        outline: none !important;
+        outline-color: transparent;
+    }
+    .input:focus{
+        outline: none !important;
+        outline-color: transparent;
     }
     .text-primary{
         color: #0296be !important;
@@ -131,14 +139,56 @@
 </style>
 <body>
 
-<section class="main-section"> 
-            <div class="container-fluid"> 
+<section>
+    <div class="container-fluid login-container">
+        <div class="row">
+            <div class="col-md-7 align-content-center">
+                <img src="assets/logo.png" width="150"> 
+                <h3 class="text-primary"> Doc Gregg Veterinary Clinic </h3>
+                <h4><i>"Where Care Meets Comfort"</i></h4>
+                <span>
+                A vet clinic is a compassionate hub
+                dedicated to providing expert medical care
+                and support for beloved pets.
+                </span>
+            </div>
+            <div class="col-md-5 align-items-center">
+                <div class="card p-3"> 
+                    <h3 class="text-primary text-center">Login</h3>
+                        <form method="post" autocomplete="off"> 
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="floatingInputInvalid" placeholder="" name="email" autocomplete="off" require>
+                                <label for="floatingInputInvalid">Email</label>
+                            </div>
+                            <br>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="myInput" placeholder="" name="password" autocomplete="off" require>
+                                <label for="floatingInputInvalid">Password</label>
+                            </div>
+                            <br>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" onclick="myFunction()" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Show Password</label>
+                            </div>
+                            <br>                                       
+                            <button class="btn btn-primary login-button" type="submit" name="user_login"> Log-in </button>
+                            <a href="admin_forgot_password.php" class="mt-2" style="float:right">Forgot Password</a>              
+                        </form>
+                        <div class="registration-section mt-3"> 
+                            <p1> <strong> Register as Staff</strong> </p1> 
+                            <A class="btn btn-primary mt-3" href="sign-up-staff.php"> Create Account </A> 
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            <!-- <div class="container-fluid"> 
                 <div class="row">
                     <div class="col-sm"></div>
                         <div class="col-sm main-heading text-center text-white" >
                             <img src="assets/logo.png" width="150"> 
-                            <h3 class="text-primary"> Doc Gregg <br>Veterinary Clinic  </h3>
-
+                            <h3 class="text-primary"> Doc Gregg <br>Veterinary Clinic </h3>
                         </div>
                     <div class="col-sm"></div>
                 </div>
@@ -184,9 +234,9 @@
                     <div class="col-sm"></div>
                 </div>
                             
-            </div>
+            </div> -->
 
-        </section>
+       
 
         <script>
             function myFunction() {
