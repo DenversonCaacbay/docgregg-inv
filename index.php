@@ -74,12 +74,15 @@
         background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 100%);
     }
     .login-container{
-        padding: 0px 90px;
+        padding: 120px 90px;
     }
-    .login-container .card{
+    .login-container .row{
         border: none;
-        margin-top: 20%;
-        box-shadow: 0px 10px 13px 0px rgba(0,0,0,0.10);
+        /* margin-top: 20%; */
+        /* box-shadow: 0px 10px 13px 0px rgba(0,0,0,0.10); */
+    }
+    .login-container .row .col-md-7{
+        padding-top: 70px;
     }
     .form-floating {
     width: 100%;
@@ -142,7 +145,7 @@
 <section>
     <div class="container-fluid login-container">
         <div class="row">
-            <div class="col-md-7 align-content-center">
+            <div class="col-md-7">
                 <img src="assets/logo.png" width="150"> 
                 <h3 class="text-primary"> Doc Gregg Veterinary Clinic </h3>
                 <h4><i>"Where Care Meets Comfort"</i></h4>
@@ -152,7 +155,7 @@
                 and support for beloved pets.
                 </span>
             </div>
-            <div class="col-md-5 align-items-center">
+            <div class="col-md-5">
                 <div class="card p-3"> 
                     <h3 class="text-primary text-center">Login</h3>
                         <form method="post" autocomplete="off"> 

@@ -80,15 +80,101 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-    <style>
+<style>
+        body {
+                background: rgb(255,255,255);
+                background: linear-gradient(180deg, rgba(255,255,255,1) 42%, rgba(2,150,190,1) 100%);
+            }
+                   .login-container{
+        padding: 120px 90px;
+    }
+    .login-container .row{
+        border: none;
+        /* margin-top: 20%;
+        box-shadow: 0px 10px 13px 0px rgba(0,0,0,0.10); */
+    }
+    .login-container .row .col-md-7{
+        padding-top: 70px;
+    }
+    .login-container .row .col-md-5{
+        padding-top: 70px;
+    }
+    .form-floating {
+    width: 100%;
+    /* padding: 10px; */
+    outline: none;
+    border: none;
+    }
+    .form-control {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border-bottom: 3px #0296be solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    }
+    .form-floating:focus {
+        outline: none !important;
+        outline-color: transparent;
+    }
+    .input:focus{
+        outline: none !important;
+        outline-color: transparent;
+    }
+    .text-primary{
+        color: #0296be !important;
+    }
         .text-header{
             color: #0296be;
         }
+        .bg-primary{
+                background: #0296be !important;
+            }
+            .btn-primary {
+                color: white;
+                background: #0296be !important;
+                padding: 10px 15px;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                opacity: 0.9;
+            }
+            .btn:hover {
+                opacity: 1;
+            }
     </style>
-<nav class="navbar sticky-top py-3 navbar-expand-lg navbar-dark">
-    <a class="mx-auto" style="text-decoration:none;color: #fff;font-size: 20px; font-weight: 600;" href="#">Verifying...</a>
-</nav>
-<div class="container mt-5">
+
+            <div class="container-fluid login-container">
+                <div class="row">
+                    <div class="col-md-7 align-content-center">
+                        <img src="assets/logo.png" width="150"> 
+                        <h3 class="text-primary"> Doc Gregg Veterinary Clinic </h3>
+                        <h4><i>"Where Care Meets Comfort"</i></h4>
+                        <span>
+                        A vet clinic is a compassionate hub
+                        dedicated to providing expert medical care
+                        and support for beloved pets.
+                        </span>
+                    </div>
+                    <div class="col-md-5 align-items-center">
+                        <div class="card p-3"> 
+                            <h3 class="text-primary text-center">Sign Up</h3>
+                            <form method="post" class="p-2" action="">
+                                    <!-- <h5 class="text-header">Enter Verification code sent to your Email:</h5> -->
+                                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputInvalid" placeholder="" name="verification_code" required>
+                    <label for="floatingInputInvalid">Verification Code: </label>
+                </div>
+            <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>"><br>
+            <button class="btn btn-primary w-100" type="submit" name="verify">Verify</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+<!-- <div class="container mt-5">
     <div class="card p-2">
         <form method="post" class="p-2" action="">
                 <h5 class="text-header">Enter Verification code sent to your Email</h5>
@@ -100,4 +186,4 @@ $conn->close();
             <button class="btn btn-primary w-100" type="submit" name="verify">Verify</button>
         </form>
     </div>
-</div>
+</div> -->

@@ -3,6 +3,11 @@
     overflow: auto;
 }
 
+.page-container .card{
+    background: none;
+    border: none !important;
+}
+
 
 @media screen and (max-width: 1580px) {
     .page-container{

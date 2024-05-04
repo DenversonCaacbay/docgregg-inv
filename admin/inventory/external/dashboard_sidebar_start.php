@@ -186,7 +186,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div><i class="fas fa-clipboard-list"></i>
                     <span>Inventory</span></div>
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down" style="font-size: 12px !important;"></i>
                 </div>    
                 
                     

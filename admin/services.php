@@ -8,11 +8,14 @@
     
     $staffbmis->delete_services();
 
-    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-    $limit = 5;
-    $offset = ($currentPage - 1) * $limit;
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $recordsPerPage = 5; // set the number of records to display per page
+    // $view = $staffbmis->view_services_all($page, $recordsPerPage);
+    $view = $staffbmis->view_customers($page, $recordsPerPage);
+    // $totalRecords = $staffbmis->count_inventory(); // get the total number of records
 
-    list($view, $moreRecords) = $staffbmis->view_customers($limit, $offset);
+// Calculate the total number of pages
+    $totalPages = ceil($totalRecords / $recordsPerPage);
 
 ?>
 
@@ -29,6 +32,9 @@
     th,td{
         /* justify-content: center; */
         align-content: center;
+    }
+    .customer--card{
+        background: none;
     }
 </style>
 
@@ -52,63 +58,51 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label> Search :</label>
-                        <input type="text" class="form-control" id="searchInput" name="name"  value="" required>
+                        <!-- <label> Search :</label> -->
+                        <input type="text" class="form-control mt-2" id="searchInput" name="name"  placeholder="Search..." required>
                     </div>
                 </div>
             </div>
            
-            <div class="card customer--card">
-            <table class="table table-hover text-center table-bordered">
-    <thead style="background: #0296be;color:#fff;" class="sticky"> 
-        <tr>
-            <th> Customer Name </th>
-            <th> Contact </th>
-            <th> Email </th>
-            <th> Address </th>
-            <th> View </th>
-        </tr>
-    </thead>
+            <div class="card customer--card border-0">
+                <table class="table table-hover text-center table-bordered">
+                    <thead style="background: #0296be;color:#fff;" class="sticky"> 
+                        <tr>
+                            <th> Customer Name </th>
+                            <th> Contact </th>
+                            <th> Email </th>
+                            <th> Address </th>
+                            <th> View </th>
+                        </tr>
+                    </thead>
 
-    <tbody>
-        <?php if (is_array($view) && count($view) > 0) { ?>
-            <?php foreach ($view as $item) { ?>
-                <tr>
-                    <td data-fullname="<?= htmlspecialchars($item['customer_name']); ?>">
-                        <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
-                    </td>
-                    <td> <?= $item['customer_contact'] ?> </td>
-                    <td> <?= $item['customer_email'] ?> </td>
-                    <td> <?= $item['customer_address'] ?> </td>
-                    <td>
-                        <form action="" method="post">
-                            <input type="hidden" name="serv_id" value="<?= $item['customer_id']; ?>">
-                            <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
-                            <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
-                            <a href="view_customer.php?id=<?= $item['id_user'] ?>" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
-                        </form>
-                    </td>
-                </tr>
-            <?php } ?>
-        <?php } else { ?>
-            <tr>
-                <td colspan="5">No Data Found</td>
-            </tr>
-        <?php } ?>
-    </tbody>
-</table>
-
-<div class="pagination d-flex mt-3 me-3">
-    <?php if ($currentPage > 1): ?>
-        <a class="btn btn-primary" href="?page=<?= $currentPage - 1 ?>">Prev</a>
-    <?php endif; ?>
-
-    <span class="current-page mt-1 me-3 ms-3">Page <?= $currentPage ?></span>
-
-    <?php if ($moreRecords): ?>
-        <a class="btn btn-primary" href="?page=<?= $currentPage + 1 ?>">Next</a>
-    <?php endif; ?>
-</div>
+                    <tbody>
+                        <?php if (is_array($view) && count($view) > 0) { ?>
+                            <?php foreach ($view as $item) { ?>
+                                <tr>
+                                    <td data-fullname="<?= htmlspecialchars($item['customer_name']); ?>">
+                                        <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
+                                    </td>
+                                    <td> <?= $item['customer_contact'] ?> </td>
+                                    <td> <?= $item['customer_email'] ?> </td>
+                                    <td> <?= $item['customer_address'] ?> </td>
+                                    <td>
+                                        <form action="" method="post">
+                                            <input type="hidden" name="serv_id" value="<?= $item['customer_id']; ?>">
+                                            <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
+                                            <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
+                                            <a href="view_customer.php?id=<?= $item['id_user'] ?>" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <tr>
+                                <td colspan="5">No Data Found</td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
                 <div id="noDataFound" style="display: none;text-align:center">
                     <p>No Data Found</p>
                 </div>
