@@ -9,6 +9,10 @@
     $recent_user = $staffbmis->recent_user();
     // print_r($recent_user);
 
+    $internal = $staffbmis->view_low_inventory_external();
+    $external = $staffbmis->view_low_stock_internal();
+    $most_sold = $staffbmis->view_stock_most_sold();
+
     // $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
     $rescountsales = $staffbmis->count_total();
@@ -39,7 +43,7 @@
 
     // For Low Inventory
     $recordsPerPage = 3; // set the number of records to display per page
-    $view = $staffbmis->view_low_inventory($page, $recordsPerPage);
+    // $view = $staffbmis->view_low_inventory($page, $recordsPerPage);
     $totalRecords = $staffbmis->count_low_inventory(); // get the total number of records
 
 
@@ -106,16 +110,20 @@ img{
                 <th> Quantity </th>
                 <th> Category </th>
                 <!-- <th></th> -->
-                <?php if(is_array($view)) {?>
-                    <?php foreach($view as $view) {?>
+                <?php if(is_array($internal)) {?>
+                    <?php foreach($internal as $view) {?>
                         <tr>
                             <td> <?= strlen($view['name']) > 20 ? substr($view['name'], 0, 20) . '...' : $view['name']; ?> </td>
                             <td> <?= $view['quantity'];?> </td>
                             <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
                             <!-- <td class="text-center"><span class="badge bg-danger">Low Stocks</span></td> -->
                         </tr>
-                    <?php }?>
-                <?php } ?>
+                    <?php } ?>
+                    <?php } else { ?>
+                        <tr>
+                            <td colspan="3">No Data Found</td>
+                        </tr>
+                    <?php } ?>
             </table> 
         </div>
         <div class="col-md-6">
@@ -124,10 +132,28 @@ img{
                 <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
             </div>
             <table class="table table-reponsive">
-                <th> Product Name </th>
-                <th> Quantity </th>
-                <th> Category </th>
-                <th></th>
+                <tr>
+                    <th> Product Name </th>
+                    <th> Quantity </th>
+                    <th> Category </th>
+                    <!-- <th></th> -->
+                </tr>
+                <tr>
+                    <?php if (is_array($external) && count($external) > 0) { ?>
+                        <?php foreach ($external as $item) { ?>
+                    <tr>
+                        <td><?= $item['name'] ?></td>
+                        <td><?= $item['quantity'] ?></td>
+                        <td><?= $item['category'] ?></td>
+                        <!-- <td></td> -->
+                    </tr>
+                    <?php } ?>
+                    <?php } else { ?>
+                        <tr>
+                            <td colspan="3">No Data Found</td>
+                        </tr>
+                    <?php } ?>
+                </tr>
             </table>
         </div>
         <div class="col-md-12">
@@ -135,9 +161,24 @@ img{
                 <h5>Top 3 Most Sold Product</h5>
             </div>
             <table class="table table-reponsive">
-                <th> Product Name </th>
-                <th> Category </th>
-                <th></th>
+                <tr>
+                    <th> Product Name </th>
+                    <th> Total </th>
+                    <!-- <th></th> -->
+                </tr>
+                <?php if (is_array($most_sold) && count($most_sold) > 0) { ?>
+                    <?php foreach ($most_sold as $item) { ?>
+                <tr>
+                    <td><?= $item['product'] ?></td>
+                    <td>₱<?= number_format($item['total'], 2, '.', ',') ?></td>
+                    <!-- <td></td> -->
+                </tr>
+                <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="2">No Data Found</td>
+                    </tr>
+                <?php } ?>
             </table>   
         </div>
     </div>

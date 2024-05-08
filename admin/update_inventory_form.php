@@ -85,7 +85,12 @@
                                 </div>
                                 <div class="col-md-3"> 
                                     <div class="form-group">
-                                        <label class="mtop"> Quantity: </label>
+                                        <label class="mtop"> Quantity: 
+                                        <a href="<?= $view['quantity'] <= 20 ? 'update_low_inventory_form.php?inv_id=' . $_GET['inv_id'] : "" ?>">
+                                                <span class="mtop badge badge-<?= $view['quantity'] <= 20 ? "danger" : "success" ?>"> <?= $view['quantity'] <= 20 ? "Low" : "Good" ?> Stock
+                                                </span>
+                                            </a>
+                                        </label>
                                         <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" readonly>
                                     </div>
                                 </div>
@@ -102,17 +107,22 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div classs="form-group">
                                             <label class="mtop"> Expiration Date: </label>
                                             <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                         </div>
                                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                                         <input type="hidden" class="form-control" name="role" value="resident">
                                     </div>
+                                    <!-- <div class="col-md-12"> 
+                                        <div class="form-group">
+                                            <span class="mtop badge badge-<?= $view['quantity'] ? "success" : "danger" ?>"> <?= $view['quantity'] ? "Good" : "Low" ?> Stock</span>
+                                            <input type="number" class="form-control" name="qty" value="<?= $item[''] ?: "0" ?>" readonly>
+                                        </div>
+                                    </div> -->
                                     <div class="col-md-12">
                                         <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Update </button>
                                     </div>
-                                
 
                             </div>
                         

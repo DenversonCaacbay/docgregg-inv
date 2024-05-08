@@ -808,14 +808,43 @@
         // }
 
         public function view_low_inventory(){
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL 
+                AND quantity <= 20 ORDER BY quantity ASC");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+
+        public function view_low_inventory_external(){
             // $startFrom = ($page - 1) * $recordsPerPage;
             $connection = $this->openConn();
         
             // Modify the SQL query to include a WHERE clause
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= 20");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL 
+                AND quantity <= 20 ORDER BY quantity ASC LIMIT 3");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
+            return $view;
+        }
+
+        public function view_low_stock_internal(){
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory_internal WHERE deleted_at IS NULL 
+                AND quantity <= 20  ORDER BY quantity ASC LIMIT 3");
+            $stmt->execute();   
+            $view = $stmt->fetchAll();
+            return $view;
+        }
+
+        public function view_stock_most_sold(){
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT *, SUM(totalQty) AS total_quantity 
+                FROM invoice GROUP BY prod_id ORDER BY total_quantity DESC LIMIT 3");
+            $stmt->execute();   
+            $view = $stmt->fetchAll();
             return $view;
         }
         
