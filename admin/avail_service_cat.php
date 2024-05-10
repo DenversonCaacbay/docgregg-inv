@@ -159,10 +159,10 @@
                     var medicines = JSON.parse(this.responseText);
                     var selectHTML = '<label>List of Syringe and Vaccine: </label><select class="form-select item_id" size="5">';
                     for (var i = 0; i < medicines.length; i++) {
-                        selectHTML += '<option value="' + medicines[i].inv_id + '">' + medicines[i].name + '</option>';
+                        selectHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                     }
                     selectHTML += '</select>';
-                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                     additionalOptionsDiv.innerHTML = selectHTML;
                 }
             };
@@ -177,10 +177,10 @@
                     var medicines = JSON.parse(this.responseText);
                     var selectHTML = '<label>List of Medicines: </label><select class="form-select item_id" size="5">';
                     for (var i = 0; i < medicines.length; i++) {
-                        selectHTML += '<option value="' + medicines[i].inv_id + '">' + medicines[i].name + '</option>';
+                        selectHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                     }
                     selectHTML += '</select>';
-                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                     additionalOptionsDiv.innerHTML = selectHTML;
                 }
             };
@@ -206,10 +206,10 @@
                             var medicines = JSON.parse(this.responseText);
                             additionalOptionsHTML += '<label>List of Syringe and Vaccine: </label><select class="form-select item_id" size="5">';
                             for (var i = 0; i < medicines.length; i++) {
-                                additionalOptionsHTML += '<option value="' + medicines[i].inv_id + '">' + medicines[i].name + '</option>';
+                                additionalOptionsHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                             }
                             additionalOptionsHTML += '</select>';
-                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                             additionalOptionsDiv.innerHTML = additionalOptionsHTML;
                         }
                     };
@@ -223,10 +223,10 @@
                             var medicines = JSON.parse(this.responseText);
                             additionalOptionsHTML += '<label>List of Medicines: </label><select class="form-select item_id" size="5">';
                             for (var i = 0; i < medicines.length; i++) {
-                                additionalOptionsHTML += '<option value="' + medicines[i].inv_id + '">' + medicines[i].name + '</option>';
+                                additionalOptionsHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                             }
                             additionalOptionsHTML += '</select>';
-                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                             additionalOptionsDiv.innerHTML = additionalOptionsHTML;
                         }
                     };
@@ -281,6 +281,12 @@
     var selectedQuantity = quantityInput.value.trim(); 
     var selectedService = serviceSelect.options[serviceSelect.selectedIndex].text;
     var selectedServiceValue = itemId.value;
+
+    // check if selectedQuantity exceeds the stock left
+    if(parseInt(selectedQuantity) > parseInt(selectedServiceValue.split("|")[1])){
+        alert('The requested quantity exceeds available stock.');
+        return;
+    }
 
     // Check if pet input is empty
     if (selectedPet === '') {
@@ -393,5 +399,18 @@ function removeRow(index) {
     }
 }
 
+function checkQuantity() {
+        // var quantityInput = document.getElementById("quantityInput");
+        var quantityInput = document.getElementsByClassName("quantityInput")[0];
+        // console.log(quantityInput);
+        var selectedQuantity = parseInt(quantityInput.value);
+        var selectedServiceValue = document.querySelector('.item_id').value;
+
+        // Check if selectedQty exceeds the stock left
+        if (selectedQuantity > parseInt(selectedServiceValue.split("|")[1])) {
+            alert('The requested quantity exceeds available stock.');
+            quantityInput.value = parseInt(selectedServiceValue.split("|")[1]); // Set quantity to available stock
+        }
+    }
 
 </script>
