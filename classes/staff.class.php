@@ -876,6 +876,7 @@
                 $capital = $_POST['input_capital'];
                 $profit = $_POST['input_profit'];
                 $qty = $_POST['qty'];
+                $low_stock = $_POST['low_stock'];
                 $category = $_POST['category'];
                 $bought_date = $_POST['bought_date'];
                 $exp = $_POST['exp_date'];
@@ -928,8 +929,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                     $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
         
