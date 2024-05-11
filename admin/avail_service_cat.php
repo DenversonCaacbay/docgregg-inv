@@ -113,7 +113,7 @@
                             <thead>
                                 <th hidden>Pet</th>
                                 <th hidden>Pet Type</th>
-                                <th>Service ID</th>
+                                <th hidden>Service ID</th>
                                 <th>Service</th>
                                 <th>Type / Medicine / Equipment</th>
                                 <th>Quantity</th>
@@ -272,7 +272,6 @@
     var staffInput = document.querySelector('input[name="staff"]');
     var typeInput = document.querySelector('input[name="chosen_type"]');
     var serviceSelect = document.getElementById("serviceSelect");
-    // var itemId = document.getElementById('item_id');
     var itemId = document.getElementsByClassName('item_id')[0];
     var quantityInput = document.querySelector('input[name="quantity"]');
     var selectedPet = petInput.value.trim();
@@ -324,12 +323,12 @@
     var table = document.querySelector('.table tbody');
     var newRow = table.insertRow();
     newRow.innerHTML = '<td hidden>' + selectedPet + '</td>' +
-                       '<td hidden>' + selectedType + '</td>' +
-                       '<td>' + selectedServiceValue + '</td>' +
-                       '<td>' + selectedService + '</td>' +
-                       '<td>' + additionalOptions + '</td>' +
-                       '<td>' + selectedQuantity + '</td>' +
-                       '<td hidden>' + selectedStaff + '</td>';
+                    '<td hidden>' + selectedType + '</td>' +
+                    '<td>' + selectedServiceValue + '</td>' +
+                    '<td>' + selectedService + '</td>' +
+                    '<td>' + additionalOptions + '</td>' +
+                    '<td>' + selectedQuantity + '</td>' +
+                    '<td hidden>' + selectedStaff + '</td>';
 
     // Store the table data in local storage
     var tableData = {
@@ -341,9 +340,23 @@
         quantity: selectedQuantity,
         staff: selectedStaff,
     };
+
+    // Retrieve existing table data from local storage
     var existingTableData = localStorage.getItem('tableData');
     if (existingTableData) {
         existingTableData = JSON.parse(existingTableData);
+        
+        // Check if selected service already exists
+        var serviceExists = existingTableData.some(function(item) {
+            return item.id === selectedServiceValue;
+        });
+        
+        if (serviceExists) {
+            alert('This service has already been added.');
+            return; // Exit function if service already exists
+        }
+        
+        // Add new table data to existing data
         existingTableData.push(tableData);
         localStorage.setItem('tableData', JSON.stringify(existingTableData));
     } else {
@@ -369,7 +382,7 @@ window.onload = function() {
             var newRow = table.insertRow();
             newRow.innerHTML = '<td hidden>' + data.pet + '</td>' +
                                '<td hidden>' + data.type + '</td>' +
-                               '<td>' + data.id + '</td>' +
+                               '<td hidden>' + data.id + '</td>' +
                                '<td>' + data.service + '</td>' +
                                '<td>' + data.options.join(', ') + '</td>' +
                                '<td>' + data.quantity + '</td>' +
