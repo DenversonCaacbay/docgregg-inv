@@ -113,6 +113,7 @@
                             <thead>
                                 <th hidden>Pet</th>
                                 <th hidden>Pet Type</th>
+                                <th hidden>Service ID</th>
                                 <th>Service</th>
                                 <th>Type / Medicine / Equipment</th>
                                 <th>Quantity</th>
@@ -156,12 +157,12 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var medicines = JSON.parse(this.responseText);
-                    var selectHTML = '<label>List of Syringe and Vaccine: </label><select class="form-select" size="5">';
+                    var selectHTML = '<label>List of Syringe and Vaccine: </label><select class="form-select item_id" size="5">';
                     for (var i = 0; i < medicines.length; i++) {
-                        selectHTML += '<option value="' + medicines[i].id + '">' + medicines[i].name + '</option>';
+                        selectHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                     }
                     selectHTML += '</select>';
-                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                     additionalOptionsDiv.innerHTML = selectHTML;
                 }
             };
@@ -174,19 +175,19 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var medicines = JSON.parse(this.responseText);
-                    var selectHTML = '<label>List of Medicines: </label><select class="form-select" size="5">';
+                    var selectHTML = '<label>List of Medicines: </label><select class="form-select item_id" size="5">';
                     for (var i = 0; i < medicines.length; i++) {
-                        selectHTML += '<option value="' + medicines[i].id + '">' + medicines[i].name + '</option>';
+                        selectHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                     }
                     selectHTML += '</select>';
-                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                    selectHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                     additionalOptionsDiv.innerHTML = selectHTML;
                 }
             };
             xhttp.open("GET", "../classes/fetch_medicine.php", true);
             xhttp.send();
         } else if (selectedOption === "treatment") {
-            var selectHTML = '<select id="treatmentType" class="form-select">' +
+            var selectHTML = '<select id="treatmentType" class="form-select item_id">' +
                                 '<option value="">-- Select Treatment --</option>' +
                                 '<option value="surgical">Surgical</option>' +
                                 '<option value="medicine">Medicine</option>' +
@@ -203,12 +204,12 @@
                     xhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
                             var medicines = JSON.parse(this.responseText);
-                            additionalOptionsHTML += '<label>List of Syringe and Vaccine: </label><select class="form-select" size="5">';
+                            additionalOptionsHTML += '<label>List of Syringe and Vaccine: </label><select class="form-select item_id" size="5">';
                             for (var i = 0; i < medicines.length; i++) {
-                                additionalOptionsHTML += '<option value="' + medicines[i].id + '">' + medicines[i].name + '</option>';
+                                additionalOptionsHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                             }
                             additionalOptionsHTML += '</select>';
-                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                             additionalOptionsDiv.innerHTML = additionalOptionsHTML;
                         }
                     };
@@ -220,12 +221,12 @@
                     xhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
                             var medicines = JSON.parse(this.responseText);
-                            additionalOptionsHTML += '<label>List of Medicines: </label><select class="form-select" size="5">';
+                            additionalOptionsHTML += '<label>List of Medicines: </label><select class="form-select item_id" size="5">';
                             for (var i = 0; i < medicines.length; i++) {
-                                additionalOptionsHTML += '<option value="' + medicines[i].id + '">' + medicines[i].name + '</option>';
+                                additionalOptionsHTML += '<option value="' + medicines[i].inv_id + '|' + medicines[i].quantity + '">' + medicines[i].name +  ' - Qty: ' + medicines[i].quantity + '</option>';
                             }
                             additionalOptionsHTML += '</select>';
-                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control" id="quantityInput" placeholder="Enter quantity">';
+                            additionalOptionsHTML += '<label class="mt-3">Enter Quantity: </label><input type="number" name="quantity" class="form-control quantityInput" placeholder="Enter quantity" oninput="checkQuantity()">';
                             additionalOptionsDiv.innerHTML = additionalOptionsHTML;
                         }
                     };
@@ -235,24 +236,24 @@
             });
         }
         else if (selectedOption === "laboratory") {
-            var selectHTML = '<select class="form-select">' +
-                                '<option>CBC</option>' +
-                                '<option>DIAGNOSTIC TEST KITS</option>' +
-                                '<option>ULTRASOUND</option>' +
+            var selectHTML = '<select class="form-select item_id">' +
+                                '<option value="0">CBC</option>' +
+                                '<option value="0">DIAGNOSTIC TEST KITS</option>' +
+                                '<option value="0">ULTRASOUND</option>' +
                              '</select>';
             selectHTML += '<label class="mt-3  d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
             additionalOptionsDiv.innerHTML = selectHTML;
             
         } else if (selectedOption === "grooming") {
-            var selectHTML = '<select class="form-select">' +
-                                '<option>Basic Grooming</option>' +
-                                '<option>Full Groom</option>' +
+            var selectHTML = '<select class="form-select item_id">' +
+                                '<option value="0">Basic Grooming</option>' +
+                                '<option value="0">Full Groom</option>' +
                              '</select>';
             selectHTML += '<label class="mt-3  d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
             additionalOptionsDiv.innerHTML = selectHTML;
         } else if (selectedOption === "bloodchemistry") {
-            var selectHTML = '<select class="form-select">' +
-                                '<option>Chem 17 Dog</option>'
+            var selectHTML = '<select class="form-select item_id">' +
+                                '<option value="0">Chem 17 Dog</option>'
                              '</select>';
             selectHTML += '<label class="mt-3 d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
             additionalOptionsDiv.innerHTML = selectHTML;
@@ -271,12 +272,20 @@
     var staffInput = document.querySelector('input[name="staff"]');
     var typeInput = document.querySelector('input[name="chosen_type"]');
     var serviceSelect = document.getElementById("serviceSelect");
+    var itemId = document.getElementsByClassName('item_id')[0];
     var quantityInput = document.querySelector('input[name="quantity"]');
     var selectedPet = petInput.value.trim();
     var selectedStaff = staffInput.value.trim();
-    var selectedType = typeInput.value.trim(); 
+    var selectedType = typeInput.value.trim();
     var selectedQuantity = quantityInput.value.trim(); 
     var selectedService = serviceSelect.options[serviceSelect.selectedIndex].text;
+    var selectedServiceValue = itemId.value;
+
+    // check if selectedQuantity exceeds the stock left
+    if(parseInt(selectedQuantity) > parseInt(selectedServiceValue.split("|")[1])){
+        alert('The requested quantity exceeds available stock.');
+        return;
+    }
 
     // Check if pet input is empty
     if (selectedPet === '') {
@@ -314,14 +323,16 @@
     var table = document.querySelector('.table tbody');
     var newRow = table.insertRow();
     newRow.innerHTML = '<td hidden>' + selectedPet + '</td>' +
-                       '<td hidden>' + selectedType + '</td>' +
-                       '<td>' + selectedService + '</td>' +
-                       '<td>' + additionalOptions + '</td>' +
-                       '<td>' + selectedQuantity + '</td>' +
-                       '<td hidden>' + selectedStaff + '</td>';
+                    '<td hidden>' + selectedType + '</td>' +
+                    '<td>' + selectedServiceValue + '</td>' +
+                    '<td>' + selectedService + '</td>' +
+                    '<td>' + additionalOptions + '</td>' +
+                    '<td>' + selectedQuantity + '</td>' +
+                    '<td hidden>' + selectedStaff + '</td>';
 
     // Store the table data in local storage
     var tableData = {
+        id: selectedServiceValue,
         pet: selectedPet,
         type: selectedType,
         service: selectedService,
@@ -329,9 +340,23 @@
         quantity: selectedQuantity,
         staff: selectedStaff,
     };
+
+    // Retrieve existing table data from local storage
     var existingTableData = localStorage.getItem('tableData');
     if (existingTableData) {
         existingTableData = JSON.parse(existingTableData);
+        
+        // Check if selected service already exists
+        var serviceExists = existingTableData.some(function(item) {
+            return item.id === selectedServiceValue;
+        });
+        
+        if (serviceExists) {
+            alert('This service has already been added.');
+            return; // Exit function if service already exists
+        }
+        
+        // Add new table data to existing data
         existingTableData.push(tableData);
         localStorage.setItem('tableData', JSON.stringify(existingTableData));
     } else {
@@ -357,6 +382,7 @@ window.onload = function() {
             var newRow = table.insertRow();
             newRow.innerHTML = '<td hidden>' + data.pet + '</td>' +
                                '<td hidden>' + data.type + '</td>' +
+                               '<td hidden>' + data.id + '</td>' +
                                '<td>' + data.service + '</td>' +
                                '<td>' + data.options.join(', ') + '</td>' +
                                '<td>' + data.quantity + '</td>' +
@@ -386,5 +412,18 @@ function removeRow(index) {
     }
 }
 
+function checkQuantity() {
+        // var quantityInput = document.getElementById("quantityInput");
+        var quantityInput = document.getElementsByClassName("quantityInput")[0];
+        // console.log(quantityInput);
+        var selectedQuantity = parseInt(quantityInput.value);
+        var selectedServiceValue = document.querySelector('.item_id').value;
+
+        // Check if selectedQty exceeds the stock left
+        if (selectedQuantity > parseInt(selectedServiceValue.split("|")[1])) {
+            alert('The requested quantity exceeds available stock.');
+            quantityInput.value = parseInt(selectedServiceValue.split("|")[1]); // Set quantity to available stock
+        }
+    }
 
 </script>
