@@ -77,7 +77,7 @@
             <div class="card text-center p-5">
                 <i class="fas fa-cogs fa-5x" style="color: #0296be !important;font-size: 50px !important;"></i>
                 <h4 class="mt-3">Logs</h4>
-                <a class="btn btn-primary" href="logs/logs_staff.php">Visit</a>
+                <a class="btn btn-primary" href="logs/logs_services.php">Visit</a>
             </div>
         </div>
     </div>

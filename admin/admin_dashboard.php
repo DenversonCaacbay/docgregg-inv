@@ -183,22 +183,25 @@ img{
         </div>
     </div>
     </div>
-
-    <div class="row mt-3">
+   
+    <div class="row mt-3 mb-3">
         <div class="col-md-12">
-            <div class="d-flex align-items-center">
-                <label for="timePeriod" class="me-2 mt-2">Select Time Period:</label>
-                <select id="timePeriod" style="width:120px;" class="form-select" onchange="updateChart()">
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="yearly">Yearly</option>
-                </select>
-            </div>
+            <div class="card shadow py-3 px-3">
+                <div class="d-flex align-items-center">
+                    <label for="timePeriod" class="me-2 mt-2">Select Time Period:</label>
+                    <select id="timePeriod" style="width:120px;" class="form-select" onchange="updateChart()">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
 
-            <div>
-                <canvas style="height:95%" id="myBarChart"></canvas>
+                <div>
+                    <canvas style="height:95%" id="myBarChart"></canvas>
+                </div>
             </div>
+            
 
                 <script>
                     var myBarChart; // Declare the chart variable outside the functions
@@ -238,58 +241,83 @@ img{
                     updateChart();
                 </script>
             </div>
-            <h3 class="mt-3">Availed Service</h3>
-            <div class="col-md-12">
+            <div class="mt-4" style="width: 100%;border-bottom: #0296be 2px solid;"></div>
+            <div class="col-md-12 mt-3">
+            <div class="card shadow py-3 px-3">
+                <div class="d-flex align-items-center">
+                    <label class="mt-3">Availed Service : </label>
+                    <select id="petTypeSelect" class="form-select ms-3 mt-2" style="width:120px;">
+                        <option value="Dog">Dog</option>
+                        <option value="Cat">Cat</option>
+                    </select>
+                </div>
                 
-                <canvas  id="barChart" width="400" height="400"></canvas>
+                
+                <canvas id="barChart" width="400" height="100"></canvas>
+            </div>
+               
 
                 <script>
-                    // Fetch data from PHP file using Fetch API
                     document.addEventListener('DOMContentLoaded', function () {
-                        // Fetch data from PHP file using Fetch API
-                        fetch('pos/fetch_pie.php')
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.json();
-                            })
-                            .then(data => {
-                                console.log(data); // Check the data in the console
+                        var petTypeSelect = document.getElementById('petTypeSelect');
+                        var ctx = document.getElementById('barChart').getContext('2d');
+                        var myBarChart;
 
-                                // Process the data to extract service names and counts
-                                var labels = data.map(item => item.service_name);
-                                var values = data.map(item => item.count);
+                        function fetchData(petType) {
+                            fetch('pos/fetch_pie.php?pet_type=' + petType)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    // Process the data to extract service names and counts
+                                    var labels = data.map(item => item.service_name);
+                                    var values = data.map(item => item.count);
 
-                                // Create a bar chart
-                                var ctx = document.getElementById('barChart').getContext('2d');
-                                var myBarChart = new Chart(ctx, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: labels,
-                                        datasets: [{
-                                            label: 'Availed Per Services',
-                                            data: values,
-                                            backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
-                                            borderColor: 'rgba(54, 162, 235, 1)',
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        maintainAspectRatio: false,
-                                        scales: {
-                                            y: {
-                                                beginAtZero: true
+                                    // Update chart data
+                                    if (myBarChart) {
+                                        myBarChart.destroy(); // Destroy existing chart instance
+                                    }
+                                    myBarChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [{
+                                                label: 'Availed Per Services',
+                                                data: values,
+                                                backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: true,
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
                                             }
                                         }
-                                    }
-                                });
-                            })
-                            .catch(error => console.error('Error fetching data:', error));
+                                    });
+                                })
+                                .catch(error => console.error('Error fetching data:', error));
+                        }
+
+                        petTypeSelect.addEventListener('change', function () {
+                            var selectedPetType = petTypeSelect.value;
+                            fetchData(selectedPetType);
+                        });
+
+                        // Fetch data for initial pet type
+                        var initialPetType = petTypeSelect.value;
+                        fetchData(initialPetType);
                     });
                 </script>
             </div>
+
 
         </div>
        

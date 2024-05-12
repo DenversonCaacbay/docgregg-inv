@@ -1935,10 +1935,25 @@
             return $result;
         }
 
+        // public function count_services_report() {
+        //     $connection = $this->openConn();
+        
+        //     $stmt = $connection->prepare("SELECT * FROM tbl_services");
+        
+        //     $stmt->execute();
+        
+        //     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        //     return $result;
+        // }
         public function count_services_report() {
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_services");
+            $stmt = $connection->prepare("
+                SELECT * 
+                FROM tbl_services 
+                INNER JOIN tbl_user ON tbl_services.cli_id = tbl_user.id_user
+            ");
         
             $stmt->execute();
         
@@ -1946,6 +1961,7 @@
         
             return $result;
         }
+        
         
 
         public function count_inventory() {

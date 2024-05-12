@@ -58,7 +58,7 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
@@ -72,7 +72,7 @@
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li>
+                    <!-- <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li> -->
                     <li class="breadcrumb-item"><a href="logs_services.php">Services</a></li>
                     <li class="breadcrumb-item"><a href="logs_inventory.php">Inventory</a></li>
                 </ol>

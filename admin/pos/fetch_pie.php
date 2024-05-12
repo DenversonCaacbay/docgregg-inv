@@ -5,16 +5,19 @@ $dbname = 'dgvc';
 $username = 'root';
 $password = '';
 
+// Get the pet type from the query string
+$pet_type = isset($_GET['pet_type']) ? $_GET['pet_type'] : '';
+
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
 
-// Fetch data from tbl_services
-$query = "SELECT service_availed FROM tbl_services";
+// Fetch data from tbl_services based on pet type
+$query = "SELECT service_availed FROM tbl_services WHERE pet_type = ?";
 $stmt = $pdo->prepare($query);
-$stmt->execute();
+$stmt->execute([$pet_type]);
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Process the data to count occurrences of each service

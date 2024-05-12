@@ -47,11 +47,11 @@
     }
     .custom-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
         padding-left:10px;
-    content: "|";
-    padding: 0 5px;
-    color: #6c757d; /* Set the color of the divider */
-  }
-  thead.sticky {
+        content: "|";
+        padding: 0 5px;
+        color: #6c757d; /* Set the color of the divider */
+    }
+    thead.sticky {
         position: sticky;
         top: 0;
         z-index: 100;
@@ -60,7 +60,7 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
 
@@ -68,11 +68,11 @@
         <div class="col-md-10">
             <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
-                <h1 class="mb-0 ml-2">Reports - Services</h1>
+                <h4 class="mb-0 ml-2">Reports - Services</h4>
             </div>
         </div>
         <div class="col-md-2 text-md-right">
-            <nav aria-label="breadcrumb" class="custom-breadcrumb">
+            <nav aria-label="breadcrumb" class="custom-breadcrumb d-flex justify-content-end">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><a href="report_stock.php">Stocks</a></li>
                     <li class="breadcrumb-item"><a href="report_services.php">Services</a></li>
@@ -111,30 +111,30 @@
                     });
                 </script>   -->
                 <script>
-    function validateDates() {
-        var startDate = document.getElementById('fromDate').value;
-        var endDate = document.getElementById('toDate').value;
+                    function validateDates() {
+                        var startDate = document.getElementById('fromDate').value;
+                        var endDate = document.getElementById('toDate').value;
 
-        if (startDate === "" || endDate === "") {
-            alert("Please select both start and end dates.");
-        } else {
-            // Perform other actions or submit the form
-            var form = document.getElementById('pdfForm');
-            form.submit();
+                        if (startDate === "" || endDate === "") {
+                            alert("Please select both start and end dates.");
+                        } else {
+                            // Perform other actions or submit the form
+                            var form = document.getElementById('pdfForm');
+                            form.submit();
 
-            // Open PDF link in a new tab
-            openPdfLink();
-        }
-    }
+                            // Open PDF link in a new tab
+                            openPdfLink();
+                        }
+                    }
 
-    // This function opens the PDF link in a new tab
-    function openPdfLink() {
-        var pdfLink = document.getElementById('pdfLink').getAttribute('href');
-        window.open(pdfLink, '_blank');
-    }
-</script>
+                    // This function opens the PDF link in a new tab
+                    function openPdfLink() {
+                        var pdfLink = document.getElementById('pdfLink').getAttribute('href');
+                        window.open(pdfLink, '_blank');
+                    }
+                </script>
 
-                <div class="col-md-5 text-md-right mt-4">
+                <div class="col-md-5 text-md-right" style="margin-top:30px;">
                     Generate Report by:  &nbsp
                     <!-- <button type="button" class="btn btn-primary">Day</button> -->
                     <a href="../generatepdf/services/day.php" class="btn btn-primary" target="_blank" id="generatePDF">Daily</a>
