@@ -327,9 +327,10 @@
     // Get selected additional options if any
     var additionalOptionsDiv = document.getElementById("additionalOptions");
     var selectedOptions = additionalOptionsDiv.querySelectorAll('select option:checked');
+    
     var selectedOptionsText = [];
     selectedOptions.forEach(function(option) {
-        selectedOptionsText.push(option.text);
+        selectedOptionsText.push(option.text.split("-")[0]); // remove "- Qty 00" in localstorage
     });
     var additionalOptions = selectedOptionsText.join(', ');
 
