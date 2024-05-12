@@ -809,8 +809,7 @@
 
         public function view_low_inventory(){
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL 
-                AND quantity <= 20 ORDER BY quantity ASC");
+            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= low_stock ORDER BY quantity ASC");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -896,8 +895,8 @@
                         $connection = $this->openConn();
         
                         // Insert into tbl_inventory
-                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty , $target_file, $category, $exp, $bought_date, $low_stock]);
         
                         // Insert into tbl_inventory_logs
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
@@ -929,8 +928,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
+                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file , $category, $exp, $bought_date, $low_stock,]);
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                     $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
         
@@ -963,6 +962,7 @@
                 $capital = $_POST['input_capital'];
                 $profit = $_POST['input_profit'];
                 $qty = $_POST['qty'];
+                $low_stock = $_POST['low_stock'];
                 $category = $_POST['category'];
                 $bought_date = $_POST['bought_date'];
                 $exp = $_POST['exp_date'];
@@ -982,8 +982,8 @@
                         $connection = $this->openConn();
         
                         // Insert into tbl_inventory
-                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
         
                         // Insert into tbl_inventory_logs
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
@@ -1008,8 +1008,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                    $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (name, price, profit, capital, quantity, picture, category, expired_at, purchased_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt_inventory->execute([$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date]);
+                     $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$type ,$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                     $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
         
@@ -2048,7 +2048,7 @@
 
         public function count_low_inventory() {
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= 20");
+            $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tbl_inventory WHERE deleted_at IS NULL AND quantity <= low_stock");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     

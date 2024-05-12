@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 // Query to fetch deworming medicines
-$query = "SELECT * FROM tbl_inventory WHERE type='External' AND (category='Syringe' OR category='Vaccine')  AND quantity > 0";
+$query = "SELECT * FROM tbl_inventory WHERE type='Internal' AND (category='Syringe' OR category='Vaccine')  AND quantity > 0";
 $result = $conn->query($query);
 
 if (!$result) {

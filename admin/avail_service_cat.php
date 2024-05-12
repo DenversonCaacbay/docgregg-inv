@@ -79,11 +79,6 @@
                         <input type="text" name="chosen_pet"  class=" form-control" value="Not Needed" hidden/>
                         <label hidden>Pet Type:</label>
                         <input type="text" name="chosen_type"  class=" form-control" value="Cat" hidden/>
-                        <!-- <select class="form-select" name="chosen_type" required>
-                            <option value="">-- Select Type --</option>
-                            <option value="Dog">Dog</option>
-                            <option value="Cat">Cat</option>
-                        </select> -->
                         <label class="mt-3">Select Service:</label>
                         <select id="serviceSelect" class="form-select" onchange="showOptions()" required>
                             <option>Select a service</option>
@@ -143,7 +138,7 @@
         </div>
     </div> 
 </div>
-
+ 
 <script>
     function showOptions() {
         var serviceSelect = document.getElementById("serviceSelect");
@@ -246,14 +241,33 @@
             
         } else if (selectedOption === "grooming") {
             var selectHTML = '<select class="form-select item_id">' +
-                                '<option value="0">Basic Grooming</option>' +
-                                '<option value="0">Full Groom</option>' +
+                                '<option value="1">Basic Grooming</option>' +
+                                '<option value="1">Full Groom</option>' +
+                             '</select>';
+            selectHTML += '<label class="mt-3  d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
+            additionalOptionsDiv.innerHTML = selectHTML;
+        } else if (selectedOption === "heartworm") {
+            var selectHTML = '<select class="form-select item_id">' +
+                                '<option value="2">Milbemax</option>' +
+                                '<option value="2">Preventheart</option>' +
+                             '</select>';
+            selectHTML += '<label class="mt-3  d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
+            additionalOptionsDiv.innerHTML = selectHTML;
+        } else if (selectedOption === "diagnostic") {
+            var selectHTML = '<select class="form-select item_id" hidden>' +
+                                '<option value="3">N/A</option>' +
+                             '</select>';
+            selectHTML += '<label class="mt-3  d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
+            additionalOptionsDiv.innerHTML = selectHTML;
+        }else if (selectedOption === "confinement") {
+            var selectHTML = '<select class="form-select item_id" hidden>' +
+                                '<option value="4">N/A</option>' +
                              '</select>';
             selectHTML += '<label class="mt-3  d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
             additionalOptionsDiv.innerHTML = selectHTML;
         } else if (selectedOption === "bloodchemistry") {
             var selectHTML = '<select class="form-select item_id">' +
-                                '<option value="0">Chem 17 Dog</option>'
+                                '<option value="5">Chem 17 Dog</option>'
                              '</select>';
             selectHTML += '<label class="mt-3 d-none">Enter Quantity: </label><input type="number" name="quantity" class="form-control" value="0" id="quantityInput" placeholder="Enter quantity" hidden>';
             additionalOptionsDiv.innerHTML = selectHTML;

@@ -86,10 +86,10 @@
                                 <div class="col-md-3"> 
                                     <div class="form-group">
                                         <label class="mtop"> Quantity: 
-                                        <a href="<?= $view['quantity'] <= 20 ? 'update_low_inventory_form.php?inv_id=' . $_GET['inv_id'] : "" ?>">
-                                                <span class="mtop badge badge-<?= $view['quantity'] <= 20 ? "danger" : "success" ?>"> <?= $view['quantity'] <= 20 ? "Low" : "Good" ?> Stock
-                                                </span>
-                                            </a>
+                                        <a href="<?= $item['quantity'] <= $item['low_stock'] ? 'update_low_inventory_form.php?inv_id=' . $_GET['inv_id'] : "" ?>">
+                                            <span class="mtop badge badge-<?= $item['quantity'] <= $item['low_stock'] ? "danger" : "success" ?>"> <?= $item['quantity'] <= $item['low_stock'] ? "Low" : "Good" ?> Stock
+                                            </span>
+                                        </a>
                                         </label>
                                         <input type="number" class="form-control" name="qty" value="<?= $item['quantity']?>" readonly>
                                     </div>

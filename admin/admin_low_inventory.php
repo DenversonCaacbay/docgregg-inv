@@ -21,19 +21,19 @@
     $staffbmis->delete_invetory();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$recordsPerPage = 3; // set the number of records to display per page
-$view = $staffbmis->view_low_inventory($page, $recordsPerPage);
-$totalRecords = $staffbmis->count_low_inventory(); // get the total number of records
+    $recordsPerPage = 3; // set the number of records to display per page
+    $view = $staffbmis->view_low_inventory($page, $recordsPerPage);
+    $totalRecords = $staffbmis->count_low_inventory(); // get the total number of records
 
 // Calculate the total number of pages
-$totalPages = ceil($totalRecords / $recordsPerPage);
-if ($userdetails['role'] !== 'administrator') {
-    // User is not an admin, display an alert
-    echo '<script>alert("You are not authorized to access this page as admin.");</script>';
-    // Redirect or take appropriate action if needed
-    header('Location: admin_dashboard.php');
-    exit();
-}
+    $totalPages = ceil($totalRecords / $recordsPerPage);
+    if ($userdetails['role'] !== 'administrator') {
+        // User is not an admin, display an alert
+        echo '<script>alert("You are not authorized to access this page as admin.");</script>';
+        // Redirect or take appropriate action if needed
+        header('Location: admin_dashboard.php');
+        exit();
+    }
     
 
 ?>
@@ -60,6 +60,7 @@ if ($userdetails['role'] !== 'administrator') {
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
                         <tr>
+                            <th> Type </th>
                             <th> Picture </th>
                             <th> Product Name </th>
                             <th> Price </th>
@@ -74,6 +75,7 @@ if ($userdetails['role'] !== 'administrator') {
                         <?php if(is_array($view)) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
+                                <td> <?= $view['type'];?> </td>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
                                         <img id="blah" src="../assets/placeholder/item-placeholder.png" width="50" alt="Item Picture" width="150">

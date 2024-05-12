@@ -142,7 +142,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label> Notify When low Stock: </label>
-                                    <input type="number" class="form-control" name="low_quantity" required>
+                                    <input type="number" class="form-control" name="low_stock" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
