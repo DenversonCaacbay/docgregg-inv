@@ -844,6 +844,16 @@
                 FROM invoice GROUP BY prod_id ORDER BY total_quantity DESC LIMIT 3");
             $stmt->execute();   
             $view = $stmt->fetchAll();
+            return
+             $view;
+        }
+
+        public function view_stock_least_sold(){
+            $connection = $this->openConn();
+            $stmt = $connection->prepare("SELECT *, SUM(totalQty) AS total_quantity 
+                FROM invoice GROUP BY prod_id ORDER BY total_quantity ASC LIMIT 3");
+            $stmt->execute();   
+            $view = $stmt->fetchAll();
             return $view;
         }
         
@@ -1866,7 +1876,7 @@
                 $stmt = $connection->prepare("SELECT * FROM tbl_admin where id_admin = ?");
                 $stmt->execute([$id_user]);
                 $user = $stmt->fetch();
-                $total = $stmt->rowCount();
+                $total = $stmst->rowCount();
 
                 if($total > 0 )  {
                     return $user;

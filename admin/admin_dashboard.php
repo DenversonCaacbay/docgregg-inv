@@ -12,6 +12,7 @@
     $internal = $staffbmis->view_low_inventory_external();
     $external = $staffbmis->view_low_stock_internal();
     $most_sold = $staffbmis->view_stock_most_sold();
+    $most_sold = $staffbmis->view_stock_least_sold();
 
     // $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
@@ -156,9 +157,34 @@ img{
                 </tr>
             </table>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="d-flex justify-content-between">
                 <h5>Top 3 Most Sold Product</h5>
+            </div>
+            <table class="table table-reponsive">
+                <tr>
+                    <th> Product Name </th>
+                    <th> Total </th>
+                    <!-- <th></th> -->
+                </tr>
+                <?php if (is_array($most_sold) && count($most_sold) > 0) { ?>
+                    <?php foreach ($most_sold as $item) { ?>
+                <tr>
+                    <td><?= $item['product'] ?></td>
+                    <td>₱<?= number_format($item['total'], 2, '.', ',') ?></td>
+                    <!-- <td></td> -->
+                </tr>
+                <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="2">No Data Found</td>
+                    </tr>
+                <?php } ?>
+            </table>   
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-between">
+                <h5>Top 3 Least Sold Product</h5>
             </div>
             <table class="table table-reponsive">
                 <tr>
