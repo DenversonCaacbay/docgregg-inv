@@ -12,7 +12,7 @@
     $internal = $staffbmis->view_low_inventory_external();
     $external = $staffbmis->view_low_stock_internal();
     $most_sold = $staffbmis->view_stock_most_sold();
-    $most_sold = $staffbmis->view_stock_least_sold();
+    $least_sold = $staffbmis->view_stock_least_sold();
 
     // $rescountuser = $staffbmis->count_user();
     $rescountpet = $staffbmis->count_pet();
@@ -128,7 +128,7 @@ img{
             </table> 
         </div>
         <div class="col-md-6">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between  align-items-center">
                 <h5>Low Stock External</h5>
                 <a class="btn btn-primary mb-3" href="admin_low_inventory.php">See More</a>
             </div>
@@ -161,26 +161,70 @@ img{
             <div class="d-flex justify-content-between">
                 <h5>Top 3 Most Sold Product</h5>
             </div>
+ 
+
             <table class="table table-reponsive">
-                <tr>
-                    <th> Product Name </th>
-                    <th> Total </th>
-                    <!-- <th></th> -->
-                </tr>
-                <?php if (is_array($most_sold) && count($most_sold) > 0) { ?>
-                    <?php foreach ($most_sold as $item) { ?>
-                <tr>
-                    <td><?= $item['product'] ?></td>
-                    <td>₱<?= number_format($item['total'], 2, '.', ',') ?></td>
-                    <!-- <td></td> -->
-                </tr>
-                <?php } ?>
-                <?php } else { ?>
-                    <tr>
-                        <td colspan="2">No Data Found</td>
-                    </tr>
-                <?php } ?>
-            </table>   
+    <tr>
+        <th>Product Name</th>
+        <th>Total</th>
+    </tr>
+    <?php
+    // Fetch data using the view_stock_most_sold() function
+    // $most_sold = view_stock_most_sold();
+
+    if (is_array($most_sold) && count($most_sold) > 0) {
+        // Initialize an associative array to store aggregated totals for each product name
+        $aggregated_totals = [];
+
+        // Iterate through the fetched data and aggregate totals for each product name
+        foreach ($most_sold as $item) {
+            // Extract only the name before "P"
+            $product_name = substr($item['product'], 0, strpos($item['product'], ' P'));
+
+            // Check if the product name already exists in the aggregated totals array
+            if (array_key_exists($product_name, $aggregated_totals)) {
+                // If it exists, add the total to the existing total
+                $aggregated_totals[$product_name] += $item['total_sum'];
+            } else {
+                // If it doesn't exist, initialize the total
+                $aggregated_totals[$product_name] = $item['total_sum'];
+            }
+        }
+
+        // Sort the aggregated totals array based on the total sum in descending order
+        arsort($aggregated_totals);
+
+        // Take only the top 3 items
+        $top_three = array_slice($aggregated_totals, 0, 3, true);
+
+        // Iterate through the top 3 items and populate the table
+        foreach ($top_three as $product_name => $total) {
+            ?>
+            <tr>
+                <td><?= $product_name ?></td>
+                <td>₱<?= number_format($total, 2, '.', ',') ?></td>
+            </tr>
+            <?php
+        }
+    } else {
+        // If no data found
+        ?>
+        <tr>
+            <td colspan="2">No Data Found</td>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
+
+
+
+
+
+
+
+
+
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-between">
@@ -192,8 +236,8 @@ img{
                     <th> Total </th>
                     <!-- <th></th> -->
                 </tr>
-                <?php if (is_array($most_sold) && count($most_sold) > 0) { ?>
-                    <?php foreach ($most_sold as $item) { ?>
+                <?php if (is_array($least_sold) && count($least_sold) > 0) { ?>
+                    <?php foreach ($least_sold as $item) { ?>
                 <tr>
                     <td><?= $item['product'] ?></td>
                     <td>₱<?= number_format($item['total'], 2, '.', ',') ?></td>
@@ -267,7 +311,7 @@ img{
                     updateChart();
                 </script>
             </div>
-            <div class="mt-4" style="width: 100%;border-bottom: #0296be 2px solid;"></div>
+            <!-- <div class="mt-4" style="width: 100%;border-bottom: #0296be 2px solid;"></div> -->
             <div class="col-md-12 mt-3">
             <div class="card shadow py-3 px-3">
                 <div class="d-flex align-items-center">

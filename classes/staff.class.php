@@ -838,15 +838,22 @@
             return $view;
         }
 
+        // public function view_stock_most_sold(){
+        //     $connection = $this->openConn();
+        //     $stmt = $connection->prepare("SELECT *, SUM(total) AS total_sum FROM invoice");
+        //     $stmt->execute();   
+        //     $view = $stmt->fetchAll();
+        //     return
+        //      $view;
+        // }
         public function view_stock_most_sold(){
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT *, SUM(totalQty) AS total_quantity 
-                FROM invoice GROUP BY prod_id ORDER BY total_quantity DESC LIMIT 3");
+            $stmt = $connection->prepare("SELECT product, SUM(total) AS total_sum FROM invoice GROUP BY product ORDER BY total_sum DESC");
             $stmt->execute();   
             $view = $stmt->fetchAll();
-            return
-             $view;
+            return $view;
         }
+        
 
         public function view_stock_least_sold(){
             $connection = $this->openConn();
