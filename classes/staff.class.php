@@ -855,14 +855,23 @@
         }
         
 
+        // public function view_stock_least_sold(){
+        //     $connection = $this->openConn();
+        //     $stmt = $connection->prepare("SELECT *, SUM(totalQty) AS total_quantity 
+        //         FROM invoice GROUP BY prod_id ORDER BY total_quantity ASC LIMIT 3");
+        //     $stmt->execute();   
+        //     $view = $stmt->fetchAll();
+        //     return $view;
+        // }
         public function view_stock_least_sold(){
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT *, SUM(totalQty) AS total_quantity 
-                FROM invoice GROUP BY prod_id ORDER BY total_quantity ASC LIMIT 3");
+            $stmt = $connection->prepare("SELECT product, SUM(total) AS total_sum FROM invoice GROUP BY product ORDER BY total_sum ASC");
             $stmt->execute();   
             $view = $stmt->fetchAll();
             return $view;
         }
+
+        
         
 
         public function view_single_inventory(){
@@ -974,6 +983,7 @@
         public function create_inventory_all() {
             if (isset($_POST['create_inventory'])) {
                 $type = $_POST['type'];
+                $code = $_POST['code'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $capital = $_POST['input_capital'];
@@ -999,8 +1009,8 @@
                         $connection = $this->openConn();
         
                         // Insert into tbl_inventory
-                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt_inventory->execute([$type, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
+                        $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type,code, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_inventory->execute([$type,$code, $name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
         
                         // Insert into tbl_inventory_logs
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
@@ -1025,8 +1035,8 @@
                     }
                 } else {
                     $connection = $this->openConn();
-                     $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt_inventory->execute([$type ,$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
+                     $stmt_inventory = $connection->prepare("INSERT INTO tbl_inventory (type,code, name, price, profit, capital, quantity, picture, category, expired_at, purchased_at, low_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_inventory->execute([$type ,$code ,$name, $price, $profit, $capital, $qty, $target_file, $category, $exp, $bought_date, $low_stock]);
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                     $stmt_logs->execute([$name,  'Added']); // Assuming 'create' is the log type for creating an item
         
@@ -1127,6 +1137,7 @@
             if (isset($_POST['update_inventory'])) {
                 $inv_id = $_GET['inv_id'];
                 $type = $_POST['type'];
+                $code = $_POST['code'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
                 $qty = $_POST['qty'];
@@ -1155,9 +1166,9 @@
         
                         if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                             $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                                SET name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
+                                SET code=?, name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
                                 WHERE inv_id = ?");
-                            $stmt_inventory->execute([$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
+                            $stmt_inventory->execute([$code,$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
         
                             $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                             $stmt_logs->execute([$name,  'Updated']);
@@ -1186,9 +1197,9 @@
                         }
                     } else {
                         $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                            SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
+                            SET code=?, name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
                             WHERE inv_id = ?");
-                        $stmt_inventory->execute([$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
+                        $stmt_inventory->execute([$code ,$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
                         $stmt_logs->execute([$name,  'Updated']);
         

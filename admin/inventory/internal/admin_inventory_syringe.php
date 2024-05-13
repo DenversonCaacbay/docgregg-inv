@@ -69,6 +69,7 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
+                        <th> Code </th>
                             <th> Picture </th>
                             <th> Product Name </th>
                             <th> Price </th>
@@ -85,6 +86,7 @@
                         <?php if(is_array($view) && count($view) > 0) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
+                                <td> <?= $view['code'];?> </td>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
                                         <img id="blah" src="../../images/placeholder/item-placeholder.png" class="img-fluid" width="50" height="50" alt="Item Picture">

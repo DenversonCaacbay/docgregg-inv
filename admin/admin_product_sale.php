@@ -356,31 +356,33 @@ if(isset($_GET["action"]))
                             </div>
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary mb-3 ms-auto fixed-bottom" style="width: 34%; margin-right:1.5%" id="proceed" value="Proceed Payment">
+                    
+                        <a href="pos/pos_clear.php" class="btn btn-danger" style="width: 30%">Clear Orders</a>
+                        <input type="submit" class="btn btn-primary p-2 ms-3" style="width: 65%" id="proceed" value="Proceed Payment">
 
                     </form>
-                    <button style="width:50%;" name="updatedata" onclick="checkpayment();" class="btn btn-primary paymentbtn sticky-bottom">Calculate</button>
-                    <a href="pos/pos_clear.php"><button style="width:49%;" class="btn btn-primary sticky-bottom">Clear Orders</button></a>
+                    <!-- <button style="width:50%;" name="updatedata" onclick="checkpayment();" class="btn btn-primary paymentbtn sticky-bottom">Calculate</button> -->
+                    
                     
                     <script>
-                    $proceed = document.getElementById("proceed").disabled = true;
-                    function checkpayment()
-                    {
-                    var total = parseFloat(document.getElementById('total_id').value);
-                    var cash = parseFloat(document.getElementById('cash_id').value);     
-                    var acceptpayment = cash - total ;
-                    acceptpayment1 = parseFloat(acceptpayment);
-                    if (cash >= total)
-                    {
-                        document.getElementById('resultpayment').value = acceptpayment1;
-                        $proceed = document.getElementById("proceed").disabled = false;
-                    }
-                    else
-                    {
-                        document.getElementById('resultpayment').value = acceptpayment1;
-                        $proceed = document.getElementById("proceed").disabled = true;
-                    }
-                    }
+                        // $proceed = document.getElementById("proceed").disabled = true;
+                        function checkpayment()
+                        {
+                        var total = parseFloat(document.getElementById('total_id').value);
+                        var cash = parseFloat(document.getElementById('cash_id').value);     
+                        var acceptpayment = cash - total ;
+                        acceptpayment1 = parseFloat(acceptpayment);
+                        if (cash >= total)
+                        {
+                            document.getElementById('resultpayment').value = acceptpayment1;
+                            $proceed = document.getElementById("proceed").disabled = false;
+                        }
+                        else
+                        {
+                            document.getElementById('resultpayment').value = acceptpayment1;
+                            $proceed = document.getElementById("proceed").disabled = true;
+                        }
+                        }
                     </script>
                 </div>
             </div>
@@ -395,6 +397,61 @@ if(isset($_GET["action"]))
 
 
 <!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="cashLowerModal" tabindex="-1" aria-labelledby="cashLowerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cashLowerModalLabel">Cash Entered is Lower Than Total Amount</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please enter an amount equal to or greater than the total amount.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $proceed = document.getElementById("proceed").disabled = true;
+    document.addEventListener('DOMContentLoaded', function() {
+        var totalInput = document.getElementById('total_id');
+        var cashInput = document.getElementById('cash_id');
+        var resultpaymentInput = document.getElementById('resultpayment');
+        var timer;
+
+        cashInput.addEventListener('input', function() {
+            // Clear previous timer
+            clearTimeout(timer);
+
+            // Set a new timer to delay the check
+            timer = setTimeout(function() {
+                var total = parseFloat(totalInput.value);
+                var cash = parseFloat(cashInput.value);
+                var acceptpayment = cash - total ;
+                acceptpayment1 = parseFloat(acceptpayment);
+
+                if (cash <= total) {
+                    // If cash is lower than total, show the modal
+                    $('#cashLowerModal').modal('show');
+                    cashInput.value = '';
+                    resultpaymentInput.value = '';
+                }
+                else{
+                    document.getElementById('resultpayment').value = acceptpayment1;
+                    
+                    $proceed = document.getElementById("proceed").disabled = false;
+                }
+            }, 1000); // Adjust the delay as needed (in milliseconds)
+        });
+    });
+</script>
+
+
+
 
 <script>
   // JavaScript to handle displaying orders in modal

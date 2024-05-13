@@ -142,7 +142,15 @@ class BMISClass {
                                 });
                             </script>";
                         // Redirect after showing the alert
-                            header("refresh: 1; url=admin/admin_dashboard.php");
+                            // header("refresh: 1; url=admin/admin_dashboard.php");
+                            // Redirect based on user role
+                            if ($user['role'] == 'administrator') {
+                                // Redirect to admin dashboard
+                                header("refresh: 1; url=admin/admin_dashboard.php");
+                            } elseif ($user['role'] == 'Staff') {
+                                // Redirect to staff services page
+                                header("refresh: 1; url=admin/services.php");
+                            }
                                 exit();
                             } 
                             else 

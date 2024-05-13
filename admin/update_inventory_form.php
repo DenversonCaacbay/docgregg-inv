@@ -59,7 +59,13 @@
                                     <label> Select Image File:  </label>
                                     <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Code: </label>
+                                        <input type="text" class="form-control" name="code"  value="<?= $item['code']?>" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label> Product Name: </label>
                                         <input type="text" class="form-control" name="name"  value="<?= $item['name']?>" required>

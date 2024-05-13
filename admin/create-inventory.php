@@ -58,11 +58,12 @@
                             <div class="col-md-6 mt-3">
                                 <div class="form-group">
                                     <label> Type of Inventory </label>
-                                    <select class="form-control" name="type" required>
+                                    <select class="form-control" name="type" id="type" required onchange="updateCategoryOptions()">
                                         <option value="" class="text-center">-- Select Type --</option>
                                         <option value="Internal">Internal Inventory</option>
                                         <option value="External">External Inventory</option>
                                     </select>
+
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3">
@@ -70,7 +71,13 @@
 
                                 <input type="file"  onchange="readURL(this, 'blah');" class="form-control" name="new_picture" required>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> Code: </label>
+                                    <input type="text" class="form-control" name="code" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Product Name: </label>
                                     <input type="text" class="form-control" name="name" required>
@@ -118,14 +125,10 @@
                                     <label class="mtop">Category</label>
                                     <select class="form-control" name="category" id="category" required>
                                         <option value="">Choose Category</option>
-                                        <option value="Shampoo">Shampoo</option>
-                                        <option value="Medicine">Medicine</option>
-                                        <option value="Vaccine">Vaccine</option>
-                                        <option value="Syringe">Syringe</option>
-                                        <option value="Dog Food">Dog Food</option>
-                                        <option value="Cat food">Cat food</option>
+                                        <!-- Options will be dynamically updated based on the selection -->
                                     </select>
                                 </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -158,6 +161,42 @@
         </div>
     </div>
 </div>
+
+<script>
+    function updateCategoryOptions() {
+        var typeSelect = document.getElementById('type');
+        var categorySelect = document.getElementById('category');
+        
+        // Clear existing options
+        categorySelect.innerHTML = '';
+        
+        // Add default option
+        var defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.text = 'Choose Category';
+        categorySelect.appendChild(defaultOption);
+        
+        // Internal Inventory options
+        if (typeSelect.value === 'Internal') {
+            addOption(categorySelect, 'Medicine', 'Medicine');
+            addOption(categorySelect, 'Vaccine', 'Vaccine');
+            addOption(categorySelect, 'Syringe', 'Syringe');
+        }
+        // External Inventory options
+        else if (typeSelect.value === 'External') {
+            addOption(categorySelect, 'Shampoo', 'Shampoo');
+            addOption(categorySelect, 'Dog Food', 'Dog Food');
+            addOption(categorySelect, 'Cat food', 'Cat Food');
+        }
+    }
+    
+    function addOption(selectElement, value, text) {
+        var option = document.createElement('option');
+        option.value = value;
+        option.text = text;
+        selectElement.appendChild(option);
+    }
+</script>
 
 <script>
     function readURL(input, imageId) {

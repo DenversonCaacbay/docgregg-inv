@@ -351,29 +351,29 @@ use PHPMailer\PHPMailer\Exception;
     }
 
 
-    public function profile_update() {
-        $id_user = $_GET['id_user'];
-        $age = $_POST['age'];
-        $status = $_POST['status'];
-        $address = $_POST['address'];
-        $contact = $_POST['contact'];
+    // public function profile_update() {
+    //     $id_user = $_GET['id_user'];
+    //     $age = $_POST['age'];
+    //     $status = $_POST['status'];
+    //     $address = $_POST['address'];
+    //     $contact = $_POST['contact'];
 
-        if (isset($_POST['profile_update'])) {
+    //     if (isset($_POST['profile_update'])) {
            
-            $connection = $this->openConn();
-            $stmt = $connection->prepare("UPDATE tbl_user SET  `age` = ?,  `status` = ?, 
-            `address` = ?, `contact` = ? WHERE id_user = ?");
-            $stmt->execute([ $age, $status, $address,
-            $contact, $id_resident]);
+    //         $connection = $this->openConn();
+    //         $stmt = $connection->prepare("UPDATE tbl_user SET  `age` = ?,  `status` = ?, 
+    //         `address` = ?, `contact` = ? WHERE id_user = ?");
+    //         $stmt->execute([ $age, $status, $address,
+    //         $contact, $id_resident]);
                
-            $message2 = "Resident Profile Updated";
+    //         $message2 = "Resident Profile Updated";
                 
-            echo "<script type='text/javascript'>alert('$message2');</script>";
-            header("Refresh:0");
+    //         echo "<script type='text/javascript'>alert('$message2');</script>";
+    //         header("Refresh:0");
 
-        }
+    //     }
 
-    }
+    // }
     
 
     //------------------------------------- RESIDENT FILTERING QUERIES --------------------------------------
