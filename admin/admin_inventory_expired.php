@@ -5,12 +5,15 @@
     $userdetails = $bmis->get_userdata();
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
+
+    // $view = $staffbmis->view_inventory_expires();
     
     $staffbmis->delete_invetory();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $recordsPerPage = 3; // set the number of records to display per page
-    $view = $staffbmis->view_low_inventory($page, $recordsPerPage);
+    $view = $staffbmis->view_inventory_expire();
+    // $view = $staffbmis->view_low_inventory($page, $recordsPerPage);
     $totalRecords = $staffbmis->count_low_inventory(); // get the total number of records
 
 // Calculate the total number of pages

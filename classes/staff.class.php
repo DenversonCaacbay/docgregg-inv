@@ -239,13 +239,33 @@
         public function view_inventory_internal(){
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='Internal' OR type='Both') AND deleted_at IS NULL AND quantity != '0'");
+            $stmt = $connection->prepare("SELECT * 
+                FROM tbl_inventory 
+                WHERE (type='Internal' OR type='Both') 
+                AND deleted_at IS NULL 
+                AND quantity != '0'
+                AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
             return $view;
         }
+
+        // inventory all - expiring in 30 days
+        public function view_inventory_expire(){
+            $connection = $this->openConn();
         
+            $stmt = $connection->prepare("SELECT * 
+                FROM tbl_inventory 
+                WHERE (type='Internal' OR type='Both') 
+                AND deleted_at IS NULL 
+                AND quantity != '0'
+                AND expired_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
 
         public function view_inventory_logs(){
             $connection = $this->openConn();
@@ -642,7 +662,13 @@
         public function view_inventory_external(){
             $connection = $this->openConn();
 
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND deleted_at IS NULL AND quantity !='0'");
+            // $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND deleted_at IS NULL AND quantity !='0'");
+            $stmt = $connection->prepare("SELECT * 
+                FROM tbl_inventory 
+                WHERE (type='External' OR type='Both') 
+                AND deleted_at IS NULL 
+                AND quantity != '0'
+                AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))");
             $stmt->execute();
             $view = $stmt->fetchAll();
 
