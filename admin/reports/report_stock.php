@@ -154,7 +154,7 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
-                            <th> Customer Name </th>
+                            <th hidden> Customer Name </th>
                             <th> Product Name </th>
                             <th> Total Quantity</th>
                             <th> Total </th>
@@ -168,7 +168,7 @@
                         <?php if(is_array($view)) {?>
                             <?php foreach($view as $view) {?>
                                 <tr>
-                                    <td> <?= $view['customer_name']; ?></td>
+                                    <td hidden> <?= $view['customer_name']; ?></td>
                                     <td>
                                         <a href="#" class="product-link" data-toggle="modal" data-target="#productModal" data-product="<?= htmlspecialchars(json_encode($view), ENT_QUOTES, 'UTF-8'); ?>">
                                             <?= strlen($view['product']) > 30 ? substr($view['product'], 0, 30) . '...' : $view['product']; ?>

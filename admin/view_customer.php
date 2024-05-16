@@ -152,6 +152,10 @@
                         </div>
 
                         <div class="card-body">
+                            <?php 
+                                $servicesToHideQuantity = ['Heartworm', 'Laboratory', 'Confinement', 'Diagnostic', 'Grooming', 'Blood Chemistry Test'];
+                            ?>
+
                             <?php foreach ($services as $service => $petTypes) : ?>
                                 <?php foreach ($petTypes as $petType => $data) : ?>
                                     <div class="card border-0 p-0">
@@ -164,19 +168,28 @@
                                                     <p class="card-title"><?= $service; ?></p>
                                                 </div>
                                                 <div class="col-md-5">
-                                                <p class="card-text">
-                                                    <?php foreach ($data as $views) : ?>
-                                                        <?php foreach (json_decode($views['type_med_equip'], true) as $index => $view) : ?>
-                                                                <?= $view; ?>-<?= $views['quantity']; ?>pcs
+                                                    <p class="card-text">
+                                                        <?php foreach ($data as $views) : ?>
+                                                            <?php foreach (json_decode($views['type_med_equip'], true) as $index => $view) : ?>
+                                                                <?php
+                                                                    // Trim the $view to remove everything after the hyphen
+                                                                    $trimmed_view = explode('-', $view)[0];
+                                                                ?>
+                                                                <?php if (in_array($service, $servicesToHideQuantity)) : ?>
+                                                                    <?= trim($trimmed_view); ?><br>
+                                                                <?php else : ?>
+                                                                    <?= $views['quantity']; ?>pcs - <?= trim($trimmed_view); ?><br>
+                                                                <?php endif; ?>
+                                                            <?php endforeach; ?>
                                                         <?php endforeach; ?>
-                                                    <?php endforeach; ?>
-                                                </p>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
+
                         </div>
                     </div>
             <?php

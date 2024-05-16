@@ -299,9 +299,9 @@ if(isset($_GET["action"]))
                                 <input type="number" name="processProfit" id="total_id" step="any" value="<?php echo $profit; ?>" class="form-control" placeholder="₱ " readonly>
                             </td>
                         </tr>
-                        <tr>
+                        <tr hidden>
                             <td colspan="3" align="right">Enter Customer Name</td>
-                            <td colspan="2" align="right"><input type="text" step="any" name="processCustomer" id="customer_id" class="form-control" placeholder="" required></td>
+                            <td colspan="2" align="right"><input type="text" step="any" name="processCustomer" value="N/A" id="customer_id" class="form-control" placeholder="" required></td>
                         </tr>
                         <tr>
                             <td colspan="3" align="right">Enter Cash</td>
@@ -472,7 +472,7 @@ if(isset($_GET["action"]))
     // Combine last td content, customer name, and cash amount into one HTML string
     var orderDetailsHTML = "<h5><strong>List of Orders:</strong><br> " + lastTDContent.split(',').join('<br>') + "</h5>";
 
-    orderDetailsHTML += "<h5><strong>Customer Name:</strong> " + customerName + "</h5>";
+    // orderDetailsHTML += "<h5><strong>Customer Name:</strong> " + customerName + "</h5>";
     orderDetailsHTML += "<h5><strong>Cash Amount:</strong> ₱" + cashAmount + ".00</h5>";
 
     // Clear any existing content in the modal body

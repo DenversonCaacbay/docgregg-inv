@@ -17,7 +17,7 @@
 
             // Loop through each row and hide/show based on the search query
             rows.forEach(function (row) {
-                var productName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                var productName = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
                 var category = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
 
                 // Check if the query matches the product name or category

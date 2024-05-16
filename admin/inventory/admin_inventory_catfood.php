@@ -63,7 +63,7 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
-                            <th> Code </th>
+                            <th> Product Code </th>
                             <th> Picture </th>
                             <th> Product Name </th>
                             <th> Price </th>

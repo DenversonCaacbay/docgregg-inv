@@ -58,7 +58,7 @@
                             <th> Quantity </th>
                             <th> Category </th>
                             <th> Date Created </th>
-                            <th> Actions </th>
+                            <!-- <th> Actions </th> -->
                         </tr>
                     </thead>
 
@@ -79,13 +79,13 @@
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
                                     <td> <?= date("F d, Y", strtotime($view['created_at'])); ?> </td>
-                                    <td>    
+                                    <!-- <td>    
                                         <form action="" method="post">
                                             <a href="update_low_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Add Stocks </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
                                            
                                         </form>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             <?php }?>
                         <?php } ?>
