@@ -50,8 +50,7 @@
     
     
     <div class="row">
-        <div class="col-md-6"><h4 class="">All Products</h4></div>
-        <div class="col-md-6"><a href="create-inventory.php" style="float:right;padding: 10px" class="btn btn-primary">Add Item</a></div>
+        <div class="col-md-12"><h4 class="">Deduct Item</h4></div>
     </div>
 
     <div class="row"> 
@@ -76,10 +75,7 @@
                 </select>
             </div>
         </div>
-        <?php
-            // Sample categories array for demonstration purposes
-            $categories = ['Vaccine', 'Syringe', 'Shampoo', 'Medecine', 'Dog Food', 'Cat Food'];
-        ?>
+            
         <div class="card">
         <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
@@ -90,18 +86,7 @@
                             <th> Product Name </th>
                             <th> Price </th>
                             <th> Quantity </th>
-                            <!-- <th> Category </th> -->
-                            <th> 
-                                <select id="categoryFilter" class="form-input" style="padding: 5px;border:none;" onchange="filterCategory()">
-                                    <option value="">All Categories</option>
-                                    <?php foreach ($categories as $category): ?>
-                                        <option value="<?= htmlspecialchars($category) ?>"><?= htmlspecialchars($category) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </th>
-                            <th> Date Created </th>
-                            <th> Purchased Date </th>
-                            <th> Expiration Date </th>
+                            <th> Category </th>
                             <th> Actions </th>
                         </tr>
                     </thead>
@@ -127,16 +112,14 @@
                                     <td>₱ <?= number_format($view['price']); ?> </td>
                                     <td> <?= $view['quantity'];?> </td>
                                     <td> <?= $view['category'] ? $view['category'] : 'N/A' ;?> </td>
-                                    <td> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
-                                    <td> <?= $view['purchased_at'] ? date("M d, Y", strtotime($view['purchased_at'])) : "N/A"; ?> </td>
-                                    <td> <?= $view['expired_at'] ? date("M d, Y", strtotime($view['expired_at'])) : "N/A"; ?> </td>
+                                    <td hidden> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
+                                    <td hidden> <?= $view['purchased_at'] ? date("M d, Y", strtotime($view['purchased_at'])) : "N/A"; ?> </td>
+                                    <td hidden> <?= $view['expired_at'] ? date("M d, Y", strtotime($view['expired_at'])) : "N/A"; ?> </td>
                                     <td>    
                                         <form action="" method="post">
-                                            <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
+                                            <a href="deduct_page.php?inv_id=<?= $view['inv_id'];?>" style="padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Deduct Item </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
                                             <input type="hidden" name="name" value="<?= $view['name'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
-                                            
                                             
                                         </form>
                                     </td>
@@ -240,22 +223,6 @@
         });
     });
 </script> 
-
-<script>
-    function filterCategory() {
-        var filter = document.getElementById("categoryFilter").value.toLowerCase();
-        var rows = document.querySelectorAll("tbody tr");
-        
-        rows.forEach(row => {
-            var category = row.cells[5].textContent.toLowerCase();
-            if (filter === "" || category.includes(filter)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-</script>
 
 
 <!-- End of Main Content -->

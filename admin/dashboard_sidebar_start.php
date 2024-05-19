@@ -225,12 +225,12 @@
                     
                 </a>
                 <ul class="dropdown-menu w-100 text-center">
-                    <li><a class="dropdown-item" href="admin_inventory.php">All Products</a></li>
-                    <li><a class="dropdown-item" href="admin_inventory_internal.php">Internal Inventory</a></li>
-                    <li><a class="dropdown-item" href="admin_inventory_external.php">External Inventory</a></li>
-                    <li><a class="dropdown-item" href="admin_low_inventory.php">Low Stocks Inventory</a></li>
-                    <!-- <li><a class="dropdown-item" href="admin_inventory_both.php">Both Internal / External</a></li> -->
-                    <li><a class="dropdown-item" href="create-inventory.php">Add Products</a></li>
+                    <li><a class="dropdown-item" href="./admin_inventory.php">All Products</a></li>
+                    <li><a class="dropdown-item" href="./admin_inventory_internal.php">Internal Inventory</a></li>
+                    <li><a class="dropdown-item" href="./admin_inventory_external.php">External Inventory</a></li>
+                    <li><a class="dropdown-item" href="./admin_low_inventory.php">Low Stocks Inventory</a></li>
+                    <li><a class="dropdown-item" href="./deduct_item.php">Deduct Item</a></li>
+                    <li><a class="dropdown-item" href="./create-inventory.php">Add Products</a></li>
                 </ul>
             </li>
             <li class="nav-item" id="sales">
@@ -309,15 +309,21 @@
                         </li>
                         <li class="nav-item mt-4">
                         <?php if ($userRole === 'administrator') : ?>
-                            <?php $lowInventoryCount = $staffbmis->count_low_inventory(); ?>
+                            <?php 
+                            $lowInventoryCount = $staffbmis->count_low_inventory();
+                            $expiredCount = $staffbmis->count_expired_inventory();
+
+                            $totalCount = $lowInventoryCount + $expiredCount;
+                            ?>
                             
-                                <a href="admin_low_inventory.php" style="position: relative;">
-                                    <i class="fas fa-bell" style="font-size: 30px;color: #0296be !important;"></i>
-                                    <?php if($lowInventoryCount > 0) : ?>
-                                    <span class="badge badge-danger" style="font-size:10px; position: absolute; top: -5; left: -5;"><?php echo $lowInventoryCount; ?></span>
-                                </a>&nbsp;
-                            <?php endif; ?>
+                            <a href="admin_notification.php" style="position: relative;">
+                                <i class="fas fa-bell" style="font-size: 30px; color: #0296be !important;"></i>
+                                <?php if ($totalCount > 0) : ?>
+                                    <span class="badge badge-danger" style="font-size: 10px; position: absolute; top: -5px; left: -5px;"><?php echo $totalCount; ?></span>
+                                <?php endif; ?>
+                            </a>&nbsp;
                         <?php endif; ?>
+
                         </li>
 
                         <!-- Nav Item - User Information -->

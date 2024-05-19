@@ -74,7 +74,7 @@
                                 <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="mtop" >Capital:  </label>
-                                    <input type="number" class="form-control" id="capital" name="input_capital" value="<?= $item['capital']?>">
+                                    <input type="number" class="form-control" id="capital" name="input_capital" value="<?= $item['capital']?>" readonly>
                                 </div>
                             </div>
                             <div class="col-md-3">

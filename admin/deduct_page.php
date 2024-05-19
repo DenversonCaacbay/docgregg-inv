@@ -25,8 +25,8 @@
 
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="admin_low_inventory.php">Back</a>
-        <h4 class="mb-0 ml-2">Add Item Stocks</h4>
+        <a class="btn btn-primary" href="deduct_page.php">Back</a>
+        <h4 class="mb-0 ml-2">Deduct Quantity</h4>
     </div>
                 
     <div class="row"> 
@@ -45,7 +45,6 @@
                     <div class="col-md-7">
                         <div class="row">
                         <div class="col-md-12 " hidden>
-                                <!-- <label>Item Picture:</label> -->
                                 <div class="custom-file form-group">
                                     <input type="file" onchange="readURL(this);" value="<?= $item['picture']?>" class="custom-file-input" id="customFile" name="new_picture">
                                     <label class="custom-file-label" for="customFile">Choose File Photo</label>
@@ -65,7 +64,7 @@
                                     <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" required>
                                 </div>
                             </div>
-                            <div class="col-md-12" style="margin-top:15%;"> 
+                            <div class="col-md-12" style="margin-top:10%;"> 
                                 <div class="form-group">
                                     <label class="mtop"> Total Quantity: </label>
                                     <input type="number" class="form-control" name="total_quantity" value="<?= $item['quantity'] ?>" readonly>
@@ -95,11 +94,17 @@
                                         <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                     </div>
                             </div>
+                            <div class="col-md-12 mt-3">
+                                <div class="form-group">
+                                    <label> Reason To Deduct Item: </label>
+                                    <input type="text" class="form-control" name="reason"  value="" required>
+                                </div>
+                            </div>
                         </div>
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
                             
-                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Add Stocks </button>
+                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Deduct Item </button>
 
                         </div>
                     </div>
@@ -111,26 +116,7 @@
 </div>
 
 
-<script>
-    $(document).ready(function () {
-        // Function to calculate total price
-        function calculateTotalPrice() {
-            var capital = parseFloat($('#capital').val());
-            var profitPercentage = parseFloat($('#profit').val());
 
-            // Check if capital and profit percentage are valid numbers
-            if (!isNaN(capital) && !isNaN(profitPercentage)) {
-                // Calculate total price using percentage profit
-                var profitAmount = capital * (profitPercentage / 100);
-                var totalPrice = capital + profitAmount;
-                $('#total_price').val(totalPrice.toFixed(2)); // Display total price with 2 decimal places
-            }
-        }
-
-        // Call calculateTotalPrice function when capital or profit percentage changes
-        $('#capital, #profit').on('input', calculateTotalPrice);
-    });
-</script>
 
 <!-- /.container-fluid -->
 

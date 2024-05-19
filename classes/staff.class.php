@@ -2135,6 +2135,24 @@
             return $result['count'];
         }
 
+        public function count_expired_inventory() {
+            $connection = $this->openConn();
+            
+            $stmt = $connection->prepare("
+                SELECT COUNT(*) as count 
+                FROM tbl_inventory 
+                WHERE (type='Internal' OR type='External') 
+                AND deleted_at IS NULL 
+                AND quantity != '0'
+                AND expired_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+            ");
+            
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+            return $result['count'];
+        }
+
         public function count_user() {
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT COUNT(*) from tbl_user WHERE deleted_at IS NULL");
