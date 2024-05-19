@@ -4,7 +4,8 @@
    $userdetails = $bmis->get_userdata();
    $user = $staffbmis->view_single_staff($userdetails['id_admin']);
    $bmis->validate_admin();
-    $staffbmis->update_inventory_low();
+    $staffbmis->deduct_inventory();
+
     $item = $staffbmis->view_single_inventory();
     if ($userdetails['role'] !== 'administrator') {
         // User is not an admin, display an alert
@@ -31,7 +32,7 @@
                 
     <div class="row"> 
         <div class="col-md-12"> 
-            <form method="post" enctype="multipart/form-data">
+            <form method="post">
                 <div class="row">
                     <div class="col-md-5">
                         <div class="col-md-12 mt-5">   
@@ -93,18 +94,22 @@
                                         <label class="mtop"> Expiration Date: </label>
                                         <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="mtop"> Type: </label>
+                                        <input type="text" class="form-control" name="type" value="<?= $item['type']?>" readonly>
+                                    </div>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
                                     <label> Reason To Deduct Item: </label>
-                                    <input type="text" class="form-control" name="reason"  value="" required>
+                                    <input type="text" class="form-control" name="remarks"  value="" required>
                                 </div>
                             </div>
                         </div>
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
                             
-                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Deduct Item </button>
+                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="deduct_inventory"> Deduct Item </button>
 
                         </div>
                     </div>

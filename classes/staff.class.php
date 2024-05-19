@@ -1169,92 +1169,42 @@
             }
         }    
 
-        public function update_inventory() {
-            if (isset($_POST['update_inventory'])) {
+        public function deduct_inventory() {
+            if (isset($_POST['deduct_inventory'])) {
                 $inv_id = $_GET['inv_id'];
-                $type = $_POST['type'];
-                $code = $_POST['code'];
-                $name = $_POST['name'];
-                $price = $_POST['price'];
+                $quantity = $_POST['total_quantity'];
                 $qty = $_POST['qty'];
-                $category = $_POST['category'];
-                $bought_date = $_POST['bought_date'];
-                $exp = $_POST['exp_date'];
-                $new_picture = $_FILES['new_picture'];
-        
-                // Fetch the old quantity from the database
-                $connection = $this->openConn();
-                $stmt = $connection->prepare("SELECT quantity FROM tbl_inventory WHERE inv_id = ?");
-                $stmt->execute([$inv_id]);
-                $oldQuantity = $stmt->fetchColumn();
-        
+                $remarks = $_POST['remarks'];
+                $name = $_POST['name'];
+                $type = $_POST['type'];
+
                 // Compare old quantity with new quantity
-                if ($qty >= $oldQuantity) {
-                    if (!empty($new_picture['name'])) {
-                        $target_dir = "../uploads/inventory/";
-                        $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+                if (!($qty > $quantity)) {
+                    $qty_new = $quantity - $qty;
+                    $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}. It now has {$qty_new} pieces left.";
+
+                    $connection = $this->openConn();
+                    $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET quantity = ? WHERE inv_id = ?");
+                    $stmt_inventory->execute([$qty_new, $inv_id]);
         
-                        if (!is_dir($target_dir)) {
-                            mkdir($target_dir, 0755, true);
-                        }
+                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, remarks, log_type) VALUES (?, ?, ?)");
+                    $stmt_logs->execute([$name, $remarks_data, 'Deduction']);
         
-                        $target_file = $target_dir . time() . '.' . $file_extension;
-        
-                        if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
-                            $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                                SET code=?, name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
-                                WHERE inv_id = ?");
-                            $stmt_inventory->execute([$code,$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
-        
-                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                            $stmt_logs->execute([$name,  'Updated']);
-        
-                            echo "<script type='text/javascript'>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Item Updated',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                });
-                            </script>";
-                            // Redirect after showing the alert
-                            if ($type === "Both") {
-                                header("refresh: 1; url=admin_inventory.php");
-                            } 
-                            elseif ($type === "Internal") {
-                                header("refresh: 1; url=admin_inventory_internal.php");
-                            } elseif ($type === "External") {
-                                header("refresh: 1; url=admin_inventory_external.php");
-                            }
-                        } else {
-                            echo "Sorry, there was an error uploading your file.";
-                        }
-                    } else {
-                        $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                            SET code=?, name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
-                            WHERE inv_id = ?");
-                        $stmt_inventory->execute([$code ,$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
-                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                        $stmt_logs->execute([$name,  'Updated']);
-        
-                        echo "<script type='text/javascript'>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Item Updated',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Updated',
+                                showConfirmButton: false,
+                                timer: 1500
                             });
-                        </script>";
-                        // Redirect after showing the alert
-                        if ($type === "Internal") {
-                            header("refresh: 1; url=admin_inventory_internal.php");
-                        } elseif ($type === "External") {
-                            header("refresh: 1; url=admin_inventory_external.php");
-                        }
+                        });
+                    </script>";
+                    // Redirect after showing the alert
+                    if ($type === "Internal") {
+                        header("refresh: 1; url=admin_inventory_internal.php");
+                    } elseif ($type === "External") {
+                        header("refresh: 1; url=admin_inventory_external.php");
                     }
                 } else {
                     // Quantity is lower than the previous quantity, show an alert
@@ -1263,6 +1213,7 @@
                 }
             }
         }
+        
 
         // Update Internal Inventory
         public function update_inventory_internal() {
