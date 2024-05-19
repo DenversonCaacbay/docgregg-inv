@@ -210,15 +210,25 @@
         }
 
         // #inventory
-        public function view_inventory(){
+        public function view_inventory() {
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL AND quantity !='0'");
+            $stmt = $connection->prepare("
+                SELECT * 
+                FROM tbl_inventory 
+                WHERE deleted_at IS NULL AND quantity != '0'
+                ORDER BY 
+                    CASE 
+                        WHEN quantity <= low_stock THEN 0 
+                        ELSE 1 
+                    END, 
+                    quantity ASC
+            ");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
             return $view;
-        }
+        }             
 
         // public function view_inventory($limit = 5, $offset = 0){
         //     $connection = $this->openConn();

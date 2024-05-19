@@ -98,7 +98,7 @@
                     <tbody>
                         <?php if(is_array($view) && count($view) > 0) {?>
                             <?php foreach($view as $view) {?>
-                                <tr>
+                                <tr class="<?php echo $view['quantity'] <= $view['low_stock'] ? "table-danger" : "" ?>">
                                 <td> <?= $view['code'];?> </td>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
