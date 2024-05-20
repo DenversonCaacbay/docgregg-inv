@@ -213,17 +213,7 @@
         public function view_inventory() {
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare("
-                SELECT * 
-                FROM tbl_inventory 
-                WHERE deleted_at IS NULL AND quantity != '0'
-                ORDER BY 
-                    CASE 
-                        WHEN quantity <= low_stock THEN 0 
-                        ELSE 1 
-                    END, 
-                    quantity ASC
-            ");
+            $stmt = $connection->prepare(" SELECT *  FROM tbl_inventory WHERE deleted_at IS NULL AND quantity != '0' ORDER BY  CASE  WHEN quantity <= low_stock THEN 0  ELSE 1  END, created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
@@ -267,7 +257,7 @@
         
             $stmt = $connection->prepare("SELECT * 
                 FROM tbl_inventory 
-                WHERE (type='Internal' OR type='Both') 
+                WHERE (type='Internal' OR type='External') 
                 AND deleted_at IS NULL 
                 AND quantity != '0'
                 AND expired_at BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
@@ -1276,20 +1266,21 @@
                 // Compare old quantity with new quantity
                 if (!($qty > $quantity)) {
                     $qty_new = $quantity - $qty;
-                    $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}. It now has {$qty_new} pieces left.";
+                    // $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}. It now has {$qty_new} pieces left.";
+                    $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}.";
 
                     $connection = $this->openConn();
                     $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET quantity = ? WHERE inv_id = ?");
                     $stmt_inventory->execute([$qty_new, $inv_id]);
         
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, remarks, log_type) VALUES (?, ?, ?)");
-                    $stmt_logs->execute([$name, $remarks_data, 'Deduction']);
+                    $stmt_logs->execute([$name, $remarks_data,  $remarks]);
         
                     echo "<script type='text/javascript'>
                         document.addEventListener('DOMContentLoaded', function() {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Item Updated',
+                                title: 'Item Deducted',
                                 showConfirmButton: false,
                                 timer: 1500
                             });
@@ -1297,9 +1288,9 @@
                     </script>";
                     // Redirect after showing the alert
                     if ($type === "Internal") {
-                        header("refresh: 1; url=admin_inventory_internal.php");
+                        header("refresh: 1; url=deduct_item.php");
                     } elseif ($type === "External") {
-                        header("refresh: 1; url=admin_inventory_external.php");
+                        header("refresh: 1; url=deduct_item.php");
                     }
                 } else {
                     // Quantity is lower than the previous quantity, show an alert
@@ -1308,6 +1299,7 @@
                 }
             }
         }
+        
         
 
         // Update Internal Inventory
