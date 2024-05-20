@@ -1274,7 +1274,7 @@
                     $stmt_inventory->execute([$qty_new, $inv_id]);
         
                     $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, remarks, log_type) VALUES (?, ?, ?)");
-                    $stmt_logs->execute([$name, $remarks_data,  $remarks]);
+                    $stmt_logs->execute([$name, $remarks_data, 'Deduction']);
         
                     echo "<script type='text/javascript'>
                         document.addEventListener('DOMContentLoaded', function() {
@@ -1293,6 +1293,62 @@
                         header("refresh: 1; url=deduct_item.php");
                     }
                 } else {
+                    // Quantity is lower than the previous quantity, show an alert
+                    $message = "Cannot update! Quantity is lower than the previous quantity.";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                }
+            }
+        }
+
+        public function update_expiring_inventory() {
+            if (isset($_POST['expiring_inventory'])) {
+                $inv_id = $_GET['inv_id'];
+                $quantity = $_POST['total_quantity'];
+                $qty = $_POST['qty'];
+                $remarks = $_POST['remarks'];
+                $name = $_POST['name'];
+                $type = $_POST['type'];
+                $old_expiration = new DateTime($_POST['old_expiration']);
+                $new_expiration = new DateTime($_POST['new_expiration']);
+                $currentDate = new DateTime();
+
+                // check if item is aboutu to expire
+                if ($new_expiration < $old_expiration || $currentDate->diff($new_expiration)->days <= 30) {
+                    $message = "Cannot update! Item will expire soon.";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                }
+
+                // Compare old quantity with new quantity
+                if (!($qty > $quantity)) {
+                    $qty_new = $quantity + $qty;
+                    $remarks_data = "The quantity of item {$name} has been increased by {$qty} from {$quantity}.";
+
+                    $connection = $this->openConn();
+                    $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET quantity = ?, expired_at = ?
+                         WHERE inv_id = ?");
+                    $stmt_inventory->execute([$qty_new, $new_expiration, $inv_id]);
+        
+                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, remarks, log_type) VALUES (?, ?, ?)");
+                    $stmt_logs->execute([$name, $remarks_data, 'Expiring']);
+        
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Deducted',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                    </script>";
+                    // Redirect after showing the alert
+                    if ($type === "Internal") {
+                        header("refresh: 1; url=deduct_item.php");
+                    } elseif ($type === "External") {
+                        header("refresh: 1; url=deduct_item.php");
+                    }
+                } 
+                else {
                     // Quantity is lower than the previous quantity, show an alert
                     $message = "Cannot update! Quantity is lower than the previous quantity.";
                     echo "<script type='text/javascript'>alert('$message');</script>";
