@@ -346,80 +346,93 @@ img{
             </div>
             <!-- <div class="mt-4" style="width: 100%;border-bottom: #0296be 2px solid;"></div> -->
             <div class="col-md-12 mt-3">
-            <div class="card shadow py-3 px-3">
-                <div class="d-flex align-items-center">
-                    <label class="mt-3">Availed Service : </label>
-                    <select id="petTypeSelect" class="form-select ms-3 mt-2" style="width:120px;">
-                        <option value="Dog">Dog</option>
-                        <option value="Cat">Cat</option>
-                    </select>
-                </div>
-                
-                
-                <canvas id="barChart" width="400" height="100"></canvas>
-            </div>
-               
+    <div class="card shadow py-3 px-3">
+        <div class="d-flex align-items-center">
+            <label class="mt-3">Availed Service : </label>
+            <select id="petTypeSelect" class="form-select ms-3 mt-2" style="width:120px;">
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+            </select>
+            <label class="mt-3 ms-3">Timeframe : </label>
+            <select id="timeframeSelect" class="form-select ms-3 mt-2" style="width:120px;">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+        </div>
+        <canvas id="barChart" width="400" height="100"></canvas>
+    </div>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        var petTypeSelect = document.getElementById('petTypeSelect');
-                        var ctx = document.getElementById('barChart').getContext('2d');
-                        var myBarChart;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var petTypeSelect = document.getElementById('petTypeSelect');
+            var timeframeSelect = document.getElementById('timeframeSelect');
+            var ctx = document.getElementById('barChart').getContext('2d');
+            var myBarChart;
 
-                        function fetchData(petType) {
-                            fetch('pos/fetch_pie.php?pet_type=' + petType)
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Network response was not ok');
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    // Process the data to extract service names and counts
-                                    var labels = data.map(item => item.service_name);
-                                    var values = data.map(item => item.count);
-
-                                    // Update chart data
-                                    if (myBarChart) {
-                                        myBarChart.destroy(); // Destroy existing chart instance
-                                    }
-                                    myBarChart = new Chart(ctx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: labels,
-                                            datasets: [{
-                                                label: 'Availed Per Services',
-                                                data: values,
-                                                backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
-                                                borderColor: 'rgba(54, 162, 235, 1)',
-                                                borderWidth: 1
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRatio: true,
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true
-                                                }
-                                            }
-                                        }
-                                    });
-                                })
-                                .catch(error => console.error('Error fetching data:', error));
+            function fetchData(petType, timeframe) {
+                fetch('pos/fetch_pie.php?pet_type=' + petType + '&timeframe=' + timeframe)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
                         }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Process the data to extract service names and counts
+                        var labels = data.map(item => item.service_name);
+                        var values = data.map(item => item.count);
 
-                        petTypeSelect.addEventListener('change', function () {
-                            var selectedPetType = petTypeSelect.value;
-                            fetchData(selectedPetType);
+                        // Update chart data
+                        if (myBarChart) {
+                            myBarChart.destroy(); // Destroy existing chart instance
+                        }
+                        myBarChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Availed Per Services',
+                                    data: values,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
                         });
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
 
-                        // Fetch data for initial pet type
-                        var initialPetType = petTypeSelect.value;
-                        fetchData(initialPetType);
-                    });
-                </script>
-            </div>
+            petTypeSelect.addEventListener('change', function () {
+                var selectedPetType = petTypeSelect.value;
+                var selectedTimeframe = timeframeSelect.value;
+                fetchData(selectedPetType, selectedTimeframe);
+            });
+
+            timeframeSelect.addEventListener('change', function () {
+                var selectedPetType = petTypeSelect.value;
+                var selectedTimeframe = timeframeSelect.value;
+                fetchData(selectedPetType, selectedTimeframe);
+            });
+
+            // Fetch data for initial pet type and timeframe
+            var initialPetType = petTypeSelect.value;
+            var initialTimeframe = timeframeSelect.value;
+            fetchData(initialPetType, initialTimeframe);
+        });
+    </script>
+</div>
 
 
         </div>

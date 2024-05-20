@@ -5,8 +5,9 @@ $dbname = 'dgvc';
 $username = 'root';
 $password = '';
 
-// Get the pet type from the query string
+// Get the pet type and timeframe from the query string
 $pet_type = isset($_GET['pet_type']) ? $_GET['pet_type'] : '';
+$timeframe = isset($_GET['timeframe']) ? $_GET['timeframe'] : '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -14,8 +15,29 @@ try {
     die("Error: " . $e->getMessage());
 }
 
-// Fetch data from tbl_services based on pet type
-$query = "SELECT service_availed FROM tbl_services WHERE pet_type = ?";
+// Determine the date range based on the timeframe
+$dateCondition = '';
+switch ($timeframe) {
+    case 'daily':
+        $dateCondition = "DATE(created_at) = CURDATE()";
+        break;
+    case 'weekly':
+        $dateCondition = "YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)";
+        break;
+    case 'monthly':
+        $dateCondition = "MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())";
+        break;
+    case 'yearly':
+        $dateCondition = "YEAR(created_at) = YEAR(CURDATE())";
+        break;
+    default:
+        // If no valid timeframe is provided, default to no date filtering
+        $dateCondition = "1";
+        break;
+}
+
+// Fetch data from tbl_services based on pet type and date condition
+$query = "SELECT service_availed FROM tbl_services WHERE pet_type = ? AND $dateCondition";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$pet_type]);
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -297,30 +297,60 @@
 
     // check if selectedQuantity exceeds the stock left
     if(parseInt(selectedQuantity) > parseInt(selectedServiceValue.split("|")[1])){
-        alert('The requested quantity exceeds available stock.');
+        // alert('The requested quantity exceeds available stock.');
+        Swal.fire({
+            icon: 'error',
+            title: 'The requested quantity exceeds available stock.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return;
     }
 
     // Check if pet input is empty
     if (selectedPet === '') {
-        alert('Please select a pet.');
+        // alert('Please select a pet.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Please select a pet.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return; // Exit function if pet input is empty
     }
 
     // Check if pet type input is empty
     if (selectedType === '') {
-        alert('Please select a pet type.');
+        // alert('Please select a pet type.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Please select a pet type.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return; // Exit function if pet type input is empty
     }
 
     if (selectedQuantity === '') {
-        alert('Quantity Field is Empty.');
+        // alert('Quantity Field is Empty.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Quantity Field is Empty.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return; // Exit function if pet type input is empty
     }
 
     // Check if service is not selected
     if (selectedService === 'Select a service') {
-        alert('Please select a service.');
+        // alert('Please select a service.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Please select a service.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return; // Exit function if service is not selected
     }
 
@@ -367,7 +397,13 @@
         });
         
         if (serviceExists) {
-            alert('This service has already been added.');
+            // alert('This service has already been added.');
+            Swal.fire({
+                icon: 'error',
+                title: 'This service has already been added.',
+                showConfirmButton: false,
+                timer: 1500
+            });            
             return; // Exit function if service already exists
         }
         
@@ -436,7 +472,13 @@ function checkQuantity() {
 
         // Check if selectedQty exceeds the stock left
         if (selectedQuantity > parseInt(selectedServiceValue.split("|")[1])) {
-            alert('The requested quantity exceeds available stock.');
+            // alert('The requested quantity exceeds available stock.');
+            Swal.fire({
+                icon: 'error',
+                title: 'The requested quantity exceeds available stock.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             quantityInput.value = parseInt(selectedServiceValue.split("|")[1]); // Set quantity to available stock
         }
     }

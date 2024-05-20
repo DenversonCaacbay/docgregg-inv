@@ -63,7 +63,7 @@ if(isset($_POST["add_to_cart"]))
         echo "<script type='text/javascript'>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    icon: 'warning',
+                    icon: 'error',
                     title: 'Please enter a quantity greater than 0',
                     showConfirmButton: false,
                     timer: 1500
@@ -73,7 +73,17 @@ if(isset($_POST["add_to_cart"]))
         // Redirect after showing the alert
         header("refresh: 1; url=admin_product_sale.php");
     } elseif ($quantity > $hiddenStocks) {
-        echo "<script>alert('The quantity entered is higher than the available stock.');</script>";
+        echo "
+        <script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'The quantity entered is higher than the available stock.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        </script>";
     } else {
         // Make sure to start the session
         if(!isset($_SESSION["shopping_cart"]))
@@ -395,18 +405,16 @@ if(isset($_GET["action"]))
 </div>
 
 
-
-<!-- Modal -->
 <!-- Modal -->
 <div class="modal fade" id="cashLowerModal" tabindex="-1" aria-labelledby="cashLowerModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-vertical-center">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cashLowerModalLabel">Cash Entered is Lower Than Total Amount</h5>
+        <h5 class="modal-title text-danger fw-bold" id="cashLowerModalLabel">Warning!</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Please enter an amount equal to or greater than the total amount.
+        </i> Please enter an amount equal to or greater than the total amount.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -419,7 +427,7 @@ if(isset($_GET["action"]))
     $proceed = document.getElementById("proceed").disabled = true;
     document.addEventListener('DOMContentLoaded', function() {
         var totalInput = document.getElementById('total_id');
-        var cashInput = document.getElementById('cash_id');
+        var cashInput = document.getElementById('cash_id'); 
         var resultpaymentInput = document.getElementById('resultpayment');
         var timer;
 
@@ -436,7 +444,13 @@ if(isset($_GET["action"]))
 
                 if (cash <= total) {
                     // If cash is lower than total, show the modal
-                    $('#cashLowerModal').modal('show');
+                    // $('#cashLowerModal').modal('show');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'The quantity entered is higher than the available stock.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     cashInput.value = '';
                     resultpaymentInput.value = '';
                 }

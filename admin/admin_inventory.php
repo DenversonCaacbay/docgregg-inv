@@ -81,7 +81,7 @@
             $categories = ['Vaccine', 'Syringe', 'Shampoo', 'Medecine', 'Dog Food', 'Cat Food'];
         ?>
         <div class="card">
-        <table class="table table-hover text-center table-bordered">
+            <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
@@ -90,7 +90,6 @@
                             <th> Product Name </th>
                             <th> Price </th>
                             <th> Quantity </th>
-                            <!-- <th> Category </th> -->
                             <th> 
                                 <select id="categoryFilter" class="form-input" style="padding: 5px;border:none;" onchange="filterCategory()">
                                     <option value="">All Categories</option>

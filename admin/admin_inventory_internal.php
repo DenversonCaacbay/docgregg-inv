@@ -83,12 +83,19 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
-                        <th> Code </th>
+                            <th> Product Code </th>
                             <th> Picture </th>
                             <th> Product Name </th>
                             <th> Price </th>
                             <th> Quantity </th>
-                            <th> Category </th>
+                            <th> 
+                                <select id="categoryFilter" class="form-input" style="padding: 5px;border:none;" onchange="filterCategory()">
+                                    <option value="">All Categories</option>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= htmlspecialchars($category) ?>"><?= htmlspecialchars($category) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </th>
                             <th> Date Created </th>
                             <th> Purchased Date </th>
                             <th> Expiration Date </th>
@@ -99,7 +106,7 @@
                     <tbody>
                         <?php if(is_array($view) && count($view) > 0) {?>
                             <?php foreach($view as $view) {?>
-                                <tr>
+                                <tr class="<?php echo $view['quantity'] <= $view['low_stock'] ? "table-danger" : "" ?>">
                                 <td> <?= $view['code'];?> </td>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
@@ -125,14 +132,16 @@
                                             <a href="update_inventory_form.php?inv_id=<?= $view['inv_id'];?>" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Update </a>
                                             <input type="hidden" name="inv_id" value="<?= $view['inv_id'];?>">
                                             <input type="hidden" name="name" value="<?= $view['name'];?>">
-                                            <button class="btn btn-danger" type="submit" name="delete_inventory_internal"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
+                                            <button class="btn btn-danger" type="submit" name="delete_inventory"style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;"  onclick="return confirm('Are you sure you want to remove this data?')"> Remove </button>
+                                            
+                                            
                                         </form>
                                     </td>
                                 </tr>
                             <?php }?>
                             <?php } else { ?>
                                 <tr>
-                                    <td colspan="10">No Data Found</td>
+                                    <td colspan="9">No Data Found</td>
                                 </tr>
                             <?php } ?>
                         

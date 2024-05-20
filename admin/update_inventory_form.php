@@ -1,10 +1,14 @@
 <?php
-   error_reporting(E_ALL ^ E_WARNING);
-   require('../classes/staff.class.php');
-   $userdetails = $bmis->get_userdata();
-   $bmis->validate_admin();
+    error_reporting(E_ALL ^ E_WARNING);
+    require('../classes/staff.class.php');
+    $userdetails = $bmis->get_userdata();
+    $bmis->validate_admin();
+
+    // For Updating
     $staffbmis->update_inventory();
     $item = $staffbmis->view_single_inventory();
+
+
     if ($userdetails['role'] !== 'administrator') {
         // User is not an admin, display an alert
         echo '<script>alert("You are not authorized to access this page as admin.");</script>';

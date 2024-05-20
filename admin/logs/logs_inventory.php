@@ -136,6 +136,7 @@
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
                             <tr>
                                 <th> Product Name </th>
+                                <th> Remarks </th>
                                 <th> Type </th>
                                 <th> Date </th>
                             </tr>
@@ -146,6 +147,7 @@
                                 <?php foreach($view as $view) {?>
                                     <tr>
                                         <td> <?= $view['name'];?></td>
+                                        <td> <?= $view['remarks'];?></td>
                                         <td> <?= $view['log_type'];?> </td>
                                         <td> <?= $view['log_date'];?> </td>
                                     </tr>
