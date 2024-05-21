@@ -144,7 +144,7 @@
                                 <?php foreach($view as $view) {?>
                                     <tr>
                                         <td> <?= $view['fname'];?> <?= $view['mi'];?> <?= $view['lname'];?></td>
-                                        <td> <?= $view['deleted_at'];?> </td>
+                                        <td> <?= $view['date_time'];?> </td>
                                     </tr>
                                 <?php }?>
                             <?php } ?>
