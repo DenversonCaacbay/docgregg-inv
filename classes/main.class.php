@@ -129,6 +129,12 @@ class BMISClass {
                             if (password_verify($password, $user['password'])) 
                             {
                                 $this->set_userdata($user);
+
+                                // log
+                                $staff_name = $user['fname']." ".$user['lname'];
+                                $stmt_log = $connection->prepare("INSERT INTO loggin_logs (staff, log_type) VALUES (?, ?)");
+                                $stmt_log->execute([$staff_name, "login"]);
+
                                 echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     Swal.fire({
@@ -254,6 +260,12 @@ class BMISClass {
         if(!isset($_SESSION)) {
             session_start();
         }
+        // log
+        $staff_name = $_SESSION['userdata']['fname']." ".$_SESSION['userdata']['lname'];
+        $connection = $this->openConn();
+        $stmt_log = $connection->prepare("INSERT INTO loggin_logs (staff, log_type) VALUES (?, ?)");
+        $stmt_log->execute([$staff_name, "logout"]);
+
         $_SESSION['userdata'] = null;
         unset($_SESSION['userdata']); 
         
