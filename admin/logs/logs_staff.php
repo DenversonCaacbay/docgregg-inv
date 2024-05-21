@@ -66,13 +66,13 @@
         <div class="col-md-9">
             <div class="d-flex align-items-center">
                 <a class="btn btn-primary" href="../admin_reports_logs.php">Back</a>
-                <h1 class="mb-0 ml-2">Logs - Staff</h1>
+                <h4 class="mb-0 ml-2">Logs - Staff</h4>
             </div>
         </div>
         <div class="col-md-3 text-md-right">
-            <nav aria-label="breadcrumb" class="custom-breadcrumb">
-                <ol class="breadcrumb">
-                    <!-- <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li> -->
+            <nav aria-label="breadcrumb" class="custom-breadcrumb d-flex justify-content-end">
+                <ol class="breadcrumb ">
+                    <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li>
                     <li class="breadcrumb-item"><a href="logs_services.php">Services</a></li>
                     <li class="breadcrumb-item"><a href="logs_inventory.php">Inventory</a></li>
                 </ol>
@@ -135,7 +135,7 @@
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
                             <tr>
                                 <th> Full Name </th>
-                                <th> Date Archive </th>
+                                <th> Date and Time </th>
                             </tr>
                         </thead>
 

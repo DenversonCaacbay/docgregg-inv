@@ -1783,7 +1783,7 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_admin WHERE deleted_at IS NOT NULL ");
+            $stmt = $connection->prepare("SELECT * from loggin_logs ORDER BY created_at DESC ");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->
