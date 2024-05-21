@@ -133,7 +133,7 @@ class BMISClass {
                                 // log
                                 $staff_name = $user['fname']." ".$user['lname'];
                                 $stmt_log = $connection->prepare("INSERT INTO loggin_logs (staff, log_type) VALUES (?, ?)");
-                                $stmt_log->execute([$staff_name, "login"]);
+                                $stmt_log->execute([$staff_name, "Time In"]);
 
                                 echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
@@ -264,7 +264,7 @@ class BMISClass {
         $staff_name = $_SESSION['userdata']['fname']." ".$_SESSION['userdata']['lname'];
         $connection = $this->openConn();
         $stmt_log = $connection->prepare("INSERT INTO loggin_logs (staff, log_type) VALUES (?, ?)");
-        $stmt_log->execute([$staff_name, "logout"]);
+        $stmt_log->execute([$staff_name, "Time Out"]);
 
         $_SESSION['userdata'] = null;
         unset($_SESSION['userdata']); 

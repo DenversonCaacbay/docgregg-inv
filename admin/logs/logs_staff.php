@@ -135,6 +135,7 @@
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
                             <tr>
                                 <th> Full Name </th>
+                                <th> In | Out </th>
                                 <th> Date and Time </th>
                             </tr>
                         </thead>
@@ -143,8 +144,10 @@
                             <?php if(is_array($view)) {?>
                                 <?php foreach($view as $view) {?>
                                     <tr>
-                                        <td> <?= $view['fname'];?> <?= $view['mi'];?> <?= $view['lname'];?></td>
-                                        <td> <?= $view['date_time'];?> </td>
+                                        <td> <?= $view['staff'];?></td>
+                                        <td> <?= $view['log_type'];?> </td>
+                                        <td> <?= date('F d, Y h:i A', strtotime($view['created_at'])); ?> </td>
+
                                     </tr>
                                 <?php }?>
                             <?php } ?>
