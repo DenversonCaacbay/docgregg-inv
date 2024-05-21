@@ -5,6 +5,8 @@
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $staffbmis->update_inventory_low();
+
+    $staffbmis->report_inventory();
     $item = $staffbmis->view_single_inventory();
     if ($userdetails['role'] !== 'administrator') {
         // User is not an admin, display an alert
@@ -73,7 +75,7 @@
                             <div class="col-md-12" hidden> 
                                 <div class="form-group">
                                     <label class="mtop"> Quantity: </label>
-                                    <input type="number" class="form-control" name="qty" value="" required>
+                                    <input type="number" class="form-control" name="qty" value="<?= $item['quantity'] ?>" required>
                                 </div>
                             </div>
                             <div class="col" hidden>
@@ -94,17 +96,17 @@
                                         <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
                                     </div>
                             </div>
-                            <div class="col-md-12 mt-3">
+                            <div class="col-md-12 mt-3" hidden>
                                 <div class="form-group">
                                     <label> Report Expired Product: </label>
-                                    <input type="text" class="form-control" name="reason"  value="" required>
+                                    <input type="text" class="form-control" name="remarks"  value="">
                                 </div>
                             </div>
                         </div>
                         <input name="inv_id" type="hidden" value="<?= $view['inv_id']?>">
                         <input type="hidden" class="form-control" name="role" value="resident">
                             
-                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="update_inventory"> Report </button>
+                        <button class="btn btn-primary w-100" style=" font-size: 18px; border-radius:5px;" type="submit" name="report_inventory"> Report </button>
 
                         </div>
                     </div>

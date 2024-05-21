@@ -149,7 +149,7 @@
                                         <td> <?= $view['name'];?></td>
                                         <td> <?= $view['remarks'];?></td>
                                         <td> <?= $view['log_type'];?> </td>
-                                        <td> <?= $view['log_date'];?> </td>
+                                        <td> <?=  date('F d, Y', strtotime($view['log_date']));?> </td>
                                     </tr>
                                 <?php }?>
                             <?php } ?>

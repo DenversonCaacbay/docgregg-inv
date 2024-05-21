@@ -395,8 +395,34 @@ img{
                                 datasets: [{
                                     label: 'Availed Per Services',
                                     data: values,
-                                    backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
-                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.7)',   // Blue
+                                        'rgba(255, 99, 132, 0.7)',   // Red
+                                        'rgba(75, 192, 192, 0.7)',   // Green
+                                        'rgba(255, 206, 86, 0.7)',   // Yellow
+                                        'rgba(153, 102, 255, 0.7)',  // Purple
+                                        'rgba(255, 159, 64, 0.7)',   // Orange
+                                        'rgba(199, 199, 199, 0.7)',  // Grey
+                                        'rgba(83, 102, 255, 0.7)',   // Dark Blue
+                                        'rgba(201, 203, 207, 0.7)',  // Light Grey
+                                        'rgba(255, 87, 51, 0.7)',    // Coral
+                                        'rgba(60, 179, 113, 0.7)',   // Medium Sea Green
+                                        'rgba(106, 90, 205, 0.7)'    // Slate Blue
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(199, 199, 199, 1)',
+                                        'rgba(83, 102, 255, 1)',
+                                        'rgba(201, 203, 207, 1)',
+                                        'rgba(255, 87, 51, 1)',
+                                        'rgba(60, 179, 113, 1)',
+                                        'rgba(106, 90, 205, 1)'
+                                    ],
                                     borderWidth: 1
                                 }]
                             },
