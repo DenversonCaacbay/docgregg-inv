@@ -83,6 +83,10 @@
         </div>
             
         <div class="card">
+        <?php
+            // Sample categories array for demonstration purposes
+            $categories = ['Vaccine', 'Syringe', 'Shampoo', 'Medicine', 'Dog Food', 'Cat Food'];
+        ?>
         <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
@@ -243,4 +247,19 @@
 </script> 
 
 
+<script>
+    function filterCategory() {
+        var filter = document.getElementById("categoryFilter").value.toLowerCase();
+        var rows = document.querySelectorAll("tbody tr");
+        
+        rows.forEach(row => {
+            var category = row.cells[5].textContent.toLowerCase();
+            if (filter === "" || category.includes(filter)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+</script>
 <!-- End of Main Content -->

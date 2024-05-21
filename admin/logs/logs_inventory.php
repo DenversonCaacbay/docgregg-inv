@@ -74,7 +74,7 @@
         <div class="col-md-3 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb d-flex justify-content-end">
                 <ol class="breadcrumb">
-                    <!-- <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li> -->
+                    <li class="breadcrumb-item"><a href="logs_staff.php">Staff</a></li>
                     <li class="breadcrumb-item"><a href="logs_services.php">Services</a></li>
                     <li class="breadcrumb-item"><a href="logs_inventory.php">Inventory</a></li>
                 </ol>
@@ -149,7 +149,7 @@
                                         <td> <?= $view['name'];?></td>
                                         <td> <?= $view['remarks'];?></td>
                                         <td> <?= $view['log_type'];?> </td>
-                                        <td> <?= $view['log_date'];?> </td>
+                                        <td> <?=  date('F d, Y', strtotime($view['log_date']));?> </td>
                                     </tr>
                                 <?php }?>
                             <?php } ?>

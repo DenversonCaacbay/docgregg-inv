@@ -213,13 +213,47 @@
         public function view_inventory() {
             $connection = $this->openConn();
         
-            $stmt = $connection->prepare(" SELECT *  FROM tbl_inventory WHERE deleted_at IS NULL AND quantity != '0' ORDER BY  CASE  WHEN quantity <= low_stock THEN 0  ELSE 1  END, created_at DESC");
+            $stmt = $connection->prepare(" SELECT *  FROM tbl_inventory WHERE deleted_at IS NULL AND quantity != low_stock ORDER BY  CASE WHEN quantity <= low_stock THEN 0  ELSE 1  END, created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
         
             return $view;
         }             
-
+        // inventory Internal
+        // public function view_inventory_internal(){
+        //     $connection = $this->openConn();
+        
+        //     $stmt = $connection->prepare("SELECT *  FROM tbl_inventory  WHERE (type='Internal') AND deleted_at IS NULL AND quantity != '0' AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))");
+        //     $stmt->execute();
+        //     $view = $stmt->fetchAll();
+        
+        //     return $view;
+        // }
+        public function view_inventory_internal() {
+            $connection = $this->openConn();
+        
+            // Query to select internal inventory items that are not deleted, not zero quantity,
+            // and either expired or expiring in more than 30 days from today
+            $stmt = $connection->prepare("
+                SELECT * 
+                FROM tbl_inventory 
+                WHERE type = 'Internal' 
+                  AND deleted_at IS NULL 
+                  AND quantity != low_stock 
+                  AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))
+                ORDER BY 
+                  CASE 
+                    WHEN quantity <= low_stock THEN 0 
+                    ELSE 1 
+                  END, 
+                  created_at DESC
+            ");
+            $stmt->execute();
+            $view = $stmt->fetchAll();
+        
+            return $view;
+        }
+        
         // public function view_inventory($limit = 5, $offset = 0){
         //     $connection = $this->openConn();
         //     $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE deleted_at IS NULL LIMIT :limit OFFSET :offset");
@@ -235,21 +269,7 @@
         //     return [$view, $moreRecords];
         // }
 
-        // inventory Internal
-        public function view_inventory_internal(){
-            $connection = $this->openConn();
-        
-            $stmt = $connection->prepare("SELECT * 
-                FROM tbl_inventory 
-                WHERE (type='Internal' OR type='Both') 
-                AND deleted_at IS NULL 
-                AND quantity != '0'
-                AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))");
-            $stmt->execute();
-            $view = $stmt->fetchAll();
-        
-            return $view;
-        }
+
 
         // inventory all - expiring in 30 days
         public function view_inventory_expire(){
@@ -458,7 +478,7 @@
         public function view_customers(){
             $connection = $this->openConn();
     
-            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL ORDER BY created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
             
@@ -659,21 +679,46 @@
 
 // ------------------------------------------------------------------------START EXTERNAL INVENTORY --------------------------------------- //
         // Inventory External
-        public function view_inventory_external(){
-            $connection = $this->openConn();
+        // public function view_inventory_external(){
+        //     $connection = $this->openConn();
 
-            // $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND deleted_at IS NULL AND quantity !='0'");
-            $stmt = $connection->prepare("SELECT * 
+        //     // $stmt = $connection->prepare("SELECT * FROM tbl_inventory WHERE (type='External' OR type='Both') AND deleted_at IS NULL AND quantity !='0'");
+        //     $stmt = $connection->prepare("SELECT * 
+        //         FROM tbl_inventory 
+        //         WHERE (type='External') 
+        //         AND deleted_at IS NULL 
+        //         AND quantity != '0'
+        //         AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))");
+        //     $stmt->execute();
+        //     $view = $stmt->fetchAll();
+
+        //     return $view;
+        // }
+        public function view_inventory_external() {
+            $connection = $this->openConn();
+        
+            // Query to select internal inventory items that are not deleted, not zero quantity,
+            // and either expired or expiring in more than 30 days from today
+            $stmt = $connection->prepare("
+                SELECT * 
                 FROM tbl_inventory 
-                WHERE (type='External' OR type='Both') 
-                AND deleted_at IS NULL 
-                AND quantity != '0'
-                AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))");
+                WHERE type = 'External' 
+                  AND deleted_at IS NULL 
+                  AND quantity != low_stock 
+                  AND (expired_at < CURDATE() OR expired_at > DATE_ADD(CURDATE(), INTERVAL 30 DAY))
+                ORDER BY 
+                  CASE 
+                    WHEN quantity <= low_stock THEN 0 
+                    ELSE 1 
+                  END, 
+                  created_at DESC
+            ");
             $stmt->execute();
             $view = $stmt->fetchAll();
-
+        
             return $view;
         }
+        
 
         //For External Cat food
         public function view_inventory_external_catfood(){
@@ -1120,8 +1165,8 @@
                                 WHERE inv_id = ?");
                             $stmt_inventory->execute([$code,$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
         
-                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                            $stmt_logs->execute([$name,  'Updated']);
+                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?,  ?, ?)");
+                            $stmt_logs->execute([$name,'Item has been updated',  'Updated']);
         
                             echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
@@ -1150,8 +1195,8 @@
                             SET code=?, name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
                             WHERE inv_id = ?");
                         $stmt_inventory->execute([$code ,$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
-                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                        $stmt_logs->execute([$name,  'Updated']);
+                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?,  ?, ?)");
+                        $stmt_logs->execute([$name,'Item has been updated',  'Updated']);
         
                         echo "<script type='text/javascript'>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -1294,11 +1339,62 @@
                     }
                 } else {
                     // Quantity is lower than the previous quantity, show an alert
+                    // $message = "Cannot update! Quantity is lower than the previous quantity.";
+                    // echo "<script type='text/javascript'>alert('$message');</script>";
+                    echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Cannot Deduct Item',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
+                }
+            }
+        }
+
+        public function report_inventory() {
+            if (isset($_POST['report_inventory'])) {
+                $inv_id = $_GET['inv_id'];
+                $remarks = $_POST['remarks'];
+                $name = $_POST['name'];
+                $type = $_POST['type'];
+        
+                // Compare old quantity with new quantity
+                if (!($qty > $quantity)) {
+                    $qty_new = $quantity - $qty;
+                    // $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}. It now has {$qty_new} pieces left.";
+                    $remarks_data = "The item {$name} has expired.";
+        
+                    $connection = $this->openConn();
+                    $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET deleted_at = NOW() WHERE inv_id = ?");
+                    $stmt_inventory->execute([$inv_id]);
+        
+                    $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, remarks, log_type) VALUES (?, ?, ?)");
+                    $stmt_logs->execute([$name, $remarks_data, 'Expired']);
+        
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item added in Logs',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function() {
+                                window.location.href = 'admin_notification.php';
+                            });
+                        });
+                    </script>";
+                } else {
+                    // Quantity is lower than the previous quantity, show an alert
                     $message = "Cannot update! Quantity is lower than the previous quantity.";
                     echo "<script type='text/javascript'>alert('$message');</script>";
                 }
             }
         }
+        
 
         public function update_expiring_inventory() {
             if (isset($_POST['expiring_inventory'])) {
@@ -1481,8 +1577,8 @@
                                 WHERE inv_id = ?");
                             $stmt_inventory->execute([$name, $price, $quantity_total, $category, $target_file, $exp, $bought_date, $inv_id]);
 
-                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                            $stmt_logs->execute([$name,  'Added Stocks']); // Assuming 'create' is the log type for creating an item
+                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?, ?, ?)");
+                            $stmt_logs->execute([$name,"Added $quantity_total",  'Added Stocks']); // Assuming 'create' is the log type for creating an item
         
                             echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
@@ -1504,8 +1600,8 @@
                             SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
                             WHERE inv_id = ?");
                         $stmt_inventory->execute([$name, $price, $quantity_total, $category, $exp, $bought_date, $inv_id]);
-                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, log_type) VALUES ( ?, ?)");
-                        $stmt_logs->execute([$name,  'Added Stocks']); // Assuming 'create' is the log type for creating an item
+                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?, ?, ?)");
+                            $stmt_logs->execute([$name,"Added $quantity_total",  'Added Stocks']); // Assuming 'create' is the log type for creating an item
         
                         echo "<script type='text/javascript'>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -1687,7 +1783,7 @@
             $connection = $this->openConn();
 
             // $stmt = $connection->prepare("SELECT * from tbl_user");
-            $stmt = $connection->prepare("SELECT * from tbl_admin WHERE deleted_at IS NOT NULL ");
+            $stmt = $connection->prepare("SELECT * from loggin_logs ORDER BY created_at DESC ");
             $stmt->execute();
             $view = $stmt->fetchAll();
             //$rows = $stmt->

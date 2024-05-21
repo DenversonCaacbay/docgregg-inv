@@ -74,7 +74,7 @@
         <div class="col-md-2 text-md-right">
             <nav aria-label="breadcrumb" class="custom-breadcrumb d-flex justify-content-end">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active"><a href="report_stock.php">Stocks</a></li>
+                    <li class="breadcrumb-item active"><a href="report_stock.php">Sales</a></li>
                     <li class="breadcrumb-item"><a href="report_services.php">Services</a></li>
                 </ol>
             </nav>

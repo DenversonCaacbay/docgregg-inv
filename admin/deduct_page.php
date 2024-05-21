@@ -26,7 +26,7 @@
 
     <!-- Page Heading -->
     <div class="d-flex align-items-center">
-        <a class="btn btn-primary" href="deduct_page.php">Back</a>
+        <a class="btn btn-primary" href="deduct_item.php">Back</a>
         <h4 class="mb-0 ml-2">Deduct Quantity</h4>
     </div>
                 
@@ -99,10 +99,10 @@
                                         <input type="text" class="form-control" name="type" value="<?= $item['type']?>" readonly>
                                     </div>
                             </div>
-                            <div class="col-md-12 mt-3">
+                            <div class="col-md-12 mt-3" hidden>
                                 <div class="form-group">
                                     <label> Reason To Deduct Item: </label>
-                                    <input type="text" class="form-control" name="remarks"  value="" required>
+                                    <input type="text" class="form-control" name="remarks"  value="sampol" required>
                                 </div>
                             </div>
                         </div>

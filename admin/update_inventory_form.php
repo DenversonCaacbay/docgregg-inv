@@ -90,7 +90,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="mtop" >Price: </label>
-                                        <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" readonly>
+                                        <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01">
                                     </div>
                                 </div>
                                 <div class="col-md-3"> 
