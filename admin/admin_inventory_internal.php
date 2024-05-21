@@ -81,7 +81,7 @@
         <div class="card">
         <?php
             // Sample categories array for demonstration purposes
-            $categories = ['Vaccine', 'Syringe', 'Medecine'];
+            $categories = ['Vaccine', 'Syringe', 'Medicine'];
         ?>
         <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">

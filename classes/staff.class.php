@@ -478,7 +478,7 @@
         public function view_customers(){
             $connection = $this->openConn();
     
-            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL");
+            $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE deleted_at IS NULL ORDER BY created_at DESC");
             $stmt->execute();
             $view = $stmt->fetchAll();
             
@@ -1339,8 +1339,18 @@
                     }
                 } else {
                     // Quantity is lower than the previous quantity, show an alert
-                    $message = "Cannot update! Quantity is lower than the previous quantity.";
-                    echo "<script type='text/javascript'>alert('$message');</script>";
+                    // $message = "Cannot update! Quantity is lower than the previous quantity.";
+                    // echo "<script type='text/javascript'>alert('$message');</script>";
+                    echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Cannot Deduct Item',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
                 }
             }
         }

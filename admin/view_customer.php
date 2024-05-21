@@ -147,7 +147,7 @@
                             <div class="row text-center bg-primary text-light p-0" style="border-radius: 5px">
                                 <div class="col-md-3">Pet Type</div>
                                 <div class="col-md-4">Service Availed</div>
-                                <div class="col-md-5">Type / Medicine / Equipment</div>
+                                <div class="col-md-5">Type | Medicine | Equipment</div>
                             </div>
                         </div>
 
@@ -176,7 +176,7 @@
                                                                     $trimmed_view = explode('-', $view)[0];
                                                                 ?>
                                                                 <?php if (in_array($service, $servicesToHideQuantity)) : ?>
-                                                                    <?= trim($trimmed_view); ?><br>
+                                                                    <?= trim('<b class="text-primary">Type:</b> '.$trimmed_view); ?><br>
                                                                 <?php else : ?>
                                                                     <?= $views['quantity']; ?>pcs - <?= trim($trimmed_view); ?><br>
                                                                 <?php endif; ?>

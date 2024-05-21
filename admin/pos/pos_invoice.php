@@ -13,7 +13,7 @@
 <?php 
     $pdo = require 'connection.php';
     session_start();
-
+    date_default_timezone_set('Asia/Manila');
     //
     $productAll = '';
     $processTotal = '';
@@ -78,7 +78,7 @@
         $statement->bindParam(':customer_name', $newInv['customer_name']);
         $statement->bindParam(':products', $newInv['products']);
         $statement->bindParam(':total', $newInv['total']);
-         $statement->bindParam(':profit', $newInv['profit']);
+        $statement->bindParam(':profit', $newInv['profit']);
         $statement->bindParam(':totalQty', $newInv['totalQty']);
         $statement->bindParam(':cash', $newInv['cash']);
         $statement->bindParam(':cash_change', $newInv['cash_change']);

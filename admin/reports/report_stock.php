@@ -73,7 +73,7 @@
         <div class="col-md-6">
             <nav aria-label="breadcrumb" class="custom-breadcrumb d-flex justify-content-end">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active"><a href="report_stock.php">Stocks</a></li>
+                    <li class="breadcrumb-item active"><a href="report_stock.php">Sales</a></li>
                     <li class="breadcrumb-item"><a href="report_services.php">Services</a></li>
                 </ol>
             </nav>
@@ -177,7 +177,8 @@
                                     <td> <?= $view['totalQty']; ?></td>
                                     <td>₱ <?= number_format($view['total']); ?> </td>
                                     <td> <?= $view['staff_name']; ?></td>
-                                    <td> <?= $view['created_at']; ?> </td>
+                                    <td> <?= date('F d, Y h:i A', strtotime($view['created_at'])); ?> </td>
+
                                 </tr>
                             <?php }?>
                         <?php } ?>
