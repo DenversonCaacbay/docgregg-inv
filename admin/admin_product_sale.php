@@ -53,7 +53,7 @@
 session_start(); // Make sure to start the session
 
 $connect = mysqli_connect("localhost", "root", "", "dgvc");
-
+// $connect = mysqli_connect("localhost", "u579189311_dgvetclinic", "Intelliware556", "u579189311_dgvc");
 if(isset($_POST["add_to_cart"]))
 {
     $quantity = isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0;
@@ -211,6 +211,7 @@ if(isset($_GET["action"]))
                     <div class="card form--card">
                         <table style="width:100%;" id="myTable datatableid" class="table table-light">
                             <tr>
+                                <th width="10%" style="background: #0296be;color:white;">Product Code</th>
                                 <th width="40%" style="background: #0296be;color:white;">Product Name</th>
                                 <th width="20%" style="background: #0296be;color:white;">Price</th>
                                 <th width="20%" style="background: #0296be;color:white;">Stocks</th>
@@ -234,6 +235,7 @@ if(isset($_GET["action"]))
                             <tbody id="myTable">
                                 <tr>
                                     <form method="post" action="admin_product_sale.php?action=add&id=<?php echo $row["inv_id"]; ?>">
+                                        <td width="10%"><h5><?php echo $row["code"]; ?></h5></td>
                                         <td width="20%"><h5 class=""><?php echo strlen($row['name']) > 20 ? substr($row['name'], 0, 20) . '...' : $row['name']; ?></h5></td>
                                         <td width="10%"><h5>₱ <?php echo $row["price"]; ?>.00</h5></td>
                                         <td width="20%"><h5><?php echo $row["quantity"]; ?> pc(s)</h5></td>
@@ -253,9 +255,9 @@ if(isset($_GET["action"]))
                                     }
                                 }
                             ?>
-                            <tr id="noItemRow" style="display: none;">
-                                <td colspan="7" class="text-center">No item found</td>
-                            </tr>
+                            <!--<tr id="noItemRow" style="display: none;">-->
+                            <!--    <td colspan="7" class="text-center">No item found</td>-->
+                            <!--</tr>-->
                             </tbody>
                         </table>
                     </div>

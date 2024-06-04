@@ -146,6 +146,8 @@ use PHPMailer\PHPMailer\Exception;
             if (isset($_POST['add_staff'])) 
             {
                 ob_start();
+                date_default_timezone_set('Asia/Manila');
+                $date_timezone = date('Y-m-d H:i:s');
                 $email = $_POST['email'];
                 $password = ($_POST['password']);
                 $confirm_password = ($_POST['confirm_password']);
@@ -157,7 +159,16 @@ use PHPMailer\PHPMailer\Exception;
                 // Check if email already exists
                 if ($this->check_staff($email) > 0) 
                 {
-                    echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Account already exist',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                    </script>";
                     // You might want to redirect the user or perform some other action here.
                     return;
                 }
@@ -170,8 +181,8 @@ use PHPMailer\PHPMailer\Exception;
                 $verification_code = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
                 
                 try {
-                    $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `password`, `lname`, `fname`, `verification_code`,`position`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$email, $hashed_password, $lname, $fname, $verification_code, $position,$role]);       
+                    $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `password`, `lname`, `fname`, `verification_code`,`position`, `role`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$email, $hashed_password, $lname, $fname, $verification_code, $position, $role, $date_timezone]);       
 
                     // Check if the query was successful
                     if ($stmt->rowCount() > 0) 

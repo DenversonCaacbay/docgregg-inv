@@ -15,11 +15,11 @@
 
     if($_SESSION['userdata']){
         if($user_role == 'administrator'){
-            header('Location: admin_dashboard.php');
+            header('Location: admin/admin_dashboard.php');
         }
 
         if($user_role == 'staff'){
-            header('Location: staff_dashboard.php');
+            header('Location: admin/admin_dashboard.php');
         }
 
         if($user_role == 'resident'){

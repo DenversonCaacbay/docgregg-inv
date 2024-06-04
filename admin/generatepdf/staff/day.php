@@ -10,7 +10,7 @@ $today = date('Y-m-d');
 
 
 // Use DATE() function to get only the date part of created_at
-$query = "SELECT * FROM tbl_admin WHERE DATE(deleted_at) = '$today'";
+$query = "SELECT * FROM WHERE DATE(deleted_at) = '$today'";
 $result = $conn->query($query);
 
 $html = '

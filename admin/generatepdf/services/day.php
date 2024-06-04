@@ -5,7 +5,9 @@ require_once '../pdf.php';
 require_once '../config.php';
 
 $today = date('Y-m-d');
-$query = "SELECT * FROM tbl_services WHERE DATE(created_at) = '$today'";
+$query = "SELECT * FROM tbl_log_services 
+        INNER JOIN tbl_user 
+        ON tbl_log_services.cli_id = tbl_user.id_user WHERE DATE(created_at) = '$today' ORDER BY tbl_log_services.log_date ASC";
 $result = $conn->query($query);
 $html = '
 

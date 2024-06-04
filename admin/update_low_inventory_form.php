@@ -65,7 +65,7 @@
                                     <input type="number" class="form-control" name="price"  value="<?= $item['price']?>" step=".01" required>
                                 </div>
                             </div>
-                            <div class="col-md-12" style="margin-top:15%;"> 
+                            <div class="col-md-12" style="margin-top:5%;"> 
                                 <div class="form-group">
                                     <label class="mtop"> Total Quantity: </label>
                                     <input type="number" class="form-control" name="total_quantity" value="<?= $item['quantity'] ?>" readonly>
@@ -83,16 +83,16 @@
                                     <input type="text" class="form-control" name="category" value="<?= $item['category']?>" readonly>
                                 </div>
                             </div>
-                                <div class="col-md-12" hidden>
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="mtop"> Purchased Date: </label>
-                                        <input type="date" class="form-control" name="bought_date" value="<?= $item['purchased_at']?>" readonly>
+                                        <input type="date" class="form-control" name="bought_date" value="" required>
                                     </div>
                                 </div>
-                                <div class="col-md-12" hidden>
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="mtop"> Expiration Date: </label>
-                                        <input type="date" class="form-control" name="exp_date" value="<?= $item['expired_at']?>" readonly>
+                                        <input type="date" class="form-control" name="exp_date" value="" required>
                                     </div>
                             </div>
                         </div>
@@ -129,6 +129,30 @@
 
         // Call calculateTotalPrice function when capital or profit percentage changes
         $('#capital, #profit').on('input', calculateTotalPrice);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Add a change event handler to the Purchased Date input
+        $('input[name="bought_date"]').on('change', function () {
+            // Get the selected Purchased Date value
+            var purchasedDate = new Date($(this).val());
+
+            // Calculate the minimum Expiration Date (6 months from the Purchased Date)
+            var minExpirationDate = new Date(purchasedDate.getFullYear(), purchasedDate.getMonth() + 12, purchasedDate.getDate());
+
+            // Set the minimum Expiration Date value to the Expiration Date input
+            $('input[name="exp_date"]').attr('min', formatDate(minExpirationDate));
+        });
+
+        // Function to format date as 'YYYY-MM-DD'
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + '-' + month + '-' + day;
+        }
     });
 </script>
 

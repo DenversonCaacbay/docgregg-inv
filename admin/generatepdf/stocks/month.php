@@ -16,7 +16,7 @@ if ($conn->connect_error) {
   die('Connection failed: ' . $conn->connect_error);
 }
 
-$query = "SELECT * FROM invoice WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
+$query = "SELECT * FROM invoice WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth' ORDER BY created_at ASC";
 $result = $conn->query($query);
 
 // Generate the report HTML
@@ -62,8 +62,8 @@ $html .= '
 <table  id="customers">';
 $html .= '<tr>
 <th width="20%">Created At</th>
-<th width="20%">Customer Name</th>
 <th width="40%">Product Name</th>
+<th width="40%">Staff</th>
 <th style="display:none" width="20%">Profit</th>
 <th width="20%">Total</th>
 </tr>';
@@ -74,8 +74,8 @@ if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . date('F d, Y h:i A', strtotime($row['created_at'])) . '</td>';
-    $html .= '<td>' . $row['customer_name'] .  '</td>';
     $html .= '<td class="product-name">' . $row['product'] .'</td>';
+    $html .= '<td>' . $row['staff_name'] .'</td>';
     $html .= '<td style="display:none">' . $row['profit'] .'</td>';
     $html .= '<td> ₱' . $row['total'] .  '.00</td>';
     $totalSales += $row['total'];
@@ -96,14 +96,14 @@ if ($result->num_rows > 0) {
 
   $html .= '</tr>';
 } else {
-  $html .= '<tr><td colspan="4">No sales this week.</td></tr>';
+  $html .= '<tr><td colspan="3">No sales this week.</td></tr>';
 }
 
 $html .= '</table>';
 
 $pdf = new Pdf();
 
- $file_name = 'Monthly Report -'.$today.'.pdf';
+ $file_name = 'Monthly Sales Report -'.$today.'.pdf';
  $pdf->loadHtml($html);
  $pdf->setPaper('A4', 'portrait');
  $pdf->render();

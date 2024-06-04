@@ -331,7 +331,7 @@
                                 <a class="nav-link" href="admin_myprofile.php" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 
                                 <?php if (empty($user_picture)): ?>
-                                    <img src="../assets/placeholder/user-placeholder.png" class="rounded-circle mr-2" style="width: 30px; height: 30px" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
+                                    <img src="../assets/placeholder/user-placeholder.PNG" class="rounded-circle mr-2" style="width: 30px; height: 30px" alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php else: ?>
                                     <img src="<?= $user_picture ?>" class="rounded-circle mr-2" style="width: 30px; height: 30px; object-fit: cover"  alt="User Picture"> <h6 class="mr-2 mt-2 d-lg-inline text-primary"><?= ucfirst($userdetails['role']) ?>: <?= $userdetails['fname']?> <?= $userdetails['lname']?></h6>
                                 <?php endif; ?>

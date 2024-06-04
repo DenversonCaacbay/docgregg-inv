@@ -10,7 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $toDate = $_POST["toDate"];
 
     // Use DATE() function to get only the date part of created_at within the specified date range
-    $query = "SELECT * FROM tbl_services WHERE DATE(created_at) BETWEEN '$fromDate' AND '$toDate'";
+    $query = "SELECT  * FROM tbl_log_services 
+        INNER JOIN tbl_user 
+        ON tbl_log_services.cli_id = tbl_user.id_user WHERE DATE(log_date) BETWEEN '$fromDate' AND '$toDate'";
     $result = $conn->query($query);
 
     $html = '

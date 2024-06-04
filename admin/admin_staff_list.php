@@ -26,15 +26,12 @@
 
 <!-- Begin Page Content -->
 
-<div class="container-fluid">
+<div class="container-fluid page-container">
 
     <!-- Page Heading -->
+<h4 class="mb-4">Staff List</h4>
 
-    <div class="row">
-        <div class="col-md-6"><h1 class="mb-4">Staff List</h1></div>
-    </div>
-
-    <div class="container-fluid mt-3">
+    <div class="container-fluid">
     <table class="table table-hover text-center table-bordered mt-3">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;"> 
@@ -78,7 +75,8 @@
                     <td><?= $user['email']; ?></td>
                     <td><?= $user['position']; ?></td>
                     <td><?= $user['role']; ?></td>
-                    <td><?= $user['created_at']; ?></td>
+                    <td><?=  date("M. d, Y", strtotime($user['created_at'])); ?></td>
+                   
                     <td>
                         <form action="" method="post">
                             <input type="hidden" name="id_admin" value="<?= $user['id_admin'];?>">

@@ -5,13 +5,15 @@ require_once '../pdf.php';
 require_once '../config.php';
 // Fetch today's date
 $today = date('Y-m-d');
-$currentMonth = date('Y-m');
+$currentYear = date('Y');
 
 // Connect to your database (replace with your own credentials)
 
 
 // Fetch data from the shop_inventory table based on today's date
-$query = "SELECT * FROM tbl_services WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
+$query = "SELECT * FROM tbl_log_services 
+        INNER JOIN tbl_user 
+        ON tbl_log_services.cli_id = tbl_user.id_user WHERE DATE_FORMAT(log_date, '%Y') = '$currentYear' ORDER BY log_date ASC";
 $result = $conn->query($query);
 
 // Generate the report HTML

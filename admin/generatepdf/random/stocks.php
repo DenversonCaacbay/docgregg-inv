@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
     
-    <h1 style="text-align:center">Stocks Report</h1>
+    <h1 style="text-align:center">Sales Report</h1>
     <h4>From: ' . date('F d, Y', strtotime($fromDate)) . '</h4>
     <h4>To:   	&nbsp;	&nbsp;	&nbsp;' .date('F d, Y', strtotime($toDate)). '</h4>
     ';
@@ -76,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <table  id="customers">';
     $html .= '<tr>
     <th width="20%">Created At</th>
-    <th width="20%">Customer Name</th>
     <th width="40%">Product Name</th>
+    <th width="20%">Staff</th>
     <th width="20%">Total</th>
     </tr>';
 
@@ -87,11 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         while ($row = $result->fetch_assoc()) {
             $html .= '<tr>';
             $html .= '<td>' . date('F d, Y h:i A', strtotime($row['created_at'])) . '</td>';
-            $html .= '<td>' . $row['customer_name'] .  '</td>';
             $html .= '<td class="product-name">' . $row['product'] .  '</td>';
 
             $html .= '<td style="display:none">' . $row['profit'] .'</td>';
+             $html .= '<td> ' . $row['staff_name'] .  '</td>';
             $html .= '<td> ₱' . $row['total'] .  '.00</td>';
+           
             $totalSales += $row['total']; // Accumulate total sales
             $totalProfit += $row['profit'];
 

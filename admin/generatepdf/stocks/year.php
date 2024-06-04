@@ -9,7 +9,7 @@ session_start();
 require_once '../pdf.php';
 // Fetch today's date
 $today = date('Y-m-d');
-$currentMonth = date('Y-m');
+$currentYear = date('Y');
 
 // Connect to your database (replace with your own credentials)
 $servername = "localhost";
@@ -23,7 +23,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch data from the shop_inventory table based on today's date
-$query = "SELECT * FROM invoice WHERE DATE_FORMAT(created_at, '%Y-%m') = '$currentMonth'";
+$query = "SELECT * FROM invoice WHERE DATE_FORMAT(created_at, '%Y') = '$currentYear' ORDER BY created_at ASC";
 $result = $conn->query($query);
 
 // Generate the report HTML
@@ -69,8 +69,8 @@ $html .= '
 <table  id="customers">';
 $html .= '<tr>
 <th width="20%">Created At</th>
-<th width="20%">Customer Name</th>
 <th width="40%">Product Name</th>
+<th width="20%">Staff</th>
 <th style="display:none" width="20%">Profit</th>
 <th width="20%">Total</th>
 </tr>';
@@ -81,8 +81,8 @@ if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
     $html .= '<td>' . date('F d, Y h:i A', strtotime($row['created_at'])) . '</td>';
-    $html .= '<td>' . $row['customer_name'] .  '</td>';
     $html .= '<td class="product-name">' . $row['product'] .'</td>';
+    $html .= '<td>' . $row['staff_name'] .'</td>';
     $html .= '<td style="display:none">' . $row['profit'] .'</td>';
     $html .= '<td> ₱' . $row['total'] .  '.00</td>';
     $totalSales += $row['total'];
@@ -103,7 +103,7 @@ if ($result->num_rows > 0) {
 
   $html .= '</tr>';
 } else {
-  $html .= '<tr><td colspan="4">No sales this Year.</td></tr>';
+  $html .= '<tr><td colspan="3">No sales this Year.</td></tr>';
 }
 $html .= '</table>';
 // $pdf = new Pdf();
@@ -112,7 +112,7 @@ $html .= '</table>';
 $pdf = new Pdf();
 // $dompdf->loadHtml(html_entity_decode($html));
 //landscape orientation
- $file_name = 'Yearly Report -'.$today.'.pdf';
+ $file_name = 'Yearly Sales Report -'.$today.'.pdf';
  $pdf->loadHtml($html);
  $pdf->setPaper('A4', 'portrait');
  $pdf->render();

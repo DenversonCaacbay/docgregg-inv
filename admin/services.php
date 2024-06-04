@@ -65,44 +65,43 @@
             </div>
            
             <div class="card customer--card border-0">
-                <table class="table table-hover text-center table-bordered">
-                    <thead style="background: #0296be;color:#fff;" class="sticky"> 
-                        <tr>
-                            <th> Customer Name </th>
-                            <th> Contact </th>
-                            <th> Email </th>
-                            <th> Address </th>
-                            <th> View </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php if (is_array($view) && count($view) > 0) { ?>
-                            <?php foreach ($view as $item) { ?>
-                                <tr>
-                                    <td data-fullname="<?= htmlspecialchars($item['customer_name']); ?>">
-                                        <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
-                                    </td>
-                                    <td> <?= $item['customer_contact'] ?> </td>
-                                    <td> <?= $item['customer_email'] ?> </td>
-                                    <td> <?= $item['customer_address'] ?> </td>
-                                    <td>
-                                        <form action="" method="post">
-                                            <input type="hidden" name="serv_id" value="<?= $item['customer_id']; ?>">
-                                            <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
-                                            <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
-                                            <a href="view_customer.php?id=<?= $item['id_user'] ?>" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <tr>
-                                <td colspan="5">No Data Found</td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+                <table class="table table-hover text-center table-bordered" id="customerTable">
+    <thead style="background: #0296be;color:#fff;" class="sticky"> 
+        <tr>
+            <th> Customer Name </th>
+            <th> Contact </th>
+            <th> Email </th>
+            <th> Address </th>
+            <th> View </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (is_array($view) && count($view) > 0) { ?>
+            <?php foreach ($view as $item) { ?>
+                <tr>
+                    <td data-fullname="<?= htmlspecialchars($item['customer_name']); ?>">
+                        <?= strlen($item['customer_name']) > 20 ? substr($item['customer_name'], 0, 20) . '...' : $item['customer_name']; ?>
+                    </td>
+                    <td> <?= $item['customer_contact'] ?> </td>
+                    <td> <?= $item['customer_email'] ?> </td>
+                    <td> <?= $item['customer_address'] ?> </td>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="serv_id" value="<?= $item['customer_id']; ?>">
+                            <input type="hidden" name="customer_name" value="<?= $item['customer_name']; ?>">
+                            <input type="hidden" name="staff_name" value="<?= $item['staff_name']; ?>">
+                            <a href="view_customer.php?id=<?= $item['id_user'] ?>" class="btn btn-primary" style="width: 70px;padding:5px; font-size: 15px; border-radius:5px;">View</a>
+                        </form>
+                    </td>
+                </tr>
+            <?php } ?>
+        <?php } else { ?>
+            <tr>
+                <td colspan="5">No Data Found</td>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
                 <div id="noDataFound" style="display: none;text-align:center">
                     <p>No Data Found</p>
                 </div>
@@ -172,6 +171,33 @@
 
         // Handle form submission to filter results
     });
+</script>
+
+
+<script>
+// JavaScript for filtering table rows based on search input
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    var input = document.getElementById('searchInput');
+    var filter = input.value.toLowerCase();
+    var table = document.getElementById('customerTable');
+    var trs = table.getElementsByTagName('tr');
+
+    for (var i = 1; i < trs.length; i++) {
+        var tds = trs[i].getElementsByTagName('td');
+        var showRow = false;
+        
+        for (var j = 0; j < 3; j++) { // Only search in the first three columns
+            if (tds[j]) {
+                var tdValue = tds[j].textContent || tds[j].innerText;
+                if (tdValue.toLowerCase().indexOf(filter) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+        }
+        trs[i].style.display = showRow ? "" : "none";
+    }
+});
 </script>
 
 

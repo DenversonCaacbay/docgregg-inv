@@ -99,10 +99,10 @@
                                         <input type="text" class="form-control" name="type" value="<?= $item['type']?>" readonly>
                                     </div>
                             </div>
-                            <div class="col-md-12 mt-3" hidden>
+                            <div class="col-md-12 mt-3">
                                 <div class="form-group">
                                     <label> Reason To Deduct Item: </label>
-                                    <input type="text" class="form-control" name="remarks"  value="sampol" required>
+                                    <input type="text" class="form-control" name="remarks"  value="" required>
                                 </div>
                             </div>
                         </div>

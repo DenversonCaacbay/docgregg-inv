@@ -135,7 +135,6 @@
                     <form action="" method="post">
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
                             <tr>
-                                <th> Customer Name </th>
                                 <th> Services Availed </th>
                                 <th> Staff Name </th>
                                 <th> Type </th>
@@ -147,7 +146,6 @@
                             <?php if(is_array($view)) {?>
                                 <?php foreach($view as $view) {?>
                                     <tr>
-                                        <td> <?= $view['customer_name'];?></td>
                                         <td> <?= $view['service_availed'];?> </td>
                                         <td> <?= $view['staff_name'];?> </td>
                                         <td> <?= $view['log_type'];?> </td>

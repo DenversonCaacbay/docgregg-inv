@@ -1135,68 +1135,68 @@
                 $code = $_POST['code'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
-                $qty = $_POST['qty'];
-                $category = $_POST['category'];
-                $bought_date = $_POST['bought_date'];
-                $exp = $_POST['exp_date'];
+                $capital = $_POST['input_capital'];
+                $profit = $_POST['input_profit'];
+                // Fetch the database connection
+                $connection = $this->openConn();
+        
+                // Update inventory without checking or updating the image
+                $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET code = ?, name = ?, price = ?, capital = ?, profit = ? WHERE inv_id = ?");
+                $stmt_inventory->execute([$code, $name, $price, $capital, $profit, $inv_id]);
+        
+                $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name, remarks, log_type) VALUES (?, ?, ?)");
+                $stmt_logs->execute([$name, 'Item has been updated', 'Updated']);
+        
+                echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item Updated',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>";
+                
+                // Redirect after showing the alert
+                if ($type === "Both") {
+                    header("refresh: 1; url=admin_inventory.php");
+                } elseif ($type === "Internal") {
+                    header("refresh: 1; url=admin_inventory_internal.php");
+                } elseif ($type === "External") {
+                    header("refresh: 1; url=admin_inventory_external.php");
+                }
+            }
+        }
+        
+
+
+        public function update_image() {
+            if (isset($_POST['update_image'])) {
+                $inv_id = $_GET['inv_id'];
+                $name = $_POST['name'];
                 $new_picture = $_FILES['new_picture'];
         
-                // Fetch the old quantity from the database
+                // Fetch the database connection
                 $connection = $this->openConn();
-                $stmt = $connection->prepare("SELECT quantity FROM tbl_inventory WHERE inv_id = ?");
-                $stmt->execute([$inv_id]);
-                $oldQuantity = $stmt->fetchColumn();
         
-                // Compare old quantity with new quantity
-                if ($qty >= $oldQuantity) {
-                    if (!empty($new_picture['name'])) {
-                        $target_dir = "../uploads/inventory/";
-                        $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
+                // Process the new picture upload
+                if (!empty($new_picture['name'])) {
+                    $target_dir = "../uploads/inventory/";
+                    $file_extension = pathinfo($new_picture['name'], PATHINFO_EXTENSION);
         
-                        if (!is_dir($target_dir)) {
-                            mkdir($target_dir, 0755, true);
-                        }
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0755, true);
+                    }
         
-                        $target_file = $target_dir . time() . '.' . $file_extension;
+                    $target_file = $target_dir . time() . '.' . $file_extension;
         
-                        if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
-                            $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                                SET code=?, name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
-                                WHERE inv_id = ?");
-                            $stmt_inventory->execute([$code,$name, $price, $qty, $category, $target_file, $exp, $bought_date, $inv_id]);
+                    if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
+                        $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET picture = ? WHERE inv_id = ?");
+                        $stmt_inventory->execute([$target_file, $inv_id]);
         
-                            $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?,  ?, ?)");
-                            $stmt_logs->execute([$name,'Item has been updated',  'Updated']);
-        
-                            echo "<script type='text/javascript'>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Item Updated',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                });
-                            </script>";
-                            // Redirect after showing the alert
-                            if ($type === "Both") {
-                                header("refresh: 1; url=admin_inventory.php");
-                            } 
-                            elseif ($type === "Internal") {
-                                header("refresh: 1; url=admin_inventory_internal.php");
-                            } elseif ($type === "External") {
-                                header("refresh: 1; url=admin_inventory_external.php");
-                            }
-                        } else {
-                            echo "Sorry, there was an error uploading your file.";
-                        }
-                    } else {
-                        $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                            SET code=?, name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
-                            WHERE inv_id = ?");
-                        $stmt_inventory->execute([$code ,$name, $price, $qty, $category, $exp, $bought_date, $inv_id]);
-                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?,  ?, ?)");
-                        $stmt_logs->execute([$name,'Item has been updated',  'Updated']);
+                        $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?, ?, ?)");
+                        $stmt_logs->execute([$name, 'Item Image has been updated', 'Updated']);
         
                         echo "<script type='text/javascript'>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -1208,20 +1208,27 @@
                                 });
                             });
                         </script>";
+                        
                         // Redirect after showing the alert
-                        if ($type === "Internal") {
-                            header("refresh: 1; url=admin_inventory_internal.php");
-                        } elseif ($type === "External") {
-                            header("refresh: 1; url=admin_inventory_external.php");
-                        }
+                        header("refresh: 1; url=update_inventory_form.php?inv_id=$inv_id");
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
                     }
                 } else {
-                    // Quantity is lower than the previous quantity, show an alert
-                    $message = "Cannot update! Quantity is lower than the previous quantity.";
-                    echo "<script type='text/javascript'>alert('$message');</script>";
+                    // Handle case where no new picture is uploaded
+                    echo "<script type='text/javascript'>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'No Image Selected',
+                                showConfirmButton: true,
+                            });
+                        });
+                    </script>";
                 }
             }
         }
+        
 
         
         // For Internal Inventory
@@ -1312,7 +1319,7 @@
                 if (!($qty > $quantity)) {
                     $qty_new = $quantity - $qty;
                     // $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}. It now has {$qty_new} pieces left.";
-                    $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}.";
+                    $remarks_data = "The quantity of item {$name} has been reduced by {$qty} from {$quantity}.<br> Reason: {$remarks} ";
 
                     $connection = $this->openConn();
                     $stmt_inventory = $connection->prepare("UPDATE tbl_inventory SET quantity = ? WHERE inv_id = ?");
@@ -1540,6 +1547,8 @@
         // Update for Low Inventory
         public function update_inventory_low() {
             if (isset($_POST['update_inventory'])) {
+                date_default_timezone_set('Asia/Manila');
+                $date_timezone = date('Y-m-d H:i:s');
                 $inv_id = $_GET['inv_id'];
                 $name = $_POST['name'];
                 $price = $_POST['price'];
@@ -1573,12 +1582,12 @@
         
                         if (move_uploaded_file($new_picture["tmp_name"], $target_file)) {
                             $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                                SET name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?
+                                SET name =?, price =?, quantity = ?, category = ?, picture = ?, expired_at = ?, purchased_at = ?, created_at = ?
                                 WHERE inv_id = ?");
-                            $stmt_inventory->execute([$name, $price, $quantity_total, $category, $target_file, $exp, $bought_date, $inv_id]);
+                            $stmt_inventory->execute([$name, $price, $quantity_total, $category, $target_file, $exp, $bought_date, $date_timezone, $inv_id]);
 
                             $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?, ?, ?)");
-                            $stmt_logs->execute([$name,"Added $quantity_total",  'Added Stocks']); // Assuming 'create' is the log type for creating an item
+                            $stmt_logs->execute([$name,"Added $quantity_total pc's" ,  'New Stocks Added']); // Assuming 'create' is the log type for creating an item
         
                             echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {
@@ -1597,11 +1606,11 @@
                         }
                     } else {
                         $stmt_inventory = $connection->prepare("UPDATE tbl_inventory
-                            SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?
+                            SET name =?, price =?, quantity = ?, category = ?, expired_at = ?, purchased_at = ?, created_at = ?
                             WHERE inv_id = ?");
-                        $stmt_inventory->execute([$name, $price, $quantity_total, $category, $exp, $bought_date, $inv_id]);
+                        $stmt_inventory->execute([$name, $price, $quantity_total, $category, $exp, $bought_date,$date_timezone, $inv_id]);
                         $stmt_logs = $connection->prepare("INSERT INTO tbl_log_inventory (name,remarks, log_type) VALUES (?, ?, ?)");
-                            $stmt_logs->execute([$name,"Added $quantity_total",  'Added Stocks']); // Assuming 'create' is the log type for creating an item
+                            $stmt_logs->execute([$name,"Added $quantity_total pc's",  'New Stocks Added']); // Assuming 'create' is the log type for creating an item
         
                         echo "<script type='text/javascript'>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -2200,21 +2209,24 @@
         
         //     return $result;
         // }
-        public function count_services_report() {
-            $connection = $this->openConn();
-        
-            $stmt = $connection->prepare("
-                SELECT * 
-                FROM tbl_services 
-                INNER JOIN tbl_user ON tbl_services.cli_id = tbl_user.id_user
-            ");
-        
-            $stmt->execute();
-        
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-            return $result;
-        }
+public function count_services_report() {
+    $connection = $this->openConn();
+    
+    $stmt = $connection->prepare("
+        SELECT * 
+        FROM tbl_log_services 
+        INNER JOIN tbl_user 
+        ON tbl_log_services.cli_id = tbl_user.id_user 
+        ORDER BY tbl_log_services.log_date DESC
+    ");
+    
+    $stmt->execute();
+    
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    return $result;
+}
+
         
         
 
@@ -2736,8 +2748,8 @@
             reader.onload = function (e) {
                 $('#blah')
                     .attr('src', e.target.result)
-                    .width(470)
-                    .height(350);
+                    .width(150)
+                    .height(150);
             };
 
             reader.readAsDataURL(input.files[0]);

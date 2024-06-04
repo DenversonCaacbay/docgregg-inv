@@ -10,7 +10,9 @@ $endOfWeek = date('Y-m-d', strtotime('next week', strtotime($today)));
 
 
 
-$query = "SELECT * FROM tbl_services WHERE created_at >= '$startOfWeek' AND created_at < '$endOfWeek'";
+$query = "SELECT * FROM tbl_log_services 
+        INNER JOIN tbl_user 
+        ON tbl_log_services.cli_id = tbl_user.id_user WHERE log_date >= '$startOfWeek' AND log_date < '$endOfWeek' ORDER BY tbl_log_services.log_date ASC";
 $result = $conn->query($query);
 
 $html = '

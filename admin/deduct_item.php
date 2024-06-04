@@ -81,12 +81,14 @@
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
                         <tr>
+                            
                             <th> Product Code </th>
                             <th> Picture </th>
                             <th> Product Name </th>
                             <th> Price </th>
                             <th> Quantity </th>
                             <th> Category </th>
+                            <th> Type </th>
                             <th> Actions </th>
                         </tr>
                     </thead>
@@ -95,6 +97,7 @@
                         <?php if(is_array($view) && count($view) > 0) {?>
                             <?php foreach($view as $view) {?>
                                 <tr class="<?php echo $view['quantity'] <= $view['low_stock'] ? "table-danger" : "" ?>">
+                                   
                                 <td> <?= $view['code'];?> </td>
                                 <td>
                                     <?php if (is_null($view['picture'])): ?>
@@ -115,6 +118,7 @@
                                     <td hidden> <?= date("M d, Y", strtotime($view['created_at'])); ?> </td>
                                     <td hidden> <?= $view['purchased_at'] ? date("M d, Y", strtotime($view['purchased_at'])) : "N/A"; ?> </td>
                                     <td hidden> <?= $view['expired_at'] ? date("M d, Y", strtotime($view['expired_at'])) : "N/A"; ?> </td>
+                                     <td> <?= $view['type'];?> </td>
                                     <td>    
                                         <form action="" method="post">
                                             <a href="deduct_page.php?inv_id=<?= $view['inv_id'];?>" style="padding:5px; font-size: 15px; border-radius:5px; margin-bottom: 2px;" class="btn btn-success"> Deduct Item </a>

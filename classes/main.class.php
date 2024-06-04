@@ -13,7 +13,7 @@
 
 <?php 
 
-date_default_timezone_set('Asia/Manila');
+// date_default_timezone_set('Asia/Manila');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -101,6 +101,7 @@ class BMISClass {
         //Testing Login with checking is User has verified his or her account
         public function user_login() 
         {
+            
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
             ob_start();
@@ -110,6 +111,8 @@ class BMISClass {
                 // Your existing code here
                 if(isset($_POST['user_login'])) 
                 {
+                    date_default_timezone_set('Asia/Manila');
+                    $date_timezone = date('Y-m-d H:i:s');
                     $email = $_POST['email'];
                     $password = $_POST['password'];
                     $connection = $this->openConn();
@@ -132,8 +135,8 @@ class BMISClass {
 
                                 // log
                                 $staff_name = $user['fname']." ".$user['lname'];
-                                $stmt_log = $connection->prepare("INSERT INTO loggin_logs (staff, log_type) VALUES (?, ?)");
-                                $stmt_log->execute([$staff_name, "Time In"]);
+                                $stmt_log = $connection->prepare("INSERT INTO loggin_logs (staff, log_type, created_at) VALUES (?, ?, ?)");
+                                $stmt_log->execute([$staff_name, "Time In", $date_timezone]);
 
                                 echo "<script type='text/javascript'>
                                 document.addEventListener('DOMContentLoaded', function() {

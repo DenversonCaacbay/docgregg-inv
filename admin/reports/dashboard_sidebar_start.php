@@ -197,11 +197,12 @@
                 
                     
                 </a>
-                <ul class="dropdown-menu ms-2 text-center">
+                <ul class="dropdown-menu w-100 text-center">
                     <li><a class="dropdown-item" href="../admin_inventory.php">All Products</a></li>
                     <li><a class="dropdown-item" href="../admin_inventory_internal.php">Internal Inventory</a></li>
                     <li><a class="dropdown-item" href="../admin_inventory_external.php">External Inventory</a></li>
-                    <!-- <li><a class="dropdown-item" href="admin_inventory_both.php">Both Internal / External</a></li> -->
+                     <li><a class="dropdown-item" href="../admin_low_inventory.php">Low Stocks Inventory</a></li>
+                    <li><a class="dropdown-item" href="../deduct_item.php">Deduct Item</a></li>
                     <li><a class="dropdown-item" href="../create_inventory.php">Add Products</a></li>
                 </ul>
             </li>

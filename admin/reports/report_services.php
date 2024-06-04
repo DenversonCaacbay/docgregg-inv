@@ -7,9 +7,8 @@
     $user = $staffbmis->view_single_staff($userdetails['id_admin']);
     $bmis->validate_admin();
     $view = $staffbmis->count_services_report();
-    // $bmis->validate_admin();
-    // $bmis->delete_bspermit();
-    // $view = $bmis->view_bspermit();
+    
+    
     $id_resident = $_GET['id_resident'];
     // $resident = $residentbmis->get_single_bspermit($id_resident);
     if ($userdetails['role'] !== 'administrator') {
@@ -84,7 +83,7 @@
         <div class="col-md-12">
             <div class="row">
             <div class="col-md-7">
-                    <form id="pdfForm" method="post" action="generatepdf/random/services.php" style="display: inline-block; margin-right: 10px;">
+                    <form id="pdfForm" method="post" action="../generatepdf/random/services.php" style="display: inline-block; margin-right: 10px;">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group" style="margin-bottom: 5px;">
@@ -104,12 +103,7 @@
                         </div>
                     </form> 
                 </div>  
-                <!-- <script> 
-                    document.getElementById('pdfLink').addEventListener('click', function (event) {
-                        event.preventDefault();
-                        document.getElementById('pdfForm').submit();
-                    });
-                </script>   -->
+               
                 <script>
                     function validateDates() {
                         var startDate = document.getElementById('fromDate').value;
@@ -146,7 +140,7 @@
                     <!-- <button type="button" class="btn btn-primary">Year</button> -->
                 </div>
             </div>
-            <div class="card" style="height: 500px; overflow: auto;">
+            <div class="card">
             <table class="table table-hover text-center table-bordered">
                 <form action="" method="post">
                     <thead style="background: #0296be;color:#fff;" class="sticky"> 
@@ -170,7 +164,7 @@
                                 </td>
                                 
                                 <td> <?= $view['staff_name'];?> </td>
-                                    <td> <?= $view['created_at'];?> </td>
+                                    <td> <?= date('F d, Y - h:i A', strtotime($view['log_date']));?> </td>
                                 </tr>
                             <?php }?>
                         <?php } ?>

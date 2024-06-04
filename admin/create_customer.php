@@ -89,7 +89,8 @@
 
                             
                             <div class="mt-3">
-                                <input type="submit" class="btn btn-primary w-100 mb-3 p-2" name="create_customer" value="Add Customer" onclick="return confirm('Are you sure you want to Add Customer?')" />
+                                <!--<input type="submit" class="btn btn-primary w-100 mb-3 p-2" name="create_customer" value="Add Customer" onclick="return confirm('Are you sure you want to Add Customer?')" />-->
+                                <input type="submit" class="btn btn-primary w-100 mb-3 p-2" name="create_customer" value="Add Customer" />
                             </div>
                             
                             
@@ -102,3 +103,25 @@
     </div> 
 </div>
 
+<script>
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to Add Customer?')) {
+                // Assuming you have your form submission logic here, e.g., an AJAX call
+
+                // Show success alert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Customer Added',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                // Simulate form submission after showing the alert
+                setTimeout(() => {
+                    document.getElementById('customerForm').submit();
+                }, 1500);
+            }
+            return false; // Prevent the default form submission
+        }
+    </script>

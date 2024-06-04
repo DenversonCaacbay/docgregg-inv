@@ -17,11 +17,12 @@
 
             // Loop through each row and hide/show based on the search query
             rows.forEach(function (row) {
+                var productCode = row.querySelector('td:nth-child(1)').textContent.toLowerCase(); // Change to nth-child(3) for Product Name
                 var productName = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Change to nth-child(3) for Product Name
                 var category = row.querySelector('td:nth-child(6)').textContent.toLowerCase(); // Change to nth-child(6) for Category
 
                 // Check if the query matches the product name or category
-                if (productName.includes(query) || category.includes(query)) {
+                if (productCode.includes(query) || productName.includes(query) || category.includes(query)) {
                     row.style.display = ''; // Show the row
                     hasMatch = true;
                 } else {

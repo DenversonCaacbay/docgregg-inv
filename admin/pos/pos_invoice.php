@@ -1,20 +1,9 @@
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<!-- SweetAlert 2 JS (including dependencies) -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
-<style>
-    .your-custom-font-class {
-        font-family: 'Nunito', sans-serif;
-    }
-</style>
-
 <?php 
     $pdo = require 'connection.php';
     session_start();
-    date_default_timezone_set('Asia/Manila');
-    //
+    date_default_timezone_set('Asia/Manila'); // Ensure timezone is set correctly
+    $date_timezone = date('Y-m-d H:i:s'); // Get the current date and time
+
     $productAll = '';
     $processTotal = '';
     $processProfit = '';
@@ -24,80 +13,55 @@
     $processTotalQty = 0;
     $staff_name = '';
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        // check if it has qty
-        foreach($_SESSION['shopping_cart'] as $data){
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Check if it has qty
+        foreach ($_SESSION['shopping_cart'] as $data) {
             $prod_id = $data['item_id'];
             $prod_qty = $data['item_quantity'];
             $processTotalQty += $data['item_quantity'];
 
-            // echo $data['item_id']."<br>";
-            // echo $data['item_quantity']."<br>";
-            $searchProd = "SELECT * FROM tbl_inventory WHERE inv_id = ".$prod_id;
-            $statement = $pdo->query($searchProd);
+            // Fetch the product details
+            $searchProd = "SELECT * FROM tbl_inventory WHERE inv_id = :prod_id";
+            $statement = $pdo->prepare($searchProd);
+            $statement->bindParam(':prod_id', $prod_id, PDO::PARAM_INT);
+            $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach($results as $result){
-                    $old_qty = $result['quantity'];
-                    // reduce qty
-                    $newQty = $old_qty - $prod_qty;
+            foreach ($results as $result) {
+                $old_qty = $result['quantity'];
+                // Reduce qty
+                $newQty = $old_qty - $prod_qty;
 
-                    $data = ['quantity' => 1];
-
-                    $reduce_qty = "UPDATE tbl_inventory SET quantity = :quantity WHERE inv_id = ".$prod_id;
-
-                    $statement = $pdo->prepare($reduce_qty);
-
-                    $statement->bindParam(':quantity', $data['quantity']);
-
-                    // change
-                    $data['quantity'] = $newQty;
-
-                    $statement->execute();
+                // Update quantity
+                $reduce_qty = "UPDATE tbl_inventory SET quantity = :quantity WHERE inv_id = :prod_id";
+                $statement = $pdo->prepare($reduce_qty);
+                $statement->bindParam(':quantity', $newQty, PDO::PARAM_INT);
+                $statement->bindParam(':prod_id', $prod_id, PDO::PARAM_INT);
+                $statement->execute();
             }
-
         }
 
-        // create invoice
-        $sql = 'INSERT INTO invoice(customer_name, product, total,profit, totalQty,cash, cash_change, staff_name) 
-            VALUES (:customer_name, :products, :total,:profit, :totalQty, :cash, :cash_change, :staff_name)';
-
+        // Create invoice
+        $sql = 'INSERT INTO invoice (customer_name, product, total, profit, totalQty, cash, cash_change, staff_name, created_at) 
+                VALUES (:customer_name, :products, :total, :profit, :totalQty, :cash, :cash_change, :staff_name, :date_timezone)';
         $statement = $pdo->prepare($sql);
 
-        $newInv = [
-            'customer_name' => 'text',
-            'products' => 'text',
-            'total' => '9',
-            'profit' => '9',
-            'totalQty' => '0',
-            'cash' => 9,
-            'cash_change' => 9,
-            'staff_name' => 'text',
-        ];
+        $statement->bindParam(':customer_name', $_POST['processCustomer']);
+        $statement->bindParam(':products', $_POST['productAll']);
+        $statement->bindParam(':total', $_POST['processTotal']);
+        $statement->bindParam(':profit', $_POST['processProfit']);
+        $statement->bindParam(':totalQty', $processTotalQty);
+        $statement->bindParam(':cash', $_POST['processCash']);
+        $statement->bindParam(':cash_change', $_POST['processChange']);
+        $statement->bindParam(':staff_name', $_POST['staff_name']);
+        $statement->bindParam(':date_timezone', $date_timezone); // Use the captured date and time
 
-        $statement->bindParam(':customer_name', $newInv['customer_name']);
-        $statement->bindParam(':products', $newInv['products']);
-        $statement->bindParam(':total', $newInv['total']);
-        $statement->bindParam(':profit', $newInv['profit']);
-        $statement->bindParam(':totalQty', $newInv['totalQty']);
-        $statement->bindParam(':cash', $newInv['cash']);
-        $statement->bindParam(':cash_change', $newInv['cash_change']);
-        $statement->bindParam(':staff_name', $newInv['staff_name']);
-
-        //change
-        $newInv['customer_name'] = $_POST['processCustomer'];
-        $newInv['products'] = $_POST['productAll'];
-        $newInv['totalQty'] = $processTotalQty;
-        $newInv['total'] = $_POST['processTotal'];
-        $newInv['profit'] = $_POST['processProfit'];
-        $newInv['cash'] = $_POST['processCash'];
-        $newInv['cash_change'] = $_POST['processChange'];
-        $newInv['staff_name'] = $_POST['staff_name'];
-
-        //execute query
+        // Execute the query
         $statement->execute();
 
+        // Clear the shopping cart
         unset($_SESSION["shopping_cart"]);
+
         echo "<script type='text/javascript'>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -111,9 +75,9 @@
                 });
             });
         </script>";
+
         // Redirect after showing the alert
         header("refresh: 1; url=../admin_product_sale.php");
         exit();
     }
-
 ?>

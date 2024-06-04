@@ -4,6 +4,8 @@
 
     // Check if tableData and id_user are set in the POST request and URL respectively
     if(isset($_POST["tableData"]) && isset($_GET["id"])) {
+        date_default_timezone_set('Asia/Manila'); // Ensure timezone is set correctly
+       // Get the current date and time
         // Establish database connection
         $servername = "localhost";
         $username = "root";
@@ -26,7 +28,7 @@
             $stock_left = (int) explode("|", $row['id'])[1];
             $stock_demand = (int)$row['quantity'];
             $deduct_stock = $stock_left - $stock_demand;
-
+            $date_timezone = date('Y-m-d H:i:s'); 
             // deduct inventory
             $stmt_inventory = $conn->prepare("UPDATE tbl_inventory SET quantity = ? WHERE inv_id = ?");
             $stmt_inventory->bind_param("ii", $deduct_stock, $inventory_id);
@@ -43,12 +45,16 @@
             $staff = $row['staff'] ;
 
             // Prepare and execute SQL statement to insert data into the database
-            $stmt = $conn->prepare("INSERT INTO tbl_services (cli_id, pet_name, pet_type, service_availed, 
-                type_med_equip, quantity, staff) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("issssis", $cli_id, $pet_name, $pet_type, 
-                $service_availed, $type_med_equip_serialized, $quantity, $staff);
+            $stmt = $conn->prepare("INSERT INTO tbl_services (cli_id, pet_name, pet_type, service_availed, type_med_equip, quantity, staff, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("issssiss", $cli_id, $pet_name, $pet_type, $service_availed, $type_med_equip_serialized, $quantity, $staff, $date_timezone);
             $stmt->execute();
             $stmt->close();
+            
+            $stmt_logs = $conn->prepare("INSERT INTO tbl_log_services (cli_id, service_availed, staff_name, log_date) VALUES (?, ?, ?, ?)");
+            $stmt_logs->bind_param("isss", $cli_id, $service_availed, $staff, $date_timezone);
+            $stmt_logs->execute();
+            $stmt_logs->close();
+            
         }
         echo "<script type='text/javascript'>
             document.addEventListener('DOMContentLoaded', function() {

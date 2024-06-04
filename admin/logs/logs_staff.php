@@ -83,53 +83,53 @@
         <div class="col-md-12">
             <div class="row">
             <div class="col-md-7">
-                    <form id="pdfForm" method="post" action="generatepdf/random/client.php" style="display: inline-block; margin-right: 10px;">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label for="fromDate" style="display: block;">From Date:</label>
-                                    <input type="date" class="form-control" id="fromDate" name="fromDate" required>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label for="toDate" style="display: block;">To Date:</label>
-                                    <input type="date" class="form-control" id="toDate" name="toDate" required>
-                                </div>
-                            </div>
-                            <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div>
-                            <div class="col-md-1 mt-4"><a  href="admin_reports.php" class="btn btn-primary p-2 mt-3"><i class="fas fa-redo"></i></a></div>            
+                    <!--<form id="pdfForm" method="post" action="generatepdf/random/client.php" style="display: inline-block; margin-right: 10px;">-->
+                    <!--    <div class="row">-->
+                    <!--        <div class="col-md-4">-->
+                    <!--            <div class="form-group" style="margin-bottom: 5px;">-->
+                    <!--                <label for="fromDate" style="display: block;">From Date:</label>-->
+                    <!--                <input type="date" class="form-control" id="fromDate" name="fromDate" required>-->
+                    <!--            </div>-->
+                    <!--        </div>-->
+                    <!--        <div class="col-md-4">-->
+                    <!--            <div class="form-group" style="margin-bottom: 5px;">-->
+                    <!--                <label for="toDate" style="display: block;">To Date:</label>-->
+                    <!--                <input type="date" class="form-control" id="toDate" name="toDate" required>-->
+                    <!--            </div>-->
+                    <!--        </div>-->
+                    <!--        <div class="col-md-1 mt-4"><button type="submit" class="btn btn-primary p-2 mt-3" id="generatePDF"><i class="fas fa-search"></i></button></div>-->
+                    <!--        <div class="col-md-1 mt-4"><a  href="admin_reports.php" class="btn btn-primary p-2 mt-3"><i class="fas fa-redo"></i></a></div>            -->
                             <!-- <div class="col-md-2 mt-4"><a href="#" class="btn btn-primary p-2" style="margin-top:15px" onclick="validateDates()" id="pdfLink"><i class="fas fa-print"></i></a></div> -->
-                        </div>
-                    </form> 
+                    <!--    </div>-->
+                    <!--</form> -->
                 </div>  
-                <script>
-                    function validateDates() {
-                    var startDate = document.getElementById('fromDate').value;
-                    var endDate = document.getElementById('toDate').value;
+            <!--    <script>-->
+            <!--        function validateDates() {-->
+            <!--        var startDate = document.getElementById('fromDate').value;-->
+            <!--        var endDate = document.getElementById('toDate').value;-->
 
-                    if (startDate === "" || endDate === "") {
-                        alert("Please select both start and end dates.");
-                    } else {
-                        // Perform other actions or submit the form
-                        var form = document.getElementById('pdfForm');
-                        form.submit();
+            <!--        if (startDate === "" || endDate === "") {-->
+            <!--            alert("Please select both start and end dates.");-->
+            <!--        } else {-->
+                        <!--// Perform other actions or submit the form-->
+            <!--            var form = document.getElementById('pdfForm');-->
+            <!--            form.submit();-->
 
-                        // Open PDF link in a new tab
-                        openPdfLink();
-                    }
-                }
+                        <!--// Open PDF link in a new tab-->
+            <!--            openPdfLink();-->
+            <!--        }-->
+            <!--    }-->
 
-                // This function opens the PDF link in a new tab
-                function openPdfLink() {
-                    var pdfLink = document.getElementById('pdfLink').getAttribute('href');
-                    window.open(pdfLink, '_blank');
-                }
-            </script>
+                <!--// This function opens the PDF link in a new tab-->
+            <!--    function openPdfLink() {-->
+            <!--        var pdfLink = document.getElementById('pdfLink').getAttribute('href');-->
+            <!--        window.open(pdfLink, '_blank');-->
+            <!--    }-->
+            <!--</script>-->
 
                 
             </div>
-            <div class="card" style="height: 500px; overflow: auto;">
+            <div class="card">
                 <table class="table table-hover text-center table-bordered">
                     <form action="" method="post">
                         <thead style="background: #0296be;color:#fff;" class="sticky"> 
