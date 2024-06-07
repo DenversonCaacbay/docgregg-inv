@@ -77,10 +77,29 @@
                                     <input type="email" class="form-control"  name="customer_email" required>
                                 </div>
                             </div>
-                            <div class="col-md-12 mt-2">
+                            <h4>Address</h4>
+                            <div class="col-md-3 mt-2">
                                 <div class="form-group">
-                                    <label> Address: (Street/Barangay, City, Province)</label>
-                                    <input type="text" class="form-control" name="customer_address" required>
+                                    <label> Street</label>
+                                    <input type="text" class="form-control" name="street" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <div class="form-group">
+                                    <label> Barangay</label>
+                                    <input type="text" class="form-control" name="barangay" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" name="city" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <div class="form-group">
+                                    <label>Province</label>
+                                    <input type="text" class="form-control" name="province" required>
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -2645,12 +2645,15 @@ public function count_services_report() {
                 $customer_name = ucwords(strtolower($_POST['customer_name']));
                 $customer_contact = $_POST['customer_contact'];
                 $customer_email = $_POST['customer_email'];
-                $customer_address = ucwords(strtolower($_POST['customer_address']));
+                $street = ucwords(strtolower($_POST['street']));
+                $barangay = ucwords(strtolower($_POST['barangay']));
+                $city = ucwords(strtolower($_POST['city']));
+                $province = ucwords(strtolower($_POST['province']));
                 $staff_name = $_POST['staff_name'];
 
                 $connection = $this->openConn();
-                $stmt_services = $connection->prepare("INSERT INTO tbl_user (customer_name,customer_contact,customer_email,customer_address, staff_name, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-                $stmt_services->execute([$customer_name,$customer_contact,$customer_email,$customer_address,  $staff_name]);
+                $stmt_services = $connection->prepare("INSERT INTO tbl_user (customer_name, customer_contact, customer_email, street, barangay, city, province, staff_name, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+                $stmt_services->execute([$customer_name, $customer_contact, $customer_email, $street, $barangay, $city, $province, $staff_name]);
 
                 // Use SweetAlert for the alert
                 echo "<script type='text/javascript'>

@@ -70,7 +70,8 @@ $html .= '
 $html .= '<tr>
 <th width="20%">Created At</th>
 <th width="40%">Product Name</th>
-<th width="20%">Staff</th>
+<th width="20%">Quantity</th>
+<th width="40%">Staff</th>
 <th style="display:none" width="20%">Profit</th>
 <th width="20%">Total</th>
 </tr>';
@@ -79,9 +80,43 @@ $totalSales = 0;
 $totalProfit = 0;
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
+
+// Assuming $row['product'] contains the product string
+$productString = $row['product'];
+
+// Split the string by commas
+$productArray = explode(',', $productString);
+
+// Initialize an empty string for the output
+$output = "";
+
+// Loop through each product description
+foreach ($productArray as $product) {
+    // Split the product description by spaces
+    $productParts = explode(' ', trim($product));
+
+    // Initialize an empty string for the product name
+    $productName = "";
+
+    // Loop through each part of the product description
+    foreach ($productParts as $part) {
+        // Check if the part does not contain numbers or 'pc(s)'
+        if (!is_numeric($part) && strpos($part, 'pc(s)') === false) {
+            // Append the part to the product name
+            $productName .= $part . " ";
+        } else {
+            // Stop the loop if a non-name part is found
+            break;
+        }
+    }
+
+    // Trim the trailing space and append the product name to the output with a new line
+    $output .= trim($productName) . "<br>";
+}
     $html .= '<tr>';
     $html .= '<td>' . date('F d, Y h:i A', strtotime($row['created_at'])) . '</td>';
-    $html .= '<td class="product-name">' . $row['product'] .'</td>';
+    $html .= '<td class="product-name">'  . $output .'</td>';
+    $html .= '<td>' . $row['totalQty'] .'</td>';
     $html .= '<td>' . $row['staff_name'] .'</td>';
     $html .= '<td style="display:none">' . $row['profit'] .'</td>';
     $html .= '<td> ₱' . $row['total'] .  '.00</td>';
@@ -93,11 +128,11 @@ if ($result->num_rows > 0) {
 
   // Display total sales row
   $html .= '<tr>';
-  $html .= '<td colspan="3" style="text-align: right;">Total Sales:</td>';
+  $html .= '<td colspan="4" style="text-align: right;">Total Sales:</td>';
   $html .= '<td> ₱' . $totalSales . '.00</td>';
   $html .= '</tr>';
   $html .= '<tr>';
-  $html .= '<td colspan="3" style="text-align: right;">Total Profit:</td>';
+  $html .= '<td colspan="4" style="text-align: right;">Total Profit:</td>';
   $html .= '<td> ₱' . $totalProfit . '.00</td>';
   // $html .= '<td> ₱' . $totalProfit . '.00</td>';
 
